@@ -1,0 +1,79 @@
+https://demo.pyrocms.com/admin/navigation
+http://www.statamic.local/cp/users/roles
+https://github.com/BootstrapCMS/CMS/blob/master/SCREENSHOTS.md
+https://asgardcms.com/features
+
+
+
+
+
+
+
+/*
+.ui-sortable {
+	margin: 0;
+	width: 344px;
+	background-color: #cccccc;
+	list-style-type: none;
+	list-style: none;
+	padding: 0; 
+}
+
+.ui-sortable li { 
+	outline: 0;
+	margin: 0; 
+	padding: 0;
+	list-style: none;
+	color: #FFFFFF;
+	position: relative;
+	border-top: 1px solid rgba(255,255,255,.2);
+	border-bottom: 1px solid rgba(0,0,0,.5);
+	
+	&:first-child {
+		border-top: 0; 
+	}
+
+	&:last-child {
+		border-bottom: 0;
+	}
+	
+	i.fa-bars {
+		display: inline-block;
+		cursor: move;
+		padding: 20px;
+		margin: 0;
+		background-color: #EFEFEF;
+	}
+	
+	span {
+		background-color: green;
+	}
+	
+	a {
+		color: #FFFFFF;
+		height: 45px;
+		line-height: 48px;
+		text-decoration: none;
+		background-color: blue;
+		
+		&:hover {
+			text-decoration: underline;
+		}
+		
+		i {
+			display: inline-block;
+			padding: 20px;
+			margin: 0;
+			cursor: pointer;
+			background-color: fuchsia;
+		}
+	}
+}
+
+.ui-sortable-placeholder {
+	border: 3px dashed #aaaaaa;
+	height: 45px;
+	width: 344px;
+	background-color: #cccccc;
+}
+*/

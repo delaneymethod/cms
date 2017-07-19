@@ -1,0 +1,45 @@
+@import 'variables';
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+
+@import 'node_modules/font-awesome/scss/font-awesome';
+
+html, body {
+	height: 100%;
+	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #333333;
+	background-color: #ffffff;
+}
+
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	/* Without this, the body has excess horizontal scroll when the menu is open */
+	overflow-x: hidden;
+}
+
+.btn {
+	cursor: pointer;	
+}
+
+form,
+input[type='text'],
+input[type='radio'],
+input[type='checkbox'],
+select,
+textarea,
+button {
+}
+
+.btn,
+.btn:focus,
+.btn:active,
+* {
+	outline: 0 !important;
+}
