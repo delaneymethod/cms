@@ -69,7 +69,12 @@ class PageController extends Controller
 	 */
    	public function create(Request $request)
 	{
-		return view('dashboard.pages.create');
+		$page = [];
+		
+		$page['title'] = 'Create Page';
+		$page['subTitle'] = 'Pages';
+		
+		return view('dashboard.pages.create', compact('page'));
 	}
 	
 	/**
@@ -80,6 +85,7 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
+		dd($request->all());
     }
     
     /**

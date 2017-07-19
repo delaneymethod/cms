@@ -88,6 +88,6 @@ return [
     |
     */
 
-    'prefix' => env('PREFIX', 'gf'),
+    'prefix' => env('PREFIX', ''),
 
 ];

@@ -32,7 +32,7 @@
 					<div class="col">
 						<form name="" id="" class="" role="form" method="PUT" action="{{ url('/dashboard/pages/{id}') }}">
 							{{ csrf_field() }}
-							<button type="submit" name="" id="" class="" title="">Update</button>
+							<button type="submit" name="" id="" class="btn btn-outline-primary" title="Update">Update</button>
 						</form>
 					</div>
 				</div>

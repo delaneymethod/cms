@@ -31,10 +31,14 @@
 		});
 	
 		$('.sortable').nestedSortable({
-			handle: 'i',
+			forcePlaceholderSize: true,
+			handle: 'div',
+			helper:	'clone',
 			items: 'li',
-			toleranceElement: '> i',
-			placeholder: 'ui-sortable-placeholder'
+			placeholder: 'sortable-placeholder',
+			tolerance: 'pointer',
+			toleranceElement: '> div',
+			isTree: true
 		});
 	};
 	</script>
@@ -48,39 +52,25 @@
 				@include('dashboard._partials.pageTitle')
 				<div class="row">
 					<div class="col">
-						<form name="" id="" class="" role="form" method="POST" action="{{ url('/dashboard/menu') }}">
-							{{ csrf_field() }}
-							{{ method_field('PUT') }}
-							<input type="hidden" name="tree" id="tree" value="">
-							@php
-								echo '<ol class="sortable">';
-									
-								foreach ($pages as $page) {
-									renderPage($page);
-								}
-								
-								echo '</ol>';
-								
-								function renderPage($page) {
-									echo '<li id="page_'.$page->id.'"><i class="fa fa-bars" aria-hidden="true"></i><span>'.$page->title.'</span><a href="" title="Edit '.$page->title.'"><i class="fa fa-pencil pull-right" aria-hidden="true"></i></a>';
-								
-									if ($page->children()->count() > 0) {
-										echo '<ol>';
-									
-										foreach($page->children as $child) {
-											renderPage($child);
-										}
-									
-										echo '</ol>';
-									}
-									
-									echo '</li>';
-								}
-				    		@endphp
-							<button type="submit" name="" id="" class="" title="">Save</button>
-						</form>
+						<ul class="list-unstyled list-inline buttons">
+							<li class="list-inline-item"><a href="/dashboard/pages/create" title="Add Page" class="btn btn-outline-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Page</a></li>
+						</ul>
 					</div>
 				</div>
+				<div class="content padding bg-white">
+					<ol class="sortable list-unstyled">
+						@foreach ($pages as $page)
+							@component('dashboard._components.renderPage', ['page' => $page])
+							@endcomponent
+						@endforeach
+					</ol>
+					<form name="" id="" class="" role="form" method="POST" action="{{ url('/dashboard/menu') }}">
+						{{ csrf_field() }}
+						{{ method_field('PUT') }}
+						<input type="hidden" name="tree" id="tree" value="">
+						<button type="submit" name="" id="" class="btn btn-outline-primary" title="Save">Save</button>
+					</form>
+		    	</div>
 			</div>
 		</div>
 @endsection

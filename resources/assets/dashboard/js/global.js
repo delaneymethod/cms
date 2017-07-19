@@ -15,6 +15,20 @@ require('bootstrap');
 
 require('../plugins/redactor/redactor');
 
+require('../plugins/redactor/plugins/source');
+
+require('../plugins/redactor/plugins/table');
+
+require('../plugins/redactor/plugins/alignment/alignment');
+
+require('../plugins/redactor/plugins/fullscreen');
+
+require('../plugins/redactor/plugins/filemanager');
+
+require('../plugins/redactor/plugins/imagemanager');
+
+require('../plugins/redactor/plugins/video');
+
 require('../plugins/jquery-ui/sortable');
 
 require('../plugins/jquery-ui/sortable-nested');

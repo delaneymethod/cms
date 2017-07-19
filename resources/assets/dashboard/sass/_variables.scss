@@ -2,9 +2,15 @@ $fa-font-path: '/assets/fonts';
 
 $flagsImagePath: '/assets/img/';
 
-$sidebar-active-border-left-color: #3c8dbc;
+$gf-red: #d30e07;
 
-$sidebar-active-border-left-color: #ffb114;
+$gf-default: #333333;
+
+$gf-warning: #f0ad4e;
+
+$gf-info: #5bc0de;
+
+$gf-danger: #d9534f;
 
 $sidebar-bg-color: #222d32;
 
@@ -16,6 +22,7 @@ $sidebar-a-hover-bg-color: #1e282c;
 
 $main-bg-color: #ecf0f5;
 
-$main-message-bg-color: $sidebar-active-border-left-color;
+$main-message-bg-color: $gf-red;
 
 $input-border-focus: rgba(0, 0, 0, 0.075);
+

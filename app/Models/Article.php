@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\User;
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -22,5 +23,13 @@ class Article extends Model
 	public function user()
 	{
 		return $this->belongsTo(User::class);
+	}
+	
+	/**
+	 * Get the status record associated with the user.
+	 */
+	public function status()
+	{
+		return $this->belongsTo(Status::class);
 	}
 }

@@ -21,11 +21,14 @@ class CreateLocationsTable extends Migration
 			$table->increments('id');
 
 			$table->string('title')->index();
-
+			
+			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the status table');
+			
 			$table->timestamps();
 		});
 
 		Schema::table('locations', function (Blueprint $table) {
+			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 		});
 	}
 

@@ -36,13 +36,13 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'database' => env('DB_DATABASE', database_path('database.sqlite')),
-            'prefix' => env('PREFIX', 'gf'),
+            'prefix' => env('PREFIX', ''),
         ],
         
         'sqlite_testing' => [
             'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix' => env('PREFIX', 'gf'),
+            'prefix' => env('PREFIX', ''),
         ],
 
         'mysql' => [
@@ -56,7 +56,7 @@ return [
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => env('PREFIX', 'gf'),
+            'prefix' => env('PREFIX', ''),
             'strict' => true,
             'engine' => null,
         ],
@@ -69,7 +69,7 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
-            'prefix' => env('PREFIX', 'gf'),
+            'prefix' => env('PREFIX', ''),
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
@@ -82,7 +82,7 @@ return [
             'username' => env('DB_USERNAME', 'forge'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
-            'prefix' => env('PREFIX', 'gf'),
+            'prefix' => env('PREFIX', ''),
         ],
 
     ],

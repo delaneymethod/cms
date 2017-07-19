@@ -21,12 +21,12 @@ class StatusesTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
-				'title' => 'Retired',
+				'title' => 'Pending',
 				'created_at' => $now,
 				'updated_at' => $now,
 			],
 			[
-				'title' => 'Pending',
+				'title' => 'Retired',
 				'created_at' => $now,
 				'updated_at' => $now,
 			],
