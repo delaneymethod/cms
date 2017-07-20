@@ -22,7 +22,7 @@ class DashboardController extends Controller
 	}
 
 	/**
-	 * Get dashboard view.
+	 * Get cp view.
 	 *
 	 * @params	Request 	$request
 	 * @return 	Response
@@ -34,6 +34,6 @@ class DashboardController extends Controller
 		$page['title'] = 'Dashboard';
 		$page['subTitle'] = '';
 		
-		return view('dashboard.index', compact('page'));
+		return view('cp.dashboard.index', compact('page'));
 	}
 }

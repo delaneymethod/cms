@@ -23,11 +23,13 @@ class CreatePagesTable extends Migration
 			$table->string('title');
 			$table->string('slug');
 			
+			$table->longText('content');
+			
+			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the status table');
 			$table->unsignedInteger('parent_id')->nullable()->index();
 			$table->unsignedInteger('lft')->nullable()->index();
 			$table->unsignedInteger('rgt')->nullable()->index();
 			$table->unsignedInteger('depth')->nullable();
-			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the status table');
 			
 			$table->timestamps();
 		});

@@ -7,11 +7,13 @@ use Log;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Traits\PageTrait;
+use App\Http\Traits\StatusTrait;
 use App\Http\Controllers\Controller;
 
 class PageController extends Controller
 {
 	use PageTrait;
+	use StatusTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -40,7 +42,7 @@ class PageController extends Controller
 		
 		$pages = $this->getPages();
 		
-		return view('dashboard.pages.index', compact('page', 'pages'));
+		return view('cp.pages.index', compact('page', 'pages'));
 	}
 	
 	/**
@@ -58,7 +60,7 @@ class PageController extends Controller
 		
 		$pages = $this->getPagesHierarchy();
 		
-		return view('dashboard.menu.index', compact('page', 'pages'));
+		return view('cp.menu.index', compact('page', 'pages'));
 	}
 	
 	/**
@@ -74,7 +76,13 @@ class PageController extends Controller
 		$page['title'] = 'Create Page';
 		$page['subTitle'] = 'Pages';
 		
-		return view('dashboard.pages.create', compact('page'));
+		// Used to set parent_id
+		$pages = $this->getPages();
+		
+		// Used to set status_id
+		$statuses = $this->getStatuses();
+		
+		return view('cp.pages.create', compact('page', 'pages', 'statuses'));
 	}
 	
 	/**
@@ -85,7 +93,57 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-		dd($request->all());
+		//$currentUser = $this->getUser();
+
+		//if ($currentUser->hasPermission('edit_pages')) {
+			// Remove any Cross-site scripting (XSS)
+			$cleanedPage = $this->sanitizerInput($request->all());
+
+			$rules = $this->getRules('page');
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedPage, $rules);
+
+			if ($validator->fails()) {
+				return back()->withErrors($validator)->withInput();
+			}
+
+			DB::beginTransaction();
+
+			try {
+				// Create new model
+				$page = new Page;
+	
+				// Set our field data
+				$page->title = $cleanedPage['title'];
+				$page->slug = $cleanedPage['slug'];
+				$page->status_id = $cleanedPage['status_id'];
+				$page->content = $cleanedPage['content'];
+				$page->parent_id = $cleanedPage['parent_id'];
+				
+				$page->save();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Created successfully.', $level = 'success');
+
+			return redirect('/cp/pages');
+		//}
+
+		//abort(403, 'Unauthorised action');
     }
     
     /**
@@ -97,7 +155,7 @@ class PageController extends Controller
 	 */
    	public function edit(Request $request, int $id)
 	{
-		return view('dashboard.pages.edit', compact('id'));
+		return view('cp.pages.edit', compact('id'));
 	}
 	
 	/**
@@ -169,9 +227,9 @@ class PageController extends Controller
 
 			DB::commit();
 
-			flash('Updated successfully.', $level = 'success');
+			flash('Saved successfully.', $level = 'success');
 
-			return redirect('/dashboard/menu');
+			return redirect('/cp/menu');
 		//}
 
 		//abort(403, 'Unauthorised action');

@@ -39,7 +39,7 @@ class UserController extends Controller
 		
 		$users = $this->getUsers();
 		
-		return view('dashboard.users.index', compact('page', 'users'));
+		return view('cp.users.index', compact('page', 'users'));
 	}
 	
 	/**

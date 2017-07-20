@@ -40,7 +40,7 @@ class ArticleController extends Controller
 		
 		$articles = $this->getArticles();
 		
-		return view('dashboard.articles.index', compact('page', 'articles'));
+		return view('cp.articles.index', compact('page', 'articles'));
 	}
 	
 	/**

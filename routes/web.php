@@ -15,56 +15,66 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
-// Dashboard routes
-Route::get('/dashboard', 'DashboardController@index');
+// CP route
+Route::get('/cp', function () {
+	return redirect('/cp/dashboard');
+});
 
-// Dashboard > Users routes
-Route::get('/dashboard/users', 'UserController@index');
-Route::get('/dashboard/users/create', 'UserController@create');
-Route::get('/dashboard/users/{id}/edit', 'UserController@edit');
+// CP > Dashboard routes
+Route::get('/cp/dashboard', 'DashboardController@index');
 
-Route::post('/dashboard/users', 'UserController@store');
+// CP > Users routes
+Route::get('/cp/users', 'UserController@index');
+Route::get('/cp/users/create', 'UserController@create');
+Route::get('/cp/users/{id}/edit', 'UserController@edit');
 
-Route::put('/dashboard/users/{id}', 'UserController@update');
-Route::patch('/dashboard/users/{id}', 'UserController@update');
+Route::post('/cp/users', 'UserController@store');
 
-Route::delete('/dashboard/users/{id}', 'UserController@delete');
+Route::put('/cp/users/{id}', 'UserController@update');
+Route::patch('/cp/users/{id}', 'UserController@update');
 
-// Dashboard > Locations routes
-Route::get('/dashboard/locations', 'LocationController@index');
+Route::delete('/cp/users/{id}', 'UserController@delete');
 
-// Dashboard > Orders routes
-Route::get('/dashboard/orders', 'OrderController@index');
+// CP > Locations routes
+Route::get('/cp/locations', 'LocationController@index');
 
-// Dashboard > Articles routes
-Route::get('/dashboard/articles', 'ArticleController@index');
+// CP > Orders routes
+Route::get('/cp/orders', 'OrderController@index');
 
-// Dashboard > Pages routes
-Route::get('/dashboard/pages', 'PageController@index');
-Route::get('/dashboard/pages/create', 'PageController@create');
-Route::get('/dashboard/pages/{id}/edit', 'PageController@edit');
+// CP > Articles routes
+Route::get('/cp/articles', 'ArticleController@index');
 
-Route::post('/dashboard/pages', 'PageController@store');
+// CP > Pages routes
+Route::get('/cp/pages', 'PageController@index');
+Route::get('/cp/pages/create', 'PageController@create');
+Route::get('/cp/pages/{id}/edit', 'PageController@edit');
 
-Route::put('/dashboard/pages/{id}', 'PageController@update');
-Route::patch('/dashboard/pages/{id}', 'PageController@update');
+Route::post('/cp/pages', 'PageController@store');
 
-Route::delete('/dashboard/pages/{id}', 'PageController@delete');
+Route::put('/cp/pages/{id}', 'PageController@update');
+Route::patch('/cp/pages/{id}', 'PageController@update');
 
-// Dashboard > Menu routes
-Route::get('/dashboard/menu', 'PageController@menu');
+Route::delete('/cp/pages/{id}', 'PageController@delete');
 
-Route::put('/dashboard/menu', 'PageController@tree');
-Route::patch('/dashboard/menu', 'PageController@tree');
+// CP > Menu routes
+Route::get('/cp/menu', 'PageController@menu');
 
-// Dashboard > Advanced routes
-Route::get('/dashboard/advanced', 'RoleController@index');
+Route::put('/cp/menu', 'PageController@tree');
+Route::patch('/cp/menu', 'PageController@tree');
 
-// Dashboard > Roles routes
-Route::get('/dashboard/advanced/roles', 'RoleController@index');
+// CP > Advanced routes
+Route::get('/cp/advanced', 'RoleController@index');
 
-// Dashboard > Permissions routes
-Route::get('/dashboard/advanced/permissions', 'PermissionController@index');
+// CP > Roles routes
+Route::get('/cp/advanced/roles', 'RoleController@index');
 
-// Dashboard > Statuses routes
-Route::get('/dashboard/advanced/statuses', 'StatusController@index');
+// CP > Permissions routes
+Route::get('/cp/advanced/permissions', 'PermissionController@index');
+
+// CP > Statuses routes
+Route::get('/cp/advanced/statuses', 'StatusController@index');
+
+// CP > Assets routes
+Route::get('/cp/assets', 'AssetController@index');
+
+Route::post('/cp/assets', 'AssetController@store');

@@ -18,12 +18,13 @@ class PagesTableSeeder extends Seeder
 		$pages = [
 			[
 				'title' => 'Home',
-				'slug' => '/',
+				'slug' => '',
+				'status_id' => 1,
+				'content' => '<p>This is the homepage.</p>',
 				'parent_id' => null,
 				'lft' => 1,
 				'rgt' => 2,
 				'depth' => 0,
-				'status_id' => 1,
 				'created_at' => $now,
 				'updated_at' => $now,
 			],

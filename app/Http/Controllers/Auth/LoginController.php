@@ -12,7 +12,7 @@ class LoginController extends Controller
 	use PasswordResetTrait;
 	use AuthenticatesUsers;
 
-	protected $redirectTo = '/dashboard';
+	protected $redirectTo = '/cp/dashboard';
 
 	/**
 	 * Create a new controller instance.
@@ -49,6 +49,6 @@ class LoginController extends Controller
 			$this->deletePasswordReset($user->email);
 		}
 		
-		return redirect('/dashboard');
+		return redirect('/cp/dashboard');
 	}
 }

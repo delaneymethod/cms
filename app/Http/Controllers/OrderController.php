@@ -40,7 +40,7 @@ class OrderController extends Controller
 		
 		$orders = $this->getOrders();
 		
-		return view('dashboard.orders.index', compact('page', 'orders'));
+		return view('cp.orders.index', compact('page', 'orders'));
 	}
 	
 	/**

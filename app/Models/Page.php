@@ -15,11 +15,12 @@ class Page extends Node
 	protected $fillable = [
 		'title',
 		'slug',
+		'status_id',
+		'content',
 		'parent_id',
 		'lft',
 		'rgt',
 		'depth',
-		'status_id',
 	];
 	
 	/**

@@ -40,7 +40,7 @@ class StatusController extends Controller
 		
 		$statuses = $this->getStatuses();
 		
-		return view('dashboard.advanced.statuses.index', compact('page', 'statuses'));
+		return view('cp.advanced.statuses.index', compact('page', 'statuses'));
 	}
 	
 	/**

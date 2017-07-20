@@ -40,7 +40,7 @@ class LocationController extends Controller
 		
 		$locations = $this->getLocations();
 		
-		return view('dashboard.locations.index', compact('page', 'locations'));
+		return view('cp.locations.index', compact('page', 'locations'));
 	}
 	
 	/**

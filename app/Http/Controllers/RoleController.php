@@ -40,7 +40,7 @@ class RoleController extends Controller
 		
 		$roles = $this->getRoles();
 		
-		return view('dashboard.advanced.roles.index', compact('page', 'roles'));
+		return view('cp.advanced.roles.index', compact('page', 'roles'));
 	}
 	
 	/**

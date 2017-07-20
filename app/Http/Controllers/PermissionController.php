@@ -40,7 +40,7 @@ class PermissionController extends Controller
 		
 		$permissions = $this->getPermissions();
 		
-		return view('dashboard.advanced.permissions.index', compact('page', 'permissions'));
+		return view('cp.advanced.permissions.index', compact('page', 'permissions'));
 	}
 	
 	/**

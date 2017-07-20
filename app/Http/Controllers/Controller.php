@@ -68,7 +68,7 @@ class Controller extends BaseController
 	 */
 	public function getRules(string $model)
 	{
-		return config('app.validation_rules.'.$model);
+		return config('grampianfasteners.validation_rules.'.$model);
 	}
 
 	/**
@@ -292,7 +292,7 @@ class Controller extends BaseController
 				// If API request, we want to throw the invalid limit in the JSON response
 				return $this->setStatusCode(400)->respondWithInvalidLimit();
 			} else {
-				// If other request, e.g via dashboard, we want to throw the invalid limit as an onscreen error message.
+				// If other request, e.g via cp, we want to throw the invalid limit as an onscreen error message.
 				abort(500, 'Invalid limit');
 			}
 		}

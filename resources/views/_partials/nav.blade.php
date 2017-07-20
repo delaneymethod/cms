@@ -4,7 +4,7 @@
 						@if (Auth::guest() && Route::has('login'))
 							<li><a href="{{ url('/login') }}" title="Login">Login</a></li>
 						@else
-							<li><a href="{{ url('/dashboard') }}" title="Dashboard">Dashboard</a></li>
+							<li><a href="{{ url('/cp/dashboard') }}" title="Dashboard">Dashboard</a></li>
 						@endif
 					</ul>
 				</nav>

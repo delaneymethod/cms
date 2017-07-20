@@ -136,6 +136,6 @@ class ApiController extends Controller
 	 */
 	private function _getErrorMessages()
 	{
-		return config('app.api_error_messages');
+		return config('grampianfasteners.api_error_messages');
 	}
 }

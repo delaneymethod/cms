@@ -21,6 +21,13 @@
 	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/apple-icon-144x144.png">
 	<link rel="dns-prefetch" href="{{ config('app.url') }}">
 	<base href="/">
+	<script async>
+	'use strict';
+	
+	window.User = {!! Auth::check() ? Auth::user() : 'null' !!};
+	
+	window.Laravel = {'csrfToken': '{{ csrf_token() }}'};
+	</script>
 	@stack('headScripts')
 </head>
 <body>
