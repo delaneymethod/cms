@@ -35,14 +35,15 @@ class PageController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Pages';
 		
-		$page['title'] = 'Pages';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
+		$this->rebuildPages();
+	
 		$pages = $this->getPages();
 		
-		return view('cp.pages.index', compact('page', 'pages'));
+		return view('cp.pages.index', compact('title', 'subTitle', 'pages'));
 	}
 	
 	/**
@@ -53,14 +54,15 @@ class PageController extends Controller
 	 */
    	public function menu(Request $request)
 	{
-		$page = [];
+		$title = 'Menu';
 		
-		$page['title'] = 'Menu';
-		$page['subTitle'] = '';
+		$subTitle = '';
+		
+		$this->rebuildPages();
 		
 		$pages = $this->getPagesHierarchy();
 		
-		return view('cp.menu.index', compact('page', 'pages'));
+		return view('cp.menu.index', compact('title', 'subTitle', 'pages'));
 	}
 	
 	/**
@@ -71,10 +73,9 @@ class PageController extends Controller
 	 */
    	public function create(Request $request)
 	{
-		$page = [];
+		$title = 'Create Page';
 		
-		$page['title'] = 'Create Page';
-		$page['subTitle'] = 'Pages';
+		$subTitle = 'Pages';
 		
 		// Used to set parent_id
 		$pages = $this->getPages();
@@ -82,7 +83,7 @@ class PageController extends Controller
 		// Used to set status_id
 		$statuses = $this->getStatuses();
 		
-		return view('cp.pages.create', compact('page', 'pages', 'statuses'));
+		return view('cp.pages.create', compact('title', 'subTitle', 'pages', 'statuses'));
 	}
 	
 	/**
@@ -119,7 +120,7 @@ class PageController extends Controller
 				$page->slug = $cleanedPage['slug'];
 				$page->status_id = $cleanedPage['status_id'];
 				$page->content = $cleanedPage['content'];
-				$page->parent_id = $cleanedPage['parent_id'];
+				$page->parent_id = ($cleanedPage['parent_id'] === 0) ? null : $cleanedPage['parent_id'];
 				
 				$page->save();
 			} catch (QueryException $queryException) {
@@ -138,7 +139,7 @@ class PageController extends Controller
 
 			DB::commit();
 
-			flash('Created successfully.', $level = 'success');
+			flash('Page created successfully.', $level = 'success');
 
 			return redirect('/cp/pages');
 		//}
@@ -155,7 +156,19 @@ class PageController extends Controller
 	 */
    	public function edit(Request $request, int $id)
 	{
-		return view('cp.pages.edit', compact('id'));
+		$title = 'Edit Page';
+		
+		$subTitle = 'Pages';
+		
+		$page = $this->getPage($id);
+		
+		// Used to set parent_id
+		$pages = $this->getPages();
+		
+		// Used to set status_id
+		$statuses = $this->getStatuses();
+		
+		return view('cp.pages.edit', compact('title', 'subTitle', 'page', 'pages', 'statuses'));
 	}
 	
 	/**
@@ -167,6 +180,61 @@ class PageController extends Controller
 	 */
    	public function update(Request $request, int $id)
 	{
+		//$currentUser = $this->getUser();
+
+		//if ($currentUser->hasPermission('edit_pages')) {
+			// Remove any Cross-site scripting (XSS)
+			$cleanedPage = $this->sanitizerInput($request->all());
+
+			$rules = $this->getRules('page');
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedPage, $rules);
+
+			if ($validator->fails()) {
+				return back()->withErrors($validator)->withInput();
+			}
+
+			DB::beginTransaction();
+
+			try {
+				// Create new model
+				$page = $this->getPage($id);
+				
+				// Set our field data
+				if ($page->id === 1) {
+					$page->content = $cleanedPage['content'];
+				} else {
+					$page->title = $cleanedPage['title'];
+					$page->slug = $cleanedPage['slug'];
+					$page->status_id = $cleanedPage['status_id'];
+					$page->content = $cleanedPage['content'];
+					$page->parent_id = ($cleanedPage['parent_id'] === 0) ? null : $cleanedPage['parent_id'];
+				}
+				
+				$page->save();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Page updated successfully.', $level = 'success');
+
+			return redirect('/cp/pages');
+		//}
+
+		//abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -211,6 +279,8 @@ class PageController extends Controller
 					
 					$page->save();
 				}
+				
+				$this->rebuildPages();
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -227,12 +297,44 @@ class PageController extends Controller
 
 			DB::commit();
 
-			flash('Saved successfully.', $level = 'success');
+			flash('Changes saved successfully.', $level = 'success');
 
 			return redirect('/cp/menu');
 		//}
 
 		//abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Shows a form for deleting a page.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function confirm(Request $request, int $id)
+	{
+		if ($id === 1) {
+			abort(403, 'Unauthorised action');
+		}
+		
+		$page = $this->getPage($id);
+		
+		if ($page->children()->count() > 0) {
+			$title = 'Pages';
+		
+			$subTitle = '';
+		
+			flash('You must delete the '.$page->title.' subpages first.', $level = 'warning');
+			
+			return redirect('/cp/pages');
+		} else {
+			$title = 'Delete Page';
+		
+			$subTitle = 'Pages';
+		
+			return view('cp.pages.delete', compact('title', 'subTitle', 'page'));
+		}
 	}
 	
 	/**
@@ -244,6 +346,39 @@ class PageController extends Controller
 	 */
    	public function delete(Request $request, int $id)
 	{
+		//$currentUser = $this->getUser();
+
+		//if ($currentUser->hasPermission('delete_pages')) {
+			DB::beginTransaction();
+
+			try {
+				$page = $this->getPage($id);
+				
+				$page->delete();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Page deleted successfully.', $level = 'info');
+
+			return redirect('/cp/pages');
+		//}
+
+		//abort(403, 'Unauthorised action');
+		
+		
 	}
 	
 	/**

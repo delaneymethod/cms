@@ -17,7 +17,7 @@ class Role extends Model
 	];
 
 	/**
-	 * Get the user records associated with the status.
+	 * Get the user records associated with the role.
 	 */
 	public function users()
 	{

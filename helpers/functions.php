@@ -18,7 +18,7 @@ if (!function_exists('setActive')) {
 	 */
 	function setActive($path)
 	{
-		return call_user_func_array('Request::is', (array) $path) ? 'active' : '';
+		return request()->is($path.'*') ? 'active' : '';
 	}
 }
 
@@ -30,7 +30,7 @@ if (!function_exists('setClass')) {
 	 */
 	function setClass($path, $class)
 	{
-		return call_user_func_array('Request::is', (array) $path) ? $class : '';
+		return request()->is($path.'*') ? $class : '';
 	}
 }
 

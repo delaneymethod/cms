@@ -181,8 +181,8 @@ return [
         Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
         Propaganistas\LaravelIntl\IntlServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
-        Baum\Providers\BaumServiceProvider::class,
-
+		Baum\Providers\BaumServiceProvider::class,
+		
     ],
 
     /*

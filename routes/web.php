@@ -48,6 +48,7 @@ Route::get('/cp/articles', 'ArticleController@index');
 Route::get('/cp/pages', 'PageController@index');
 Route::get('/cp/pages/create', 'PageController@create');
 Route::get('/cp/pages/{id}/edit', 'PageController@edit');
+Route::get('/cp/pages/{id}/delete', 'PageController@confirm');
 
 Route::post('/cp/pages', 'PageController@store');
 
@@ -76,5 +77,6 @@ Route::get('/cp/advanced/statuses', 'StatusController@index');
 
 // CP > Assets routes
 Route::get('/cp/assets', 'AssetController@index');
+Route::get('/cp/assets/upload', 'AssetController@upload');
 
 Route::post('/cp/assets', 'AssetController@store');

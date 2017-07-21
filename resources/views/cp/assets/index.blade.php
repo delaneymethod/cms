@@ -21,6 +21,18 @@
 			<div class="col-md-9 col-lg-9 main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
+				<div class="row">
+					<div class="col">
+						<ul class="list-unstyled list-inline buttons">
+							<li class="list-inline-item"><a href="/cp/assets/upload" title="Upload Assets" class="btn btn-outline-success"><i class="fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="content padding bg-white">					
+					@foreach ($assets as $asset)
+						{{ $asset->path }}<br>
+					@endforeach
+				</div>
 			</div>
 		</div>
 @endsection

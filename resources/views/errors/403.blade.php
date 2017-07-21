@@ -25,7 +25,7 @@
 		<h2>Server Error: 403 (Forbidden)</h2>
 		<h3>What does this mean?</h3>
 		<p>You don&#39;t have the right credentials to view the requested resource.</p>
-		<p>Perhaps you would like to go <a href="javascript:window.history.back();" title="Back">back</a> or go to our <a href="{{ url('/') }}" title="Home">homepage</a> ?</p>
+		<p>Perhaps you would like to go <a href="javascript:window.history.back();" title="Back">back</a> or go to our <a href="/" title="Home">homepage</a> ?</p>
 	</section>
 	@include('_partials.footer')
 @endsection

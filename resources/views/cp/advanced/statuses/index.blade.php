@@ -39,19 +39,17 @@
 						</thead>
 						<tbody>
 							@foreach ($statuses as $status)
-							<tr>
-								<td class="id">{{ $status->id }}</td>
-								<td>{{ $status->title }}</td>
-								<td class="actions dropdown text-center">
-									<a href="javascript:void(0);" title="Status Actions" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li class="dropdown-item"><a href="/cp/advanced/statuses/{{ $status->id }}/edit" title="Edit Status" class="gf-info"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Status</a></li>
-										<li class="dropdown-item">
-											<a href="javascript:void(0);" title="Delete Status" class="gf-danger"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Status</a>
-										</li>
-									</ul>
-								</td>
-							</tr>
+								<tr>
+									<td class="id">{{ $status->id }}</td>
+									<td>{{ $status->title }}</td>
+									<td class="actions dropdown text-center" id="submenu">
+										<a href="javascript:void(0);" title="Status Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+										<ul class="dropdown-menu dropdown-menu-right">
+											<li class="dropdown-item gf-info"><a href="/cp/advanced/statuses/{{ $status->id }}/edit" title="Edit Status"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Status</a></li>
+											<li class="dropdown-item gf-danger"><a href="/cp/advanced/statuses/{{ $status->id }}/delete" title="Delete Status"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Status</a></li>
+										</ul>
+									</td>
+								</tr>
 							@endforeach
 						</tbody>
 					</table>

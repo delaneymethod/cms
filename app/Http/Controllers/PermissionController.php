@@ -33,14 +33,13 @@ class PermissionController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Permissions';
 		
-		$page['title'] = 'Permissions';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
 		$permissions = $this->getPermissions();
 		
-		return view('cp.advanced.permissions.index', compact('page', 'permissions'));
+		return view('cp.advanced.permissions.index', compact('title', 'subTitle', 'permissions'));
 	}
 	
 	/**

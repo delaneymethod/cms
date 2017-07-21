@@ -33,14 +33,13 @@ class ArticleController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Articles';
 		
-		$page['title'] = 'Articles';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
 		$articles = $this->getArticles();
 		
-		return view('cp.articles.index', compact('page', 'articles'));
+		return view('cp.articles.index', compact('title', 'subTitle', 'articles'));
 	}
 	
 	/**

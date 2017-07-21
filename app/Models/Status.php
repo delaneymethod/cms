@@ -44,7 +44,7 @@ class Status extends Model
 	}
 	
 	/**
-	 * Get the article records associated with the status.
+	 * Get the location records associated with the status.
 	 */
 	public function locations()
 	{

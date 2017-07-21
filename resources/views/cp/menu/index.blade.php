@@ -13,28 +13,6 @@
 
 @push('bodyScripts')
 	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	<script async>
-	window.onload = () => {
-		$('form').submit(() => {
-			const tree = $('.sortable').nestedSortable('toArray');
-				
-			$('#tree').val(JSON.stringify(tree));
-				
-			return true;
-		});
-	
-		$('.sortable').nestedSortable({
-			forcePlaceholderSize: true,
-			handle: 'div',
-			helper:	'clone',
-			items: 'li',
-			placeholder: 'sortable-placeholder',
-			tolerance: 'pointer',
-			toleranceElement: '> div',
-			isTree: true
-		});
-	};
-	</script>
 @endpush
 
 @section('content')
@@ -51,17 +29,17 @@
 					</div>
 				</div>
 				<div class="content padding bg-white">
-					<ol class="sortable list-unstyled">
+					<ol class="sortable list-unstyled" id="nestedSortable">
 						@foreach ($pages as $page)
 							@component('cp._components.renderPage', ['page' => $page])
 							@endcomponent
 						@endforeach
 					</ol>
-					<form name="" id="" class="" role="form" method="POST" action="{{ url('/cp/menu') }}">
+					<form name="menu" id="menu" class="menu" role="form" method="POST" action="/cp/menu">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
 						<input type="hidden" name="tree" id="tree" value="">
-						<button type="submit" name="" id="" class="btn btn-outline-primary" title="Save">Save</button>
+						<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
 					</form>
 		    	</div>
 			</div>

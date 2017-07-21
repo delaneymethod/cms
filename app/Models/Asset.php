@@ -13,5 +13,22 @@ class Asset extends Model
 	 */
 	protected $fillable = [
 		'title',
+		'hash_name',
+		'original_name',
+		'mime_type',
+		'extension',
+		'path',
+		'size',
 	];
+	
+	/**
+	 * Set the assets filesize in human readable format.
+	 *
+	 * @param  int  $value
+	 * @return void
+	 */
+	public function setFilesizeAttribute($size)
+	{
+		$this->attributes['filesize'] = $size;
+	}
 }

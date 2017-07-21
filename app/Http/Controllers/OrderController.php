@@ -33,14 +33,13 @@ class OrderController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Orders';
 		
-		$page['title'] = 'Orders';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
 		$orders = $this->getOrders();
 		
-		return view('cp.orders.index', compact('page', 'orders'));
+		return view('cp.orders.index', compact('title', 'subTitle', 'orders'));
 	}
 	
 	/**

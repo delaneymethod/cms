@@ -18,7 +18,7 @@ class Order extends Model
 	];
 
 	/**
-	 * Get the user records associated with the status.
+	 * Get the user record associated with the order.
 	 */
 	public function user()
 	{
@@ -26,7 +26,7 @@ class Order extends Model
 	}
 	
 	/**
-	 * Get the status record associated with the user.
+	 * Get the status record associated with the order.
 	 */
 	public function status()
 	{

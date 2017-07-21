@@ -17,7 +17,7 @@ class Location extends Model
 	];
 
 	/**
-	 * Get the user records associated with the status.
+	 * Get the status record associated with the location.
 	 */
 	public function status()
 	{

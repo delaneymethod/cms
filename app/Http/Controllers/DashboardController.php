@@ -29,11 +29,10 @@ class DashboardController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Dashboard';
 		
-		$page['title'] = 'Dashboard';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
-		return view('cp.dashboard.index', compact('page'));
+		return view('cp.dashboard.index', compact('title', 'subTitle'));
 	}
 }

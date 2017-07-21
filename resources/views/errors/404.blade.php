@@ -27,7 +27,7 @@
 		<p>We couldn&#39;t find the page you requested on our servers.</p>
 		<p>We&#39;re really sorry about that. It&#39;s our fault, not yours.</p>
 		<p>We&#39;ll work hard to get this page back online as soon as possible.</p>
-		<p>Perhaps you would like to go <a href="javascript:window.history.back();" title="Back">back</a> or go to our <a href="{{ url('/') }}" title="Home">homepage</a> ?</p>
+		<p>Perhaps you would like to go <a href="javascript:window.history.back();" title="Back">back</a> or go to our <a href="/" title="Home">homepage</a> ?</p>
 	</section>
 	@include('_partials.footer')
 @endsection

@@ -43,25 +43,23 @@
 						</thead>
 						<tbody>
 							@foreach ($users as $user)
-							<tr>
-								<td class="id">{{ $user->id }}</td>
-								<td>{{ $user->first_name }} {{ $user->last_name }}</td>
-								<td><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline">{{ $user->email }}</a></td>
-								<td>{{ $user->job_title }}</td>
-								<td>{{ $user->location->title }}</td>
-								<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" aria-hidden="true"></i></td>
-								<td class="actions dropdown text-center">
-									<a href="javascript:void(0);" title="User Actions" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit User</a></li>
-										<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>
-										<li class="dropdown-divider"></li>
-										<li class="dropdown-item gf-danger">
-											<a href="javascript:void(0);" title="Delete User"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete User</a>
-										</li>
-									</ul>
-								</td>
-							</tr>
+								<tr>
+									<td class="id">{{ $user->id }}</td>
+									<td>{{ $user->first_name }} {{ $user->last_name }}</td>
+									<td><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline">{{ $user->email }}</a></td>
+									<td>{{ $user->job_title }}</td>
+									<td>{{ $user->location->title }}</td>
+									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" aria-hidden="true"></i></td>
+									<td class="actions dropdown text-center" id="submenu">
+										<a href="javascript:void(0);" title="User Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+										<ul class="dropdown-menu dropdown-menu-right">
+											<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit User</a></li>
+											<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>
+											<li class="dropdown-divider"></li>
+											<li class="dropdown-item gf-danger"><a href="/cp/users/{{ $user->id }}/delete" title="Delete User"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete User</a></li>
+										</ul>
+									</td>
+								</tr>
 							@endforeach
 						</tbody>
 					</table>

@@ -33,14 +33,13 @@ class StatusController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Statuses';
 		
-		$page['title'] = 'Statuses';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
 		$statuses = $this->getStatuses();
 		
-		return view('cp.advanced.statuses.index', compact('page', 'statuses'));
+		return view('cp.advanced.statuses.index', compact('title', 'subTitle', 'statuses'));
 	}
 	
 	/**

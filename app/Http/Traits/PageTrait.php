@@ -47,4 +47,14 @@ trait PageTrait
 	{
 		return Page::all()->toHierarchy();
 	}
+	
+	/**
+	 * Rebuilds (or reindexes) the Tree-structure 
+	 *
+	 * @return 	bool
+	 */
+	public function rebuildPages()
+	{
+		return Page::rebuild(true);
+	}
 }

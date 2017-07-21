@@ -56,6 +56,7 @@ button,
 
 a,
 .btn {
+	font-family: inherit;
 	cursor: pointer;
 }
 
@@ -99,6 +100,7 @@ a,
 
 .btn-outline-gf-red {
 	color: $gf-red;
+	font-family: inherit;
 	background-image: none;
 	background-color: transparent;
 	border-color: $gf-red;
@@ -112,6 +114,7 @@ a,
 
 .btn-outline-primary {
 	color: $gf-blue;
+	font-family: inherit;
 	background-image: none;
 	background-color: transparent;
 	border-color: $gf-blue;
@@ -228,7 +231,7 @@ a,
 					margin-right: 10px;	
 				}
 				
-				.fa-angle-left{
+				.fa-angle-left {
 					-moz-transition: all .3s linear;
 					-webkit-transition: all .3s linear;
 					transition: all .3s linear;
@@ -306,7 +309,7 @@ a,
 	background-color: $main-bg-color;
 	
 	.message {
-		display: block;
+		display: none;
 		margin-right: -15px;
 		margin-left: -15px;
 		margin-bottom: 0;
@@ -315,21 +318,32 @@ a,
 		color: #ffffff;
 		font-weight: 600;
 		font-size: 16px;
+		
+		a,
+		a:hover {
+			color: #ffffff;
+			background-color: transparent;
+			text-decoration: none;
+		}
 	}
 	
 	.message.success {
+		display: block;
 		background-color: green;
 	}
 	
 	.message.info {
+		display: block;
 		background-color: $gf-info;
 	}
 	
 	.message.warning {
+		display: block;
 		background-color: $gf-warning;
 	}
 	
 	.message.danger {
+		display: block;
 		background-color: $main-message-bg-color;	
 	}
 	
@@ -377,6 +391,10 @@ a,
 			
 			.gf-red {
 				color: $gf-red;
+			}
+			
+			.cancel-button {
+				margin-right: 10px;
 			}
 		}
 		
@@ -436,6 +454,24 @@ a,
 			
 			.gf-danger:hover {
 				background-color: $gf-danger;
+			}
+			
+			#pageActions {
+				.fa-ellipsis-v {
+					-moz-transition: all .3s linear;
+					-webkit-transition: all .3s linear;
+					transition: all .3s linear;
+				}
+			
+				.fa-rotate {
+					-moz-transform:rotate(-90deg);
+					-webkit-transform:rotate(-90deg);
+					transform:rotate(-90deg);
+					-webkit-transform-origin: 50% 50%;
+					-moz-transform-origin: 50% 50%;
+					-o-transform-origin: 50% 50%;
+					transform-origin: 50% 50%;
+				}
 			}
 			
 			.dropdown-toggle::after {

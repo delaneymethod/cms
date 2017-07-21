@@ -32,14 +32,13 @@ class UserController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Users';
 		
-		$page['title'] = 'Users';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
 		$users = $this->getUsers();
 		
-		return view('cp.users.index', compact('page', 'users'));
+		return view('cp.users.index', compact('title', 'subTitle', 'users'));
 	}
 	
 	/**

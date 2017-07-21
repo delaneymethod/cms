@@ -33,14 +33,13 @@ class RoleController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Roles';
 		
-		$page['title'] = 'Roles';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
 		$roles = $this->getRoles();
 		
-		return view('cp.advanced.roles.index', compact('page', 'roles'));
+		return view('cp.advanced.roles.index', compact('title', 'subTitle', 'roles'));
 	}
 	
 	/**

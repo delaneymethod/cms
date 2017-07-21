@@ -40,22 +40,20 @@
 						</thead>
 						<tbody>
 							@foreach ($locations as $location)
-							<tr>
-								<td class="id">{{ $location->id }}</td>
-								<td>{{ $location->title }}</td>
-								<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $location->status->id }}" title="{{ $location->status->title }}" aria-hidden="true"></i></td>
-								<td class="actions dropdown text-center">
-									<a href="javascript:void(0);" title="Location Actions" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
-									<ul class="dropdown-menu dropdown-menu-right">
-										<li class="dropdown-item gf-info"><a href="/cp/locations/{{ $location->id }}/edit" title="Edit Location"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Location</a></li>
-										<li class="dropdown-item gf-default"><a href="/cp/locations/{{ $location->id }}/retire" title="Retire Location"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire Location</a></li>
-										<li class="dropdown-divider"></li>
-										<li class="dropdown-item gf-danger">
-											<a href="javascript:void(0);" title="Delete Location"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Location</a>
-										</li>
-									</ul>
-								</td>
-							</tr>
+								<tr>
+									<td class="id">{{ $location->id }}</td>
+									<td>{{ $location->title }}</td>
+									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $location->status->id }}" title="{{ $location->status->title }}" aria-hidden="true"></i></td>
+									<td class="actions dropdown text-center" id="submenu">
+										<a href="javascript:void(0);" title="Location Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+										<ul class="dropdown-menu dropdown-menu-right">
+											<li class="dropdown-item gf-info"><a href="/cp/locations/{{ $location->id }}/edit" title="Edit Location"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Location</a></li>
+											<li class="dropdown-item gf-default"><a href="/cp/locations/{{ $location->id }}/retire" title="Retire Location"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire Location</a></li>
+											<li class="dropdown-divider"></li>
+											<li class="dropdown-item gf-danger"><a href="/cp/locations/{{ $location->id }}/delete" title="Delete Location"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Location</a></li>
+										</ul>
+									</td>
+								</tr>
 							@endforeach
 						</tbody>
 					</table>

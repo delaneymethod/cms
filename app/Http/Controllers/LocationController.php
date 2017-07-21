@@ -33,14 +33,13 @@ class LocationController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$page = [];
+		$title = 'Locations';
 		
-		$page['title'] = 'Locations';
-		$page['subTitle'] = '';
+		$subTitle = '';
 		
 		$locations = $this->getLocations();
 		
-		return view('cp.locations.index', compact('page', 'locations'));
+		return view('cp.locations.index', compact('title', 'subTitle', 'locations'));
 	}
 	
 	/**

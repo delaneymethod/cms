@@ -18,15 +18,41 @@
 		
 				$(event.target).find('span > i').toggleClass('fa-rotate');
 			});
-		};
+			
+			$('.main .content #pageActions').on('click', event => {
+				event.preventDefault();
+				
+				$('.main .content #pageActions i').removeClass('fa-rotate');
+				
+				if (event.target === event.currentTarget) {
+					$(event.target).find('i').toggleClass('fa-rotate');
+				} else {
+					$(event.target).toggleClass('fa-rotate');
+				}
+			});
+			
+			$('.main .content #submenu').on('hide.bs.dropdown', () => {
+				$('.main .content #pageActions i').removeClass('fa-rotate');
+			});
+			
+			$('.main .message.success').on('shown', () => {
+				setTimeout(() => {
+					$('.main .message.success').fadeOut('fast');
+				}, 4000);
+    		});
+    		
+    		$('.main .message #hideMessage').on('click', () => {
+	    		$('.main .message').fadeOut('fast');
+    		});
+    	};
 		
 		let attachRedactor = element => {
 			$(element).redactor({
 				'focus': false,
 				'fileUpload': '/cp/assets',
-				'fileManagerJson': '/cp/assets',
-				'imageUpload': '/cp/assets',
-				'imageManagerJson': '/cp/assets?type=image',
+				'fileManagerJson': '/cp/assets?format=json',
+				'imageUpload': '/cp/assets?type=image',
+				'imageManagerJson': '/cp/assets?format=json&type=image',
 				'imageResizable': true,
 				'imagePosition': true,
 				'structure': true,
@@ -65,6 +91,19 @@
 			});
 		};
 		
+		let attachNestedSortable = element => {
+			$(element).nestedSortable({
+				'forcePlaceholderSize': true,
+				'handle': 'div',
+				'helper':	'clone',
+				'items': 'li',
+				'placeholder': 'sortable-placeholder',
+				'tolerance': 'pointer',
+				'toleranceElement': '> div',
+				'isTree': true
+			});
+		};
+		
 		let convertTitleToSlug = (element, targetElement) => {
 			$(element).on('keyup change', event => {
 				let slug = $(event.target).val().toString()
@@ -83,7 +122,17 @@
 			$('#logout').on('click', event => {
 				event.preventDefault();
 			
-				$('#logout-form').submit();
+				$('#logoutUser').submit();
+			});	
+		};
+		
+		let saveMenuChanges = element => {
+			$('form#menu').submit(() => {
+				const tree = $(element).nestedSortable('toArray');
+					
+				$('#tree').val(JSON.stringify(tree));
+					
+				return true;
 			});	
 		};
 		
@@ -92,17 +141,21 @@
 			
 			this.settings = $.extend({}, defaults, options);
 			
+			logout();
+			
 			loadAnimations();
 			
 			attachRedactor('#content');
 			
 			attachDataTable('#datatable');
-		
+			
+			attachNestedSortable('#nestedSortable');
+			
 			convertTitleToSlug('#createPage #title', '#createPage #slug');
 			
 			convertTitleToSlug('#createPage #slug', '#createPage #slug');
 			
-			logout();
+			saveMenuChanges('#nestedSortable');
 		};
 
 		init();

@@ -21,9 +21,7 @@
 			<div class="col-md-9 col-lg-9 main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
-				<div class="row">
-					<div class="col">
-					</div>
+				<div class="content padding bg-white">
 				</div>
 			</div>
 		</div>

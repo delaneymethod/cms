@@ -21,6 +21,13 @@ class CreateAssetsTable extends Migration
 			$table->increments('id');
 			
 			$table->string('title');
+			$table->string('hash_name');
+			$table->string('original_name');
+			$table->string('mime_type')->index();
+			$table->string('extension')->index();
+			$table->string('path');
+			
+			$table->unsignedInteger('size');
 			
 			$table->timestamps();
 		});
