@@ -29,9 +29,6 @@
 					</div>
 				</div>
 				<div class="content padding bg-white">					
-					@foreach ($assets as $asset)
-						{{ $asset->path }}<br>
-					@endforeach
 				</div>
 			</div>
 		</div>

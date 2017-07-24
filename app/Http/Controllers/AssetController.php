@@ -8,12 +8,17 @@ use App\Models\Asset;
 use Illuminate\Http\Request;
 use App\Http\Traits\AssetTrait;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class AssetController extends Controller
 {
 	use AssetTrait;
 	
-	protected $storagePath;
+	protected $folder;
+	
+	protected $visibility;
+	
+	protected $publicStorageUrl;
 	
 	/**
 	 * Create a new controller instance.
@@ -26,7 +31,11 @@ class AssetController extends Controller
 		
 		$this->middleware('auth');
 		
-		$this->storagePath = '/storage/';
+		$this->folder = 'uploads';
+	
+		$this->visibility = 'public';
+		
+		$this->publicStorageUrl = env('APP_URL').'/storage';
 	}
 
 	/**
@@ -41,69 +50,50 @@ class AssetController extends Controller
 		
 		$subTitle = '';
 		
-		$assets = $this->getAssets();
-		
 		$type = $request->get('type');
-		
-		if (!empty($type) && $type === 'image') {
-			$mimeTypes = [
-				'image/bmp',
-				'image/gif',
-				'image/jpeg',
-				'image/pjpeg',
-				'image/png',
-				'image/tiff',
-			];
-			
-			$assets = $assets->whereIn('mime_type', $mimeTypes);
-			
-			$images = [];
-			
-			foreach ($assets as $asset) {
-				array_push($images, array(
-					'id' => $asset->id, 
-					'title' => $asset->title, 
-					'thumb' => $this->storagePath.$asset->path, 
-					'url' => $this->storagePath.$asset->path, 
-				));
-			}
-		}
 		
 		$format = $request->get('format');
 		
+		// Filter based on type and/or format 
 		if (!empty($type) && $type === 'image' && !empty($format) && $format === 'json') {
-			$json = [];
+			$assets = $this->getAssets();
 			
-			foreach ($images as $image) {
-				array_push($json, array(
-					'id' => $image['id'], 
-					'title' => $image['title'], 
-					'thumb' => $image['thumb'], 
-					'url' => $image['url'], 
-				));
-			}
+			$assets = $this->filterByImage($assets);
+			
+			$json = $this->convertToJson($assets, $type);
 			
 			return response()->json($json);
-		}
-		
-		if (!empty($format) && $format === 'json') {
-			$json = [];
+		} else if (!empty($format) && $format === 'json') {
+			$assets = $this->getAssets();
 			
-			foreach ($assets as $asset) {
-				array_push($json, array(
-					'id' => $asset->id, 
-					'title' => $asset->title, 
-					'name' => $asset->original_name, 
-					'url' => $this->storagePath.$asset->path, 
-					'size' => $asset->filesize
-				));
-			}
+			$json = $this->convertToJson($assets);
 			
 			return response()->json($json);
+		} else {
+			return view('cp.assets.index', compact('title', 'subTitle'));
 		}
-		
-		return view('cp.assets.index', compact('title', 'subTitle', 'assets'));
 	}
+	
+	// http://demo.directorylister.com/
+	
+	/*
+	public function browse(Request $request)
+	{
+		$path = $this->buildPath([
+			'',
+			$this->visibility,
+			$this->folder
+		]);
+		
+		$assets = [];
+		
+		$assets['files'] = $this->getAllFiles($path);
+		
+		$assets['folders'] = $this->getAllFolders($path);
+		
+		return $assets;
+	}
+	*/
 	
 	/**
 	 * Shows a form for uploading files.
@@ -136,10 +126,22 @@ class AssetController extends Controller
 			
 			$cleanedAssets = $this->sanitizerInput($request->all());
 			
-			$files = count($cleanedAssets['files']) - 1;
+			// If its a single file upload ("file" instead of "files"), then user is uploading via modal window so we need to track this.
+			$multiple = false;
 			
-			foreach (range(0, $files) as $index) {
-				$rules['files.' . $index] = 'required|file|max:3000';
+			if (!empty($cleanedAssets['files'])) {
+				$multiple = true;
+			}
+			
+			if ($multiple) {
+				// Create some custom validation rules
+				$files = count($cleanedAssets['files']) - 1;
+			
+				foreach (range(0, $files) as $index) {
+					$rules['files.' . $index] = 'required|file|max:3000';
+				}
+			} else {
+				$rules['file'] = 'required|file|max:3000';
 			}
 			
 			// Make sure all the input data is what we actually save
@@ -150,32 +152,53 @@ class AssetController extends Controller
 			}
 
 			DB::beginTransaction();
-
-			try {
+			
+			if ($multiple) {
 				$files = $cleanedAssets['files'];
+			} else {
+				// Keep structure consisent so push single asset into an array.
+				$files = [];
 				
+				array_push($files, $cleanedAssets['file']);
+			}
+				
+			try {
 				foreach ($files as $file) {
 					$originalName = $file->getClientOriginalName();
-					
-					$path = $file->storeAs('uploads', $originalName, 'public');
-					
+						
+					// Creating asset title based on original name value
 					$title = substr($originalName, 0, strripos($originalName, '.'));
-					
+				
 					$title = str_replace('_', ' ', $title);
-					
+				
 					$title = ucwords($title);
+				
+					// Check if asset exists
+					$asset = $this->getAssetByOriginalName($originalName);
 					
-					// Create new model
-					$asset = new Asset;
+					// If the assets doesn't exist, then upload it
+					if (empty($asset)) {
+						$path = $file->storeAs($this->folder, $originalName, $this->visibility);
 					
-					// Set our field data
+						// Create new model
+						$asset = new Asset;
+						
+						// Set our field data
+						$asset->hash_name = $file->hashName();
+						
+						$asset->path = $this->buildPath([
+							'',
+							$path
+						]);
+					}
+					
+					// Update our field data
 					$asset->title = $title;
 					$asset->original_name = $originalName;
-					$asset->hash_name = $file->hashName();
 					$asset->mime_type = $file->getClientMimeType();
 					$asset->extension = $file->extension();
-					$asset->path = $this->storagePath.$path;
 					$asset->size = $file->getClientSize();
+					
 					$asset->save();
 				}
 			} catch (QueryException $queryException) {
@@ -184,22 +207,158 @@ class AssetController extends Controller
 				Log::info('SQL: '.$queryException->getSql());
 
 				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
-
-				abort(500, $queryException);
+				
+				if ($multiple) {
+					abort(500, $queryException);
+				} else {
+					return response()->json([
+						'error' => true,
+						'queryException' => true,
+						'message' => $queryException->getMessage()
+					]);
+				}
 			} catch (Exception $exception) {
 				DB::rollback();
-
-				abort(500, $exception);
+				
+				if ($multiple) {
+					abort(500, $exception);
+				} else {
+					return response()->json([
+						'error' => true,
+						'exception' => true,
+						'message' => $exception->getMessage()
+					]);
+				}
 			}
 
 			DB::commit();
+			
+			if ($multiple) {
+				flash('Assets uploaded successfully.', $level = 'success');
 
-			flash('Assets uploaded successfully.', $level = 'success');
-
-			return redirect('/cp/assets');
+				return redirect('/cp/assets');
+			} else {
+				$type = $request->get('type');
+				
+				if (!empty($type) && $type === 'image') {
+					return response()->json([
+						'id' => $asset->id,
+						'url' => $this->publicStorageUrl.$asset->path
+					]);
+				} else {
+					return response()->json([
+						'id' => $asset->id,
+						'filename' => $asset->original_name,
+						'filelink' => $this->publicStorageUrl.$asset->path
+					]);
+				}
+			}
 		//}
 
 		//abort(403, 'Unauthorised action');
+	}
+	
+	private function buildPath(array $uris)
+	{
+		return implode('/', $uris);
+	}
+	
+	/**
+	 * Does what it says on the tin!
+	 */
+	private function convertToJson($assets, $type = null) 
+	{
+		$json = [];
+		
+		if (!empty($type) && $type === 'image') {
+			foreach ($assets as $asset) {
+				array_push($json, array(
+					'id' => $asset['id'],
+					'title' => $asset['title'],
+					'thumb' => $this->publicStorageUrl.$asset['thumb'],
+					'url' => $this->publicStorageUrl.$asset['url'],
+				));
+			}
+		} else {
+			foreach ($assets as $asset) {
+				array_push($json, array(
+					'id' => $asset->id,
+					'title' => $asset->title,
+					'name' => $asset->original_name,
+					'url' => $this->publicStorageUrl.$asset->path,
+					'size' => $asset->filesize
+				));
+			}
+		}
+			
+		return $json;
+	}
+	
+	/**
+	 * Does what it says on the tin!
+	 */
+	private function filterByImage($assets)
+	{
+		$images = [];
+		
+		$mimeTypes = [
+			'image/jpg',
+			'image/jpeg',
+			'image/png',
+			'image/gif',
+		];
+			
+		$assets = $assets->whereIn('mime_type', $mimeTypes);
+			
+		foreach ($assets as $asset) {
+			array_push($images, array(
+				'id' => $asset->id, 
+				'title' => $asset->title, 
+				'thumb' => $asset->path, 
+				'url' => $asset->path, 
+			));
+		}
+		
+		return $images;
+	}
+	
+	/*
+	public function getAllFiles($path)
+	{
+		$files = Storage::allFiles($path);
+		
+		foreach ($files as &$file) {
+			$file = str_replace(['/', $this->visibility, $this->folder], '', $file);
+			
+			$file = $this->getAssetByOriginalName($file);
+			
+			$file->thumb = $this->publicStorageUrl.$file->path;
+			$file->url = $this->publicStorageUrl.$file->path;
+		}
+		
+		return $files;
+	}
+	
+	public function getAllFolders($path)
+	{
+		$folders = Storage::allDirectories($path);
+	
+		foreach ($folders as &$folder) {
+			$folder = str_replace(['/', $this->visibility, $this->folder], '', $folder);	
+		}
+		
+		return $folders;
+	}
+	*/
+	
+	/**
+	 * Does what it says on the tin!
+	 */
+	public function getFileSize($bytes) 
+	{
+		$i = floor(log($bytes, 1024));
+		
+		return round($bytes / pow(1024, $i), [0,0,2,2,3][$i]).['B','kB','MB','GB','TB'][$i];
 	}
 	
 	/**

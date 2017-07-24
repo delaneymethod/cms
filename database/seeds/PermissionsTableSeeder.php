@@ -55,6 +55,16 @@ class PermissionsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'title' => 'edit_passwords_users',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'retire_users',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
 				'title' => 'delete_users',
 				'created_at' => $now,
 				'updated_at' => $now,

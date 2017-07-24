@@ -8,12 +8,15 @@ use App\Models\Status;
 use App\Models\Article;
 use App\Models\Location;
 use App\Models\Permission;
+use App\Http\Traits\RoleTrait;
 use App\Http\Traits\PermissionTrait;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+	use RoleTrait;
 	use Notifiable;
 	use PermissionTrait;
 
@@ -115,6 +118,40 @@ class User extends Authenticatable
 	}
 	
 	/**
+	 * Set permissions for the user based on a role.
+	 *
+	 * $param 	int 		$roleId
+	 */
+	public function setRole(int $roleId)
+	{
+		$assignedPermissions = array();
+
+		// Quick cross check to to make sure role exists
+		$role = $this->getRole($roleId);
+
+		$permissions = $this->getPermissions();
+
+		switch ($role->title) {
+			case 'Super Admin':
+				// Add all permissions
+				$assignedPermissions = $permissions->pluck('id')->toArray();
+			break;
+			
+			case 'Admin':
+				// TODO - Assign more permissions to admins
+				array_push($assignedPermissions, $this->_getIdFromCollection($permissions, 'view_users'));
+			break;
+		}
+		
+		if (count($assignedPermissions) === 0) {
+			abort(500, 'The user has no permissions!');
+		}
+
+		// See "Syncing Associations" under Eloquent Relationships in the Laravel docs!
+		return $this->permissions()->sync($assignedPermissions);
+	}
+	
+	/**
 	 * Route notifications for the mail channel.
 	 *
 	 * @return string
@@ -122,5 +159,19 @@ class User extends Authenticatable
 	public function routeNotificationForMail()
 	{
 		return $this->email;
+	}
+
+	/**
+	 * Get id from collection where corresponding value
+	 *
+	 * $param 	collection 	$collection
+	 * $param 	string 		$permission
+	 * @return 	int
+	 */
+	private function _getIdFromCollection(Collection $collection, string $permission)
+	{
+		dump($collection, $permission);
+		
+		return $collection->where('permission', $permission)->first()->id;
 	}
 }

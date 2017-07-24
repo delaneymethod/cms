@@ -17,6 +17,7 @@ class LocationsTableSeeder extends Seeder
 		$locations = [
 			[
 				'title' => 'Westhill, Aberdeen',
+				'primary' => 1,
 				'status_id' => 1,
 				'created_at' => $now,
 				'updated_at' => $now,

@@ -27,6 +27,9 @@ Route::get('/cp/dashboard', 'DashboardController@index');
 Route::get('/cp/users', 'UserController@index');
 Route::get('/cp/users/create', 'UserController@create');
 Route::get('/cp/users/{id}/edit', 'UserController@edit');
+Route::get('/cp/users/{id}/edit/password', 'UserController@editPassword');
+Route::get('/cp/users/{id}/retire', 'UserController@retire');
+Route::get('/cp/users/{id}/delete', 'UserController@confirm');
 
 Route::post('/cp/users', 'UserController@store');
 

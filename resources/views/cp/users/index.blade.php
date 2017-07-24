@@ -18,7 +18,7 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="col-md-9 col-lg-9 main">
+			<div class="col-md-10 col-lg-10 main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="row">
@@ -36,6 +36,8 @@
 								<th>Full Name</th>
 								<th>Email</th>
 								<th>Job Title</th>
+								<th>Telephone</th>
+								<th>Mobile</th>
 								<th>Location</th>
 								<th class="text-center">Status</th>
 								<th class="no-sort">&nbsp;</th>
@@ -44,19 +46,25 @@
 						<tbody>
 							@foreach ($users as $user)
 								<tr>
-									<td class="id">{{ $user->id }}</td>
+									<td>{{ $user->id }}</td>
 									<td>{{ $user->first_name }} {{ $user->last_name }}</td>
 									<td><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline">{{ $user->email }}</a></td>
 									<td>{{ $user->job_title }}</td>
+									<td>{{ $user->telephone }}</td>
+									<td>{{ $user->mobile }}</td>
 									<td>{{ $user->location->title }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" aria-hidden="true"></i></td>
 									<td class="actions dropdown text-center" id="submenu">
 										<a href="javascript:void(0);" title="User Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu dropdown-menu-right">
 											<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit User</a></li>
-											<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>
-											<li class="dropdown-divider"></li>
-											<li class="dropdown-item gf-danger"><a href="/cp/users/{{ $user->id }}/delete" title="Delete User"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete User</a></li>
+											@if ($user->status_id != 3 && $user->id != Auth::id())
+												<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>
+											@endif
+											@if ($user->id != Auth::id())
+												<li class="dropdown-divider"></li>
+												<li class="dropdown-item gf-danger"><a href="/cp/users/{{ $user->id }}/delete" title="Delete User"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete User</a></li>
+											@endif
 										</ul>
 									</td>
 								</tr>

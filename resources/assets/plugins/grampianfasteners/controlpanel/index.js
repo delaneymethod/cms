@@ -47,11 +47,13 @@
     	};
 		
 		let attachRedactor = element => {
+			const token = window.Laravel.csrfToken;
+			
 			$(element).redactor({
 				'focus': false,
-				'fileUpload': '/cp/assets',
+				'fileUpload': '/cp/assets?_token=' + token,
 				'fileManagerJson': '/cp/assets?format=json',
-				'imageUpload': '/cp/assets?type=image',
+				'imageUpload': '/cp/assets?_token=' + token + '&type=image',
 				'imageManagerJson': '/cp/assets?format=json&type=image',
 				'imageResizable': true,
 				'imagePosition': true,
@@ -65,7 +67,21 @@
 	        		'filemanager',
 	        		'imagemanager',
 	        		'video'
-	        	]
+	        	],
+				'callbacks': {
+					'imageUpload': (image, json) => {
+						$(image).attr('id', json.id);
+					},
+					'imageUploadError': (json, xhr) => {
+						alert(json);
+					},
+					'fileUpload': (link, json) => {
+						$(link).attr('id', json.id);
+					},
+					'fileUploadError': json => {
+						alert(json);
+					}
+				}
 	        });	
 		};
 		

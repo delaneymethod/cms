@@ -94,9 +94,9 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-		//$currentUser = $this->getUser();
+		//$currentUser = $this->getAuthenticatedUser();
 
-		//if ($currentUser->hasPermission('edit_pages')) {
+		//if ($currentUser->hasPermission('create_pages')) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedPage = $this->sanitizerInput($request->all());
 
@@ -120,7 +120,7 @@ class PageController extends Controller
 				$page->slug = $cleanedPage['slug'];
 				$page->status_id = $cleanedPage['status_id'];
 				$page->content = $cleanedPage['content'];
-				$page->parent_id = ($cleanedPage['parent_id'] === 0) ? null : $cleanedPage['parent_id'];
+				$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
 				
 				$page->save();
 			} catch (QueryException $queryException) {
@@ -180,7 +180,7 @@ class PageController extends Controller
 	 */
    	public function update(Request $request, int $id)
 	{
-		//$currentUser = $this->getUser();
+		//$currentUser = $this->getAuthenticatedUser();
 
 		//if ($currentUser->hasPermission('edit_pages')) {
 			// Remove any Cross-site scripting (XSS)
@@ -202,15 +202,17 @@ class PageController extends Controller
 				$page = $this->getPage($id);
 				
 				// Set our field data
-				if ($page->id === 1) {
+				if ($page->id == 1) {
 					$page->content = $cleanedPage['content'];
 				} else {
 					$page->title = $cleanedPage['title'];
 					$page->slug = $cleanedPage['slug'];
 					$page->status_id = $cleanedPage['status_id'];
 					$page->content = $cleanedPage['content'];
-					$page->parent_id = ($cleanedPage['parent_id'] === 0) ? null : $cleanedPage['parent_id'];
+					$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
 				}
+				
+				$page->updated_at = $this->datetime;
 				
 				$page->save();
 			} catch (QueryException $queryException) {
@@ -245,7 +247,7 @@ class PageController extends Controller
 	 */
    	public function tree(Request $request)
 	{
-		//$currentUser = $this->getUser();
+		//$currentUser = $this->getAuthenticatedUser();
 
 		//if ($currentUser->hasPermission('edit_pages')) {
 			// Remove any Cross-site scripting (XSS)
@@ -314,11 +316,13 @@ class PageController extends Controller
 	 */
    	public function confirm(Request $request, int $id)
 	{
-		if ($id === 1) {
-			abort(403, 'Unauthorised action');
-		}
-		
 		$page = $this->getPage($id);
+		
+		if ($page->id == $id && $id == 1) {
+			flash('You cannot delete the '.$page->title.' page.', $level = 'warning');
+
+			return redirect('/cp/pages');
+		}
 		
 		if ($page->children()->count() > 0) {
 			$title = 'Pages';
@@ -346,14 +350,20 @@ class PageController extends Controller
 	 */
    	public function delete(Request $request, int $id)
 	{
-		//$currentUser = $this->getUser();
+		//$currentUser = $this->getAuthenticatedUser();
+		
+		$page = $this->getPage($id);
+		
+		if ($page->id == $id && $id == 1) {
+			flash('You cannot delete the '.$page->title.' page.', $level = 'warning');
 
+			return redirect('/cp/pages');
+		}
+		
 		//if ($currentUser->hasPermission('delete_pages')) {
 			DB::beginTransaction();
 
 			try {
-				$page = $this->getPage($id);
-				
 				$page->delete();
 			} catch (QueryException $queryException) {
 				DB::rollback();
@@ -377,8 +387,6 @@ class PageController extends Controller
 		//}
 
 		//abort(403, 'Unauthorised action');
-		
-		
 	}
 	
 	/**

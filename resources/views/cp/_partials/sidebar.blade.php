@@ -1,4 +1,4 @@
-		<div class="col-md-3 col-lg-3 sidebar">
+		<div class="col-md-2 col-lg-2 sidebar">
 			<h3>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h3>
 			<h4 class="text-uppercase">Administration</h4>
 			<ul class="list-unstyled">
@@ -21,6 +21,7 @@
 			</ul>
 			<h4 class="text-uppercase">User</h4>
 			<ul class="list-unstyled">
+				<li class="{{ setActive('cp/users/password') }}"><a href="/cp/users/{{ Auth::id() }}/edit/password" title="Change Password"><i class="text-center icon fa fa-key" aria-hidden="true"></i>Change Password</a></li>
 				<li><a href="javascript:void(0);" title="Logout" id="logout"><i class="text-center icon fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
 			</ul>
 			<form name="logoutUser" id="logoutUser" class="logoutUser" action="/logout" method="POST" style="display: none;">

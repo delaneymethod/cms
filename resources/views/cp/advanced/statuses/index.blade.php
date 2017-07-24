@@ -40,7 +40,7 @@
 						<tbody>
 							@foreach ($statuses as $status)
 								<tr>
-									<td class="id">{{ $status->id }}</td>
+									<td>{{ $status->id }}</td>
 									<td>{{ $status->title }}</td>
 									<td class="actions dropdown text-center" id="submenu">
 										<a href="javascript:void(0);" title="Status Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>

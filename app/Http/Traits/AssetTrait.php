@@ -35,16 +35,13 @@ trait AssetTrait
 	}
 	
 	/**
-	 * Read folder contents from the public storage directory.
+	 * Get the specified asset based on id.
 	 *
-	 * @param	String 		$path
-	 * @return 	Collection/Array
+	 * @param 	int 		$id
+	 * @return 	Object
 	 */
-	public function readDirectory(string $path)
+	public function getAssetByOriginalName(string $originalName)
 	{
-		// Set where we want to save the file
-		$directory = config('filesystems.disks.public.root').'/'.$path;
-
-		return File::allFiles($directory);
+		return Asset::where('original_name', $originalName)->first();
 	}
 }

@@ -41,7 +41,7 @@
 						<tbody>
 							@foreach ($locations as $location)
 								<tr>
-									<td class="id">{{ $location->id }}</td>
+									<td>{{ $location->id }}</td>
 									<td>{{ $location->title }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $location->status->id }}" title="{{ $location->status->title }}" aria-hidden="true"></i></td>
 									<td class="actions dropdown text-center" id="submenu">

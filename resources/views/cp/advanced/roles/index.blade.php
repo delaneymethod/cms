@@ -40,7 +40,7 @@
 						<tbody>
 							@foreach ($roles as $role)
 								<tr>
-									<td class="id">{{ $role->id }}</td>
+									<td>{{ $role->id }}</td>
 									<td>{{ $role->title }}</td>
 									<td class="actions dropdown text-center" id="submenu">
 										<a href="javascript:void(0);" title="Role Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>

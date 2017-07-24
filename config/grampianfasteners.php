@@ -109,6 +109,7 @@ return [
 			'first_name' => 'required|string|max:255',
 			'last_name' => 'required|string|max:255',
 			'email' => 'required|email|unique:users,email|max:255',
+			'password' => 'required|string|max:255',
 			'job_title' => 'string|max:255',
 			'telephone' => 'required|phone:AUTO|string',
 			'mobile' => 'phone:AUTO|string',

@@ -22,6 +22,7 @@ class CreateLocationsTable extends Migration
 
 			$table->string('title')->index();
 			
+			$table->unsignedInteger('primary')->nullable();
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the status table');
 			
 			$table->timestamps();

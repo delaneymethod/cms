@@ -43,7 +43,7 @@
 						<tbody>
 							@foreach ($pages as $page)
 								<tr>
-									<td class="id">{{ $page->id }}</td>
+									<td>{{ $page->id }}</td>
 									<td>{{ $page->title }}</td>
 									<td>{{ $page->slug }}</td>
 									<td>{{ ($page->parent) ? $page->parent->title : '' }}</td>
