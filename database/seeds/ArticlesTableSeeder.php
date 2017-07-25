@@ -16,7 +16,7 @@ class ArticlesTableSeeder extends Seeder
 
 		$articles = [
 			[
-				'title' => 'Blog Post 1',
+				'title' => 'My First Blog Post',
 				'user_id' => 1,
 				'status_id' => 1,
 				'created_at' => $now,

@@ -12,13 +12,18 @@ trait UserTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getUser(int $id = null)
+	public function getUser(int $id)
 	{
-		if (!is_null($id)) {
-			return User::findOrFail($id);
+		$user = User::findOrFail($id);
+		
+		$currentUser = $this->getAuthenticatedUser();
+		
+		// No need to filter if the user we're editing is the current user.
+		if ($currentUser->id == $user->id) {
+			return $user;
 		}
 		
-		return $this->getAuthenticatedUser();
+		return $this->filterUsers([$user])->first();
 	}
 	
 	/**
@@ -28,9 +33,11 @@ trait UserTrait
 	 */
 	public function getUsers()
 	{
+		$users = $this->filterUsers(User::all());
+		
 		$limit = $this->getLimit();
 
-		return $this->paginateCollection(User::all(), $limit);
+		return $this->paginateCollection($users, $limit);
 	}
 	
 	/**
@@ -57,6 +64,16 @@ trait UserTrait
 	public function getSuperAdmins()
 	{
 		return User::where('role_id', 1);
+	}
+	
+	/**
+	 * Get the admin user records
+	 *
+	 * @return 	Response
+	 */
+	public function getAdmins()
+	{
+		return User::where('role_id', 2);
 	}
 	
 	/**

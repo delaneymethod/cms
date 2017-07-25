@@ -28,8 +28,9 @@ class CreateUsersTable extends Migration
 			$table->string('telephone');
 			$table->string('mobile');
 			
+			$table->unsignedInteger('company_id')->nullable()->index()->comment('Foreign key to the companies table');
 			$table->unsignedInteger('location_id')->nullable()->index()->comment('Foreign key to the locations table');
-			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the status table');
+			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
 			$table->unsignedInteger('role_id')->nullable()->index()->comment('Foreign key to the roles table');
 			
 			$table->rememberToken();
@@ -40,6 +41,7 @@ class CreateUsersTable extends Migration
 		});
 
 		Schema::table('users', function (Blueprint $table) {
+			$table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
 			$table->foreign('location_id')->references('id')->on('locations')->onDelete('set null');
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 			$table->foreign('role_id')->references('id')->on('roles')->onDelete('set null');

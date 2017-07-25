@@ -34,6 +34,9 @@ body {
 
 form,
 input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='tel'],
 input[type='radio'],
 input[type='checkbox'],
 select,
@@ -41,7 +44,20 @@ textarea,
 button {
 }
 
+input[type='text']:disabled,
+input[type='email']:disabled,
+input[type='password']:disabled,
+input[type='tel']:disabled,
+input[type='radio']:disabled,
+input[type='checkbox']:disabled,
+select:disabled,
+textarea:disabled {
+}
+
 input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='tel'],
 input[type='radio'],
 input[type='checkbox'],
 select,
@@ -389,12 +405,20 @@ a,
 				margin-right: 5px;
 			}
 			
+			.text-disabled {
+				color: #a1a1a1;
+			}
+			
 			.gf-red {
 				color: $gf-red;
 			}
 			
 			.cancel-button {
 				margin-right: 10px;
+			}
+			
+			.form-buttons {
+				margin-top: 30px;
 			}
 		}
 		

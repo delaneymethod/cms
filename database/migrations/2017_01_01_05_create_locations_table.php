@@ -22,13 +22,14 @@ class CreateLocationsTable extends Migration
 
 			$table->string('title')->index();
 			
-			$table->unsignedInteger('primary')->nullable();
-			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the status table');
+			$table->unsignedInteger('company_id')->nullable()->index()->comment('Foreign key to the companies table');
+			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
 			
 			$table->timestamps();
 		});
 
 		Schema::table('locations', function (Blueprint $table) {
+			$table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 		});
 	}

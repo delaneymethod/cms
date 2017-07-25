@@ -33,9 +33,11 @@ class OrderController extends Controller
 	 */
    	public function index(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$title = 'Orders';
 		
-		$subTitle = '';
+		$subTitle = $currentUser->company->title;
 		
 		$orders = $this->getOrders();
 		

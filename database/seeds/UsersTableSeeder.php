@@ -24,6 +24,7 @@ class UsersTableSeeder extends Seeder
 				'job_title' => '',
 				'telephone' => '',
 				'mobile' => '',
+				'company_id' => 1,
 				'location_id' => 1,
 				'status_id' => 1,
 				'role_id' => 1,

@@ -14,7 +14,9 @@ trait LocationTrait
 	 */
 	public function getLocation(int $id)
 	{
-		return Location::findOrFail($id);
+		$location = Location::findOrFail($id);
+		
+		return $this->filterLocations([$location])->first();
 	}
 
 	/**
@@ -24,8 +26,10 @@ trait LocationTrait
 	 */
 	public function getLocations()
 	{
-		$limit = $this->getLimit();
+		$locations = $this->filterLocations(Location::all());
 		
-		return $this->paginateCollection(Location::all(), $limit);
+		$limit = $this->getLimit();
+
+		return $this->paginateCollection($locations, $limit);
 	}
 }

@@ -25,7 +25,7 @@ class CreatePagesTable extends Migration
 			
 			$table->longText('content');
 	  
-			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the status table');
+			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
 			$table->unsignedInteger('parent_id')->nullable()->index();
 			$table->unsignedInteger('lft')->nullable()->index();
 			$table->unsignedInteger('rgt')->nullable()->index();

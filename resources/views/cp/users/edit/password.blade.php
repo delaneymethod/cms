@@ -18,7 +18,7 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="col-md-9 col-lg-9 main">
+			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
@@ -32,9 +32,16 @@
 						<input type="hidden" name="job_title" value="{{ $user->job_title }}">
 						<input type="hidden" name="telephone" value="{{ $user->telephone }}">
 						<input type="hidden" name="mobile" value="{{ $user->mobile }}">
+						<input type="hidden" name="company_id" value="{{ $user->company_id }}">
 						<input type="hidden" name="location_id" value="{{ $user->location_id }}">
 						<input type="hidden" name="role_id" value="{{ $user->role_id }}">
 						<input type="hidden" name="status_id" value="{{ $user->status_id }}">
+						@if ($user->id != Auth::id())
+							<div class="form-group">
+								<label class="control-label font-weight-bold">User Account</label>
+								<input type="text" class="form-control text-disabled" value="{{ $user->first_name }} {{ $user->last_name }}" disabled>
+							</div>
+						@endif
 						<div class="form-group">
 							<label for="password" class="control-label font-weight-bold">Password <span class="text-danger">&#42;</span></label>
 							<input type="password" name="password" id="password" class="form-control" value="{{ old('password') }}" placeholder="e.g y1Fwc]_C" tabindex="1" autocomplete="off" aria-describedby="helpBlockPassword" required autofocus>
@@ -51,8 +58,10 @@
 							@endif
 							<span id="helpBlockPasswordConfirmation" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
-						<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
+						<div class="form-buttons">
+							<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="3" title="Save Changes">Save Changes</button>
+						</div>
 					</form>
 				</div>
 			</div>

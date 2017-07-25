@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class LocationsTableSeeder extends Seeder
+class CompaniesTableSeeder extends Seeder
 {
 	/**
 	 * Run the database seeds.
@@ -14,18 +14,17 @@ class LocationsTableSeeder extends Seeder
 	{
 		$now = Carbon::now()->format('Y-m-d H:i:s');
 
-		$locations = [
+		$companies = [
 			[
-				'title' => 'Westhill, Aberdeen',
-				'company_id' => 1,
-				'status_id' => 1,
+				'title' => 'DelaneyMethod Web Development Ltd',
+				'default_location_id' => 1,
 				'created_at' => $now,
 				'updated_at' => $now,
 			],
 		];
 
-		DB::table('locations')->delete();
+		DB::table('companies')->delete();
 
-		DB::table('locations')->insert($locations);
+		DB::table('companies')->insert($companies);
 	}
 }

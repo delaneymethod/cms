@@ -18,7 +18,7 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="col-md-10 col-lg-10 main">
+			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
@@ -75,8 +75,20 @@
 							<span id="helpBlockMobile" class="form-control-feedback form-text text-muted">- Please enter the mobile number in the international format starting with a plus sign (&#43;).</span>
 						</div>
 						<div class="form-group">
+							<label for="company_id" class="control-label font-weight-bold">Company</label>
+							<select name="company_id" id="company_id" class="form-control" tabindex="7" aria-describedby="helpBlockCompanyId" required>
+								@foreach ($companies as $company)
+									<option value="{{ $company->id }}" {{ (old('company_id') == $company->id) ? 'selected' : '' }}>{{ $company->title }}</option>
+								@endforeach
+							</select>
+							@if ($errors->has('company_id'))
+								<span id="helpBlockCompanyId" class="form-control-feedback form-text gf-red">- {{ $errors->first('company_id') }}</span>
+							@endif
+							<span id="helpBlockCompanyId" class="form-control-feedback form-text text-muted"></span>
+						</div>
+						<div class="form-group">
 							<label for="location_id" class="control-label font-weight-bold">Location</label>
-							<select name="location_id" id="location_id" class="form-control" tabindex="7" aria-describedby="helpBlockLocationId" required>
+							<select name="location_id" id="location_id" class="form-control" tabindex="8" aria-describedby="helpBlockLocationId" required>
 								@foreach ($locations as $location)
 									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id) ? 'selected' : '' }}>{{ $location->title }}</option>
 								@endforeach
@@ -91,7 +103,7 @@
 							@foreach ($roles as $role)
 								<div class="form-check">
 									<label for="role_id-{{ str_slug($role->title) }}" class="form-check-label">
-										<input type="radio" name="role_id" id="role_id-{{ str_slug($role->title) }}" class="form-check-input" value="{{ $role->id }}" tabindex="8" aria-describedby="helpBlockRoleId" {{ (old('role_id') == $role->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $role->title }}
+										<input type="radio" name="role_id" id="role_id-{{ str_slug($role->title) }}" class="form-check-input" value="{{ $role->id }}" tabindex="9" aria-describedby="helpBlockRoleId" {{ (old('role_id') == $role->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $role->title }}
 									</label>
 								</div>
 							@endforeach
@@ -105,7 +117,7 @@
 							@foreach ($statuses as $status)
 								<div class="form-check status_id-{{ $status->id }}">
 									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
-										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="9" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="10" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}
 									</label>
 								</div>
 							@endforeach
@@ -114,8 +126,10 @@
 							@endif
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="11" title="Cancel">Cancel</a>
-						<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="10" title="Save Changes">Save Changes</button>
+						<div class="form-buttons">
+							<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="11" title="Save Changes">Save Changes</button>
+						</div>
 					</form>
 				</div>
 			</div>

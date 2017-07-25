@@ -33,9 +33,11 @@ class LocationController extends Controller
 	 */
    	public function index(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$title = 'Locations';
 		
-		$subTitle = '';
+		$subTitle = $currentUser->company->title;
 		
 		$locations = $this->getLocations();
 		

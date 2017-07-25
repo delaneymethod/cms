@@ -89,7 +89,7 @@ class PageController extends Controller
 	/**
      * Creates a new page.
      *
-	 * @params	Request 	$request
+	 * @params Request 	$request
      * @return Response
      */
     public function store(Request $request)

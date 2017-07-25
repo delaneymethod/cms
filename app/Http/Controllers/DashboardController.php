@@ -29,9 +29,11 @@ class DashboardController extends Controller
 	 */
    	public function index(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$title = 'Dashboard';
 		
-		$subTitle = '';
+		$subTitle = $currentUser->company->title;
 		
 		return view('cp.dashboard.index', compact('title', 'subTitle'));
 	}

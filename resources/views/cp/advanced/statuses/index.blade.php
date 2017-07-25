@@ -18,7 +18,7 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="col-md-9 col-lg-9 main">
+			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="row">

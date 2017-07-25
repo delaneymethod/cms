@@ -18,7 +18,7 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="col-md-10 col-lg-10 main">
+			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="row">
@@ -47,7 +47,7 @@
 							@foreach ($users as $user)
 								<tr>
 									<td>{{ $user->id }}</td>
-									<td>{{ $user->first_name }} {{ $user->last_name }}</td>
+									<td>{{ $user->first_name }} {{ $user->last_name }} {!! ($user->id == Auth::id()) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase">You</span>' : '' !!}</td>
 									<td><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline">{{ $user->email }}</a></td>
 									<td>{{ $user->job_title }}</td>
 									<td>{{ $user->telephone }}</td>
@@ -62,7 +62,6 @@
 												<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>
 											@endif
 											@if ($user->id != Auth::id())
-												<li class="dropdown-divider"></li>
 												<li class="dropdown-item gf-danger"><a href="/cp/users/{{ $user->id }}/delete" title="Delete User"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete User</a></li>
 											@endif
 										</ul>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\RoleTrait;
 use App\Http\Traits\UserTrait;
 use App\Http\Traits\StatusTrait;
+use App\Http\Traits\CompanyTrait;
 use App\Http\Traits\LocationTrait;
 use App\Http\Controllers\Controller;
 
@@ -17,6 +18,7 @@ class UserController extends Controller
 	use RoleTrait;
 	use UserTrait;
 	use StatusTrait;
+	use CompanyTrait;
 	use LocationTrait;
 	
 	/**
@@ -38,9 +40,11 @@ class UserController extends Controller
 	 */
    	public function index(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		 
 		$title = 'Users';
 		
-		$subTitle = '';
+		$subTitle = $currentUser->company->title;
 		
 		$users = $this->getUsers();
 		
@@ -55,9 +59,14 @@ class UserController extends Controller
 	 */
    	public function create(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$title = 'Create User';
 		
-		$subTitle = 'Users';
+		$subTitle = $currentUser->company->title;
+		
+		// Used to set company_id
+		$companies = $this->getCompanies();
 		
 		// Used to set role_id
 		$roles = $this->getRoles();
@@ -65,23 +74,23 @@ class UserController extends Controller
 		// Used to set status_id
 		$statuses = $this->getStatuses();
 		
-		// Used to set status_id
+		// Used to set location_id
 		$locations = $this->getLocations();
 		
-		return view('cp.users.create', compact('title', 'subTitle', 'statuses', 'locations', 'roles'));
+		return view('cp.users.create', compact('title', 'subTitle', 'companies', 'statuses', 'locations', 'roles'));
 	}
 	
 	/**
      * Creates a new user.
      *
-	 * @params	Request 	$request
+	 * @params Request 	$request
      * @return Response
      */
     public function store(Request $request)
     {
-	    //$currentUser = $this->getAuthenticatedUser();
+	    $currentUser = $this->getAuthenticatedUser();
 
-		//if ($currentUser->hasPermission('create_users')) {
+		if ($currentUser->hasPermission('create_users')) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedUser = $this->sanitizerInput($request->all());
 
@@ -108,11 +117,14 @@ class UserController extends Controller
 				$user->telephone = $cleanedUser['telephone'];
 				$user->mobile = $cleanedUser['mobile'];
 				$user->job_title = $cleanedUser['job_title'];
+				$user->company_id = $cleanedUser['company_id'];
 				$user->location_id = $cleanedUser['location_id'];
 				$user->status_id = $cleanedUser['status_id'];
 				$user->role_id = $cleanedUser['role_id'];
 				
 				$user->save();
+				
+				$user->setRole($user->role_id);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -132,9 +144,9 @@ class UserController extends Controller
 			flash('User created successfully.', $level = 'success');
 
 			return redirect('/cp/users');
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
     }
     
     /**
@@ -146,29 +158,32 @@ class UserController extends Controller
 	 */
    	public function edit(Request $request, int $id)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$title = 'Edit User';
 		
-		$subTitle = 'Users';
+		$subTitle = $currentUser->company->title;
 		
 		$user = $this->getUser($id);
 		
+		$this->authorize('userOwnsThis', $user);
+		
+		// Used to set company_id
+		$companies = $this->getCompanies();
+	
 		// Used to set role_id
 		$roles = $this->getRoles();
-		
+	
 		// Used to set status_id
 		$statuses = $this->getStatuses();
-		
+	
 		// Remove the retire status from the list since we are updating the current user
 		$currentUser = $this->getAuthenticatedUser();
-		
-		if ($currentUser->id == $id) {
-			$statuses->forget(2);
-		}
-		
-		// Used to set status_id
+	
+		// Used to set location_id
 		$locations = $this->getLocations();
-		
-		return view('cp.users.edit.index', compact('title', 'subTitle', 'user', 'roles', 'statuses', 'locations'));
+	
+		return view('cp.users.edit.index', compact('title', 'subTitle', 'user', 'companies', 'roles', 'statuses', 'locations'));
 	}
 	
 	/**
@@ -180,11 +195,15 @@ class UserController extends Controller
 	 */
    	public function editPassword(Request $request, int $id)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$title = 'Change Password';
 		
-		$subTitle = 'Users';
+		$subTitle = $currentUser->company->title;
 		
 		$user = $this->getUser($id);
+		
+		$this->authorize('userOwnsThis', $user);
 		
 		return view('cp.users.edit.password', compact('title', 'subTitle', 'user'));
 	}
@@ -211,9 +230,9 @@ class UserController extends Controller
 			$permission = 'edit_passwords_users';
 		}
 			
-		//$currentUser = $this->getAuthenticatedUser();
+		$currentUser = $this->getAuthenticatedUser();
 
-		//if ($currentUser->hasPermission($permission)) {
+		if ($currentUser->hasPermission($permission)) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedUser = $this->sanitizerInput($request->all());
 
@@ -239,6 +258,8 @@ class UserController extends Controller
 				// Create new model
 				$user = $this->getUser($id);
 				
+				$this->authorize('userOwnsThis', $user);
+		
 				// Set our field data
 				$user->first_name = $cleanedUser['first_name'];
 				$user->last_name = $cleanedUser['last_name'];
@@ -253,6 +274,7 @@ class UserController extends Controller
 				$user->job_title = $cleanedUser['job_title'];
 				$user->telephone = $cleanedUser['telephone'];
 				$user->mobile = $cleanedUser['mobile'];
+				$user->company_id = $cleanedUser['company_id'];
 				$user->location_id = $cleanedUser['location_id'];
 				$user->status_id = $cleanedUser['status_id'];
 				$user->role_id = $cleanedUser['role_id'];
@@ -280,9 +302,9 @@ class UserController extends Controller
 			flash('User updated successfully.', $level = 'success');
 
 			return redirect('/cp/users');
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -302,12 +324,14 @@ class UserController extends Controller
 			return redirect('/cp/users');
 		}
 		
-		//if ($currentUser->hasPermission('retire_users')) {
+		if ($currentUser->hasPermission('retire_users')) {
 			DB::beginTransaction();
 
 			try {
 				$user = $this->getUser($id);
 				
+				$this->authorize('userOwnsThis', $user);
+		
 				// Retired status
 				$user->status_id = 3;
 				$user->updated_at = $this->datetime;
@@ -332,9 +356,9 @@ class UserController extends Controller
 			flash('User retired successfully.', $level = 'info');
 
 			return redirect('/cp/users');
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -348,6 +372,10 @@ class UserController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
+		$user = $this->getUser($id);
+		
+		$this->authorize('userOwnsThis', $user);
+		
 		if ($currentUser->id == $id) {
 			flash('You cannot delete yourself.', $level = 'warning');
 
@@ -356,9 +384,7 @@ class UserController extends Controller
 		
 		$title = 'Delete User';
 		
-		$subTitle = 'Users';
-	
-		$user = $this->getUser($id);
+		$subTitle = $currentUser->company->title;
 		
 		return view('cp.users.delete', compact('title', 'subTitle', 'user'));
 	}
@@ -373,19 +399,21 @@ class UserController extends Controller
    	public function delete(Request $request, int $id)
 	{
 		$currentUser = $this->getAuthenticatedUser();
-
-		if ($currentUser->id == $id) {
-			flash('You cannot delete yourself.', $level = 'warning');
-
-			return redirect('/cp/users');
-		}
 		
-		//if ($currentUser->hasPermission('delete_users')) {
+		if ($currentUser->hasPermission('delete_users')) {
+			$user = $this->getUser($id);
+			
+			$this->authorize('userOwnsThis', $user);
+			
+			if ($currentUser->id == $user->id) {
+				flash('You cannot delete yourself.', $level = 'warning');
+
+				return redirect('/cp/users');
+			}
+		
 			DB::beginTransaction();
 
 			try {
-				$user = $this->getUser($id);
-				
 				$user->delete();
 			} catch (QueryException $queryException) {
 				DB::rollback();
@@ -406,9 +434,9 @@ class UserController extends Controller
 			flash('User deleted successfully.', $level = 'info');
 
 			return redirect('/cp/users');
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**

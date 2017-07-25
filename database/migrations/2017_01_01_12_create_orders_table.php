@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticlesTable extends Migration
+class CreateOrdersTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,7 +15,7 @@ class CreateArticlesTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 
-		Schema::create('articles', function (Blueprint $table) {
+		Schema::create('orders', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->increments('id');
@@ -23,12 +23,12 @@ class CreateArticlesTable extends Migration
 			$table->string('title');
 			
 			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
-			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the status table');
+			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
 			
 			$table->timestamps();
 		});
 
-		Schema::table('articles', function (Blueprint $table) {
+		Schema::table('orders', function (Blueprint $table) {
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 		});
@@ -41,6 +41,6 @@ class CreateArticlesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('articles');
+		Schema::dropIfExists('orders');
 	}
 }

@@ -86,8 +86,19 @@ return [
 			'content' => 'string',
 			'parent_id' => 'required|integer',
 		],
+		'company' => [
+			'title' => 'required|string|max:255',
+			'default_location_id' => 'required|integer',
+		],
+		'article' => [
+			'title' => 'required|string|max:255',
+			'user_id' => 'required|integer',
+			'status_id' => 'required|integer',
+		],
 		'location' => [
 			'title' => 'required|string|max:255',
+			'company_id' => 'required|integer',
+			'status_id' => 'required|integer',
 		],
 		'role' => [
 			'title' => 'required|string|max:255',
@@ -102,8 +113,8 @@ return [
 			'title' => 'required|string|max:255',
 		],
 		'county' => [
-			'country_id' => 'required|integer',
 			'title' => 'required|string|max:255',
+			'country_id' => 'required|integer',
 		],
 		'user' => [
 			'first_name' => 'required|string|max:255',
@@ -113,11 +124,30 @@ return [
 			'job_title' => 'string|max:255',
 			'telephone' => 'required|phone:AUTO|string',
 			'mobile' => 'phone:AUTO|string',
+			'company_id' => 'required|integer',
 			'location_id' => 'required|integer',
 			'status_id' => 'required|integer',
 			'role_id' => 'required|integer',
 		],
 	
+	],
+	
+	'column_widths' => [
+		
+		'cp' => [
+			'sidebar' => [
+				'sm' => 'col-sm-12',
+				'md' => 'col-md-2',
+				'lg' => 'col-lg-2',
+			],
+			
+			'main' => [
+				'sm' => 'col-sm-12',
+				'md' => 'col-md-10',
+				'lg' => 'col-lg-10',
+			],
+		],
+		
 	],
 
 ];

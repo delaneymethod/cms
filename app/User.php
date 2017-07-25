@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Role;
 use App\Models\Order;
 use App\Models\Status;
+use App\Models\Company;
 use App\Models\Article;
 use App\Models\Location;
 use App\Models\Permission;
@@ -33,6 +34,7 @@ class User extends Authenticatable
 		'job_title',
 		'telephone',
 		'mobile',
+		'company_id',
 		'location_id',
 		'status_id',
 		'role_id',
@@ -62,6 +64,14 @@ class User extends Authenticatable
 	public function status()
 	{
 		return $this->belongsTo(Status::class);
+	}
+	
+	/**
+	 * Get the company record associated with the user.
+	 */
+	public function company()
+	{
+		return $this->belongsTo(Company::class);
 	}
 	
 	/**
@@ -132,14 +142,25 @@ class User extends Authenticatable
 		$permissions = $this->getPermissions();
 
 		switch ($role->title) {
-			case 'Super Admin':
+			case 'Super Administrator':
 				// Add all permissions
 				$assignedPermissions = $permissions->pluck('id')->toArray();
 			break;
 			
-			case 'Admin':
+			case 'Administrator':
 				// TODO - Assign more permissions to admins
 				array_push($assignedPermissions, $this->_getIdFromCollection($permissions, 'view_users'));
+				
+				// cannot select super admin status
+				// cannot edit roles, statuses, pages, menu, articles
+				
+			break;
+			
+			case 'End User':
+				// TODO - Assign more permissions to end users
+				array_push($assignedPermissions, $this->_getIdFromCollection($permissions, 'view_orders'));
+			
+				// can only view stuff and edit own account
 			break;
 		}
 		
@@ -149,6 +170,36 @@ class User extends Authenticatable
 
 		// See "Syncing Associations" under Eloquent Relationships in the Laravel docs!
 		return $this->permissions()->sync($assignedPermissions);
+	}
+	
+	/**
+	 * Checks if user is a super admin.
+	 *
+	 * @return bool
+	 */
+	public function isSuperAdmin()
+	{
+		return $this->role_id == 1;
+	}
+	
+	/**
+	 * Checks if user is a admin.
+	 *
+	 * @return bool
+	 */
+	public function isAdmin()
+	{
+		return $this->role_id == 2;
+	}
+	
+	/**
+	 * Checks if user is an end user.
+	 *
+	 * @return bool
+	 */
+	public function isEndUser()
+	{
+		return $this->role_id == 3;
 	}
 	
 	/**
@@ -170,8 +221,6 @@ class User extends Authenticatable
 	 */
 	private function _getIdFromCollection(Collection $collection, string $permission)
 	{
-		dump($collection, $permission);
-		
-		return $collection->where('permission', $permission)->first()->id;
+		return $collection->where('title', $permission)->first()->id;
 	}
 }

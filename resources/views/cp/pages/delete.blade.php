@@ -18,7 +18,7 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="col-md-9 col-lg-9 main">
+			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
@@ -27,8 +27,10 @@
 					<form name="removePage" id="removePage" class="removePage" role="form" method="POST" action="/cp/pages/{{ $page->id }}">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
-						<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
-						<button type="submit" name="submit" id="submit" class="btn btn-outline-danger" title="Delete">Delete</button>
+						<div class="form-buttons">
+							<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-danger" tabindex="1" title="Delete">Delete</button>
+						</div>
 					</form>
 				</div>
 			</div>

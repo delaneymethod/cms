@@ -16,7 +16,7 @@ class OrdersTableSeeder extends Seeder
 
 		$orders = [
 			[
-				'title' => 'Order 1',
+				'title' => 'My First Order',
 				'user_id' => 1,
 				'status_id' => 1,
 				'created_at' => $now,

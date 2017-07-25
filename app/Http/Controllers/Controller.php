@@ -301,6 +301,139 @@ class Controller extends BaseController
 	}
 	
 	/**
+	 * Filters company records based on current users company.
+	 *
+	 * @param  Collection 	$companies
+	 * @return Collection
+	 */
+	protected function filterCompanies($companies)
+	{
+		if (count($companies) == 0) {
+			return collect($companies);
+		}
+		
+		$currentUser = $this->getAuthenticatedUser();
+	
+		// If super admin, return everything
+		if ($currentUser->isSuperAdmin()) {
+			return collect($companies);
+		} else {
+			$filteredCompanies = [];
+			
+			foreach ($companies as $company) {
+				if ($company->id == $currentUser->company_id) {
+					array_push($filteredCompanies, $company);
+				}
+			}
+			
+			return collect($filteredCompanies);
+		}
+	}
+	
+	/**
+	 * Filters user records based on current users company.
+	 *
+	 * @param  Collection 	$users
+	 * @return Collection
+	 */
+	protected function filterUsers($users)
+	{
+		if (count($users) == 0) {
+			return collect($users);
+		}
+		
+		$currentUser = $this->getAuthenticatedUser();
+	
+		// If super admin, return everything
+		if ($currentUser->isSuperAdmin()) {
+			return collect($users);
+		} else {
+			$filteredUsers = [];
+			
+			foreach ($users as $user) {
+				if ($user->company_id == $currentUser->company_id) {
+					array_push($filteredUsers, $user);
+				}
+			}
+			
+			return collect($filteredUsers);
+		}
+	}
+	
+	/**
+	 * Filters location records based on current users company.
+	 *
+	 * @param  Collection 	$locations
+	 * @return Collection
+	 */
+	protected function filterLocations($locations)
+	{
+		if ($locations->count() == 0) {		
+			return collect($locations);
+		}
+		
+		$currentUser = $this->getAuthenticatedUser();
+	
+		// If super admin, return everything
+		if ($currentUser->isSuperAdmin()) {
+			return collect($locations);
+		} else {
+			$allowedLocations = $currentUser->company->locations->toArray();
+			
+			$filteredLocations = [];
+			
+			if (count($allowedLocations) > 0) {
+				foreach ($locations as $location) {
+					if (in_array($location->id, $allowedLocations)) {
+						array_push($filteredLocations, $location);
+					}
+				}
+			}
+			
+			return collect($filteredLocations);
+		}
+	}
+	
+	/**
+	 * Filters order records based on current users company.
+	 *
+	 * @param  Collection 	$orders
+	 * @return Collection
+	 */
+	protected function filterOrders($orders)
+	{
+		if ($orders->count() == 0) {		
+			return collect($orders);
+		}
+		
+		$currentUser = $this->getAuthenticatedUser();
+		
+		// If super admin, return everything
+		if ($currentUser->isSuperAdmin()) {
+			return collect($orders);
+		} else {
+			$allowedOrderIds = [];
+			
+			// Run over all users in current users company and grab order ids
+			foreach ($currentUser->company->users as $user) {
+				$allowedOrderIds = array_merge($allowedOrderIds, $user->orders->pluck('id')->toArray());
+			}
+			
+			$filteredOrders = [];
+			
+			if (count($allowedOrderIds) > 0) {
+				foreach ($orders as $order) {
+					if (in_array($order->id, $allowedOrderIds)) {
+						array_push($filteredOrders, $order);
+					}
+				}
+			}
+			
+			return collect($filteredOrders);
+		}
+	}
+	
+	/**
 	 * Simple get cache
 	 *
 	 * @param  String 		$key

@@ -14,7 +14,9 @@ trait OrderTrait
 	 */
 	public function getOrder(int $id)
 	{
-		return Order::findOrFail($id);
+		$order = Order::findOrFail($id);
+	
+		return $this->filterOrders([$order])->first();
 	}
 
 	/**
@@ -24,6 +26,10 @@ trait OrderTrait
 	 */
 	public function getOrders()
 	{
-		return Order::all();
+		$orders = $this->filterOrders(Order::all());
+		
+		$limit = $this->getLimit();
+
+		return $this->paginateCollection($orders, $limit);
 	}
 }

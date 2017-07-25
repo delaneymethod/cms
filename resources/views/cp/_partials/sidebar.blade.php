@@ -1,8 +1,9 @@
-		<div class="col-md-2 col-lg-2 sidebar">
+		<div class="{{ $sidebarSmCols }} {{ $sidebarMdCols }} {{ $sidebarLgCols }} sidebar">
 			<h3>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h3>
 			<h4 class="text-uppercase">Administration</h4>
 			<ul class="list-unstyled">
 				<li class="{{ setActive('cp/dashboard') }}"><a href="/cp/dashboard" title=""><i class="text-center icon fa fa-tachometer" aria-hidden="true"></i>Dashboard</a></li>
+				<li class="{{ setActive('cp/companies') }}"><a href="/cp/companies" title="Companies"><i class="text-center icon fa fa-building" aria-hidden="true"></i>Companies</a></li>
 				<li class="{{ setActive('cp/users') }}"><a href="/cp/users" title="Users"><i class="text-center icon fa fa-users" aria-hidden="true"></i>Users</a></li>
 				<li class="{{ setActive('cp/locations') }}"><a href="/cp/locations" title="Locations"><i class="text-center icon fa fa-map-marker" aria-hidden="true"></i>Locations</a></li>
 				<li class="{{ setActive('cp/orders') }}"><a href="/cp/orders" title="Orders"><i class="text-center icon fa fa-shopping-cart" aria-hidden="true"></i>Orders</a></li>
@@ -21,7 +22,7 @@
 			</ul>
 			<h4 class="text-uppercase">User</h4>
 			<ul class="list-unstyled">
-				<li class="{{ setActive('cp/users/password') }}"><a href="/cp/users/{{ Auth::id() }}/edit/password" title="Change Password"><i class="text-center icon fa fa-key" aria-hidden="true"></i>Change Password</a></li>
+				<li class="{{ setActive('cp/users/'.Auth::id().'/edit/password') }}"><a href="/cp/users/{{ Auth::id() }}/edit/password" title="Change Password"><i class="text-center icon fa fa-key" aria-hidden="true"></i>Change Password</a></li>
 				<li><a href="javascript:void(0);" title="Logout" id="logout"><i class="text-center icon fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
 			</ul>
 			<form name="logoutUser" id="logoutUser" class="logoutUser" action="/logout" method="POST" style="display: none;">

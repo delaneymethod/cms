@@ -21,7 +21,7 @@ class AssetsTableSeeder extends Seeder
 				'original_name' => 'banner_a.jpg',
 				'mime_type' => 'image/jpeg',
 				'extension' => 'jpg',
-				'path' => '/storage/uploads/banner_a.jpg',
+				'path' => '/uploads/banner_a.jpg',
 				'size' => 670136,
 				'created_at' => $now,
 				'updated_at' => $now,
