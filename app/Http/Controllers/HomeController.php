@@ -33,8 +33,10 @@ class HomeController extends Controller
 	 */
    	public function index(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$page = $this->getPage(1);
 		
-		return view('index', compact('page'));
+		return view('index', compact('currentUser', 'page'));
 	}
 }

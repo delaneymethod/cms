@@ -32,4 +32,22 @@ trait CompanyTrait
 
 		return $this->paginateCollection($companies, $limit);
 	}
+	
+	/**
+	 * Get all the companies default location ids.
+	 *
+	 * @return 	Response
+	 */
+	public function getDefaultLocationIds()
+	{
+		$defaultLocationIds = [];
+		
+		$companies = $this->filterCompanies(Company::all());
+			
+		foreach ($companies as $company) {
+			array_push($defaultLocationIds, $company->default_location_id);
+		}
+		
+		return array_unique($defaultLocationIds);
+	}
 }

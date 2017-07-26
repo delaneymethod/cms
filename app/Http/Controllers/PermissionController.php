@@ -33,13 +33,19 @@ class PermissionController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$title = 'Permissions';
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$subTitle = '';
+		if ($currentUser->hasPermission('view_permissions')) {
+			$title = 'Permissions';
+			
+			$subTitle = '';
+			
+			$permissions = $this->getPermissions();
+			
+			return view('cp.advanced.permissions.index', compact('currentUser', 'title', 'subTitle', 'permissions'));
+		}
 		
-		$permissions = $this->getPermissions();
-		
-		return view('cp.advanced.permissions.index', compact('title', 'subTitle', 'permissions'));
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**

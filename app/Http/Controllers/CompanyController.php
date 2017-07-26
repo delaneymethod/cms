@@ -36,7 +36,7 @@ class CompanyController extends Controller
    	public function index(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
-
+		
 		if ($currentUser->hasPermission('view_companies')) {
 			$title = 'Companies';
 		
@@ -44,7 +44,7 @@ class CompanyController extends Controller
 			
 			$companies = $this->getCompanies();
 			
-			return view('cp.companies.index', compact('title', 'subTitle', 'companies'));
+			return view('cp.companies.index', compact('currentUser', 'title', 'subTitle', 'companies'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -68,7 +68,7 @@ class CompanyController extends Controller
 			// Used to set location_id
 			$locations = $this->getLocations();
 			
-			return view('cp.companies.create', compact('title', 'subTitle', 'locations'));
+			return view('cp.companies.create', compact('currentUser', 'title', 'subTitle', 'locations'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -155,7 +155,7 @@ class CompanyController extends Controller
 			// Used to set location_id
 			$locations = $this->getLocations();
 			
-			return view('cp.companies.edit', compact('title', 'subTitle', 'company', 'locations'));
+			return view('cp.companies.edit', compact('currentUser', 'title', 'subTitle', 'company', 'locations'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -251,7 +251,7 @@ class CompanyController extends Controller
 			
 			$subTitle = $currentUser->company->title;
 		
-			return view('cp.companies.delete', compact('title', 'subTitle', 'company'));
+			return view('cp.companies.delete', compact('currentUser', 'title', 'subTitle', 'company'));
 		}
 
 		abort(403, 'Unauthorised action');

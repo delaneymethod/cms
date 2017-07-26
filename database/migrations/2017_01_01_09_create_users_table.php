@@ -23,10 +23,10 @@ class CreateUsersTable extends Migration
 			$table->string('first_name');
 			$table->string('last_name');
 			$table->string('email')->unique()->index();
-			$table->string('password');
-			$table->string('job_title')->index();
-			$table->string('telephone');
-			$table->string('mobile');
+			$table->string('password')->nullable();
+			$table->string('job_title')->nullable()->index();
+			$table->string('telephone')->nullable();
+			$table->string('mobile')->nullable();
 			
 			$table->unsignedInteger('company_id')->nullable()->index()->comment('Foreign key to the companies table');
 			$table->unsignedInteger('location_id')->nullable()->index()->comment('Foreign key to the locations table');

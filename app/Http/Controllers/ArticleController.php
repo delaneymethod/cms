@@ -33,13 +33,15 @@ class ArticleController extends Controller
 	 */
    	public function index(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$title = 'Articles';
 		
 		$subTitle = '';
 		
 		$articles = $this->getArticles();
 		
-		return view('cp.articles.index', compact('title', 'subTitle', 'articles'));
+		return view('cp.articles.index', compact('currentUser', 'title', 'subTitle', 'articles'));
 	}
 	
 	/**

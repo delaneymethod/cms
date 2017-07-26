@@ -35,10 +35,10 @@
 							<span id="helpBlockTitle" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
-							<label for="default_location_id" class="control-label font-weight-bold">Location</label>
+							<label for="default_location_id" class="control-label font-weight-bold">Default Location</label>
 							<select name="default_location_id" id="default_location_id" class="form-control" tabindex="2" aria-describedby="helpBlockDefaultLocationId" required>
 								@foreach ($locations as $location)
-									<option value="{{ $location->id }}" {{ (old('default_location_id') == $location->id || $company->default_location_id == $location->id) ? 'selected' : '' }}>{{ $location->title }}</option>
+									<option value="{{ $location->id }}" {{ (old('default_location_id') == $location->id || $company->default_location_id == $location->id) ? 'selected' : '' }}>{{ $location->title }}{{ ($location->status->id == 2 || $location->status->id == 3) ? '&nbsp;('.$location->status->title.')' : '' }}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('default_location_id'))
@@ -47,9 +47,11 @@
 							<span id="helpBlockDefaultLocationId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-buttons">
-							<a href="/cp/companies" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
+							@if ($currentUser->hasPermission('view_companies'))
+								<a href="/cp/companies" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
+							@endif
 							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="3" title="Save Changes">Save Changes</button>
-							@if ($company->id != Auth::user()->company_id)
+							@if ($currentUser->hasPermission('delete_companies') && $company->id != $currentUser->company_id)
 								<a href="/cp/companies/{{ $company->id }}/delete" title="Delete Company" class="pull-right btn btn-outline-danger">Delete Company</a>
 							@endif
 						</div>

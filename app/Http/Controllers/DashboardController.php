@@ -35,6 +35,6 @@ class DashboardController extends Controller
 		
 		$subTitle = $currentUser->company->title;
 		
-		return view('cp.dashboard.index', compact('title', 'subTitle'));
+		return view('cp.dashboard.index', compact('currentUser', 'title', 'subTitle'));
 	}
 }

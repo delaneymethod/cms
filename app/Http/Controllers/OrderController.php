@@ -35,13 +35,17 @@ class OrderController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		$title = 'Orders';
+		if ($currentUser->hasPermission('view_orders')) {
+			$title = 'Orders';
 		
-		$subTitle = $currentUser->company->title;
+			$subTitle = $currentUser->company->title;
 		
-		$orders = $this->getOrders();
+			$orders = $this->getOrders();
 		
-		return view('cp.orders.index', compact('title', 'subTitle', 'orders'));
+			return view('cp.orders.index', compact('currentUser', 'title', 'subTitle', 'orders'));
+		}
+		
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**

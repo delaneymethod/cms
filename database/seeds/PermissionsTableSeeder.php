@@ -236,6 +236,11 @@ class PermissionsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'title' => 'retire_locations',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
 				'title' => 'delete_locations',
 				'created_at' => $now,
 				'updated_at' => $now,

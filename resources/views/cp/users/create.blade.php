@@ -67,8 +67,8 @@
 							<span id="helpBlockTelephone" class="form-control-feedback form-text text-muted">- Please enter the telephone number in the international format starting with a plus sign (&#43;).</span>
 						</div>
 						<div class="form-group">
-							<label for="mobile" class="control-label font-weight-bold">Mobile <span class="text-danger">&#42;</span></label>
-							<input type="tel" name="mobile" id="mobile" class="form-control" value="{{ old('mobile') }}" placeholder="E.g: &#43;44 7700 123 456" tabindex="6" autocomplete="off" aria-describedby="helpBlockMobile" required>
+							<label for="mobile" class="control-label font-weight-bold">Mobile</label>
+							<input type="tel" name="mobile" id="mobile" class="form-control" value="{{ old('mobile') }}" placeholder="E.g: &#43;44 7700 123 456" tabindex="6" autocomplete="off" aria-describedby="helpBlockMobile">
 							@if ($errors->has('mobile'))
 								<span id="helpBlockMobile" class="form-control-feedback form-text gf-red">- {{ $errors->first('mobile') }}</span>
 							@endif
@@ -90,7 +90,7 @@
 							<label for="location_id" class="control-label font-weight-bold">Location</label>
 							<select name="location_id" id="location_id" class="form-control" tabindex="8" aria-describedby="helpBlockLocationId" required>
 								@foreach ($locations as $location)
-									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id) ? 'selected' : '' }}>{{ $location->title }}</option>
+									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id) ? 'selected' : '' }}>{{ $location->title }}{{ ($location->status->id == 2 || $location->status->id == 3) ? '&nbsp;('.$location->status->title.')' : '' }}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('location_id'))
@@ -127,7 +127,9 @@
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-buttons">
-							<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
+							@if ($currentUser->hasPermission('view_users'))
+								<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
+							@endif
 							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="11" title="Save Changes">Save Changes</button>
 						</div>
 					</form>

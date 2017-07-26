@@ -36,8 +36,8 @@
 							@foreach ($orders as $order)
 								<tr>
 									<td>{{ $order->id }}</td>
-									<td>{{ $order->title }}</td>
-									<td>{!! ($order->user) ? $order->user->first_name.' '.$order->user->last_name.(($order->user->id == Auth::id()) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase">You</span>' : '') : '<span class="badge badge-pill badge-warning align-middle text-uppercase">Null</span>' !!}</td>
+									<td>{{ $order->title }}{!! ($order->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
+									<td>{!! ($order->user) ? $order->user->first_name.' '.$order->user->last_name.(($order->user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '').(($order->user->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->user->status->title.'</span>' : '').(($order->user->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->user->status->title.'</span>' : '') : '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Null</span>' !!}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $order->status->id }}" title="{{ $order->status->title }}" aria-hidden="true"></i></td>
 									<td class="actions dropdown text-center" id="submenu">
 										<a href="javascript:void(0);" title="Order Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>

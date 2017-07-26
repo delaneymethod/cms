@@ -33,13 +33,19 @@ class RoleController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$title = 'Roles';
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$subTitle = '';
+		if ($currentUser->hasPermission('view_roles')) {
+			$title = 'Roles';
+			
+			$subTitle = '';
+			
+			$roles = $this->getRoles();
+			
+			return view('cp.advanced.roles.index', compact('currentUser', 'title', 'subTitle', 'roles'));
+		}
 		
-		$roles = $this->getRoles();
-		
-		return view('cp.advanced.roles.index', compact('title', 'subTitle', 'roles'));
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**

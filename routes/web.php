@@ -47,6 +47,14 @@ Route::delete('/cp/companies/{id}', 'CompanyController@delete');
 
 // CP > Locations routes
 Route::get('/cp/locations', 'LocationController@index');
+Route::get('/cp/locations/create', 'LocationController@create');
+Route::get('/cp/locations/{id}/edit', 'LocationController@edit');
+Route::get('/cp/locations/{id}/retire', 'LocationController@retire');
+Route::get('/cp/locations/{id}/delete', 'LocationController@confirm');
+Route::post('/cp/locations', 'LocationController@store');
+Route::put('/cp/locations/{id}', 'LocationController@update');
+Route::patch('/cp/locations/{id}', 'LocationController@update');
+Route::delete('/cp/locations/{id}', 'LocationController@delete');
 
 // CP > Orders routes
 Route::get('/cp/orders', 'OrderController@index');

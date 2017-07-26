@@ -21,7 +21,18 @@ class CreateLocationsTable extends Migration
 			$table->increments('id');
 
 			$table->string('title')->index();
+			$table->string('unit')->nullable();
+			$table->string('building')->nullable();
+			$table->string('street_address_1')->index();
+			$table->string('street_address_2')->nullable();
+			$table->string('street_address_3')->nullable();
+			$table->string('street_address_4')->nullable();
+			$table->string('town_city')->index();
+			$table->string('postal_code')->nullable();
+			$table->string('telephone');
 			
+			$table->unsignedInteger('county_id')->nullable()->index()->comment('Foreign key to the counties table');
+			$table->unsignedInteger('country_id')->nullable()->index()->comment('Foreign key to the countries table');
 			$table->unsignedInteger('company_id')->nullable()->index()->comment('Foreign key to the companies table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
 			
@@ -29,6 +40,8 @@ class CreateLocationsTable extends Migration
 		});
 
 		Schema::table('locations', function (Blueprint $table) {
+			$table->foreign('county_id')->references('id')->on('counties')->onDelete('set null');
+			$table->foreign('country_id')->references('id')->on('countries')->onDelete('set null');
 			$table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 		});

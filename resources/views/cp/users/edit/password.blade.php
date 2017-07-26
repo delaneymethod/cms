@@ -36,7 +36,7 @@
 						<input type="hidden" name="location_id" value="{{ $user->location_id }}">
 						<input type="hidden" name="role_id" value="{{ $user->role_id }}">
 						<input type="hidden" name="status_id" value="{{ $user->status_id }}">
-						@if ($user->id != Auth::id())
+						@if ($user->id != $currentUser->id)
 							<div class="form-group">
 								<label class="control-label font-weight-bold">User Account</label>
 								<input type="text" class="form-control text-disabled" value="{{ $user->first_name }} {{ $user->last_name }}" disabled>
@@ -59,7 +59,9 @@
 							<span id="helpBlockPasswordConfirmation" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-buttons">
-							<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
+							@if ($currentUser->hasPermission('view_users'))
+								<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
+							@endif
 							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="3" title="Save Changes">Save Changes</button>
 						</div>
 					</form>

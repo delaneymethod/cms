@@ -35,15 +35,21 @@ class PageController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$title = 'Pages';
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$subTitle = '';
+		if ($currentUser->hasPermission('view_pages')) {
+			$title = 'Pages';
+			
+			$subTitle = '';
+			
+			$this->rebuildPages();
 		
-		$this->rebuildPages();
-	
-		$pages = $this->getPages();
-		
-		return view('cp.pages.index', compact('title', 'subTitle', 'pages'));
+			$pages = $this->getPages();
+			
+			return view('cp.pages.index', compact('currentUser', 'title', 'subTitle', 'pages'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -54,15 +60,21 @@ class PageController extends Controller
 	 */
    	public function menu(Request $request)
 	{
-		$title = 'Menu';
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$subTitle = '';
+		if ($currentUser->hasPermission('edit_pages')) {
+			$title = 'Menu';
 		
-		$this->rebuildPages();
-		
-		$pages = $this->getPagesHierarchy();
-		
-		return view('cp.menu.index', compact('title', 'subTitle', 'pages'));
+			$subTitle = '';
+			
+			$this->rebuildPages();
+			
+			$pages = $this->getPagesHierarchy();
+			
+			return view('cp.menu.index', compact('currentUser', 'title', 'subTitle', 'pages'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -73,17 +85,23 @@ class PageController extends Controller
 	 */
    	public function create(Request $request)
 	{
-		$title = 'Create Page';
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$subTitle = 'Pages';
+		if ($currentUser->hasPermission('create_pages')) {
+			$title = 'Create Page';
 		
-		// Used to set parent_id
-		$pages = $this->getPages();
-		
-		// Used to set status_id
-		$statuses = $this->getStatuses();
-		
-		return view('cp.pages.create', compact('title', 'subTitle', 'pages', 'statuses'));
+			$subTitle = 'Pages';
+			
+			// Used to set parent_id
+			$pages = $this->getPages();
+			
+			// Used to set status_id
+			$statuses = $this->getStatuses();
+			
+			return view('cp.pages.create', compact('currentUser', 'title', 'subTitle', 'pages', 'statuses'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -94,9 +112,9 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-		//$currentUser = $this->getAuthenticatedUser();
+		$currentUser = $this->getAuthenticatedUser();
 
-		//if ($currentUser->hasPermission('create_pages')) {
+		if ($currentUser->hasPermission('create_pages')) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedPage = $this->sanitizerInput($request->all());
 
@@ -142,9 +160,9 @@ class PageController extends Controller
 			flash('Page created successfully.', $level = 'success');
 
 			return redirect('/cp/pages');
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
     }
     
     /**
@@ -156,19 +174,25 @@ class PageController extends Controller
 	 */
    	public function edit(Request $request, int $id)
 	{
-		$title = 'Edit Page';
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$subTitle = 'Pages';
-		
-		$page = $this->getPage($id);
-		
-		// Used to set parent_id
-		$pages = $this->getPages();
-		
-		// Used to set status_id
-		$statuses = $this->getStatuses();
-		
-		return view('cp.pages.edit', compact('title', 'subTitle', 'page', 'pages', 'statuses'));
+		if ($currentUser->hasPermission('edit_pages')) {
+			$title = 'Edit Page';
+			
+			$subTitle = 'Pages';
+			
+			$page = $this->getPage($id);
+			
+			// Used to set parent_id
+			$pages = $this->getPages();
+			
+			// Used to set status_id
+			$statuses = $this->getStatuses();
+			
+			return view('cp.pages.edit', compact('currentUser', 'title', 'subTitle', 'page', 'pages', 'statuses'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -180,9 +204,9 @@ class PageController extends Controller
 	 */
    	public function update(Request $request, int $id)
 	{
-		//$currentUser = $this->getAuthenticatedUser();
+		$currentUser = $this->getAuthenticatedUser();
 
-		//if ($currentUser->hasPermission('edit_pages')) {
+		if ($currentUser->hasPermission('edit_pages')) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedPage = $this->sanitizerInput($request->all());
 
@@ -234,9 +258,9 @@ class PageController extends Controller
 			flash('Page updated successfully.', $level = 'success');
 
 			return redirect('/cp/pages');
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -247,9 +271,9 @@ class PageController extends Controller
 	 */
    	public function tree(Request $request)
 	{
-		//$currentUser = $this->getAuthenticatedUser();
+		$currentUser = $this->getAuthenticatedUser();
 
-		//if ($currentUser->hasPermission('edit_pages')) {
+		if ($currentUser->hasPermission('edit_pages')) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedTree = $this->sanitizerInput($request->all());
 
@@ -302,9 +326,9 @@ class PageController extends Controller
 			flash('Changes saved successfully.', $level = 'success');
 
 			return redirect('/cp/menu');
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -316,29 +340,35 @@ class PageController extends Controller
 	 */
    	public function confirm(Request $request, int $id)
 	{
-		$page = $this->getPage($id);
+		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($page->id == $id && $id == 1) {
-			flash('You cannot delete the '.$page->title.' page.', $level = 'warning');
-
-			return redirect('/cp/pages');
-		}
-		
-		if ($page->children()->count() > 0) {
-			$title = 'Pages';
-		
-			$subTitle = '';
-		
-			flash('You must delete the '.$page->title.' subpages first.', $level = 'warning');
+		if ($currentUser->hasPermission('delete_pages')) {
+			$page = $this->getPage($id);
 			
-			return redirect('/cp/pages');
-		} else {
-			$title = 'Delete Page';
-		
-			$subTitle = 'Pages';
-		
-			return view('cp.pages.delete', compact('title', 'subTitle', 'page'));
+			if ($page->id == $id && $id == 1) {
+				flash('You cannot delete the '.$page->title.' page.', $level = 'warning');
+	
+				return redirect('/cp/pages');
+			}
+			
+			if ($page->children()->count() > 0) {
+				$title = 'Pages';
+			
+				$subTitle = '';
+			
+				flash('You must delete the '.$page->title.' subpages first.', $level = 'warning');
+				
+				return redirect('/cp/pages');
+			} else {
+				$title = 'Delete Page';
+			
+				$subTitle = 'Pages';
+			
+				return view('cp.pages.delete', compact('currentUser', 'title', 'subTitle', 'page'));
+			}
 		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -350,17 +380,17 @@ class PageController extends Controller
 	 */
    	public function delete(Request $request, int $id)
 	{
-		//$currentUser = $this->getAuthenticatedUser();
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$page = $this->getPage($id);
+		if ($currentUser->hasPermission('delete_pages')) {
+			$page = $this->getPage($id);
 		
-		if ($page->id == $id && $id == 1) {
-			flash('You cannot delete the '.$page->title.' page.', $level = 'warning');
+			if ($page->id == $id && $id == 1) {
+				flash('You cannot delete the '.$page->title.' page.', $level = 'warning');
 
-			return redirect('/cp/pages');
-		}
+				return redirect('/cp/pages');
+			}
 		
-		//if ($currentUser->hasPermission('delete_pages')) {
 			DB::beginTransaction();
 
 			try {
@@ -384,9 +414,9 @@ class PageController extends Controller
 			flash('Page deleted successfully.', $level = 'info');
 
 			return redirect('/cp/pages');
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**

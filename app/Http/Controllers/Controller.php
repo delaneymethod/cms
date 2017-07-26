@@ -368,7 +368,7 @@ class Controller extends BaseController
 	 */
 	protected function filterLocations($locations)
 	{
-		if ($locations->count() == 0) {		
+		if (count($locations) == 0) {		
 			return collect($locations);
 		}
 		
@@ -378,13 +378,13 @@ class Controller extends BaseController
 		if ($currentUser->isSuperAdmin()) {
 			return collect($locations);
 		} else {
-			$allowedLocations = $currentUser->company->locations->toArray();
+			$allowedLocationIds = $currentUser->company->locations->pluck('id')->toArray();
 			
 			$filteredLocations = [];
 			
-			if (count($allowedLocations) > 0) {
+			if (count($allowedLocationIds) > 0) {
 				foreach ($locations as $location) {
-					if (in_array($location->id, $allowedLocations)) {
+					if (in_array($location->id, $allowedLocationIds)) {
 						array_push($filteredLocations, $location);
 					}
 				}
@@ -402,7 +402,7 @@ class Controller extends BaseController
 	 */
 	protected function filterOrders($orders)
 	{
-		if ($orders->count() == 0) {		
+		if (count($orders) == 0) {		
 			return collect($orders);
 		}
 		

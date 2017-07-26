@@ -46,6 +46,8 @@ class AssetController extends Controller
 	 */
    	public function index(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$title = 'Assets';
 		
 		$subTitle = '';
@@ -70,7 +72,7 @@ class AssetController extends Controller
 			
 			return response()->json($json);
 		} else {
-			return view('cp.assets.index', compact('title', 'subTitle'));
+			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle'));
 		}
 	}
 	
@@ -103,11 +105,17 @@ class AssetController extends Controller
 	 */
    	public function upload(Request $request)
 	{
-		$title = 'Upload Assets';
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$subTitle = 'Assets';
+		if ($currentUser->hasPermission('upload_assets')) {
+			$title = 'Upload Assets';
 		
-		return view('cp.assets.upload', compact('title', 'subTitle'));
+			$subTitle = 'Assets';
+		
+			return view('cp.assets.upload', compact('currentUser', 'title', 'subTitle'));
+		}
+		
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -118,9 +126,9 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-		//$currentUser = $this->getUser();
-
-		//if ($currentUser->hasPermission('upload_files')) {
+	    $currentUser = $this->getAuthenticatedUser();
+	    
+		if ($currentUser->hasPermission('upload_assets')) {
 			// Remove any Cross-site scripting (XSS)
 			$rules = [];
 			
@@ -253,9 +261,9 @@ class AssetController extends Controller
 					]);
 				}
 			}
-		//}
+		}
 
-		//abort(403, 'Unauthorised action');
+		abort(403, 'Unauthorised action');
 	}
 	
 	private function buildPath(array $uris)
@@ -323,7 +331,7 @@ class AssetController extends Controller
 	}
 	
 	/*
-	public function getAllFiles($path)
+	private function getAllFiles($path)
 	{
 		$files = Storage::allFiles($path);
 		
@@ -339,7 +347,7 @@ class AssetController extends Controller
 		return $files;
 	}
 	
-	public function getAllFolders($path)
+	private function getAllFolders($path)
 	{
 		$folders = Storage::allDirectories($path);
 	
@@ -354,7 +362,7 @@ class AssetController extends Controller
 	/**
 	 * Does what it says on the tin!
 	 */
-	public function getFileSize($bytes) 
+	private function getFileSize($bytes) 
 	{
 		$i = floor(log($bytes, 1024));
 		

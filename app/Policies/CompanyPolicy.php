@@ -13,8 +13,8 @@ class CompanyPolicy
 	/**
 	 * Determine whether the user can view, create, update or delete the resource.
 	 *
-	 * @param	User	$currentUser
-	 * @param	User	$user
+	 * @param	User		$currentUser
+	 * @param	Company		$company
 	 * @return mixed
 	 */
 	public function userOwnsThis(User $currentUser, Company $company)

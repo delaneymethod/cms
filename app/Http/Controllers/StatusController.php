@@ -33,13 +33,19 @@ class StatusController extends Controller
 	 */
    	public function index(Request $request)
 	{
-		$title = 'Statuses';
+		$currentUser = $this->getAuthenticatedUser();
 		
-		$subTitle = '';
+		if ($currentUser->hasPermission('view_statuses')) {
+			$title = 'Statuses';
+			
+			$subTitle = '';
+			
+			$statuses = $this->getStatuses();
+			
+			return view('cp.advanced.statuses.index', compact('currentUser', 'title', 'subTitle', 'statuses'));
+		}
 		
-		$statuses = $this->getStatuses();
-		
-		return view('cp.advanced.statuses.index', compact('title', 'subTitle', 'statuses'));
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**

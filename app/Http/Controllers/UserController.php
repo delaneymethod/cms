@@ -41,14 +41,18 @@ class UserController extends Controller
    	public function index(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
-		 
-		$title = 'Users';
 		
-		$subTitle = $currentUser->company->title;
+		if ($currentUser->hasPermission('view_users')) {
+			$title = 'Users';
 		
-		$users = $this->getUsers();
+			$subTitle = $currentUser->company->title;
 		
-		return view('cp.users.index', compact('title', 'subTitle', 'users'));
+			$users = $this->getUsers();
+		
+			return view('cp.users.index', compact('currentUser', 'title', 'subTitle', 'users'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -60,24 +64,33 @@ class UserController extends Controller
    	public function create(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
-		
-		$title = 'Create User';
-		
-		$subTitle = $currentUser->company->title;
-		
-		// Used to set company_id
-		$companies = $this->getCompanies();
-		
-		// Used to set role_id
-		$roles = $this->getRoles();
-		
-		// Used to set status_id
-		$statuses = $this->getStatuses();
-		
-		// Used to set location_id
-		$locations = $this->getLocations();
-		
-		return view('cp.users.create', compact('title', 'subTitle', 'companies', 'statuses', 'locations', 'roles'));
+
+		if ($currentUser->hasPermission('create_users')) {
+			$title = 'Create User';
+			
+			$subTitle = $currentUser->company->title;
+			
+			// Used to set company_id
+			$companies = $this->getCompanies();
+			
+			// Used to set role_id
+			$roles = $this->getRoles();
+			
+			// If current user is not a super admin, hide super admin role
+			if (!$currentUser->isSuperAdmin()) {
+				$roles->forget(0);
+			}
+			
+			// Used to set status_id
+			$statuses = $this->getStatuses();
+			
+			// Used to set location_id
+			$locations = $this->getLocations();
+			
+			return view('cp.users.create', compact('currentUser', 'title', 'subTitle', 'companies', 'statuses', 'locations', 'roles'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -160,34 +173,40 @@ class UserController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		$title = 'Edit User';
+		if ($currentUser->hasPermission('edit_users') || $currentUser->id == $id) {
+			$title = 'Edit User';
 		
-		$subTitle = $currentUser->company->title;
+			$subTitle = $currentUser->company->title;
+			
+			$user = $this->getUser($id);
+			
+			$this->authorize('userOwnsThis', $user);
+			
+			// Used to set company_id
+			$companies = $this->getCompanies();
 		
-		$user = $this->getUser($id);
+			// Used to set role_id
+			$roles = $this->getRoles();
+			
+			// If current user is not a super admin, hide super admin role
+			if (!$currentUser->isSuperAdmin()) {
+				$roles->forget(0);
+			}
+			
+			// Used to set status_id
+			$statuses = $this->getStatuses();
 		
-		$this->authorize('userOwnsThis', $user);
+			// Used to set location_id
+			$locations = $this->getLocations();
 		
-		// Used to set company_id
-		$companies = $this->getCompanies();
-	
-		// Used to set role_id
-		$roles = $this->getRoles();
-	
-		// Used to set status_id
-		$statuses = $this->getStatuses();
-	
-		// Remove the retire status from the list since we are updating the current user
-		$currentUser = $this->getAuthenticatedUser();
-	
-		// Used to set location_id
-		$locations = $this->getLocations();
-	
-		return view('cp.users.edit.index', compact('title', 'subTitle', 'user', 'companies', 'roles', 'statuses', 'locations'));
+			return view('cp.users.edit.index', compact('currentUser', 'title', 'subTitle', 'user', 'companies', 'roles', 'statuses', 'locations'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
-	 * Shows a form for editing a user.
+	 * Shows a form for editing a user password.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
@@ -197,15 +216,19 @@ class UserController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		$title = 'Change Password';
-		
-		$subTitle = $currentUser->company->title;
-		
-		$user = $this->getUser($id);
-		
-		$this->authorize('userOwnsThis', $user);
-		
-		return view('cp.users.edit.password', compact('title', 'subTitle', 'user'));
+		if ($currentUser->hasPermission('edit_passwords_users') || $currentUser->id == $id) {
+			$title = 'Change Password';
+			
+			$subTitle = $currentUser->company->title;
+			
+			$user = $this->getUser($id);
+			
+			$this->authorize('userOwnsThis', $user);
+			
+			return view('cp.users.edit.password', compact('currentUser', 'title', 'subTitle', 'user'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
@@ -232,7 +255,7 @@ class UserController extends Controller
 			
 		$currentUser = $this->getAuthenticatedUser();
 
-		if ($currentUser->hasPermission($permission)) {
+		if ($currentUser->hasPermission($permission) || $currentUser->id == $id) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedUser = $this->sanitizerInput($request->all());
 
@@ -318,20 +341,20 @@ class UserController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($currentUser->id == $id) {
-			flash('You cannot retire yourself.', $level = 'warning');
-
-			return redirect('/cp/users');
-		}
-		
 		if ($currentUser->hasPermission('retire_users')) {
+			$user = $this->getUser($id);
+				
+			$this->authorize('userOwnsThis', $user);
+		
+			if ($currentUser->id == $user->id) {
+				flash('You cannot retire yourself.', $level = 'warning');
+
+				return redirect('/cp/users');
+			}
+			
 			DB::beginTransaction();
 
 			try {
-				$user = $this->getUser($id);
-				
-				$this->authorize('userOwnsThis', $user);
-		
 				// Retired status
 				$user->status_id = 3;
 				$user->updated_at = $this->datetime;
@@ -372,21 +395,25 @@ class UserController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		$user = $this->getUser($id);
+		if ($currentUser->hasPermission('delete_users')) {
+			$user = $this->getUser($id);
 		
-		$this->authorize('userOwnsThis', $user);
-		
-		if ($currentUser->id == $id) {
-			flash('You cannot delete yourself.', $level = 'warning');
-
-			return redirect('/cp/users');
+			$this->authorize('userOwnsThis', $user);
+			
+			if ($currentUser->id == $user->id) {
+				flash('You cannot delete yourself.', $level = 'warning');
+	
+				return redirect('/cp/users');
+			}
+			
+			$title = 'Delete User';
+			
+			$subTitle = $currentUser->company->title;
+			
+			return view('cp.users.delete', compact('currentUser', 'title', 'subTitle', 'user'));
 		}
-		
-		$title = 'Delete User';
-		
-		$subTitle = $currentUser->company->title;
-		
-		return view('cp.users.delete', compact('title', 'subTitle', 'user'));
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**

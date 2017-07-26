@@ -1,6 +1,6 @@
 				<nav>
 					<ul>
-						<li><a href="'/" title="Home">Home</a></li>
+						<li><a href="/" title="Home">Home</a></li>
 						@if (Auth::guest() && Route::has('login'))
 							<li><a href="/login" title="Login">Login</a></li>
 						@else

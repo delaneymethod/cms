@@ -16,7 +16,18 @@ class LocationsTableSeeder extends Seeder
 
 		$locations = [
 			[
-				'title' => 'Westhill, Aberdeen',
+				'title' => 'Dyce, Aberdeen',
+				'unit' => '',
+				'building' => 'Grampian House',
+				'street_address_1' => 'Pitmedden Road',
+				'street_address_2' => 'Dyce',
+				'street_address_3' => '',
+				'street_address_4' => '',
+				'town_city' => 'Aberdeen',
+				'postal_code' => 'AB21 0DP',
+				'county_id' => 33,
+				'country_id' => 3,
+				'telephone' => '+44 1224 772 777',
 				'company_id' => 1,
 				'status_id' => 1,
 				'created_at' => $now,

@@ -86,7 +86,9 @@
 							<span id="helpBlockContent" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-buttons">
-							<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="7" title="Cancel">Cancel</a>
+							@if ($currentUser->hasPermission('view_pages'))
+								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="7" title="Cancel">Cancel</a>
+							@endif
 							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="6" title="Save Changes">Save Changes</button>
 						</div>
 					</form>

@@ -1,6 +1,6 @@
 @extends('_layouts.default')
 
-@section('title', 'Delete Company- Companies - '.config('app.name'))
+@section('title', 'Delete Company - Companies - '.config('app.name'))
 @section('description', 'Delete Company - Companies - '.config('app.name'))
 @section('keywords', 'Delete, Company, Companies, '.config('app.name'))
 
@@ -28,7 +28,9 @@
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
 						<div class="form-buttons">
-							<a href="/cp/companies" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>
+							@if ($currentUser->hasPermission('view_companies'))
+								<a href="/cp/companies" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>
+							@endif
 							<button type="submit" name="submit" id="submit" class="btn btn-outline-danger" tabindex="1" title="Delete">Delete</button>
 						</div>
 					</form>

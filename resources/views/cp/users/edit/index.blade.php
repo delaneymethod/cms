@@ -26,7 +26,7 @@
 					<form name="editUser" id="editUser" class="editUser" role="form" method="POST" action="/cp/users/{{ $user->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
-						@if ($user->id == Auth::id())
+						@if ($user->id == $currentUser->id)
 							<input type="hidden" name="company_id" value="{{ $user->company_id }}">
 							<input type="hidden" name="role_id" value="{{ $user->role_id }}">
 							<input type="hidden" name="status_id" value="{{ $user->status_id }}">
@@ -73,8 +73,8 @@
 							<span id="helpBlockTelephone" class="form-control-feedback form-text text-muted">- Please enter the telephone number in the international format starting with a plus sign (&#43;).</span>
 						</div>
 						<div class="form-group">
-							<label for="mobile" class="control-label font-weight-bold">Mobile <span class="text-danger">&#42;</span></label>
-							<input type="tel" name="mobile" id="mobile" class="form-control" value="{{ old('mobile') ?? $user->mobile }}" placeholder="E.g: &#43;44 7700 123 456" tabindex="6" autocomplete="off" aria-describedby="helpBlockMobile" required>
+							<label for="mobile" class="control-label font-weight-bold">Mobile</label>
+							<input type="tel" name="mobile" id="mobile" class="form-control" value="{{ old('mobile') ?? $user->mobile }}" placeholder="E.g: &#43;44 7700 123 456" tabindex="6" autocomplete="off" aria-describedby="helpBlockMobile">
 							@if ($errors->has('mobile'))
 								<span id="helpBlockMobile" class="form-control-feedback form-text gf-red">- {{ $errors->first('mobile') }}</span>
 							@endif
@@ -82,15 +82,15 @@
 						</div>
 						<div class="form-group">
 							<label for="company_id" class="control-label font-weight-bold">Company</label>
-							<select name="company_id" id="company_id" class="form-control {{ ($user->id == Auth::id()) ? 'text-disabled' : '' }}" tabindex="7" aria-describedby="helpBlockCompanyId" required>
+							<select name="company_id" id="company_id" class="form-control {{ ($user->id == $currentUser->id) ? 'text-disabled' : '' }}" tabindex="7" aria-describedby="helpBlockCompanyId" required>
 								@foreach ($companies as $company)
-									<option value="{{ $company->id }}" {{ (old('company_id') == $company->id || $user->company_id == $company->id) ? 'selected' : '' }} {{ ($user->id == Auth::id()) ? 'disabled' : '' }}>{{ $company->title }}</option>
+									<option value="{{ $company->id }}" {{ (old('company_id') == $company->id || $user->company_id == $company->id) ? 'selected' : '' }} {{ ($user->id == $currentUser->id) ? 'disabled' : '' }}>{{ $company->title }}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('company_id'))
 								<span id="helpBlockCompanyId" class="form-control-feedback form-text gf-red">- {{ $errors->first('company_id') }}</span>
 							@endif
-							@if ($user->id == Auth::id())
+							@if ($user->id == $currentUser->id)
 								<span id="helpBlockCompanyId" class="form-control-feedback form-text text-warning">- This field is disabled. You cannot change your own company.</span>
 							@endif
 							<span id="helpBlockCompanyId" class="form-control-feedback form-text text-muted"></span>
@@ -99,7 +99,7 @@
 							<label for="location_id" class="control-label font-weight-bold">Location</label>
 							<select name="location_id" id="location_id" class="form-control" tabindex="8" aria-describedby="helpBlockLocationId" required>
 								@foreach ($locations as $location)
-									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id || $user->location_id == $location->id) ? 'selected' : '' }}>{{ $location->title }}</option>
+									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id || $user->location_id == $location->id) ? 'selected' : '' }}>{{ $location->title }}{{ ($location->status->id == 2 || $location->status->id == 3) ? '&nbsp;('.$location->status->title.')' : '' }}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('location_id'))
@@ -111,15 +111,15 @@
 							<label class="control-label font-weight-bold">Role</label>
 							@foreach ($roles as $role)
 								<div class="form-check">
-									<label for="role_id-{{ str_slug($role->title) }}" class="form-check-label {{ ($user->id == Auth::id()) ? 'text-disabled' : '' }}">
-										<input type="radio" name="role_id" id="role_id-{{ str_slug($role->title) }}" class="form-check-input" value="{{ $role->id }}" tabindex="9" aria-describedby="helpBlockRoleId" {{ (old('role_id') == $role->id || $user->role_id == $role->id) ? 'checked' : '' }} {{ ($user->id == Auth::id()) ? 'disabled' : '' }}>{{ $role->title }}
+									<label for="role_id-{{ str_slug($role->title) }}" class="form-check-label {{ ($user->id == $currentUser->id) ? 'text-disabled' : '' }}">
+										<input type="radio" name="role_id" id="role_id-{{ str_slug($role->title) }}" class="form-check-input" value="{{ $role->id }}" tabindex="9" aria-describedby="helpBlockRoleId" {{ (old('role_id') == $role->id || $user->role_id == $role->id) ? 'checked' : '' }} {{ ($user->id == $currentUser->id) ? 'disabled' : '' }}>{{ $role->title }}
 									</label>
 								</div>
 							@endforeach
 							@if ($errors->has('role_id'))
 								<span id="helpBlockRoleId" class="form-control-feedback form-text gf-red">- {{ $errors->first('role_id') }}</span>
 							@endif
-							@if ($user->id == Auth::id())
+							@if ($user->id == $currentUser->id)
 								<span id="helpBlockRoleId" class="form-control-feedback form-text text-warning">- This field is disabled. You cannot change your own role.</span>
 							@endif
 							<span id="helpBlockRoleId" class="form-control-feedback form-text text-muted"></span>
@@ -128,26 +128,30 @@
 							<label class="control-label font-weight-bold">Status</label>
 							@foreach ($statuses as $status)
 								<div class="form-check status_id-{{ $status->id }}">
-									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label {{ ($user->id == Auth::id()) ? 'text-disabled' : '' }}">
-										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="10" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $user->status_id == $status->id) ? 'checked' : '' }} {{ ($user->id == Auth::id()) ? 'disabled' : '' }}>{{ $status->title }}
+									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label {{ ($user->id == $currentUser->id) ? 'text-disabled' : '' }}">
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="10" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $user->status_id == $status->id) ? 'checked' : '' }} {{ ($user->id == $currentUser->id) ? 'disabled' : '' }}>{{ $status->title }}
 									</label>
 								</div>
 							@endforeach
 							@if ($errors->has('status_id'))
 								<span id="helpBlockStatusId" class="form-control-feedback form-text gf-red">- {{ $errors->first('status_id') }}</span>
 							@endif
-							@if ($user->id == Auth::id())
+							@if ($user->id == $currentUser->id)
 								<span id="helpBlockStatusId" class="form-control-feedback form-text text-warning">- This field is disabled. You cannot change your own status.</span>
 							@endif
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-buttons">
-							<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
+							@if ($currentUser->hasPermission('view_users'))
+								<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
+							@endif
 							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="11" title="Save Changes">Save Changes</button>
-							@if ($user->id != Auth::id())
+							@if ($currentUser->hasPermission('delete_users') && $user->id != $currentUser->id)
 								<a href="/cp/users/{{ $user->id }}/delete" title="Delete User" class="pull-right btn btn-outline-danger">Delete User</a>
 							@endif
-							<a href="/cp/users/{{ $user->id }}/edit/password" title="Change Password" class="pull-right btn btn-outline-secondary {{ ($user->id != Auth::id()) ? 'cancel-button' : '' }}">Change Password</a>
+							@if ($currentUser->hasPermission('edit_passwords_users') || $user->id == $currentUser->id)
+								<a href="/cp/users/{{ $user->id }}/edit/password" title="Change Password" class="pull-right btn btn-outline-secondary {{ ($user->id != $currentUser->id) ? 'cancel-button' : '' }}">Change Password</a>
+							@endif
 						</div>
 					</form>
 				</div>

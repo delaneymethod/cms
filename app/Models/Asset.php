@@ -22,6 +22,15 @@ class Asset extends Model
 	];
 	
 	/**
+     * Attributes that get appended on serialization
+     *
+     * @var array
+     */
+	protected $appends = [
+		'filesize',
+	];
+	
+	/**
 	 * Set the assets filesize in human readable format.
 	 *
 	 * @param  	int  	$value
@@ -30,6 +39,16 @@ class Asset extends Model
 	public function setFilesizeAttribute($size)
 	{
 		$this->attributes['filesize'] = $size;
+	}
+	
+	/**
+	 * Gets the assets filesize in human readable format.
+	 *
+	 * @return string
+	 */
+	public function getFilesizeAttribute()
+	{
+		return $this->filesize;
 	}
 	
 	/**

@@ -124,7 +124,7 @@ class User extends Authenticatable
 	 */
 	public function hasPermission(string $permission)
 	{
-		return in_array($permission, $this->permissions->pluck('permission')->toArray());
+		return in_array($permission, $this->permissions->pluck('title')->toArray());
 	}
 	
 	/**
