@@ -33,7 +33,9 @@
 							@endif
 							<span id="helpBlockFiles" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+						@if ($currentUser->hasPermission('view_assets'))
+							<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+						@endif
 						<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Upload">Upload</button>
 					</form>
 				</div>

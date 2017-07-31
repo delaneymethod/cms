@@ -8,18 +8,13 @@ use App\Models\Status;
 use App\Models\Company;
 use App\Models\Article;
 use App\Models\Location;
-use App\Models\Permission;
-use App\Http\Traits\RoleTrait;
-use App\Http\Traits\PermissionTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-	use RoleTrait;
 	use Notifiable;
-	use PermissionTrait;
 
 	/**
 	 * The attributes that are mass assignable.
@@ -99,24 +94,6 @@ class User extends Authenticatable
 	}
 	
 	/**
-	 * Get the permissions records associated with the user.
-	 */
-	public function permissions()
-	{
-		return $this->belongsToMany(Permission::class, 'permission_user');
-	}
-
-	/**
-	 * Find out if user has permissions, based on if has any permissions
-	 *
-	 * @return boolean
-	 */
-	public function hasPermissions()
-	{
-		return !empty($this->permissions->toArray());
-	}
-
-	/**
 	 * Find out if user has a specific permission
 	 *
 	 * $param 	string 		$permission
@@ -124,52 +101,7 @@ class User extends Authenticatable
 	 */
 	public function hasPermission(string $permission)
 	{
-		return in_array($permission, $this->permissions->pluck('title')->toArray());
-	}
-	
-	/**
-	 * Set permissions for the user based on a role.
-	 *
-	 * $param 	int 		$roleId
-	 */
-	public function setRole(int $roleId)
-	{
-		$assignedPermissions = array();
-
-		// Quick cross check to to make sure role exists
-		$role = $this->getRole($roleId);
-
-		$permissions = $this->getPermissions();
-
-		switch ($role->title) {
-			case 'Super Administrator':
-				// Add all permissions
-				$assignedPermissions = $permissions->pluck('id')->toArray();
-			break;
-			
-			case 'Administrator':
-				// TODO - Assign more permissions to admins
-				array_push($assignedPermissions, $this->_getIdFromCollection($permissions, 'view_users'));
-				
-				// cannot select super admin status
-				// cannot edit roles, statuses, pages, menu, articles
-				
-			break;
-			
-			case 'End User':
-				// TODO - Assign more permissions to end users
-				array_push($assignedPermissions, $this->_getIdFromCollection($permissions, 'view_orders'));
-			
-				// can only view stuff and edit own account
-			break;
-		}
-		
-		if (count($assignedPermissions) === 0) {
-			abort(500, 'The user has no permissions!');
-		}
-
-		// See "Syncing Associations" under Eloquent Relationships in the Laravel docs!
-		return $this->permissions()->sync($assignedPermissions);
+		return in_array($permission, $this->role->permissions->pluck('title')->toArray());
 	}
 	
 	/**
@@ -210,17 +142,5 @@ class User extends Authenticatable
 	public function routeNotificationForMail()
 	{
 		return $this->email;
-	}
-
-	/**
-	 * Get id from collection where corresponding value
-	 *
-	 * $param 	collection 	$collection
-	 * $param 	string 		$permission
-	 * @return 	int
-	 */
-	private function _getIdFromCollection(Collection $collection, string $permission)
-	{
-		return $collection->where('title', $permission)->first()->id;
 	}
 }

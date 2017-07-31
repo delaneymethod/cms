@@ -6,11 +6,13 @@ use DB;
 use Log;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Http\Traits\RoleTrait;
 use App\Http\Traits\PermissionTrait;
 use App\Http\Controllers\Controller;
 
 class PermissionController extends Controller
 {
+	use RoleTrait;
 	use PermissionTrait;
 
 	/**
@@ -40,9 +42,11 @@ class PermissionController extends Controller
 			
 			$subTitle = '';
 			
+			$roles = $this->getRoles();
+			
 			$permissions = $this->getPermissions();
 			
-			return view('cp.advanced.permissions.index', compact('currentUser', 'title', 'subTitle', 'permissions'));
+		    return view('cp.advanced.permissions.index', compact('currentUser', 'title', 'subTitle', 'permissions', 'roles'));
 		}
 		
 		abort(403, 'Unauthorised action');

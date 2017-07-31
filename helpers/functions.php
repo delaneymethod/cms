@@ -46,6 +46,20 @@ if (!function_exists('currentYear')) {
 	}
 }
 
+if (!function_exists('slugToTitle')) {
+	/**
+	 * Creates a title based on slug
+	 */
+	function slugToTitle($string)
+	{
+    	$string = str_replace(array('_', '-'), array(' '), $string);
+		
+		$string = ucwords($string);
+		
+		return $string;
+	}
+}
+
 if (!function_exists('flash')) {
 	/**
 	 * Creates new session flash message

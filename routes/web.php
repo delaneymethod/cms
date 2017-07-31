@@ -82,6 +82,7 @@ Route::get('/cp/advanced', 'RoleController@index');
 
 // CP > Roles routes
 Route::get('/cp/advanced/roles', 'RoleController@index');
+Route::post('/cp/advanced/roles/permissions', 'RoleController@permissions');
 
 // CP > Permissions routes
 Route::get('/cp/advanced/permissions', 'PermissionController@index');

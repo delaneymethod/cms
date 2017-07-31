@@ -21,13 +21,15 @@
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
-				<div class="row">
-					<div class="col">
-						<ul class="list-unstyled list-inline buttons">
-							<li class="list-inline-item"><a href="/cp/assets/upload" title="Upload Assets" class="btn btn-outline-success"><i class="fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
-						</ul>
+				@if ($currentUser->hasPermission('upload_assets'))
+					<div class="row">
+						<div class="col">
+							<ul class="list-unstyled list-inline buttons">
+								<li class="list-inline-item"><a href="/cp/assets/upload" title="Upload Assets" class="btn btn-outline-success"><i class="fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
+							</ul>
+						</div>
 					</div>
-				</div>
+				@endif
 				<div class="content padding bg-white">					
 				</div>
 			</div>

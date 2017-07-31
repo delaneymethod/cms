@@ -56,23 +56,27 @@
 									<td>{{ $user->mobile }}</td>
 									<td>{{ $user->location->title }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" aria-hidden="true"></i></td>
-									<td class="actions dropdown text-center" id="submenu">
-										<a href="javascript:void(0);" title="User Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
-										<ul class="dropdown-menu dropdown-menu-right">
-											@if ($currentUser->hasPermission('edit_users') || $currentUser->id == $user->id)
-												<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit User</a></li>
-											@endif
-											@if ($currentUser->hasPermission('retire_users') && $user->status_id != 3 && $user->id != $currentUser->id)
-												<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>
-											@endif
-											@if ($currentUser->hasPermission('edit_passwords_users') || $currentUser->id == $user->id)
-												<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit/password" title="Change User"><i class="icon fa fa-key" aria-hidden="true"></i>Change Password</a></li>
-											@endif
-											@if ($currentUser->hasPermission('delete_users') && $user->id != $currentUser->id)
-												<li class="dropdown-item gf-danger"><a href="/cp/users/{{ $user->id }}/delete" title="Delete User"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete User</a></li>
-											@endif
-										</ul>
-									</td>
+									@if (!$user->isSuperAdmin())
+										<td class="actions dropdown text-center" id="submenu">
+											<a href="javascript:void(0);" title="User Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+											<ul class="dropdown-menu dropdown-menu-right">
+												@if ($currentUser->hasPermission('edit_users') || $currentUser->id == $user->id)
+													<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit User</a></li>
+												@endif
+												@if ($currentUser->hasPermission('retire_users') && $user->status_id != 3 && $user->id != $currentUser->id)
+													<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>
+												@endif
+												@if ($currentUser->hasPermission('edit_passwords_users') || $currentUser->id == $user->id)
+													<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit/password" title="Change User"><i class="icon fa fa-key" aria-hidden="true"></i>Change Password</a></li>
+												@endif
+												@if ($currentUser->hasPermission('delete_users') && $user->id != $currentUser->id)
+													<li class="dropdown-item gf-danger"><a href="/cp/users/{{ $user->id }}/delete" title="Delete User"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete User</a></li>
+												@endif
+											</ul>
+										</td>
+									@else
+										<td>&nbsp;</td>
+									@endif
 								</tr>
 							@endforeach
 						</tbody>

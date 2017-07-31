@@ -146,7 +146,7 @@ class AssetController extends Controller
 				$files = count($cleanedAssets['files']) - 1;
 			
 				foreach (range(0, $files) as $index) {
-					$rules['files.' . $index] = 'required|file|max:3000';
+					$rules['files.'.$index] = 'required|file|max:3000';
 				}
 			} else {
 				$rules['file'] = 'required|file|max:3000';

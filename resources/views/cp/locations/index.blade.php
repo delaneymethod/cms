@@ -50,20 +50,24 @@
 									<td>{{ $location->postal_address }}</td>
 									<td>{{ $location->telephone }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $location->status->id }}" title="{{ $location->status->title }}" aria-hidden="true"></i></td>
-									<td class="actions dropdown text-center" id="submenu">
-										<a href="javascript:void(0);" title="Location Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
-										<ul class="dropdown-menu dropdown-menu-right">
-											@if ($currentUser->hasPermission('edit_locations'))
-												<li class="dropdown-item gf-info"><a href="/cp/locations/{{ $location->id }}/edit" title="Edit Location"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Location</a></li>
-											@endif
-											@if ($currentUser->hasPermission('retire_locations') && !in_array($location->id, $defaultLocationIds) && $location->status_id != 3)
-												<li class="dropdown-item gf-default"><a href="/cp/locations/{{ $location->id }}/retire" title="Retire Location"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire Location</a></li>
-											@endif
-											@if ($currentUser->hasPermission('delete_locations') && !in_array($location->id, $defaultLocationIds))
-												<li class="dropdown-item gf-danger"><a href="/cp/locations/{{ $location->id }}/delete" title="Delete Location"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Location</a></li>
-											@endif
-										</ul>
-									</td>
+									@if ($currentUser->hasPermission('edit_locations') || ($currentUser->hasPermission('retire_locations') && !in_array($location->id, $defaultLocationIds) && $location->status_id != 3) || ($currentUser->hasPermission('delete_locations') && !in_array($location->id, $defaultLocationIds)))
+										<td class="actions dropdown text-center" id="submenu">
+											<a href="javascript:void(0);" title="Location Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+											<ul class="dropdown-menu dropdown-menu-right">
+												@if ($currentUser->hasPermission('edit_locations'))
+													<li class="dropdown-item gf-info"><a href="/cp/locations/{{ $location->id }}/edit" title="Edit Location"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Location</a></li>
+												@endif
+												@if ($currentUser->hasPermission('retire_locations') && !in_array($location->id, $defaultLocationIds) && $location->status_id != 3)
+													<li class="dropdown-item gf-default"><a href="/cp/locations/{{ $location->id }}/retire" title="Retire Location"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire Location</a></li>
+												@endif
+												@if ($currentUser->hasPermission('delete_locations') && !in_array($location->id, $defaultLocationIds))
+													<li class="dropdown-item gf-danger"><a href="/cp/locations/{{ $location->id }}/delete" title="Delete Location"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Location</a></li>
+												@endif
+											</ul>
+										</td>
+									@else
+										<td>&nbsp;</td>
+									@endif
 								</tr>
 							@endforeach
 						</tbody>

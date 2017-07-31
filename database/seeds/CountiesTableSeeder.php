@@ -311,6 +311,12 @@ class CountiesTableSeeder extends Seeder
 			],
 			[
 				'country_id' => 3,
+				'title' => 'Aberdeen City',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'country_id' => 3,
 				'title' => 'Aberdeenshire',
 				'created_at' => $now,
 				'updated_at' => $now,

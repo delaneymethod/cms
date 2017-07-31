@@ -137,7 +137,7 @@ class UserController extends Controller
 				
 				$user->save();
 				
-				$user->setRole($user->role_id);
+				// TODO - trigger set password email
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -304,8 +304,6 @@ class UserController extends Controller
 				$user->updated_at = $this->datetime;
 				
 				$user->save();
-				
-				$user->setRole($user->role_id);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			

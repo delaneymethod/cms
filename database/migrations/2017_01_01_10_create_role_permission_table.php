@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePermissionUserTable extends Migration
+class CreateRolePermissionTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,16 +15,16 @@ class CreatePermissionUserTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 
-		Schema::create('permission_user', function (Blueprint $table) {
+		Schema::create('role_permission', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
+			$table->unsignedInteger('role_id')->comment('Foreign key to the roles table');
 			$table->unsignedInteger('permission_id')->comment('Foreign key to the permissions table');
-			$table->unsignedInteger('user_id')->comment('Foreign key to the users table');
 		});
 
-		Schema::table('permission_user', function (Blueprint $table) {
+		Schema::table('role_permission', function (Blueprint $table) {
+			$table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
 			$table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
-			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 		});
 	}
 
@@ -35,6 +35,6 @@ class CreatePermissionUserTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('permission_user');
+		Schema::dropIfExists('role_permission');
 	}
 }

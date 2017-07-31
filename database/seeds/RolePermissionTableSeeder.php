@@ -3,7 +3,7 @@
 use App\Models\Permission;
 use Illuminate\Database\Seeder;
 
-class PermissionUserTableSeeder extends Seeder
+class RolePermissionTableSeeder extends Seeder
 {
 	/**
 	 * Run the database seeds.
@@ -12,17 +12,17 @@ class PermissionUserTableSeeder extends Seeder
 	 */
 	public function run()
 	{
-		DB::table('permission_user')->delete();
+		DB::table('role_permission')->delete();
 		
 		$permissions = Permission::all();
 		
 		$permissions->each(function($permission) {
-			$permissionUser = array(
-				'permission_id' => $permission->id,
-				'user_id' => 1
+			$rolePermission = array(
+				'role_id' => 1,
+				'permission_id' => $permission->id
 			);
 			
-			DB::table('permission_user')->insert($permissionUser);
+			DB::table('role_permission')->insert($rolePermission);
 		});
 	}
 }

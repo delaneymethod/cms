@@ -44,17 +44,21 @@
 								<tr>
 									<td>{{ $company->id }}</td>
 									<td>{{ $company->title }}</td>
-									<td class="actions dropdown text-center" id="submenu">
-										<a href="javascript:void(0);" title="Company Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
-										<ul class="dropdown-menu dropdown-menu-right">
-											@if ($currentUser->hasPermission('edit_companies'))
-												<li class="dropdown-item gf-info"><a href="/cp/companies/{{ $company->id }}/edit" title="Edit Company"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Company</a></li>
-											@endif
-											@if ($currentUser->hasPermission('delete_companies') && $company->id != $currentUser->company_id)
-												<li class="dropdown-item gf-danger"><a href="/cp/companies/{{ $company->id }}/delete" title="Delete Company"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Company</a></li>
-											@endif
-										</ul>
-									</td>
+									@if ($currentUser->hasPermission('edit_companies') || ($currentUser->hasPermission('delete_companies') && $company->id != $currentUser->company_id))
+										<td class="actions dropdown text-center" id="submenu">
+											<a href="javascript:void(0);" title="Company Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+											<ul class="dropdown-menu dropdown-menu-right">
+												@if ($currentUser->hasPermission('edit_companies'))
+													<li class="dropdown-item gf-info"><a href="/cp/companies/{{ $company->id }}/edit" title="Edit Company"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Company</a></li>
+												@endif
+												@if ($currentUser->hasPermission('delete_companies') && $company->id != $currentUser->company_id)
+													<li class="dropdown-item gf-danger"><a href="/cp/companies/{{ $company->id }}/delete" title="Delete Company"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Company</a></li>
+												@endif
+											</ul>
+										</td>
+									@else
+										<td>&nbsp;</td>
+									@endif
 								</tr>
 							@endforeach
 						</tbody>

@@ -86,7 +86,7 @@
 		};
 		
 		let attachDataTable = element => {
-			$(element).dataTable({
+			let table = $(element).dataTable({
 				'order': [],
 				'deferRender': true,
 				'oLanguage': {
