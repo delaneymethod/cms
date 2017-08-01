@@ -1,37 +1,66 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class PagesTableSeeder extends Seeder
 {
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
-		$now = Carbon::now()->format('Y-m-d H:i:s');
-		
-		$pages = [
-			[
-				'title' => 'Home',
-				'slug' => '',
-				'status_id' => 1,
-				'content' => '<p>This is the homepage.</p>',
-				'parent_id' => null,
-				'lft' => 1,
-				'rgt' => 2,
-				'depth' => 0,
-				'created_at' => $now,
-				'updated_at' => $now,
-			],
-		];
 
-		DB::table('pages')->delete();
+    /**
+     * Auto generated seed file
+     *
+     * @return void
+     */
+    public function run()
+    {
+        
 
-		DB::table('pages')->insert($pages);
-	}
+        \DB::table('pages')->delete();
+        
+        \DB::table('pages')->insert(array (
+            0 => 
+            array (
+                'id' => 1,
+                'title' => 'Home',
+                'slug' => '',
+                'content' => '<p>This is the homepage.</p>',
+                'status_id' => 1,
+                'parent_id' => NULL,
+                'lft' => 1,
+                'rgt' => 2,
+                'depth' => 0,
+                'created_at' => '2017-08-01 09:19:40',
+                'updated_at' => '2017-08-01 16:02:00',
+            ),
+            1 => 
+            array (
+                'id' => 2,
+                'title' => 'About Us',
+                'slug' => 'about-us',
+                'content' => '<p>This is the About page.</p>',
+                'status_id' => 1,
+                'parent_id' => NULL,
+                'lft' => 3,
+                'rgt' => 4,
+                'depth' => 0,
+                'created_at' => '2017-08-01 11:51:41',
+                'updated_at' => '2017-08-01 16:02:00',
+            ),
+            2 => 
+            array (
+                'id' => 3,
+                'title' => 'Services',
+                'slug' => 'services',
+                'content' => '<p>This is the Services page.</p>',
+                'status_id' => 1,
+                'parent_id' => NULL,
+                'lft' => 5,
+                'rgt' => 6,
+                'depth' => 0,
+                'created_at' => '2017-08-01 11:51:58',
+                'updated_at' => '2017-08-01 16:02:00',
+            ),
+        ));
+        
+        
+    }
 }

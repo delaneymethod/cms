@@ -76,8 +76,10 @@ return [
 
 	'validation_rules' => [
 		
-		'tree' => [
-			'tree' => 'required|string',
+		'category' => [
+			'title' => 'required|string|max:255',
+			'slug' => 'required|string|max:255',
+			'status_id' => 'required|integer',
 		],
 		'page' => [
 			'title' => 'required|string|max:255',

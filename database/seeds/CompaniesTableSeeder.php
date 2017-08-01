@@ -1,30 +1,40 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class CompaniesTableSeeder extends Seeder
 {
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
-		$now = Carbon::now()->format('Y-m-d H:i:s');
 
-		$companies = [
-			[
-				'title' => 'DelaneyMethod Web Development Ltd',
-				'default_location_id' => 1,
-				'created_at' => $now,
-				'updated_at' => $now,
-			],
-		];
+    /**
+     * Auto generated seed file
+     *
+     * @return void
+     */
+    public function run()
+    {
+        
 
-		DB::table('companies')->delete();
-
-		DB::table('companies')->insert($companies);
-	}
+        \DB::table('companies')->delete();
+        
+        \DB::table('companies')->insert(array (
+            0 => 
+            array (
+                'id' => 1,
+                'title' => 'DelaneyMethod Web Development Ltd',
+                'default_location_id' => 1,
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            1 => 
+            array (
+                'id' => 2,
+                'title' => 'Grampian Fasteners',
+                'default_location_id' => 1,
+                'created_at' => '2017-08-01 12:01:53',
+                'updated_at' => '2017-08-01 12:01:53',
+            ),
+        ));
+        
+        
+    }
 }

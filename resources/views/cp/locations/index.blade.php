@@ -44,7 +44,7 @@
 						<tbody>
 							@foreach ($locations as $location)
 								<tr class="{{ str_slug($location->status->title) }}">
-									<td>{{ $location->title }} {!! ($location->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!} {!! ($location->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}</td>
+									<td>{{ $location->title }}{!! ($location->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}{!! ($location->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}</td>
 									<td>{{ $location->postal_address }}</td>
 									<td>{{ $location->telephone }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $location->status->id }}" title="{{ $location->status->title }}" aria-hidden="true"></i></td>

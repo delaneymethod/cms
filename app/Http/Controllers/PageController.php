@@ -277,7 +277,7 @@ class PageController extends Controller
 			// Remove any Cross-site scripting (XSS)
 			$cleanedTree = $this->sanitizerInput($request->all());
 
-			$rules = $this->getRules('tree');
+			$rules['tree'] = 'required|string';
 
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedTree, $rules);

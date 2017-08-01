@@ -367,6 +367,14 @@
 			
 			convertTitleToSlug('#editArticle #slug', '#editArticle #slug');
 			
+			convertTitleToSlug('#createCategory #title', '#createCategory #slug');
+			
+			convertTitleToSlug('#createCategory #slug', '#createCategory #slug');
+			
+			convertTitleToSlug('#editCategory #title', '#editCategory #slug');
+			
+			convertTitleToSlug('#editCategory #slug', '#editCategory #slug');
+			
 			saveMenuChanges('#nestedSortable');
 		};
 

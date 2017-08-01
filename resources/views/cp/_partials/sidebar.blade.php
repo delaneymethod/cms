@@ -15,6 +15,9 @@
 				@if ($currentUser->hasPermission('view_orders'))
 					<li class="{{ setActive('cp/orders') }}"><a href="/cp/orders" title="Orders"><i class="text-center icon fa fa-shopping-cart" aria-hidden="true"></i>Orders</a></li>
 				@endif
+				@if ($currentUser->hasPermission('view_categories'))
+					<li class="{{ setActive('cp/categories') }}"><a href="/cp/categories" title="Categories"><i class="text-center icon fa fa-list" aria-hidden="true"></i>Categories</a></li>
+				@endif
 				@if ($currentUser->hasPermission('view_articles'))	
 					<li class="{{ setActive('cp/articles') }}"><a href="/cp/articles" title="Articles"><i class="text-center icon fa fa-newspaper-o" aria-hidden="true"></i>Articles</a></li>
 				@endif

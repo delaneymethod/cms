@@ -74,6 +74,16 @@ Route::put('/cp/articles/{id}', 'ArticleController@update');
 Route::patch('/cp/articles/{id}', 'ArticleController@update');
 Route::delete('/cp/articles/{id}', 'ArticleController@delete');
 
+// CP > Categories routes
+Route::get('/cp/categories', 'CategoryController@index');
+Route::get('/cp/categories/create', 'CategoryController@create');
+Route::get('/cp/categories/{id}/edit', 'CategoryController@edit');
+Route::get('/cp/categories/{id}/delete', 'CategoryController@confirm');
+Route::post('/cp/categories', 'CategoryController@store');
+Route::put('/cp/categories/{id}', 'CategoryController@update');
+Route::patch('/cp/categories/{id}', 'CategoryController@update');
+Route::delete('/cp/categories/{id}', 'CategoryController@delete');
+
 // CP > Pages routes
 Route::get('/cp/pages', 'PageController@index');
 Route::get('/cp/pages/create', 'PageController@create');

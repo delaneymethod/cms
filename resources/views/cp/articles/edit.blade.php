@@ -68,6 +68,30 @@
 							@endif
 							<span id="helpBlockUserId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						
+						
+						
+						<div class="form-group">
+							<label class="control-label font-weight-bold d-block">Categories</label>
+							<div class="btn-group" data-toggle="buttons">
+								@php ($categoryIds = (array) old('category_ids') ?? (array) $article->categories->pluck('id'))
+								@foreach ($categories as $category)
+									<label for="category_ids-{{ $category->slug }}" class="btn btn-outline-secondary">
+										<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" value="{{ $category->id }}" aria-describedby="helpBlockCategoryId" {{ (in_array($category->id, $categoryIds)) ? 'checked' : '' }}>{{ $category->title }} ({{$category->id}})
+									</label>
+								@endforeach
+							</div>
+							@if ($errors->has('category_ids'))
+								<span id="helpBlockCategoryIds" class="form-control-feedback form-text gf-red">- {{ $errors->first('category_ids') }}</span>
+							@endif
+							<span id="helpBlockCategoryIds" class="form-control-feedback form-text text-muted"></span>
+						</div>
+						
+	
+
+
+
+
 						<div class="form-group">
 							<label for="content" class="control-label font-weight-bold">Content</label>
 							<textarea name="content" id="content" placeholder="e.g Blog Post content..." tabindex="5" aria-describedby="helpBlockContent">{{ old('content') ?? $article->content }}</textarea>

@@ -182,6 +182,7 @@ return [
         Propaganistas\LaravelIntl\IntlServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
+		Orangehill\Iseed\IseedServiceProvider::class,
 		
     ],
 

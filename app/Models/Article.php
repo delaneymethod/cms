@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use App\Models\Status;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -35,5 +36,23 @@ class Article extends Model
 	public function status()
 	{
 		return $this->belongsTo(Status::class);
+	}
+	
+	/**
+	 * Get the category records associated with the article.
+	 */
+	public function categories()
+	{
+		return $this->belongsToMany(Category::class, 'article_category');
+	}
+	
+	/**
+	 * Set categories for the article.
+	 *
+	 * $param 	array 	$categories
+	 */
+	public function setCategories(array $categories)
+	{
+		return $this->categories()->sync($categories);
 	}
 }

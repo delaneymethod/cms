@@ -3,12 +3,11 @@
 namespace App\Models;
 
 use App\User;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
-	public $timestamps = false;
-
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -19,10 +18,20 @@ class Permission extends Model
 	];
 
 	/**
-	 * Get users with a certain permission
+	 * Get the role records associated with the permission.
 	 */
-	public function users()
+	public function roles()
 	{
-		return $this->belongsToMany(User::class, 'users_permissions');
+		return $this->belongsToMany(Role::class, 'role_permission');
+	}
+	
+	/**
+	 * Set roles for the permission.
+	 *
+	 * $param 	array 	$roles
+	 */
+	public function setRoles(array $roles)
+	{
+		return $this->roles()->sync($roles);
 	}
 }

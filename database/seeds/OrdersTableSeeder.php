@@ -1,31 +1,33 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class OrdersTableSeeder extends Seeder
 {
-	/**
-	 * Run the database seeds.
-	 *
-	 * @return void
-	 */
-	public function run()
-	{
-		$now = Carbon::now()->format('Y-m-d H:i:s');
 
-		$orders = [
-			[
-				'title' => 'My First Order',
-				'user_id' => 1,
-				'status_id' => 1,
-				'created_at' => $now,
-				'updated_at' => $now,
-			],
-		];
+    /**
+     * Auto generated seed file
+     *
+     * @return void
+     */
+    public function run()
+    {
+        
 
-		DB::table('orders')->delete();
-
-		DB::table('orders')->insert($orders);
-	}
+        \DB::table('orders')->delete();
+        
+        \DB::table('orders')->insert(array (
+            0 => 
+            array (
+                'id' => 1,
+                'title' => 'My First Order',
+                'user_id' => 1,
+                'status_id' => 1,
+                'created_at' => '2017-08-01 09:19:40',
+                'updated_at' => '2017-08-01 09:19:40',
+            ),
+        ));
+        
+        
+    }
 }
