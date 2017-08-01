@@ -52,7 +52,7 @@
 										@foreach ($roles as $role)
 											@php ($rolePermissions = $role->permissions->pluck('id')->toArray())
 											<td class="text-center">
-												<input type="checkbox" name="{{ $role->id }}[]" class="form-check-input" value="{{ $permission->id }}" {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} {{ ($role->id == 1) ? 'disabled' : '' }} {{ (in_array($role->id, [2, 3]) && in_array($permission->title, $disabledPermissions)) ? 'hidden' : '' }}>
+												<input type="checkbox" name="{{ $role->id }}[]" value="{{ $permission->id }}" {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} {{ ($role->id == 1) ? 'disabled' : '' }} {{ (in_array($role->id, [2, 3]) && in_array($permission->title, $disabledPermissions)) ? 'hidden' : '' }}>
 											</td>
 										@endforeach
 									</tr>

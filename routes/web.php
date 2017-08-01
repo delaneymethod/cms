@@ -58,9 +58,21 @@ Route::delete('/cp/locations/{id}', 'LocationController@delete');
 
 // CP > Orders routes
 Route::get('/cp/orders', 'OrderController@index');
+Route::get('/cp/orders/{id}/edit', 'OrderController@edit');
+Route::get('/cp/orders/{id}/delete', 'OrderController@confirm');
+Route::put('/cp/orders/{id}', 'OrderController@update');
+Route::patch('/cp/orders/{id}', 'OrderController@update');
+Route::delete('/cp/orders/{id}', 'OrderController@delete');
 
 // CP > Articles routes
 Route::get('/cp/articles', 'ArticleController@index');
+Route::get('/cp/articles/create', 'ArticleController@create');
+Route::get('/cp/articles/{id}/edit', 'ArticleController@edit');
+Route::get('/cp/articles/{id}/delete', 'ArticleController@confirm');
+Route::post('/cp/articles', 'ArticleController@store');
+Route::put('/cp/articles/{id}', 'ArticleController@update');
+Route::patch('/cp/articles/{id}', 'ArticleController@update');
+Route::delete('/cp/articles/{id}', 'ArticleController@delete');
 
 // CP > Pages routes
 Route::get('/cp/pages', 'PageController@index');
@@ -82,13 +94,27 @@ Route::get('/cp/advanced', 'RoleController@index');
 
 // CP > Roles routes
 Route::get('/cp/advanced/roles', 'RoleController@index');
+Route::get('/cp/advanced/roles/create', 'RoleController@create');
+Route::get('/cp/advanced/roles/{id}/edit', 'RoleController@edit');
+Route::get('/cp/advanced/roles/{id}/delete', 'RoleController@confirm');
+Route::post('/cp/advanced/roles', 'RoleController@store');
 Route::post('/cp/advanced/roles/permissions', 'RoleController@permissions');
+Route::put('/cp/advanced/roles/{id}', 'RoleController@update');
+Route::patch('/cp/advanced/roles/{id}', 'RoleController@update');
+Route::delete('/cp/advanced/roles/{id}', 'RoleController@delete');
 
 // CP > Permissions routes
 Route::get('/cp/advanced/permissions', 'PermissionController@index');
 
 // CP > Statuses routes
 Route::get('/cp/advanced/statuses', 'StatusController@index');
+Route::get('/cp/advanced/statuses/create', 'StatusController@create');
+Route::get('/cp/advanced/statuses/{id}/edit', 'StatusController@edit');
+Route::get('/cp/advanced/statuses/{id}/delete', 'StatusController@confirm');
+Route::post('/cp/advanced/statuses', 'StatusController@store');
+Route::put('/cp/advanced/statuses/{id}', 'StatusController@update');
+Route::patch('/cp/advanced/statuses/{id}', 'StatusController@update');
+Route::delete('/cp/advanced/statuses/{id}', 'StatusController@delete');
 
 // CP > Assets routes
 Route::get('/cp/assets', 'AssetController@index');

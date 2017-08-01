@@ -362,16 +362,6 @@ class AssetController extends Controller
 	/**
 	 * Does what it says on the tin!
 	 */
-	private function getFileSize($bytes) 
-	{
-		$i = floor(log($bytes, 1024));
-		
-		return round($bytes / pow(1024, $i), [0,0,2,2,3][$i]).['B','kB','MB','GB','TB'][$i];
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
 	public function flushAssetsCache() 
 	{
 		$this->flushCache('assets');	

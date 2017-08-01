@@ -39,6 +39,12 @@ body {
 	overflow-x: hidden;
 }
 
+canvas {
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+}
+
 form,
 input[type='text'],
 input[type='email'],

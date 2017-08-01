@@ -34,7 +34,6 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="no-sort">ID</th>
 								<th>Title</th>
 								<th class="no-sort">&nbsp;</th>
 							</tr>
@@ -42,7 +41,6 @@
 						<tbody>
 							@foreach ($statuses as $status)
 								<tr>
-									<td>{{ $status->id }}</td>
 									<td>{{ $status->title }}</td>
 									@if ($currentUser->hasPermission('edit_statuses') || $currentUser->hasPermission('delete_statuses'))
 										<td class="actions dropdown text-center" id="submenu">

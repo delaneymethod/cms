@@ -49,6 +49,233 @@ class StatusController extends Controller
 	}
 	
 	/**
+	 * Shows a form for creating a new status.
+	 *
+	 * @params	Request 	$request
+	 * @return 	Response
+	 */
+   	public function create(Request $request)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+
+		if ($currentUser->hasPermission('create_statuses')) {
+			$title = 'Create Status';
+			
+			$subTitle = '';
+			
+			return view('cp.advanced.statuses.create', compact('currentUser', 'title', 'subTitle'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+     * Creates a new status.
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+	    $currentUser = $this->getAuthenticatedUser();
+
+		if ($currentUser->hasPermission('create_statuses')) {
+			// Remove any Cross-site scripting (XSS)
+			$cleanedStatus = $this->sanitizerInput($request->all());
+
+			$rules = $this->getRules('status');
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedStatus, $rules);
+
+			if ($validator->fails()) {
+				return back()->withErrors($validator)->withInput();
+			}
+
+			DB::beginTransaction();
+
+			try {
+				// Create new model
+				$status = new Status;
+	
+				// Set our field data
+				$status->title = $cleanedStatus['title'];
+				
+				$status->save();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Status created successfully.', $level = 'success');
+
+			return redirect('/cp/advanced/statuses');
+		}
+
+		abort(403, 'Unauthorised action');
+    }
+    
+    /**
+	 * Shows a form for editing a status.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function edit(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('edit_statuses')) {
+			$title = 'Edit Status';
+		
+			$subTitle = '';
+			
+			$status = $this->getStatus($id);
+			
+			return view('cp.advanced.statuses.edit', compact('currentUser', 'title', 'subTitle', 'status'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Updates a specific status.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function update(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+
+		if ($currentUser->hasPermission('edit_statuses')) {
+			// Remove any Cross-site scripting (XSS)
+			$cleanedStatus = $this->sanitizerInput($request->all());
+
+			$rules = $this->getRules('status');
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedStatus, $rules);
+
+			if ($validator->fails()) {
+				return back()->withErrors($validator)->withInput();
+			}
+			
+			DB::beginTransaction();
+
+			try {
+				// Create new model
+				$status = $this->getStatus($id);
+				
+				// Set our field data
+				$status->title = $cleanedStatus['title'];
+				$status->updated_at = $this->datetime;
+				
+				$status->save();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Status updated successfully.', $level = 'success');
+
+			return redirect('/cp/advanced/statuses');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Shows a form for deleting a status.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function confirm(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('delete_statuses')) {
+			$status = $this->getStatus($id);
+		
+			$title = 'Delete Status';
+			
+			$subTitle = '';
+			
+			return view('cp.advanced.statuses.delete', compact('currentUser', 'title', 'subTitle', 'status'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Deletes a specific status.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function delete(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('delete_statuses')) {
+			$status = $this->getStatus($id);
+			
+			DB::beginTransaction();
+
+			try {
+				$status->delete();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Status deleted successfully.', $level = 'info');
+
+			return redirect('/cp/advanced/statuses');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
 	 * Does what it says on the tin!
 	 */
 	public function flushStatusesCache()

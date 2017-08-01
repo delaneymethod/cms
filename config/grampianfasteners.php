@@ -90,10 +90,17 @@ return [
 			'title' => 'required|string|max:255',
 			'default_location_id' => 'required|integer',
 		],
-		'article' => [
+		'order' => [
 			'title' => 'required|string|max:255',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',
+		],
+		'article' => [
+			'title' => 'required|string|max:255',
+			'slug' => 'required|string|max:255',
+			'user_id' => 'required|integer',
+			'status_id' => 'required|integer',
+			'content' => 'nullable|string',
 		],
 		'location' => [
 			'title' => 'required|string|max:255',

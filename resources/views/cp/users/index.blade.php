@@ -34,7 +34,6 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="no-sort">ID</th>
 								<th>Full Name</th>
 								<th>Email</th>
 								<th>Job Title</th>
@@ -48,7 +47,6 @@
 						<tbody>
 							@foreach ($users as $user)
 								<tr class="{{ str_slug($user->status->title) }}">
-									<td>{{ $user->id }}</td>
 									<td>{{ $user->first_name }} {{ $user->last_name }}{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}</td>
 									<td><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline">{{ $user->email }}</a></td>
 									<td>{{ $user->job_title }}</td>
@@ -56,7 +54,9 @@
 									<td>{{ $user->mobile }}</td>
 									<td>{{ $user->location->title }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" aria-hidden="true"></i></td>
-									@if (!$user->isSuperAdmin())
+									@if ($currentUser->isAdmin() && $user->isSuperAdmin())
+										<td>&nbsp;</td>
+									@else
 										<td class="actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="User Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
@@ -74,8 +74,6 @@
 												@endif
 											</ul>
 										</td>
-									@else
-										<td>&nbsp;</td>
 									@endif
 								</tr>
 							@endforeach

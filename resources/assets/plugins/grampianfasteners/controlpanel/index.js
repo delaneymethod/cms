@@ -8,6 +8,184 @@
 
 		let defaults = {};
 		
+		let loadAllStats = () => {
+			const allStats = $('#allStats');
+			
+			const totalUsers = allStats.data('total-users');
+			
+			const totalPages = allStats.data('total-pages');
+			
+			const totalOrders = allStats.data('total-orders');
+			
+			const totalAssets = allStats.data('total-assets');
+			
+			const totalCompanies = allStats.data('total-companies');
+			
+			const totalArticles = allStats.data('total-articles');
+			
+			const totalLocations = allStats.data('total-locations');
+			
+			const data = {
+				datasets: [{
+					data: [totalUsers, totalPages, totalOrders, totalAssets, totalCompanies, totalArticles, totalLocations],
+					label: 'All Stats',
+					backgroundColor: [
+						'#d30e07',
+						'#f0ad4e',
+						'#5bc0de',
+						'#f1f3f6',
+						'#1e282c',
+						'#4b965c',
+						'#7c898e',
+					]
+				}],
+				labels: [
+					'Users',
+					'Pages',
+					'Orders',
+					'Assets',
+					'Companies',
+					'Articles',
+					'Locations',
+				]
+			};
+			
+			const options = {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'All Stats'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			};
+			
+			new Chart(allStats, {
+				type: 'doughnut',
+				data: data,
+				options: options
+			});
+		};
+		
+		let loadOrderStats = () => {
+			const orderStats = $('#orderStats');
+			
+			const orders = orderStats.data('orders');
+			
+			const data = {
+				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+				datasets: [{
+					label: 'Pending',
+					backgroundColor: '#d30e07',
+					borderColor: '#d30e07',
+					data: [111, 150, 313, 141, 421, 100, 200],
+					fill: false,
+                },{
+					label: 'Approved',
+					backgroundColor: '#f0ad4e',
+					borderColor: '#f0ad4e',
+					data: [105, 150, 100, 40, 92, 100, 182],
+					fill: false,
+                }]
+			};
+			
+			const options = {
+				responsive: true,
+				title:{
+					display: true,
+					text: 'Monthly Orders'
+				},
+				tooltips: {
+					mode: 'index',
+					intersect: false,
+				},
+				hover: {
+					mode: 'nearest',
+					intersect: true
+				},
+				scales: {
+					xAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Month'
+						}
+					}],
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Orders'
+						},
+						ticks: {
+							suggestedMin: 0,
+							suggestedMax: 500,
+							stepSize: 100
+						}
+					}]
+				}
+			};
+				
+			new Chart(orderStats, {
+				type: 'line',
+				data: data,
+				options: options
+			}); 
+		};
+		
+		let loadRoleUsersStats = () => {
+			const roleUsersStats = $('#roleUsersStats');
+			
+			const totalSuperAdmins = roleUsersStats.data('total-super-admins');
+			
+			const totalAdmins = roleUsersStats.data('total-admins');
+			
+			const totalEndUsers = roleUsersStats.data('total-end-users');
+			
+			const data = {
+				datasets: [{
+					data: [totalSuperAdmins, totalAdmins, totalEndUsers],
+					label: 'Users per Role',
+					backgroundColor: [
+						'#d30e07',
+						'#f0ad4e',
+						'#4b965c',
+					]
+				}],
+				labels: [
+					'Super Admins',
+					'Admins',
+					'End Users',
+				]
+			};
+			
+			const options = {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Users per Role'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			};
+			
+			new Chart(roleUsersStats, {
+				type: 'pie',
+				data: data,
+				options: options
+			});
+		};
+		
 		let loadAnimations = () => {
 			$('.sidebar #advanced').on('click', event => {
 				event.preventDefault();
@@ -39,12 +217,12 @@
 				setTimeout(() => {
 					$('.main .message.success').fadeOut('fast');
 				}, 4000);
-    		});
-    		
-    		$('.main .message #hideMessage').on('click', () => {
-	    		$('.main .message').fadeOut('fast');
-    		});
-    	};
+			});
+			
+			$('.main .message #hideMessage').on('click', () => {
+		 		$('.main .message').fadeOut('fast');
+			});
+		};
 		
 		let attachRedactor = element => {
 			const token = window.Laravel.csrfToken;
@@ -60,14 +238,14 @@
 				'structure': true,
 				'tabAsSpaces': 4,
 				'plugins': [
-	        		'source',
-	        		'table',
-	        		'alignment',
-	        		'fullscreen',
-	        		'filemanager',
-	        		'imagemanager',
-	        		'video'
-	        	],
+			 		'source',
+			 		'table',
+			 		'alignment',
+			 		'fullscreen',
+			 		'filemanager',
+			 		'imagemanager',
+			 		'video'
+			 	],
 				'callbacks': {
 					'imageUpload': (image, json) => {
 						$(image).attr('id', json.id);
@@ -82,7 +260,7 @@
 						alert(json);
 					}
 				}
-	        });	
+			 });	
 		};
 		
 		let attachDataTable = element => {
@@ -159,6 +337,12 @@
 			
 			logout();
 			
+			loadAllStats();
+			
+			loadOrderStats();
+			
+			loadRoleUsersStats();
+			
 			loadAnimations();
 			
 			attachRedactor('#content');
@@ -170,6 +354,18 @@
 			convertTitleToSlug('#createPage #title', '#createPage #slug');
 			
 			convertTitleToSlug('#createPage #slug', '#createPage #slug');
+			
+			convertTitleToSlug('#editPage #title', '#editPage #slug');
+			
+			convertTitleToSlug('#editPage #slug', '#editPage #slug');
+			
+			convertTitleToSlug('#createArticle #title', '#createArticle #slug');
+			
+			convertTitleToSlug('#createArticle #slug', '#createArticle #slug');
+			
+			convertTitleToSlug('#editArticle #title', '#editArticle #slug');
+			
+			convertTitleToSlug('#editArticle #slug', '#editArticle #slug');
 			
 			saveMenuChanges('#nestedSortable');
 		};

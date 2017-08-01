@@ -13,6 +13,8 @@ window.axios.defaults.headers.common = {
 
 require('bootstrap');
 
+require('chart.js');
+
 require('../plugins/redactor/redactor');
 
 require('../plugins/redactor/plugins/source');

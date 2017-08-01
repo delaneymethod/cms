@@ -49,7 +49,26 @@ class Location extends Model
 	 */
 	public function getPostalAddressAttribute()
 	{
-		return 'POSTAL ADDRESS';
+		$address = [
+			$this->unit,
+			$this->building,
+			$this->street_address_1,
+			$this->street_address_2,
+			$this->street_address_3,
+			$this->street_address_4,
+			$this->town_city,
+			$this->postal_code,
+			$this->county->title,
+			$this->country->title
+		];
+		
+		$address = array_unique($address);
+		
+		$address = array_filter($address);
+		
+		$address = array_values($address);
+		
+		return implode(', ', $address);
 	}
 
 	/**

@@ -34,7 +34,6 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="no-sort">ID</th>
 								<th>Title</th>
 								<th class="no-sort">&nbsp;</th>
 							</tr>
@@ -42,7 +41,6 @@
 						<tbody>
 							@foreach ($companies as $company)
 								<tr>
-									<td>{{ $company->id }}</td>
 									<td>{{ $company->title }}</td>
 									@if ($currentUser->hasPermission('edit_companies') || ($currentUser->hasPermission('delete_companies') && $company->id != $currentUser->company_id))
 										<td class="actions dropdown text-center" id="submenu">

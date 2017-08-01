@@ -49,6 +49,84 @@ class RoleController extends Controller
 	}
 	
 	/**
+	 * Shows a form for creating a new role.
+	 *
+	 * @params	Request 	$request
+	 * @return 	Response
+	 */
+   	public function create(Request $request)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+
+		if ($currentUser->hasPermission('create_roles')) {
+			$title = 'Create Role';
+			
+			$subTitle = '';
+			
+			return view('cp.advanced.roles.create', compact('currentUser', 'title', 'subTitle'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+     * Creates a new role.
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+	    $currentUser = $this->getAuthenticatedUser();
+
+		if ($currentUser->hasPermission('create_roles')) {
+			// Remove any Cross-site scripting (XSS)
+			$cleanedRole = $this->sanitizerInput($request->all());
+
+			$rules = $this->getRules('role');
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedRole, $rules);
+
+			if ($validator->fails()) {
+				return back()->withErrors($validator)->withInput();
+			}
+
+			DB::beginTransaction();
+
+			try {
+				// Create new model
+				$role = new Role;
+	
+				// Set our field data
+				$role->title = $cleanedRole['title'];
+				
+				$role->save();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Role created successfully.', $level = 'success');
+
+			return redirect('/cp/advanced/roles');
+		}
+
+		abort(403, 'Unauthorised action');
+    }
+    
+    /**
      * Creates new permissions.
      *
 	 * @params Request 	$request
@@ -127,6 +205,155 @@ class RoleController extends Controller
 
 		abort(403, 'Unauthorised action');
     }
+    
+    /**
+	 * Shows a form for editing a role.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function edit(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('edit_roles')) {
+			$title = 'Edit Role';
+		
+			$subTitle = '';
+			
+			$role = $this->getRole($id);
+			
+			return view('cp.advanced.roles.edit', compact('currentUser', 'title', 'subTitle', 'role'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Updates a specific role.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function update(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+
+		if ($currentUser->hasPermission('edit_roles')) {
+			// Remove any Cross-site scripting (XSS)
+			$cleanedRole = $this->sanitizerInput($request->all());
+
+			$rules = $this->getRules('role');
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedRole, $rules);
+
+			if ($validator->fails()) {
+				return back()->withErrors($validator)->withInput();
+			}
+			
+			DB::beginTransaction();
+
+			try {
+				// Create new model
+				$role = $this->getRole($id);
+				
+				// Set our field data
+				$role->title = $cleanedRole['title'];
+				$role->updated_at = $this->datetime;
+				
+				$role->save();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Role updated successfully.', $level = 'success');
+
+			return redirect('/cp/advanced/roles');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Shows a form for deleting a role.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function confirm(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('delete_roles')) {
+			$role = $this->getRole($id);
+		
+			$title = 'Delete Role';
+			
+			$subTitle = '';
+			
+			return view('cp.advanced.roles.delete', compact('currentUser', 'title', 'subTitle', 'role'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Deletes a specific role.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function delete(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('delete_roles')) {
+			$role = $this->getRole($id);
+			
+			DB::beginTransaction();
+
+			try {
+				$role->delete();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Role deleted successfully.', $level = 'info');
+
+			return redirect('/cp/advanced/roles');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
 	
 	/**
 	 * Does what it says on the tin!

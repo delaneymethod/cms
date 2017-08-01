@@ -21,6 +21,9 @@ class CreateArticlesTable extends Migration
 			$table->increments('id');
 			
 			$table->string('title');
+			$table->string('slug');
+			
+			$table->longText('content')->nullable();
 			
 			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');

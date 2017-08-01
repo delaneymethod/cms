@@ -34,8 +34,9 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="no-sort">ID</th>
 								<th>Title</th>
+								<th>Slug</th>
+								<th>Author</th>
 								<th class="text-center">Status</th>
 								<th class="no-sort">&nbsp;</th>
 							</tr>
@@ -43,8 +44,9 @@
 						<tbody>
 							@foreach ($articles as $article)
 								<tr>
-									<td>{{ $article->id }}</td>
 									<td>{{ $article->title }}</td>
+									<td>{{ $article->slug }}</td>
+									<td>{{ $article->user->first_name }} {{ $article->user->last_name }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $article->status->id }}" title="{{ $article->status->title }}" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_articles') || $currentUser->hasPermission('delete_articles'))
 										<td class="actions dropdown text-center" id="submenu">

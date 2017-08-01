@@ -34,7 +34,6 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="no-sort">ID</th>
 								<th>Title</th>
 								<th class="no-sort">Slug</th>
 								<th>Parent</th>
@@ -45,7 +44,6 @@
 						<tbody>
 							@foreach ($pages as $page)
 								<tr>
-									<td>{{ $page->id }}</td>
 									<td>{{ $page->title }}</td>
 									<td>{{ $page->slug }}</td>
 									<td>{{ ($page->parent) ? $page->parent->title : '' }}</td>

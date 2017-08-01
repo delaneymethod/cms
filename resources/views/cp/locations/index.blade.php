@@ -34,7 +34,6 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="no-sort">ID</th>
 								<th>Title</th>
 								<th>Postal Address</th>
 								<th>Telephone</th>
@@ -45,7 +44,6 @@
 						<tbody>
 							@foreach ($locations as $location)
 								<tr class="{{ str_slug($location->status->title) }}">
-									<td>{{ $location->id }}</td>
 									<td>{{ $location->title }} {!! ($location->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!} {!! ($location->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}</td>
 									<td>{{ $location->postal_address }}</td>
 									<td>{{ $location->telephone }}</td>
