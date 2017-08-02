@@ -48,14 +48,14 @@
 									<td>{{ $page->slug }}</td>
 									<td>{{ ($page->parent) ? $page->parent->title : '' }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $page->status->id }}" title="{{ $page->status->title }}" aria-hidden="true"></i></td>
-									@if ($currentUser->hasPermission('edit_pages') || $currentUser->hasPermission('delete_pages') && $page->id > 1)
+									@if ($currentUser->hasPermission('edit_pages') || ($currentUser->hasPermission('delete_pages') && $page->id != 1))
 										<td class="actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Page Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="actions dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_pages'))
 													<li class="dropdown-item gf-info"><a href="/cp/pages/{{ $page->id }}/edit" title="Edit Page"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Page</a></li>
 												@endif
-												@if ($currentUser->hasPermission('delete_pages') && $page->id > 1)
+												@if ($currentUser->hasPermission('delete_pages') && $page->id != 1)
 													<li class="dropdown-item gf-danger"><a href="/cp/pages/{{ $page->id }}/delete" title="Delete Page"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Page</a></li>
 												@endif
 											</ul>

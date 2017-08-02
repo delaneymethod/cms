@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Reset Password - '.config('app.name'))
-@section('description', 'Reset Password - '.config('app.name'))
-@section('keywords', 'Reset, Password, '.config('app.name'))
+@section('title', 'Set Password - '.config('app.name'))
+@section('description', 'Set Password - '.config('app.name'))
+@section('keywords', 'Set, Password, '.config('app.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
@@ -31,7 +31,7 @@
 @section('content')
 	@include('_partials.header')
 	<section class="content">
-		<h2>Reset Password</h2>
+		<h2>Set Password</h2>
 		@if (session('status'))
 			{{ session('status') }}
 		@endif
@@ -53,7 +53,7 @@
 			@if ($errors->has('password_confirmation'))
 				<strong>{{ $errors->first('password_confirmation') }}</strong>
 			@endif
-			<button type="submit" name="" id="" class="" title="">Reset Password</button>
+			<button type="submit" name="" id="" class="" title="">Set Password</button>
 		</form>
 	</section>
 	@include('_partials.footer')

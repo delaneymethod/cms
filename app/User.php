@@ -11,6 +11,7 @@ use App\Models\Location;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Notifications\SetPassword as SetPasswordNotification;
 
 class User extends Authenticatable
 {
@@ -142,5 +143,16 @@ class User extends Authenticatable
 	public function routeNotificationForMail()
 	{
 		return $this->email;
+	}
+	
+	/**
+	 * Send the password reset notification.
+	 *
+	 * @param  string  $token
+	 * @return void
+	 */
+	public function sendPasswordResetNotification($token)
+	{
+		$this->notify(new SetPasswordNotification($token, $this->first_name));
 	}
 }

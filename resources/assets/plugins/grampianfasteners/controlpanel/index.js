@@ -8,8 +8,22 @@
 
 		let defaults = {};
 		
+		let colours = [
+			'#4D4D4D', // gray
+			'#5DA5DA', // blue
+			'#FAA43A', // orange
+			'#60BD68', // green
+			'#F17CB0', // pink
+			'#B2912F', // brown
+			'#B276B2', // purple
+			'#DECF3F', // yellow
+			'#F15854', // red
+		];
+		
 		let loadAllStats = () => {
 			const allStats = $('#allStats');
+			
+			const totalCategories = allStats.data('total-categories');
 			
 			const totalUsers = allStats.data('total-users');
 			
@@ -27,19 +41,21 @@
 			
 			const data = {
 				datasets: [{
-					data: [totalUsers, totalPages, totalOrders, totalAssets, totalCompanies, totalArticles, totalLocations],
+					data: [totalCategories, totalUsers, totalPages, totalOrders, totalAssets, totalCompanies, totalArticles, totalLocations],
 					label: 'All Stats',
 					backgroundColor: [
-						'#d30e07',
-						'#f0ad4e',
-						'#5bc0de',
-						'#f1f3f6',
-						'#1e282c',
-						'#4b965c',
-						'#7c898e',
+						colours[0],
+						colours[1],
+						colours[2],
+						colours[3],
+						colours[4],
+						colours[5],
+						colours[6],
+						colours[7],
 					]
 				}],
 				labels: [
+					'Categories',
 					'Users',
 					'Pages',
 					'Orders',
@@ -66,7 +82,7 @@
 			};
 			
 			new Chart(allStats, {
-				type: 'doughnut',
+				type: 'pie',
 				data: data,
 				options: options
 			});
@@ -81,14 +97,14 @@
 				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
 				datasets: [{
 					label: 'Pending',
-					backgroundColor: '#d30e07',
-					borderColor: '#d30e07',
+					backgroundColor: colours[0],
+					borderColor: colours[0],
 					data: [111, 150, 313, 141, 421, 100, 200],
 					fill: false,
                 },{
 					label: 'Approved',
-					backgroundColor: '#f0ad4e',
-					borderColor: '#f0ad4e',
+					backgroundColor: colours[1],
+					borderColor: colours[1],
 					data: [105, 150, 100, 40, 92, 100, 182],
 					fill: false,
                 }]
@@ -152,9 +168,9 @@
 					data: [totalSuperAdmins, totalAdmins, totalEndUsers],
 					label: 'Users per Role',
 					backgroundColor: [
-						'#d30e07',
-						'#f0ad4e',
-						'#4b965c',
+						colours[0],
+						colours[1],
+						colours[2],
 					]
 				}],
 				labels: [
@@ -180,7 +196,7 @@
 			};
 			
 			new Chart(roleUsersStats, {
-				type: 'pie',
+				type: 'doughnut',
 				data: data,
 				options: options
 			});

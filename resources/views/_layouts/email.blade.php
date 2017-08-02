@@ -10,17 +10,17 @@
 <body style="margin: 0; padding: 0;">
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 0px solid #cccccc;border-collapse: collapse;">
 		<tr>
-			<td align="center" bgcolor="#ffffff" style="padding: 20px 0 30px 0;">
-				LOGO
+			<td align="left" bgcolor="#ffffff" style="padding: 20px 0 0 0;">
+				<img src="{{ url('/assets/img/logo.png') }}" alt="{{ config('app.name') }} Logo" style="width:40%; height: auto;">
 			</td>
 		</tr>
 		<tr>
-			<td align="center" bgcolor="#f8f8f8" style="padding: 20px 20px 20px 20px;">
+			<td align="center" bgcolor="#ffffff" style="padding: 20px 0 20px 0;">
 				@yield('content')
 			</td>
 		</tr>
 		<tr>
-			<td align="center" bgcolor="#ffffff" style="padding: 20px 20px 20px 20px;font-family: Arial, sans-serif;font-size: 16px;line-height: 20px;color: #000000;">
+			<td align="center" bgcolor="#ffffff" style="padding: 0 20px 20px 20px;font-family: Arial, sans-serif;font-size: 16px;line-height: 20px;color: #000000;">
 				&copy; {{ config('app.name') }}
 			</td>
 		</tr>

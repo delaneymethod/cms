@@ -198,7 +198,7 @@ class ArticleController extends Controller
 		if ($currentUser->hasPermission('edit_articles')) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedArticle = $this->sanitizerInput($request->all());
-
+			
 			$rules = $this->getRules('article');
 			
 			if (!empty($cleanedArticle['category_ids'])) {
@@ -208,6 +208,8 @@ class ArticleController extends Controller
 					$rules['category_ids.'.$index] = 'integer';
 				}
 			}
+			
+			$rules['slug'] = 'required|string|unique:articles,slug,'.$id.'|max:255';
 			
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedArticle, $rules);

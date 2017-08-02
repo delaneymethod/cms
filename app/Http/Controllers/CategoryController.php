@@ -179,6 +179,8 @@ class CategoryController extends Controller
 
 			$rules = $this->getRules('category');
 			
+			$rules['slug'] = 'required|string|unique:categories,slug,'.$id.'|max:255';
+			
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedCategory, $rules);
 
@@ -236,7 +238,13 @@ class CategoryController extends Controller
 		
 		if ($currentUser->hasPermission('delete_categories')) {
 			$category = $this->getCategory($id);
-		
+			
+			if ($category->id == $id && $id == 1) {
+				flash('You cannot delete the '.$category->title.' category.', $level = 'warning');
+	
+				return redirect('/cp/categories');
+			}
+			
 			$title = 'Delete Category';
 			
 			$subTitle = '';
@@ -260,6 +268,12 @@ class CategoryController extends Controller
 		
 		if ($currentUser->hasPermission('delete_categories')) {
 			$category = $this->getCategory($id);
+			
+			if ($category->id == $id && $id == 1) {
+				flash('You cannot delete the '.$category->title.' category.', $level = 'warning');
+	
+				return redirect('/cp/categories');
+			}
 			
 			DB::beginTransaction();
 

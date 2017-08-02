@@ -153,7 +153,7 @@ class CompanyController extends Controller
 			$this->authorize('userOwnsThis', $company);
 			
 			// Used to set location_id
-			$locations = $this->getLocations();
+			$locations = $company->locations;
 			
 			return view('cp.companies.edit', compact('currentUser', 'title', 'subTitle', 'company', 'locations'));
 		}

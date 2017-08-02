@@ -102,27 +102,51 @@ class Controller extends BaseController
 	protected function sanitizerInput(array $data)
 	{
 		$integers = [
-			'location_id',
+			'id',
+			'article_id',
+			'category_id',
+			'user_id',
 			'status_id',
-			'role_id',
+			'default_location_id',
+			'county_id',
 			'country_id',
+			'company_id',
 			'parent_id',
 			'lft',
 			'rgt',
 			'depth',
+			'role_id',
+			'permission_id',
+			'location_id',
+			'size',
 		];
 
 		$floats = [
 		];
 
 		$strings = [
-			'slug',
-			'title',
 			'first_name',
 			'last_name',
 			'jot_title',
 			'telephone',
 			'mobile',
+			'remember_token',
+			'title',
+			'slug',
+			'content',
+			'unit',
+			'building',
+			'street_address_1',
+			'street_address_2',
+			'street_address_3',
+			'street_address_4',
+			'town_city',
+			'postal_code',
+			'hash_name',
+			'original_name',
+			'mime_type',
+			'extension',
+			'path',
 		];
 
 		$booleans = [

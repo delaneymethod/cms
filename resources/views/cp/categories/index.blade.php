@@ -46,14 +46,14 @@
 									<td>{{ $category->title }}{!! ($category->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$category->status->title.'</span>' : '' !!}{!! ($category->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$category->status->title.'</span>' : '' !!}</td>
 									<td>{{ $category->slug }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $category->status->id }}" title="{{ $category->status->title }}" aria-hidden="true"></i></td>
-									@if ($currentUser->hasPermission('edit_categories') || $currentUser->hasPermission('delete_categories'))
+									@if ($currentUser->hasPermission('edit_categories') || ($currentUser->hasPermission('delete_categories') && $category->id != 1))
 										<td class="actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Category Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_categories'))
 													<li class="dropdown-item gf-info"><a href="/cp/categories/{{ $category->id }}/edit" title="Edit Category"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Category</a></li>
 												@endif
-												@if ($currentUser->hasPermission('delete_categories'))
+												@if ($currentUser->hasPermission('delete_categories') && $category->id != 1)
 													<li class="dropdown-item gf-danger"><a href="/cp/categories/{{ $category->id }}/delete" title="Delete Category"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Category</a></li>
 												@endif
 											</ul>

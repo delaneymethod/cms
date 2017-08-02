@@ -12,6 +12,7 @@ use App\Http\Traits\StatusTrait;
 use App\Http\Traits\CompanyTrait;
 use App\Http\Traits\LocationTrait;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Password;
 
 class UserController extends Controller
 {
@@ -85,9 +86,17 @@ class UserController extends Controller
 			$statuses = $this->getStatuses();
 			
 			// Used to set location_id
-			$locations = $this->getLocations();
+			if ($companies->count() > 1) {
+				$locations = $companies->map(function($company) {
+					return $company->locations;	
+				})->flatten();
+			} else {
+				$locations = $companies->first()->locations;
+			}
 			
-			return view('cp.users.create', compact('currentUser', 'title', 'subTitle', 'companies', 'statuses', 'locations', 'roles'));
+			$defaultLocationIds = $this->getDefaultLocationIds();
+			
+			return view('cp.users.create', compact('currentUser', 'title', 'subTitle', 'companies', 'statuses', 'locations', 'roles', 'defaultLocationIds'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -137,7 +146,7 @@ class UserController extends Controller
 				
 				$user->save();
 				
-				// TODO - trigger set password email
+				Password::sendResetLink(['email' => $user->email]);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -195,10 +204,18 @@ class UserController extends Controller
 			
 			// Used to set status_id
 			$statuses = $this->getStatuses();
-		
+			
 			// Used to set location_id
-			$locations = $this->getLocations();
-		
+			if ($companies->count() > 1) {
+				$locations = $companies->map(function($company) {
+					return $company->locations;	
+				})->flatten();
+			} else {
+				$locations = $companies->first()->locations;
+			}
+			
+			$defaultLocationIds = $this->getDefaultLocationIds();
+			
 			return view('cp.users.edit.index', compact('currentUser', 'title', 'subTitle', 'user', 'companies', 'roles', 'statuses', 'locations'));
 		}
 

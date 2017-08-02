@@ -46,13 +46,16 @@
 							<label class="control-label font-weight-bold">Status</label>
 							@foreach ($statuses as $status)
 								<div class="form-check status_id-{{ $status->id }}">
-									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
-										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="3" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $category->status_id == $status->id) ? 'checked' : '' }}>{{ $status->title }}
+									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label {{ ($category->id == 1) ? 'text-disabled' : '' }}">
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="3" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $category->status_id == $status->id) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled' : '' }}>{{ $status->title }}
 									</label>
 								</div>
 							@endforeach
 							@if ($errors->has('status_id'))
 								<span id="helpBlockStatusId" class="form-control-feedback form-text gf-red">- {{ $errors->first('status_id') }}</span>
+							@endif
+							@if ($category->id == 1)
+								<span id="helpBlockStatusId" class="form-control-feedback form-text text-warning">- This field is disabled. The status cannot be changed for the default category.</span>
 							@endif
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
@@ -61,7 +64,7 @@
 								<a href="/cp/categories" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="5" title="Cancel">Cancel</a>
 							@endif
 							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="4" title="Save Changes">Save Changes</button>
-							@if ($currentUser->hasPermission('delete_categories'))
+							@if ($currentUser->hasPermission('delete_categories') && $category->id != 1)
 								<a href="/cp/categories/{{ $category->id }}/delete" title="Delete Category" class="pull-right btn btn-outline-danger">Delete Category</a>
 							@endif
 						</div>

@@ -59,7 +59,7 @@
 							<label class="control-label font-weight-bold">Status</label>
 							@foreach ($statuses as $status)
 								<div class="form-check status_id-{{ $status->id }}">
-									<label class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
+									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
 										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="3" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $page->status_id == $status->id) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>{{ $status->title }}
 									</label>
 								</div>

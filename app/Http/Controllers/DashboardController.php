@@ -14,6 +14,7 @@ use App\Http\Traits\AssetTrait;
 use App\Http\Traits\CompanyTrait;
 use App\Http\Traits\ArticleTrait;
 use App\Http\Traits\LocationTrait;
+use App\Http\Traits\CategoryTrait;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -26,6 +27,7 @@ class DashboardController extends Controller
 	use CompanyTrait;
 	use ArticleTrait;
 	use LocationTrait;
+	use CategoryTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -53,6 +55,8 @@ class DashboardController extends Controller
 		
 		$subTitle = $currentUser->company->title;
 		
+		$categories = $this->getCategories();
+		
 		$roles = $this->getRoles();
 		
 		$pages = $this->getPages();
@@ -69,6 +73,6 @@ class DashboardController extends Controller
 		
 		$locations = $this->getLocations();
 		
-		return view('cp.dashboard.index', compact('currentUser', 'title', 'subTitle', 'roles', 'pages', 'users', 'orders', 'assets', 'companies', 'articles', 'locations'));
+		return view('cp.dashboard.index', compact('currentUser', 'title', 'subTitle', 'categories', 'roles', 'pages', 'users', 'orders', 'assets', 'companies', 'articles', 'locations'));
 	}
 }

@@ -26,6 +26,7 @@
 					<form name="editArticle" id="editArticle" class="editArticle" role="form" method="POST" action="/cp/articles/{{ $article->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
+						<input type="hidden" name="category_ids[]" value="1">
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
 							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') ?? $article->title }}" placeholder="e.g Blog Post Title" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
@@ -68,30 +69,25 @@
 							@endif
 							<span id="helpBlockUserId" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						
-						
-						
 						<div class="form-group">
-							<label class="control-label font-weight-bold d-block">Categories</label>
-							<div class="btn-group" data-toggle="buttons">
-								@php ($categoryIds = (array) old('category_ids') ?? (array) $article->categories->pluck('id'))
-								@foreach ($categories as $category)
-									<label for="category_ids-{{ $category->slug }}" class="btn btn-outline-secondary">
-										<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" value="{{ $category->id }}" aria-describedby="helpBlockCategoryId" {{ (in_array($category->id, $categoryIds)) ? 'checked' : '' }}>{{ $category->title }} ({{$category->id}})
+							<label class="control-label font-weight-bold">Categories</label>
+							@if (old('category_ids'))
+								@php ($categoryIds = old('category_ids'))
+							@else
+								@php ($categoryIds = $article->categories->pluck('id')->toArray())
+							@endif
+							@foreach ($categories as $category)
+								<div class="form-check">
+									<label for="category_id-{{ $category->slug }}" class="form-check-label">
+										<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="5" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
 									</label>
-								@endforeach
-							</div>
+								</div>
+							@endforeach
 							@if ($errors->has('category_ids'))
 								<span id="helpBlockCategoryIds" class="form-control-feedback form-text gf-red">- {{ $errors->first('category_ids') }}</span>
 							@endif
 							<span id="helpBlockCategoryIds" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						
-	
-
-
-
-
 						<div class="form-group">
 							<label for="content" class="control-label font-weight-bold">Content</label>
 							<textarea name="content" id="content" placeholder="e.g Blog Post content..." tabindex="5" aria-describedby="helpBlockContent">{{ old('content') ?? $article->content }}</textarea>

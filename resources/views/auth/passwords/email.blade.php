@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Reset Password - '.config('app.name'))
-@section('description', 'Reset Password - '.config('app.name'))
-@section('keywords', 'Reset, Password, '.config('app.name'))
+@section('title', 'Set Password - '.config('app.name'))
+@section('description', 'Set Password - '.config('app.name'))
+@section('keywords', 'Set, Password, '.config('app.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
@@ -42,7 +42,7 @@
 			@if ($errors->has('email'))
 				<strong>{{ $errors->first('email') }}</strong>
 			@endif
-			<button type="submit" name="" id="" class="" title="">Send Password Reset Link</button>
+			<button type="submit" name="" id="" class="" title="">Send Reset Password Link</button>
 		</form>
 	</section>
 	@include('_partials.footer')

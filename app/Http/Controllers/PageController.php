@@ -212,6 +212,8 @@ class PageController extends Controller
 
 			$rules = $this->getRules('page');
 			
+			$rules['slug'] = 'required|string|unique:pages,slug,'.$id.'|max:255';
+			
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedPage, $rules);
 

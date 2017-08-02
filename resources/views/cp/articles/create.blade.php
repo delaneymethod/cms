@@ -25,6 +25,7 @@
 					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="createArticle" id="createArticle" class="createArticle" role="form" method="POST" action="/cp/articles">
 						{{ csrf_field() }}
+						<input type="hidden" name="category_ids[]" value="1">
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
 							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" placeholder="e.g Blog Post Title" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
@@ -66,6 +67,21 @@
 								<span id="helpBlockUserId" class="form-control-feedback form-text gf-red">- {{ $errors->first('user_id') }}</span>
 							@endif
 							<span id="helpBlockUserId" class="form-control-feedback form-text text-muted"></span>
+						</div>
+						<div class="form-group">
+							<label class="control-label font-weight-bold">Categories</label>
+							@php ($categoryIds = old('category_ids') ?? [])
+							@foreach ($categories as $category)
+								<div class="form-check">
+									<label for="category_id-{{ $category->slug }}" class="form-check-label">
+										<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="5" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : ($loop->first) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
+									</label>
+								</div>
+							@endforeach
+							@if ($errors->has('category_ids'))
+								<span id="helpBlockCategoryIds" class="form-control-feedback form-text gf-red">- {{ $errors->first('category_ids') }}</span>
+							@endif
+							<span id="helpBlockCategoryIds" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
 							<label for="content" class="control-label font-weight-bold">Content</label>

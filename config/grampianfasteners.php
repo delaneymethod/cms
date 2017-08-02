@@ -78,12 +78,12 @@ return [
 		
 		'category' => [
 			'title' => 'required|string|max:255',
-			'slug' => 'required|string|max:255',
+			'slug' => 'required|string|unique:categories,slug|max:255',
 			'status_id' => 'required|integer',
 		],
 		'page' => [
 			'title' => 'required|string|max:255',
-			'slug' => 'required|string|max:255',
+			'slug' => 'required|string|unique:pages,slug|max:255',
 			'status_id' => 'required|integer',
 			'content' => 'nullable|string',
 			'parent_id' => 'required|integer',
@@ -99,7 +99,7 @@ return [
 		],
 		'article' => [
 			'title' => 'required|string|max:255',
-			'slug' => 'required|string|max:255',
+			'slug' => 'required|string|unique:articles,slug|max:255',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',
 			'content' => 'nullable|string',
