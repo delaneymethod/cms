@@ -136,6 +136,8 @@ class PageController extends Controller
 				// Set our field data
 				$page->title = $cleanedPage['title'];
 				$page->slug = $cleanedPage['slug'];
+				$page->description = $cleanedPage['description'];
+				$page->keywords = $cleanedPage['keywords'];
 				$page->status_id = $cleanedPage['status_id'];
 				$page->content = $cleanedPage['content'];
 				$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
@@ -233,6 +235,8 @@ class PageController extends Controller
 				} else {
 					$page->title = $cleanedPage['title'];
 					$page->slug = $cleanedPage['slug'];
+					$page->description = $cleanedPage['description'];
+					$page->keywords = $cleanedPage['keywords'];
 					$page->status_id = $cleanedPage['status_id'];
 					$page->content = $cleanedPage['content'];
 					$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];

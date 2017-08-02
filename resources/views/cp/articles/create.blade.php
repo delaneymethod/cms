@@ -43,11 +43,38 @@
 							<span id="helpBlockSlug" class="form-control-feedback form-text text-muted">- The slug is auto-generated based on the title but feel free to edit it.</span>
 						</div>
 						<div class="form-group">
+							<label for="description" class="control-label font-weight-bold">Meta Description</label>
+							<input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}" placeholder="e.g Blog Post Description" tabindex="3" autocomplete="off" aria-describedby="helpBlockDescription">
+							@if ($errors->has('description'))
+								<span id="helpBlockDescription" class="form-control-feedback form-text gf-red">- {{ $errors->first('description') }}</span>
+							@endif
+							<span id="helpBlockDescription" class="form-control-feedback form-text text-muted"></span>
+						</div>
+						<div class="form-group">
+							<label for="keywords" class="control-label font-weight-bold">Meta Keywords</label>
+							<input type="text" name="keywords" id="keywords" class="form-control" value="{{ old('keywords') }}" placeholder="e.g Blog, Post, Keywords" tabindex="4" autocomplete="off" aria-describedby="helpBlockKeywords">
+							@if ($errors->has('keywords'))
+								<span id="helpBlockKeywords" class="form-control-feedback form-text gf-red">- {{ $errors->first('keywords') }}</span>
+							@endif
+							<span id="helpBlockKeywords" class="form-control-feedback form-text text-muted">- Separate your keywords by commas.</span>
+						</div>
+						<div class="form-group">
+							<label for="published_at" class="control-label font-weight-bold">Published Date <span class="text-danger">&#42;</span></label>
+							<div class="input-group date">
+								<span class="input-group-addon" id="helpBlockPublishedAt"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+								<input type="text" name="published_at" id="published_at" class="form-control" value="{{ old('published_at') }}" placeholder="e.g yyyy-mm-dd h:i:s" tabindex="5" autocomplete="off" aria-describedby="helpBlockPublishedAt" required>
+							</div>
+							@if ($errors->has('published_at'))
+								<span id="helpBlockPublishedAt" class="form-control-feedback form-text gf-red">- {{ $errors->first('published_at') }}</span>
+							@endif
+							<span id="helpBlockPublishedAt" class="form-control-feedback form-text text-muted"></span>
+						</div>
+						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
 							@foreach ($statuses as $status)
 								<div class="form-check status_id-{{ $status->id }}">
 									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
-										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="3" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="6" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}
 									</label>
 								</div>
 							@endforeach
@@ -58,7 +85,7 @@
 						</div>
 						<div class="form-group">
 							<label for="user_id" class="control-label font-weight-bold">Author</label>
-							<select name="user_id" id="user_id" class="form-control" tabindex="4" aria-describedby="helpBlockUserId" required>
+							<select name="user_id" id="user_id" class="form-control" tabindex="7" aria-describedby="helpBlockUserId" required>
 								@foreach ($users as $user)
 									<option value="{{ $user->id }}" {{ (old('user_id') == $user->id) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
 								@endforeach
@@ -74,7 +101,7 @@
 							@foreach ($categories as $category)
 								<div class="form-check">
 									<label for="category_id-{{ $category->slug }}" class="form-check-label">
-										<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="5" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : ($loop->first) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
+										<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="8" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : ($loop->first) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
 									</label>
 								</div>
 							@endforeach
@@ -85,7 +112,7 @@
 						</div>
 						<div class="form-group">
 							<label for="content" class="control-label font-weight-bold">Content</label>
-							<textarea name="content" id="content" placeholder="e.g Blog Post content..." tabindex="5" aria-describedby="helpBlockContent">{{ old('content') }}</textarea>
+							<textarea name="content" id="content" placeholder="e.g Blog Post content..." tabindex="9" aria-describedby="helpBlockContent">{{ old('content') }}</textarea>
 							@if ($errors->has('content'))
 								<span id="helpBlockContent" class="form-control-feedback form-text gf-red">- {{ $errors->first('content') }}</span>
 							@endif
@@ -93,9 +120,9 @@
 						</div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_articles'))
-								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="7" title="Cancel">Cancel</a>
+								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="11" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="6" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="10" title="Save Changes">Save Changes</button>
 						</div>
 					</form>
 				</div>

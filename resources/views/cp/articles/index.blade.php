@@ -37,6 +37,7 @@
 								<th>Title</th>
 								<th>Slug</th>
 								<th>Author</th>
+								<th>Published</th>
 								<th class="text-center">Status</th>
 								<th class="no-sort">&nbsp;</th>
 							</tr>
@@ -47,6 +48,7 @@
 									<td>{{ $article->title }}</td>
 									<td>{{ $article->slug }}</td>
 									<td>{{ $article->user->first_name }} {{ $article->user->last_name }}</td>
+									<td>{{ $article->published_at }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $article->status->id }}" title="{{ $article->status->title }}" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_articles') || $currentUser->hasPermission('delete_articles'))
 										<td class="actions dropdown text-center" id="submenu">

@@ -84,6 +84,8 @@ return [
 		'page' => [
 			'title' => 'required|string|max:255',
 			'slug' => 'required|string|unique:pages,slug|max:255',
+			'description' => 'nullable|string',
+			'keywords' => 'nullable|string',
 			'status_id' => 'required|integer',
 			'content' => 'nullable|string',
 			'parent_id' => 'required|integer',
@@ -100,9 +102,12 @@ return [
 		'article' => [
 			'title' => 'required|string|max:255',
 			'slug' => 'required|string|unique:articles,slug|max:255',
+			'description' => 'nullable|string',
+			'keywords' => 'nullable|string',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',
 			'content' => 'nullable|string',
+			'published_at' => 'required|date',
 		],
 		'location' => [
 			'title' => 'required|string|max:255',

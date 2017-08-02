@@ -13,6 +13,8 @@ window.axios.defaults.headers.common = {
 
 require('bootstrap');
 
+require('bootstrap-datetime-picker');
+
 require('chart.js');
 
 require('../plugins/redactor/redactor');

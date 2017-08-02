@@ -23,10 +23,15 @@ class CreateArticlesTable extends Migration
 			$table->string('title');
 			$table->string('slug');
 			
+			$table->mediumText('keywords')->nullable();
+			
+			$table->longText('description')->nullable();
 			$table->longText('content')->nullable();
 			
 			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
+			
+			$table->timestamp('published_at');
 			
 			$table->timestamps();
 		});

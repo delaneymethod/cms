@@ -120,9 +120,12 @@ class ArticleController extends Controller
 				// Set our field data
 				$article->title = $cleanedArticle['title'];
 				$article->slug = $cleanedArticle['slug'];
+				$article->description = $cleanedArticle['description'];
+				$article->keywords = $cleanedArticle['keywords'];
 				$article->user_id = $cleanedArticle['user_id'];
 				$article->status_id = $cleanedArticle['status_id'];
 				$article->content = $cleanedArticle['content'];
+				$article->published_at = $cleanedArticle['published_at'];
 				
 				$article->save();
 				
@@ -227,9 +230,12 @@ class ArticleController extends Controller
 				// Set our field data
 				$article->title = $cleanedArticle['title'];
 				$article->slug = $cleanedArticle['slug'];
+				$article->description = $cleanedArticle['description'];
+				$article->keywords = $cleanedArticle['keywords'];
 				$article->user_id = $cleanedArticle['user_id'];
 				$article->status_id = $cleanedArticle['status_id'];
 				$article->content = $cleanedArticle['content'];
+				$article->published_at = $cleanedArticle['published_at'];
 				$article->updated_at = $this->datetime;
 				
 				$article->save();

@@ -22,6 +22,8 @@ class PagesTableSeeder extends Seeder
                 'id' => 1,
                 'title' => 'Home',
                 'slug' => '',
+                'keywords' => NULL,
+                'description' => NULL,
                 'content' => '<p>This is the homepage.</p>',
                 'status_id' => 1,
                 'parent_id' => NULL,
@@ -29,13 +31,15 @@ class PagesTableSeeder extends Seeder
                 'rgt' => 2,
                 'depth' => 0,
                 'created_at' => '2017-08-01 09:19:40',
-                'updated_at' => '2017-08-01 16:02:00',
+                'updated_at' => '2017-08-02 12:29:59',
             ),
             1 => 
             array (
                 'id' => 2,
                 'title' => 'About Us',
                 'slug' => 'about-us',
+                'keywords' => NULL,
+                'description' => NULL,
                 'content' => '<p>This is the About page.</p>',
                 'status_id' => 1,
                 'parent_id' => NULL,
@@ -43,13 +47,15 @@ class PagesTableSeeder extends Seeder
                 'rgt' => 4,
                 'depth' => 0,
                 'created_at' => '2017-08-01 11:51:41',
-                'updated_at' => '2017-08-01 16:02:00',
+                'updated_at' => '2017-08-02 12:29:59',
             ),
             2 => 
             array (
                 'id' => 3,
                 'title' => 'Services',
                 'slug' => 'services',
+                'keywords' => NULL,
+                'description' => NULL,
                 'content' => '<p>This is the Services page.</p>',
                 'status_id' => 1,
                 'parent_id' => NULL,
@@ -57,7 +63,7 @@ class PagesTableSeeder extends Seeder
                 'rgt' => 6,
                 'depth' => 0,
                 'created_at' => '2017-08-01 11:51:58',
-                'updated_at' => '2017-08-01 16:02:00',
+                'updated_at' => '2017-08-02 12:29:59',
             ),
         ));
         

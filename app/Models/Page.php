@@ -15,6 +15,8 @@ class Page extends Node
 	protected $fillable = [
 		'title',
 		'slug',
+		'description',
+		'keywords',
 		'status_id',
 		'content',
 		'parent_id',

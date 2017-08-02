@@ -23,6 +23,9 @@ class CreatePagesTable extends Migration
 			$table->string('title');
 			$table->string('slug');
 			
+			$table->mediumText('keywords')->nullable();
+			
+			$table->longText('description')->nullable();
 			$table->longText('content')->nullable();
 	  
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');

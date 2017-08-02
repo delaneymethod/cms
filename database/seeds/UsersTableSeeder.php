@@ -31,10 +31,10 @@ class UsersTableSeeder extends Seeder
                 'location_id' => 2,
                 'status_id' => 1,
                 'role_id' => 1,
-                'remember_token' => NULL,
+                'remember_token' => 'y5gycaqbueeKo9c2AxjHzJlkuwAINjavBdVnMpnPM8mUUdu3QTm46dXI2wlo',
                 'last_login_at' => '2017-08-01 09:19:39',
                 'created_at' => '2017-08-01 09:19:39',
-                'updated_at' => '2017-08-01 12:01:38',
+                'updated_at' => '2017-08-02 13:02:33',
             ),
             1 => 
             array (
@@ -54,6 +54,25 @@ class UsersTableSeeder extends Seeder
                 'last_login_at' => NULL,
                 'created_at' => '2017-08-01 11:56:34',
                 'updated_at' => '2017-08-01 12:02:15',
+            ),
+            2 => 
+            array (
+                'id' => 3,
+                'first_name' => 'Ashley',
+                'last_name' => 'Delaney',
+                'email' => 'ashley.delaney@delaneymethod.com',
+                'password' => '$2y$10$rWFWmq3V9zcBU/jDsjblFetId.bElqLPfcDeNEL6IE4wRhfrly7w.',
+                'job_title' => 'Business Development Manager',
+                'telephone' => '+44 1224 123 456',
+                'mobile' => '+44 7889 571 206',
+                'company_id' => 1,
+                'location_id' => 4,
+                'status_id' => 1,
+                'role_id' => 1,
+                'remember_token' => 'Jcaetqx1f06qAcl4NBSfu17sdxIWdLJCuP5zsSlr5nC5FQ3nRDeBtWdHdVgo',
+                'last_login_at' => NULL,
+                'created_at' => '2017-08-02 11:41:52',
+                'updated_at' => '2017-08-02 13:02:48',
             ),
         ));
         

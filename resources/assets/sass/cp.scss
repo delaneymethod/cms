@@ -6,6 +6,8 @@
 
 @import 'node_modules/font-awesome/scss/font-awesome';
 
+@import 'node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker';
+
 @import '../plugins/datatables/datatables-bootstrap';
 
 @import '../plugins/redactor/_scss/redactor';
@@ -95,6 +97,24 @@ a,
 
 @include placeholder {
 	color: #b4b4b4 !important;
+}
+
+.datetimepicker {
+	.today {
+		color: #ffffff !important;
+		border-color: none !important;
+		background-color: $gf-red !important;
+		background-image: none !important;
+		background-repeat: no-repeat !important;
+	}
+
+	.active {
+		color: #ffffff;
+		background-color: $gf-default !important;
+		border-color: none !important;
+		background-image: none !important;
+		background-repeat: no-repeat !important;
+	}
 }
 
 .redactor-styles {
@@ -207,7 +227,7 @@ a,
 }
 
 .status_id-3 {
-	color: $gf-default;
+	color: #9b9b9b;
 	background-color: transparent;
 }
 
@@ -242,7 +262,7 @@ a,
 
 .badge-retired {
 	color: white !important;
-	background-color: rgb(73, 76, 77) !important;
+	background-color: #9b9b9b !important;
 }
 
 .sidebar {
@@ -468,13 +488,6 @@ a,
 		}
 		
 		table {
-			/*
-			tr.retired > * {
-				color: #afafaf !important;
-				background-color: #fbfbfb !important;
-			}
-			*/
-			
 			a {
 				display: block;
 				color: $sidebar-bg-color;

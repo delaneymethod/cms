@@ -24,7 +24,7 @@ class CategoriesTableSeeder extends Seeder
                 'slug' => 'all-categories',
                 'status_id' => 1,
                 'created_at' => '2017-08-01 16:49:21',
-                'updated_at' => '2017-08-01 16:49:21',
+                'updated_at' => '2017-08-02 10:50:52',
             ),
         ));
         
