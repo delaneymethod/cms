@@ -63,7 +63,7 @@ class ArticleController extends Controller
 		if ($currentUser->hasPermission('create_articles')) {
 			$title = 'Create Article';
 			
-			$subTitle = '';
+			$subTitle = 'Articles';
 			
 			// Used to set user_id
 			$users = $this->getUsers();
@@ -121,9 +121,10 @@ class ArticleController extends Controller
 				$article->title = $cleanedArticle['title'];
 				$article->slug = $cleanedArticle['slug'];
 				$article->description = $cleanedArticle['description'];
-				$article->keywords = $cleanedArticle['keywords'];
+				$article->keywords = $this->commaSeparate($cleanedArticle['keywords']);
 				$article->user_id = $cleanedArticle['user_id'];
 				$article->status_id = $cleanedArticle['status_id'];
+				$article->excerpt = $cleanedArticle['excerpt'];
 				$article->content = $cleanedArticle['content'];
 				$article->published_at = $cleanedArticle['published_at'];
 				
@@ -168,7 +169,7 @@ class ArticleController extends Controller
 		if ($currentUser->hasPermission('edit_articles')) {
 			$title = 'Edit Article';
 		
-			$subTitle = '';
+			$subTitle = 'Articles';
 			
 			$article = $this->getArticle($id);
 			
@@ -231,9 +232,10 @@ class ArticleController extends Controller
 				$article->title = $cleanedArticle['title'];
 				$article->slug = $cleanedArticle['slug'];
 				$article->description = $cleanedArticle['description'];
-				$article->keywords = $cleanedArticle['keywords'];
+				$article->keywords = $this->commaSeparate($cleanedArticle['keywords']);
 				$article->user_id = $cleanedArticle['user_id'];
 				$article->status_id = $cleanedArticle['status_id'];
+				$article->excerpt = $cleanedArticle['excerpt'];
 				$article->content = $cleanedArticle['content'];
 				$article->published_at = $cleanedArticle['published_at'];
 				$article->updated_at = $this->datetime;
@@ -281,7 +283,7 @@ class ArticleController extends Controller
 		
 			$title = 'Delete Article';
 			
-			$subTitle = '';
+			$subTitle = 'Articles';
 			
 			return view('cp.articles.delete', compact('currentUser', 'title', 'subTitle', 'article'));
 		}

@@ -61,7 +61,7 @@ class StatusController extends Controller
 		if ($currentUser->hasPermission('create_statuses')) {
 			$title = 'Create Status';
 			
-			$subTitle = '';
+			$subTitle = 'Statuses';
 			
 			return view('cp.advanced.statuses.create', compact('currentUser', 'title', 'subTitle'));
 		}
@@ -140,7 +140,7 @@ class StatusController extends Controller
 		if ($currentUser->hasPermission('edit_statuses')) {
 			$title = 'Edit Status';
 		
-			$subTitle = '';
+			$subTitle = 'Statuses';
 			
 			$status = $this->getStatus($id);
 			
@@ -225,7 +225,7 @@ class StatusController extends Controller
 		
 			$title = 'Delete Status';
 			
-			$subTitle = '';
+			$subTitle = 'Statuses';
 			
 			return view('cp.advanced.statuses.delete', compact('currentUser', 'title', 'subTitle', 'status'));
 		}

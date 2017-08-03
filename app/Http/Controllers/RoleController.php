@@ -61,7 +61,7 @@ class RoleController extends Controller
 		if ($currentUser->hasPermission('create_roles')) {
 			$title = 'Create Role';
 			
-			$subTitle = '';
+			$subTitle = 'Roles';
 			
 			return view('cp.advanced.roles.create', compact('currentUser', 'title', 'subTitle'));
 		}
@@ -220,7 +220,7 @@ class RoleController extends Controller
 		if ($currentUser->hasPermission('edit_roles')) {
 			$title = 'Edit Role';
 		
-			$subTitle = '';
+			$subTitle = 'Roles';
 			
 			$role = $this->getRole($id);
 			
@@ -305,7 +305,7 @@ class RoleController extends Controller
 		
 			$title = 'Delete Role';
 			
-			$subTitle = '';
+			$subTitle = 'Roles';
 			
 			return view('cp.advanced.roles.delete', compact('currentUser', 'title', 'subTitle', 'role'));
 		}

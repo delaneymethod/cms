@@ -8,12 +8,14 @@ use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Http\Traits\PageTrait;
 use App\Http\Traits\StatusTrait;
+use App\Http\Traits\TemplateTrait;
 use App\Http\Controllers\Controller;
 
 class PageController extends Controller
 {
 	use PageTrait;
 	use StatusTrait;
+	use TemplateTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -24,7 +26,38 @@ class PageController extends Controller
 	{
 		parent::__construct();
 		
-		$this->middleware('auth');
+		$this->middleware('auth', [
+			'except' => [
+				'page'
+			]
+		]);
+	}
+	
+	/**
+	 * Get a pages view.
+	 *
+	 * @params	Request 	$request
+	 * @return 	Response
+	 */
+	public function page(Request $request)
+	{
+		$path = $request->path();
+		
+		if ($path == '/') {
+			$segments = collect([0 => '']);
+		} else {
+			$segments = collect(explode('/', $request->path()));
+		}
+		
+		$slug = $segments->last();
+		
+		$page = $this->getPageBySlug($slug);
+		
+		//$this->prepareTemplate($page, $parameters);
+		
+		$currentUser = $this->getAuthenticatedUser();
+		
+		return view('templates.'.$page->template->filename, compact('currentUser', 'page'));
 	}
 
 	/**
@@ -33,7 +66,7 @@ class PageController extends Controller
 	 * @params	Request 	$request
 	 * @return 	Response
 	 */
-   	public function index(Request $request)
+	public function index(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
@@ -58,14 +91,14 @@ class PageController extends Controller
 	 * @params	Request 	$request
 	 * @return 	Response
 	 */
-   	public function menu(Request $request)
+	public function menu(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('edit_pages')) {
 			$title = 'Menu';
 		
-			$subTitle = '';
+			$subTitle = 'Pages';
 			
 			$this->rebuildPages();
 			
@@ -83,7 +116,7 @@ class PageController extends Controller
 	 * @params	Request 	$request
 	 * @return 	Response
 	 */
-   	public function create(Request $request)
+	public function create(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
@@ -98,20 +131,23 @@ class PageController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
-			return view('cp.pages.create', compact('currentUser', 'title', 'subTitle', 'pages', 'statuses'));
+			// Used to set template_id
+			$templates = $this->getTemplates();
+			
+			return view('cp.pages.create', compact('currentUser', 'title', 'subTitle', 'pages', 'statuses', 'templates'));
 		}
 
 		abort(403, 'Unauthorised action');
 	}
 	
 	/**
-     * Creates a new page.
-     *
+	 * Creates a new page.
+	 *
 	 * @params Request 	$request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
+	 * @return Response
+	 */
+	public function store(Request $request)
+	{
 		$currentUser = $this->getAuthenticatedUser();
 
 		if ($currentUser->hasPermission('create_pages')) {
@@ -137,7 +173,8 @@ class PageController extends Controller
 				$page->title = $cleanedPage['title'];
 				$page->slug = $cleanedPage['slug'];
 				$page->description = $cleanedPage['description'];
-				$page->keywords = $cleanedPage['keywords'];
+				$page->keywords = $this->commaSeparate($cleanedPage['keywords']);
+				$page->template_id = $cleanedPage['template_id'];
 				$page->status_id = $cleanedPage['status_id'];
 				$page->content = $cleanedPage['content'];
 				$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
@@ -165,16 +202,16 @@ class PageController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-    }
-    
-    /**
+	}
+	
+	/**
 	 * Shows a form for editing a page.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
 	 * @return 	Response
 	 */
-   	public function edit(Request $request, int $id)
+	public function edit(Request $request, int $id)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
@@ -191,7 +228,10 @@ class PageController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
-			return view('cp.pages.edit', compact('currentUser', 'title', 'subTitle', 'page', 'pages', 'statuses'));
+			// Used to set template_id
+			$templates = $this->getTemplates();
+			
+			return view('cp.pages.edit', compact('currentUser', 'title', 'subTitle', 'page', 'pages', 'statuses', 'templates'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -204,7 +244,7 @@ class PageController extends Controller
 	 * @param	int			$id
 	 * @return 	Response
 	 */
-   	public function update(Request $request, int $id)
+	public function update(Request $request, int $id)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 
@@ -236,7 +276,8 @@ class PageController extends Controller
 					$page->title = $cleanedPage['title'];
 					$page->slug = $cleanedPage['slug'];
 					$page->description = $cleanedPage['description'];
-					$page->keywords = $cleanedPage['keywords'];
+					$page->keywords = $this->commaSeparate($cleanedPage['keywords']);
+					$page->template_id = $cleanedPage['template_id'];
 					$page->status_id = $cleanedPage['status_id'];
 					$page->content = $cleanedPage['content'];
 					$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
@@ -275,7 +316,7 @@ class PageController extends Controller
 	 * @params	Request 	$request
 	 * @return 	Response
 	 */
-   	public function tree(Request $request)
+	public function tree(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 
@@ -344,7 +385,7 @@ class PageController extends Controller
 	 * @param	int			$id
 	 * @return 	Response
 	 */
-   	public function confirm(Request $request, int $id)
+	public function confirm(Request $request, int $id)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
@@ -384,7 +425,7 @@ class PageController extends Controller
 	 * @param	int			$id
 	 * @return 	Response
 	 */
-   	public function delete(Request $request, int $id)
+	public function delete(Request $request, int $id)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
@@ -423,6 +464,36 @@ class PageController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
+	}
+	
+	protected function getPageTemplates()
+	{
+		//$templates = config('cms.templates');
+	
+		//return ['' => ''] + array_combine(array_keys($templates), array_keys($templates));
+	}
+	
+	protected function prepareTemplate(Page $page, array $parameters)
+	{
+		/*
+		$templates = config('cms.templates');
+		
+		if (! $page->template || ! isset($templates[$page->template])) {
+			return;
+		}
+		
+		$template = app($templates[$page->template]);
+		
+		$view = sprintf('templates.%s', $template->getView());
+		
+		if (! view()->exists($view)) {
+			return;
+		}
+		
+		$template->prepare($view = view($view), $parameters);
+		
+		$page->view = $view;
+		*/
 	}
 	
 	/**

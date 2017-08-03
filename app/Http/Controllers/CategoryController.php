@@ -65,7 +65,7 @@ class CategoryController extends Controller
 		if ($currentUser->hasPermission('create_categories')) {
 			$title = 'Create Category';
 			
-			$subTitle = '';
+			$subTitle = 'Categories';
 			
 			// Used to set status_id
 			$statuses = $this->getStatuses();
@@ -149,7 +149,7 @@ class CategoryController extends Controller
 		if ($currentUser->hasPermission('edit_categories')) {
 			$title = 'Edit Category';
 		
-			$subTitle = '';
+			$subTitle = 'Categories';
 			
 			$category = $this->getCategory($id);
 			
@@ -247,7 +247,7 @@ class CategoryController extends Controller
 			
 			$title = 'Delete Category';
 			
-			$subTitle = '';
+			$subTitle = 'Categories';
 			
 			return view('cp.categories.delete', compact('currentUser', 'title', 'subTitle', 'category'));
 		}

@@ -177,12 +177,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         
-        // Added By Sean
-        Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
-        Propaganistas\LaravelIntl\IntlServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
+		// Added by Sean
+		Barryvdh\Cors\ServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
 		Orangehill\Iseed\IseedServiceProvider::class,
+		Propaganistas\LaravelIntl\IntlServiceProvider::class,
+		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+		Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
 		
     ],
 
@@ -232,6 +233,9 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        
+		// Added by Sean
+		'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
 
     ],
 

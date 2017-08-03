@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Baum\Node;
 use App\Models\Status;
+use App\Models\Template;
 
 class Page extends Node
 {
@@ -17,6 +18,7 @@ class Page extends Node
 		'slug',
 		'description',
 		'keywords',
+		'template_id',
 		'status_id',
 		'content',
 		'parent_id',
@@ -24,6 +26,14 @@ class Page extends Node
 		'rgt',
 		'depth',
 	];
+	
+	/**
+	 * Get the template record associated with the page.
+	 */
+	public function template()
+	{
+		return $this->belongsTo(Template::class);
+	}
 	
 	/**
 	 * Get the status record associated with the page.

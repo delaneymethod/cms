@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateArticlesTable extends Migration
+class CreatePagesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -14,30 +14,32 @@ class CreateArticlesTable extends Migration
 	public function up()
 	{
 		Schema::enableForeignKeyConstraints();
-
-		Schema::create('articles', function (Blueprint $table) {
+		
+		Schema::create('pages', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->increments('id');
 			
-			$table->string('title');
+			$table->string('title')->index();
 			$table->string('slug');
 			
 			$table->mediumText('keywords')->nullable();
 			
 			$table->longText('description')->nullable();
 			$table->longText('content')->nullable();
-			
-			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
+	  
+			$table->unsignedInteger('template_id')->nullable()->index()->comment('Foreign key to the templates table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
-			
-			$table->timestamp('published_at');
+			$table->unsignedInteger('parent_id')->nullable()->index();
+			$table->unsignedInteger('lft')->nullable()->index();
+			$table->unsignedInteger('rgt')->nullable()->index();
+			$table->unsignedInteger('depth')->nullable();
 			
 			$table->timestamps();
 		});
-
-		Schema::table('articles', function (Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+		
+		Schema::table('pages', function (Blueprint $table) {
+			$table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 		});
 	}
@@ -49,6 +51,6 @@ class CreateArticlesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('articles');
+		Schema::dropIfExists('pages');
 	}
 }

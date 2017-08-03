@@ -71,11 +71,17 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
-							@foreach ($statuses as $status)
-								<div class="form-check status_id-{{ $status->id }}">
-									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
-										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="6" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}
-									</label>
+							@foreach ($statuses->chunk(4) as $chunk)
+								<div class="row">
+									@foreach ($chunk as $status)
+										<div class="col-sm-12 col-md-3 col-lg-3">
+											<div class="form-check status_id-{{ $status->id }}">
+												<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
+													<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="6" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($status->id == 4) ? 'checked' : '' }}>{{ $status->title }}
+												</label>
+											</div>
+										</div>
+									@endforeach
 								</div>
 							@endforeach
 							@if ($errors->has('status_id'))
@@ -84,8 +90,29 @@
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
+							<label class="control-label font-weight-bold">Categories</label>
+							@php ($categoryIds = old('category_ids') ?? [])
+							@foreach ($categories->chunk(3) as $chunk)
+								<div class="row">
+									@foreach ($chunk as $category)
+										<div class="col-sm-12 col-md-4 col-lg-4">
+											<div class="form-check">
+												<label for="category_id-{{ $category->slug }}" class="form-check-label">
+													<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="7" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : ($loop->first) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
+												</label>
+											</div>
+										</div>
+									@endforeach
+								</div>
+							@endforeach
+							@if ($errors->has('category_ids'))
+								<span id="helpBlockCategoryIds" class="form-control-feedback form-text gf-red">- {{ $errors->first('category_ids') }}</span>
+							@endif
+							<span id="helpBlockCategoryIds" class="form-control-feedback form-text text-muted"></span>
+						</div>
+						<div class="form-group">
 							<label for="user_id" class="control-label font-weight-bold">Author</label>
-							<select name="user_id" id="user_id" class="form-control" tabindex="7" aria-describedby="helpBlockUserId" required>
+							<select name="user_id" id="user_id" class="form-control" tabindex="8" aria-describedby="helpBlockUserId" required>
 								@foreach ($users as $user)
 									<option value="{{ $user->id }}" {{ (old('user_id') == $user->id) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
 								@endforeach
@@ -96,23 +123,16 @@
 							<span id="helpBlockUserId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
-							<label class="control-label font-weight-bold">Categories</label>
-							@php ($categoryIds = old('category_ids') ?? [])
-							@foreach ($categories as $category)
-								<div class="form-check">
-									<label for="category_id-{{ $category->slug }}" class="form-check-label">
-										<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="8" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : ($loop->first) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
-									</label>
-								</div>
-							@endforeach
-							@if ($errors->has('category_ids'))
-								<span id="helpBlockCategoryIds" class="form-control-feedback form-text gf-red">- {{ $errors->first('category_ids') }}</span>
+							<label for="excerpt" class="control-label font-weight-bold">Excerpt</label>
+							<textarea name="excerpt" id="excerpt" style="height: 100px !important;" placeholder="e.g Blog Post excerpt..." tabindex="9" aria-describedby="helpBlockExcerpt">{{ old('excerpt') }}</textarea>
+							@if ($errors->has('excerpt'))
+								<span id="helpBlockExcerpt" class="form-control-feedback form-text gf-red">- {{ $errors->first('excerpt') }}</span>
 							@endif
-							<span id="helpBlockCategoryIds" class="form-control-feedback form-text text-muted"></span>
+							<span id="helpBlockExcerpt" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
 							<label for="content" class="control-label font-weight-bold">Content</label>
-							<textarea name="content" id="content" placeholder="e.g Blog Post content..." tabindex="9" aria-describedby="helpBlockContent">{{ old('content') }}</textarea>
+							<textarea name="content" id="content" placeholder="e.g Blog Post content..." tabindex="10" aria-describedby="helpBlockContent">{{ old('content') }}</textarea>
 							@if ($errors->has('content'))
 								<span id="helpBlockContent" class="form-control-feedback form-text gf-red">- {{ $errors->first('content') }}</span>
 							@endif
@@ -120,9 +140,9 @@
 						</div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_articles'))
-								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="11" title="Cancel">Cancel</a>
+								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="10" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="11" title="Save Changes">Save Changes</button>
 						</div>
 					</form>
 				</div>

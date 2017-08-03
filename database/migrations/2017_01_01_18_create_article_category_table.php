@@ -13,7 +13,7 @@ class CreateArticleCategoryTable extends Migration
 	 */
 	public function up()
 	{
-		 Schema::enableForeignKeyConstraints();
+		Schema::enableForeignKeyConstraints();
 		 
 		Schema::create('article_category', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';

@@ -249,7 +249,7 @@ class CompanyController extends Controller
 			
 			$title = 'Delete Company';
 			
-			$subTitle = $currentUser->company->title;
+			$subTitle = 'Companies';
 		
 			return view('cp.companies.delete', compact('currentUser', 'title', 'subTitle', 'company'));
 		}

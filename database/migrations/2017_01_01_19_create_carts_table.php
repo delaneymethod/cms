@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePasswordResetsTable extends Migration
+class CreateCartsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -14,17 +14,21 @@ class CreatePasswordResetsTable extends Migration
 	public function up()
 	{
 		Schema::enableForeignKeyConstraints();
-		 
-		Schema::create('password_resets', function (Blueprint $table) {
+
+		Schema::create('carts', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
-			$table->string('email')->index();
-			$table->string('token')->index();
+			$table->string('identifier');
+			$table->string('instance');
 			
-			$table->timestamp('created_at')->nullable();
+			$table->longText('content');
+			
+			$table->nullableTimestamps();
+
+			$table->primary(['identifier', 'instance']);
 		});
-		
-		Schema::table('password_resets', function (Blueprint $table) {
+	
+		Schema::table('carts', function (Blueprint $table) {
 		});
 	}
 
@@ -35,6 +39,6 @@ class CreatePasswordResetsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('password_resets');
+		Schema::dropIfExists('carts');
 	}
 }

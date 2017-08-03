@@ -13,7 +13,12 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
+// Cart routes
+Route::get('/cart', 'CartController@index');
+Route::post('/cart', 'CartController@store');
+Route::put('/cart/{id}', 'CartController@update');
+Route::patch('/cart/{id}', 'CartController@update');
+Route::delete('/cart/{id}', 'CartController@delete');
 
 // CP route
 Route::get('/cp', function () {
@@ -84,6 +89,16 @@ Route::put('/cp/categories/{id}', 'CategoryController@update');
 Route::patch('/cp/categories/{id}', 'CategoryController@update');
 Route::delete('/cp/categories/{id}', 'CategoryController@delete');
 
+// CP > Products routes
+Route::get('/cp/products', 'ProductController@index');
+Route::get('/cp/products/create', 'ProductController@create');
+Route::get('/cp/products/{id}/edit', 'ProductController@edit');
+Route::get('/cp/products/{id}/delete', 'ProductController@confirm');
+Route::post('/cp/products', 'ProductController@store');
+Route::put('/cp/products/{id}', 'ProductController@update');
+Route::patch('/cp/products/{id}', 'ProductController@update');
+Route::delete('/cp/products/{id}', 'ProductController@delete');
+
 // CP > Pages routes
 Route::get('/cp/pages', 'PageController@index');
 Route::get('/cp/pages/create', 'PageController@create');
@@ -130,3 +145,6 @@ Route::delete('/cp/advanced/statuses/{id}', 'StatusController@delete');
 Route::get('/cp/assets', 'AssetController@index');
 Route::get('/cp/assets/upload', 'AssetController@upload');
 Route::post('/cp/assets', 'AssetController@store');
+
+// General routes
+Route::get('{catchAll}', 'PageController@page')->where('catchAll', '(.*)');

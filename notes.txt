@@ -4,76 +4,25 @@ https://github.com/BootstrapCMS/CMS/blob/master/SCREENSHOTS.md
 https://asgardcms.com/features
 
 
+hook up products CRUD
 
 
 
+add a default template view - https://github.com/tutsplus/build-a-cms-with-laravel
+
+hook up cart CRUD
+
+add cart functionality to frontend
+
+setup jobs/queues for sending email - https://scotch.io/tutorials/why-laravel-queues-are-awesome
 
 
-/*
-.ui-sortable {
-	margin: 0;
-	width: 344px;
-	background-color: #cccccc;
-	list-style-type: none;
-	list-style: none;
-	padding: 0; 
-}
+set published default status for articles and pages
 
-.ui-sortable li { 
-	outline: 0;
-	margin: 0; 
-	padding: 0;
-	list-style: none;
-	color: #FFFFFF;
-	position: relative;
-	border-top: 1px solid rgba(255,255,255,.2);
-	border-bottom: 1px solid rgba(0,0,0,.5);
-	
-	&:first-child {
-		border-top: 0; 
-	}
+hide other statuses from articles and pages
 
-	&:last-child {
-		border-bottom: 0;
-	}
-	
-	i.fa-bars {
-		display: inline-block;
-		cursor: move;
-		padding: 20px;
-		margin: 0;
-		background-color: #EFEFEF;
-	}
-	
-	span {
-		background-color: green;
-	}
-	
-	a {
-		color: #FFFFFF;
-		height: 45px;
-		line-height: 48px;
-		text-decoration: none;
-		background-color: blue;
-		
-		&:hover {
-			text-decoration: underline;
-		}
-		
-		i {
-			display: inline-block;
-			padding: 20px;
-			margin: 0;
-			cursor: pointer;
-			background-color: fuchsia;
-		}
-	}
-}
 
-.ui-sortable-placeholder {
-	border: 3px dashed #aaaaaa;
-	height: 45px;
-	width: 344px;
-	background-color: #cccccc;
-}
-*/
+update statuses for all pages so its 4 columns
+
+
+set published status to green

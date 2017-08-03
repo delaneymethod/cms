@@ -19,6 +19,7 @@ class Article extends Model
 		'slug',
 		'description',
 		'keywords',
+		'excerpt',
 		'user_id',
 		'status_id',
 		'content',

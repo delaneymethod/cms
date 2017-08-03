@@ -339,6 +339,62 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
+            46 => 
+            array (
+                'id' => 47,
+                'title' => 'view_templates',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            47 => 
+            array (
+                'id' => 48,
+                'title' => 'create_templates',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            48 => 
+            array (
+                'id' => 49,
+                'title' => 'edit_templates',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            49 => 
+            array (
+                'id' => 50,
+                'title' => 'delete_templates',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            50 => 
+            array (
+                'id' => 51,
+                'title' => 'view_products',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            51 => 
+            array (
+                'id' => 52,
+                'title' => 'create_products',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            52 => 
+            array (
+                'id' => 53,
+                'title' => 'edit_products',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            53 => 
+            array (
+                'id' => 54,
+                'title' => 'delete_products',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
         ));
         
         

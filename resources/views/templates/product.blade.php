@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', config('app.name'))
-@section('description', 'Homepage of '.config('app.name'))
-@section('keywords', 'Homepage '.config('app.name'))
+@section('title', $product->title.' - '.config('app.name'))
+@section('description', $product->description.' '.config('app.name'))
+@section('keywords', $product->keywords.',Products,'.config('app.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
@@ -31,7 +31,8 @@
 @section('content')
 	@include('_partials.header')
 	<section class="content">
-		<h1>Homepage</h1>	
+		<h1>PRODUCT TITLE</h1>
+		PRODUCT CONTENT
 	</section>
 	@include('_partials.footer')
 @endsection

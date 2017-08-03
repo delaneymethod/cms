@@ -133,7 +133,6 @@ class Controller extends BaseController
 			'remember_token',
 			'title',
 			'slug',
-			'content',
 			'unit',
 			'building',
 			'street_address_1',
@@ -322,6 +321,42 @@ class Controller extends BaseController
 		}
 
 		$this->setLimit($limit);
+	}
+	
+	/**
+	 * Creates a comma separated string.
+	 *
+	 * @param  String 	$string
+	 * @return String
+	 */
+	protected function commaSeparate($string)
+	{
+		if (!empty($string)) {
+			// Stripe whitespace
+			$string = trim($string);
+			
+			// Split the string first
+			$string = explode(' ', $string);
+			
+			// Join the string again with commas
+			$string = implode(',', $string);
+			
+			// Tidy up commas
+			$string = str_replace([' ,', ', ', ',,,', ',,'], ',', $string);
+			
+			// Tidy up spaces
+			$string = str_replace('  ', ' ', $string);
+			
+			// If last char is a comma, remove it
+			if ($string{-1} == ',') {
+				$string = substr($string, 0, strlen($string) - 1);
+			}
+		}
+		
+		// Stripe whitespace again
+		$string = trim($string);
+		
+		return $string;
 	}
 	
 	/**

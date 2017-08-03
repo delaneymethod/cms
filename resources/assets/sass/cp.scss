@@ -127,30 +127,34 @@ a,
 }
 
 .redactor-toolbar {
-	background-color: transparent;
+	background-color: #f7f7f7;
    	border: none;
-	box-shadow: none;
+	box-shadow: none !important;
+	border-top: 1px solid rgba(0, 0, 0, 0.07);
+	border-right: 1px solid rgba(0, 0, 0, 0.07);
 	
 	li {
+		border: none;
+		background-color: #f7f7f7;
+		border-left: 1px solid rgba(0, 0, 0, 0.07);
+			
+		&:last-child {
+			border-right: 1px solid rgba(0, 0, 0, 0.07);
+		}
+			
 		a {
+			background-size: cover;
+			border: none !important;
 			background-color: #f7f7f7;
-			border-top: 1px solid rgba(0, 0, 0, 0.07);
-			border-left: 1px solid rgba(0, 0, 0, 0.07);
-			border-right: 0;
-			border-bottom: 0;
 			font-size: 14px !important;
 			padding: 10px !important;
 			height: auto !important;
 			
 			&:hover {
-				background-color: #222d32;	
+				margin-top: -1px;
+				border-top: 1px solid #222d32 !important;
+				background-color: #222d32;
 			}	
-		}
-		
-		&:last-child {
-			a {
-				border-right: 1px solid rgba(0, 0, 0, 0.07);
-			}
 		}
 	}
 }

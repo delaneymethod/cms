@@ -23,6 +23,7 @@ class ArticlesTableSeeder extends Seeder
                 'title' => 'My First Blog Post',
                 'slug' => 'my-first-blog-post',
                 'keywords' => NULL,
+                'excerpt' => NULL,
                 'description' => NULL,
                 'content' => 'My first blog post!',
                 'user_id' => 1,

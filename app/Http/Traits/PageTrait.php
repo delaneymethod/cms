@@ -18,6 +18,17 @@ trait PageTrait
 	}
 	
 	/**
+	 * Get the specified page based on slug.
+	 *
+	 * @param 	string 		$slug
+	 * @return 	Object
+	 */
+	public function getPageBySlug(string $slug)
+	{
+		return Page::where('slug', $slug)->where('status_id', 4)->firstOrFail();
+	}
+	
+	/**
 	 * Get the specified page based on id.
 	 *
 	 * @param 	int 		$id

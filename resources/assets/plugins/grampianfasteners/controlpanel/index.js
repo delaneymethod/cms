@@ -251,7 +251,21 @@
 		let attachRedactor = element => {
 			if ($(element).length) {
 				const token = window.Laravel.csrfToken;
-			
+				
+				let minHeight = 400;
+				
+				let buttons = ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link', 'horizontalrule'];
+				
+				let plugins = ['source', 'table', 'alignment', 'fullscreen', 'filemanager', 'imagemanager', 'video'];
+					
+				if (element == '#excerpt') {
+					minHeight = 100;
+					
+					buttons = ['format', 'bold', 'italic'];
+					
+					plugins = ['source'];
+				}
+				
 				$(element).redactor({
 					'focus': false,
 					'fileUpload': '/cp/assets?_token=' + token,
@@ -262,15 +276,9 @@
 					'imagePosition': true,
 					'structure': true,
 					'tabAsSpaces': 4,
-					'plugins': [
-				 		'source',
-				 		'table',
-				 		'alignment',
-				 		'fullscreen',
-				 		'filemanager',
-				 		'imagemanager',
-				 		'video'
-				 	],
+					'minHeight': minHeight,
+					'buttons': buttons,
+					'plugins': plugins,
 					'callbacks': {
 						'imageUpload': (image, json) => {
 							$(image).attr('id', json.id);
@@ -382,6 +390,8 @@
 			loadAnimations();
 			
 			attachDatePicker('.input-group.date');
+			
+			attachRedactor('#excerpt');
 			
 			attachRedactor('#content');
 			

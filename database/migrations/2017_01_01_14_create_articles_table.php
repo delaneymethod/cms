@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration
+class CreateArticlesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -14,8 +14,8 @@ class CreatePagesTable extends Migration
 	public function up()
 	{
 		Schema::enableForeignKeyConstraints();
-		
-		Schema::create('pages', function (Blueprint $table) {
+
+		Schema::create('articles', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->increments('id');
@@ -24,20 +24,21 @@ class CreatePagesTable extends Migration
 			$table->string('slug');
 			
 			$table->mediumText('keywords')->nullable();
-			
+			$table->mediumText('excerpt')->nullable();
+            
 			$table->longText('description')->nullable();
 			$table->longText('content')->nullable();
-	  
+			
+			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
-			$table->unsignedInteger('parent_id')->nullable()->index();
-			$table->unsignedInteger('lft')->nullable()->index();
-			$table->unsignedInteger('rgt')->nullable()->index();
-			$table->unsignedInteger('depth')->nullable();
+			
+			$table->timestamp('published_at');
 			
 			$table->timestamps();
 		});
-		
-		Schema::table('pages', function (Blueprint $table) {
+
+		Schema::table('articles', function (Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 		});
 	}
@@ -49,6 +50,6 @@ class CreatePagesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('pages');
+		Schema::dropIfExists('articles');
 	}
 }

@@ -86,6 +86,7 @@ return [
 			'slug' => 'required|string|unique:pages,slug|max:255',
 			'description' => 'nullable|string',
 			'keywords' => 'nullable|string',
+			'template_id' => 'required|integer',
 			'status_id' => 'required|integer',
 			'content' => 'nullable|string',
 			'parent_id' => 'required|integer',
@@ -106,6 +107,7 @@ return [
 			'keywords' => 'nullable|string',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',
+			'excerpt' => 'nullable|string',
 			'content' => 'nullable|string',
 			'published_at' => 'required|date',
 		],
@@ -125,8 +127,16 @@ return [
 			'company_id' => 'required|integer',
 			'status_id' => 'required|integer',
 		],
+		'product' => [
+			'title' => 'required|string|max:255',
+			'price' => 'required|numeric',
+		],
 		'role' => [
 			'title' => 'required|string|max:255',
+		],
+		'template' => [
+			'title' => 'required|string|max:255',
+			'filename' => 'required|string|max:255',
 		],
 		'status' => [
 			'title' => 'required|string|max:255',
