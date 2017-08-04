@@ -125,6 +125,9 @@ class Controller extends BaseController
 		];
 
 		$strings = [
+			'action',
+			'instance',
+			'row_id',
 			'first_name',
 			'last_name',
 			'jot_title',

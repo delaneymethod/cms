@@ -20,7 +20,7 @@ class CreateAssetsTable extends Migration
 			
 			$table->increments('id');
 			
-			$table->string('title');
+			$table->string('title')->index();
 			$table->string('hash_name');
 			$table->string('original_name');
 			$table->string('mime_type')->index();

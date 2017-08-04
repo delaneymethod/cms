@@ -16,6 +16,17 @@ trait ProductTrait
 	{
 		return Product::findOrFail($id);
 	}
+	
+	/**
+	 * Get the specified product based on slug.
+	 *
+	 * @param 	string 		$slug
+	 * @return 	Object
+	 */
+	public function getProductBySlug(string $slug)
+	{
+		return Product::where('slug', $slug)->firstOrFail();
+	}
 
 	/**
 	 * Get all the products.

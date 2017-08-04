@@ -2,12 +2,15 @@
 
 namespace App\Providers;
 
+use App\Http\Traits\PageTrait;
 use Illuminate\Support\Facades\View; 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+	use PageTrait;
+	
     /**
      * Bootstrap any application services.
      *
@@ -21,6 +24,11 @@ class AppServiceProvider extends ServiceProvider
 		 * 	- Added 26/01/17 as our MySQL version is 5.6.34, shipped with MAMP Pro 4.1.
 		 */
 		Schema::defaultStringLength(191);
+		
+		// Added by Sean
+		$pages = $this->getPages();
+		
+		View::share('pages', $pages);
 		
 		// Added by Sean
 		View::share('sidebarSmCols', config('grampianfasteners.column_widths.cp.sidebar.sm'));

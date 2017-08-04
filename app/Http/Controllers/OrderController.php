@@ -6,6 +6,7 @@ use DB;
 use Log;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Http\Traits\CartTrait;
 use App\Http\Traits\UserTrait;
 use App\Http\Traits\OrderTrait;
 use App\Http\Traits\StatusTrait;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
+	use CartTrait;
 	use UserTrait;
 	use OrderTrait;
 	use StatusTrait;
@@ -51,6 +53,118 @@ class OrderController extends Controller
 		
 		abort(403, 'Unauthorised action');
 	}
+	
+	/**
+     * Creates a new order.
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+    public function store(Request $request)
+    {
+	    $currentUser = $this->getAuthenticatedUser();
+
+		if ($currentUser->hasPermission('create_orders')) {
+			// Remove any Cross-site scripting (XSS)
+			$cleanedOrder = $this->sanitizerInput($request->all());
+			
+			// Get the cart instance
+			$cart = $this->getCartInstance('cart');
+			
+			// Create our order based on cart content
+			$cleanedOrder['products'] = [];
+			
+			foreach ($cart->products as $product) {
+				array_push($cleanedOrder['products'], [
+					'product_id' => $product->id,
+					'quantity' => $product->qty,
+					'price' => $product->price,
+					'price_tax' => $product->priceTax,
+					'tax_rate' => $product->taxRate,
+				]);
+			}
+			
+			$cleanedOrder['count'] = $cart->count;
+			$cleanedOrder['tax'] = $cart->tax;
+			$cleanedOrder['subtotal'] = $cart->subtotal;
+			$cleanedOrder['total'] = $cart->total;
+			
+			$products = count($cart->products) - 1;
+			
+			// Set some dynamic rules to valid our order
+			$rules = [];
+			$rules['user_id'] = 'required|integer';
+			
+			foreach (range(0, $products) as $index) {
+				$rules['products.'.$index.'.product_id'] = 'required|integer';
+				$rules['products.'.$index.'.quantity'] = 'required|integer';
+				$rules['products.'.$index.'.price'] = 'required|numeric';
+				$rules['products.'.$index.'.price_tax'] = 'required|numeric';
+				$rules['products.'.$index.'.tax_rate'] = 'required|numeric';
+			}
+			
+			$rules['count'] = 'required|integer';
+			$rules['tax'] = 'required|numeric';
+			$rules['subtotal'] = 'required|numeric';
+			$rules['total'] = 'required|numeric';
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedOrder, $rules);
+
+			if ($validator->fails()) {
+				$message = '';
+				
+				$errors = [];
+				
+				foreach ($validator->errors()->messages() as $error) {
+					array_push($errors, $error[0]);
+				}
+				
+				$message = implode(' ', $errors);
+				
+				dd($message);
+				
+				abort(500, $message);
+			}
+
+			dd('so far so good');
+			
+			DB::beginTransaction();
+
+			try {
+				/*
+				// Create new model
+				$order = new Order;
+	
+				// Set our field data
+				$order->_ = $cleanedOrder['-'];
+				
+				$order->save();
+				*/
+				
+				// finally empty the cart instance
+				$this->destroyCart();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			return redirect('/cart/checkout/success');
+		}
+
+		abort(403, 'Unauthorised action');
+    }
 	
 	/**
 	 * Shows a form for editing a order.

@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 trait UserTrait
 {

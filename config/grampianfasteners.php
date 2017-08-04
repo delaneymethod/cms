@@ -76,6 +76,9 @@ return [
 
 	'validation_rules' => [
 		
+		'cart' => [
+			'instance' => 'required|string|in:cart,wishlist',
+		],
 		'category' => [
 			'title' => 'required|string|max:255',
 			'slug' => 'required|string|unique:categories,slug|max:255',

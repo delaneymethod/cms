@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration
 			
 			$table->increments('id');
 			
-			$table->string('title');
+			$table->string('title')->index();
 			$table->string('slug');
 			
 			$table->mediumText('keywords')->nullable();

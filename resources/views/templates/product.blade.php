@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
 @section('title', $product->title.' - '.config('app.name'))
-@section('description', $product->description.' '.config('app.name'))
-@section('keywords', $product->keywords.',Products,'.config('app.name'))
+@section('description', $product->title.' '.config('app.name'))
+@section('keywords', $product->title.',Products,'.config('app.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
@@ -29,10 +29,37 @@
 @endpush
 
 @section('content')
-	@include('_partials.header')
-	<section class="content">
-		<h1>PRODUCT TITLE</h1>
-		PRODUCT CONTENT
-	</section>
-	@include('_partials.footer')
+	@include('_partials.header', [
+		'currentUser' => $currentUser,
+		'cart' => $cart
+	])
+	<div class="row wrapper">
+		<div class="col main">
+			@include('_partials.message')
+			<h1>{{ $product->title }}</h1>
+			<p>Price: {{ $product->price }}</p>
+			
+			@if ($currentUser && $currentUser->hasPermission('create_orders'))
+				@component('_components.cart.addProduct', [
+					'product' => $product, 
+					'instance' => 'cart', 
+					'action' => 'secret'
+				])
+				@endcomponent
+				
+				@if (!$wishlistCart->products->pluck('id')->contains($product->id))
+					@component('_components.cart.addProduct', [
+						'product' => $product, 
+						'instance' => 'wishlist', 
+						'action' => 'secret'
+					])
+					@endcomponent
+				@endif
+			@endif
+		</div>
+	</div>
+	@include('_partials.footer', [
+		'currentUser' => $currentUser,
+		'cart' => $cart
+	])
 @endsection

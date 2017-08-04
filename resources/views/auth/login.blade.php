@@ -29,7 +29,10 @@
 @endpush
 
 @section('content')
-	@include('_partials.header')
+	@include('_partials.header', [
+		'currentUser' => null,
+		'cart' => null
+	])
 	<section class="content">
 		<h2>Login</h2>
 		<form name="" id="" class="" role="form" method="POST" action="{{ route('login') }}">
@@ -49,5 +52,8 @@
 			<a href="{{ route('password.request') }}" title="">Forgot Your Password?</a>
 		</form>
 	</section>
-	@include('_partials.footer')
+	@include('_partials.footer', [
+		'currentUser' => null,
+		'cart' => null
+	])
 @endsection

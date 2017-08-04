@@ -20,11 +20,17 @@
 @endpush
 
 @section('content')
-	@include('_partials.header')
+	@include('_partials.header', [
+		'currentUser' => null,
+		'cart' => null
+	])
 	<section class="content">
 		<h2>Server Error: 503 (Be Right Back)</h2>
 		<h3>What does this mean?</h3>
 		<p>{{ json_decode(file_get_contents(storage_path('framework/down')), true)['message'] }}</p>
 	</section>
-	@include('_partials.footer')
+	@include('_partials.footer', [
+		'currentUser' => null,
+		'cart' => null
+	])
 @endsection

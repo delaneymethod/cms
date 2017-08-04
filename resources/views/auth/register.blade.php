@@ -29,7 +29,10 @@
 @endpush
 
 @section('content')
-	@include('_partials.header')
+	@include('_partials.header', [
+		'currentUser' => null,
+		'cart' => null
+	])
 	<section class="content">
 		<h2>Register</h2>
 		<form name="" id="" class="" role="form" method="POST" action="{{ route('register') }}">
@@ -57,5 +60,8 @@
 			<button type="submit" name="" id="" class="" title="">Register</button>
 		</form>
 	</section>
-	@include('_partials.footer')
+	@include('_partials.footer', [
+		'currentUser' => null,
+		'cart' => null
+	])
 @endsection

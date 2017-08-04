@@ -20,7 +20,7 @@ class CreateCompaniesTable extends Migration
 			
 			$table->increments('id');
 			
-			$table->string('title');
+			$table->string('title')->index();
 			
 			$table->unsignedInteger('default_location_id')->nullable();
 			

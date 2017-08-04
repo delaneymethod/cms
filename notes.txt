@@ -4,15 +4,29 @@ https://github.com/BootstrapCMS/CMS/blob/master/SCREENSHOTS.md
 https://asgardcms.com/features
 
 
-hook up products CRUD
+
+
+
+
+
+add back in templates - checkout, cart
+
+add back in pages - Products, Cart, Contact, Success
+
+
+
+
+add option to hide a page from the navigation
+
+
 
 
 
 add a default template view - https://github.com/tutsplus/build-a-cms-with-laravel
 
-hook up cart CRUD
 
-add cart functionality to frontend
+
+
 
 setup jobs/queues for sending email - https://scotch.io/tutorials/why-laravel-queues-are-awesome
 
@@ -26,3 +40,20 @@ update statuses for all pages so its 4 columns
 
 
 set published status to green
+
+add statuses to pages, articles
+
+
+
+add template slug to validation
+
+add product slug to validation
+
+
+
+
+
+
+
+add carts option to dashboard with stats
+

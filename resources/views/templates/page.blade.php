@@ -30,9 +30,12 @@
 
 @section('content')
 	@include('_partials.header')
-	<section class="content">
-		<h1>{{ $page->title }}</h1>
-		{!! $page->content !!}
-	</section>
+	<div class="row wrapper">
+		<div class="col main">
+			@include('_partials.message')
+			<h1>{{ $page->title }}</h1>
+			{!! $page->content !!}
+		</div>
+	</div>
 	@include('_partials.footer')
 @endsection

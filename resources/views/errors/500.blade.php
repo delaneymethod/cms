@@ -20,7 +20,10 @@
 @endpush
 
 @section('content')
-	@include('_partials.header')
+	@include('_partials.header', [
+		'currentUser' => null,
+		'cart' => null
+	])
 	<section class="content">
 		<h2>Server Error: 500 (Internal Server Error)</h2>
 		<h3>What does this mean?</h3>
@@ -32,5 +35,8 @@
 			<small><pre>{{ $exception->getMessage() }}</pre></small>
 		@endif
 	</section>
-	@include('_partials.footer')
+	@include('_partials.footer', [
+		'currentUser' => null,
+		'cart' => null
+	])
 @endsection

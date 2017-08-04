@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use App\Models\Status;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -14,9 +15,13 @@ class Order extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'title',
+		'order_number',
 		'user_id',
 		'status_id',
+		'count',
+		'tax',
+		'subtotal',
+		'total',
 	];
 
 	/**
@@ -33,5 +38,13 @@ class Order extends Model
 	public function status()
 	{
 		return $this->belongsTo(Status::class);
+	}
+	
+	/**
+	 * Get the product records associated with the order.
+	 */
+	public function products()
+	{
+		return $this->belongsToMany(Product::class, 'order_product');
 	}
 }

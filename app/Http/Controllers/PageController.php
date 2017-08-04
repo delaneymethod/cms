@@ -6,15 +6,19 @@ use DB;
 use Log;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use App\Http\Traits\CartTrait;
 use App\Http\Traits\PageTrait;
 use App\Http\Traits\StatusTrait;
+use App\Http\Traits\ProductTrait;
 use App\Http\Traits\TemplateTrait;
 use App\Http\Controllers\Controller;
 
 class PageController extends Controller
 {
+	use CartTrait;
 	use PageTrait;
 	use StatusTrait;
+	use ProductTrait;
 	use TemplateTrait;
 	
 	/**
@@ -41,7 +45,14 @@ class PageController extends Controller
 	 */
 	public function page(Request $request)
 	{
+		$currentUser = $this->getAuthenticatedUser();
+		
 		$path = $request->path();
+		
+		// Cart access requires logged in user
+		if ($path == 'cart' && $currentUser == null) {
+			return redirect('/login');
+		}
 		
 		if ($path == '/') {
 			$segments = collect([0 => '']);
@@ -51,13 +62,36 @@ class PageController extends Controller
 		
 		$slug = $segments->last();
 		
+		// Get requested page
 		$page = $this->getPageBySlug($slug);
 		
-		//$this->prepareTemplate($page, $parameters);
+		// If requested page was found, then grab all pages
+		$pages = $this->getPages();
+			
+		$cart = $this->getCartInstance('cart');
 		
-		$currentUser = $this->getAuthenticatedUser();
+		// Select any wishlist instances from the current session
+		$wishlistCart = $this->getCartInstance('wishlist');
 		
-		return view('templates.'.$page->template->filename, compact('currentUser', 'page'));
+		// $this->prepareTemplate($page, $parameters);
+		
+		// FIXME - template should be picked with this data already available
+		$savedCarts = [];
+		
+		if ($page->slug == 'cart') {
+			// Grab any saved cart instances from the database
+			$savedCarts = $this->getSavedCarts($currentUser->id);
+		}
+		
+		// FIXME - template should be picked with this data already available
+		$products = [];
+		
+		// Pull in all products if we're on the products page
+		if ($page->slug == 'products') {
+			$products = $this->getProducts();
+		}
+		
+		return view('templates.'.$page->template->filename, compact('currentUser', 'page', 'pages', 'products', 'cart', 'wishlistCart', 'savedCarts'));
 	}
 
 	/**

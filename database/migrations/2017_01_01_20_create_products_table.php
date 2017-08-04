@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
 			$table->increments('id');
 			
 			$table->string('title')->index();
+			$table->string('slug');
 			
 			$table->float('price', 8, 2);
 			

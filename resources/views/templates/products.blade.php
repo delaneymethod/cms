@@ -1,6 +1,6 @@
 @extends('_layouts.default')
 
-@section('title', (($page->title != 'Home') ? $page->title.' - ' : '').config('app.name'))
+@section('title', $page->title.' - '.config('app.name'))
 @section('description', $page->description.' '.config('app.name'))
 @section('keywords', $page->keywords.','.config('app.name'))
 
@@ -29,15 +29,50 @@
 @endpush
 
 @section('content')
-	@include('_partials.header')
-	<section class="content">
-		<h1>{{ $page->title }}</h1>
-		{!! $page->content !!}
-		
-		LIST PRODUCTS HERE
-		
-		http://andremadarang.com/implementing-a-shopping-cart-in-laravel/	
-		
-	</section>
-	@include('_partials.footer')
+	@include('_partials.header', [
+		'currentUser' => $currentUser,
+		'cart' => $cart
+	])
+	<div class="row wrapper">
+		<div class="col main">
+			@include('_partials.message')
+			<h1>{{ $page->title }}</h1>
+			{!! $page->content !!}
+			
+			@foreach ($products->chunk(4) as $items)
+				<div class="row">
+					@foreach ($items as $product)
+						<div class="col-sm-12 col-md-3 col-lg-3">
+							<ul>
+								<li>
+									<a href="/products/{{ $product->slug }}" title="{{ $product->title }}">{{ $product->title }}</a>
+									@if ($currentUser && $currentUser->hasPermission('create_orders'))
+										@component('_components.cart.addProduct', [
+											'product' => $product, 
+											'instance' => 'cart', 
+											'action' => 'secret'
+										])
+										@endcomponent
+										
+										@if (!$wishlistCart->products->pluck('id')->contains($product->id))
+											@component('_components.cart.addProduct', [
+												'product' => $product, 
+												'instance' => 'wishlist', 
+												'action' => 'secret'
+											])
+											@endcomponent
+										@endif
+									@endif
+								</li>
+							</ul>
+						</div>
+					@endforeach
+				</div>
+			@endforeach
+		</div>
+	</div>
+	@include('_partials.footer', [
+		'currentUser' => $currentUser,
+		'cart' => $cart
+	])
 @endsection

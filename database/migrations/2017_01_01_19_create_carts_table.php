@@ -18,12 +18,12 @@ class CreateCartsTable extends Migration
 		Schema::create('carts', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
-			$table->string('identifier');
-			$table->string('instance');
+			$table->string('identifier')->index();
+			$table->string('instance')->index();
 			
 			$table->longText('content');
 			
-			$table->nullableTimestamps();
+			$table->timestamps();
 
 			$table->primary(['identifier', 'instance']);
 		});

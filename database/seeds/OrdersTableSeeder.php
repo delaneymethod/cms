@@ -20,10 +20,14 @@ class OrdersTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'title' => 'My First Order',
+                'order_number' => '1234567890',
                 'user_id' => 1,
                 'status_id' => 1,
-                'created_at' => '2017-08-01 09:19:40',
+                'count' => 1,
+                'tax' =>  26.00,
+				'subtotal' => 129.99, 
+				'total' => 155.99,
+				'created_at' => '2017-08-01 09:19:40',
                 'updated_at' => '2017-08-01 09:19:40',
             ),
         ));

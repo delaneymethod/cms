@@ -20,10 +20,15 @@ class CreateOrdersTable extends Migration
 			
 			$table->increments('id');
 			
-			$table->string('title');
+			$table->string('order_number')->index();
 			
 			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
+			$table->unsignedInteger('count')->nullable();
+			
+			$table->float('tax', 8, 2);
+			$table->float('subtotal', 8, 2);
+			$table->float('total', 8, 2);
 			
 			$table->timestamps();
 		});

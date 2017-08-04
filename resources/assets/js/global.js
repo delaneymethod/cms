@@ -12,3 +12,5 @@ window.axios.defaults.headers.common = {
 };
 
 require('bootstrap');
+
+require('../plugins/grampianfasteners');

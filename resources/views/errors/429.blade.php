@@ -20,11 +20,17 @@
 @endpush
 
 @section('content')
-	@include('_partials.header')
+	@include('_partials.header', [
+		'currentUser' => null,
+		'cart' => null
+	])
 	<section class="content">
 		<h2>Server Error: 429 (Too Many Attempts)</h2>
 		<h3>What does this mean?</h3>
 		<p>You have made too many requests to the same resource, and now you will have to wait for a {{ $retryAfter }} seconds before trying again.</p>
 	</section>
-	@include('_partials.footer')
+	@include('_partials.footer', [
+		'currentUser' => null,
+		'cart' => null
+	])
 @endsection

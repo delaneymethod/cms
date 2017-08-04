@@ -29,7 +29,10 @@
 @endpush
 
 @section('content')
-	@include('_partials.header')
+	@include('_partials.header', [
+		'currentUser' => null,
+		'cart' => null
+	])
 	<section class="content">
 		<h2>Set Password</h2>
 		@if (session('status'))
@@ -56,5 +59,8 @@
 			<button type="submit" name="" id="" class="" title="">Set Password</button>
 		</form>
 	</section>
-	@include('_partials.footer')
+	@include('_partials.footer', [
+		'currentUser' => null,
+		'cart' => null
+	])
 @endsection
