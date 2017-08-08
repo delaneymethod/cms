@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /**
+	    /**
 		 * Added by Sean
 		 *	- fixes creating indexes on MySQL versions less than 5.7.* when running Laravel 5.4.
 		 * 	- Added 26/01/17 as our MySQL version is 5.6.34, shipped with MAMP Pro 4.1.
@@ -48,6 +48,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+	    //
     }
 }
