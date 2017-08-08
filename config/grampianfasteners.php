@@ -99,9 +99,13 @@ return [
 			'default_location_id' => 'required|integer',
 		],
 		'order' => [
-			'title' => 'required|string|max:255',
+			'order_number' => 'required|string|max:255',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',
+			'count' => 'required|integer',
+			'tax' => 'required|numeric',
+			'subtotal' => 'required|numeric',
+			'total' => 'required|numeric',
 		],
 		'article' => [
 			'title' => 'required|string|max:255',
@@ -132,6 +136,7 @@ return [
 		],
 		'product' => [
 			'title' => 'required|string|max:255',
+			'slug' => 'required|string|unique:products,slug|max:255',
 			'price' => 'required|numeric',
 		],
 		'role' => [
@@ -139,7 +144,7 @@ return [
 		],
 		'template' => [
 			'title' => 'required|string|max:255',
-			'filename' => 'required|string|max:255',
+			'filename' => 'required|string|unique:templates,filename|max:255',
 		],
 		'status' => [
 			'title' => 'required|string|max:255',

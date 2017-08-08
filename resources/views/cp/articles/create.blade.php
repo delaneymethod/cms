@@ -71,17 +71,11 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
-							@foreach ($statuses->chunk(4) as $chunk)
-								<div class="row">
-									@foreach ($chunk as $status)
-										<div class="col-sm-12 col-md-3 col-lg-3">
-											<div class="form-check status_id-{{ $status->id }}">
-												<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
-													<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="6" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($status->id == 4) ? 'checked' : '' }}>{{ $status->title }}
-												</label>
-											</div>
-										</div>
-									@endforeach
+							@foreach ($statuses as $status)
+								<div class="form-check status_id-{{ $status->id }}">
+									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="6" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}
+									</label>
 								</div>
 							@endforeach
 							@if ($errors->has('status_id'))

@@ -71,6 +71,9 @@ class ArticleController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
+			// Remove Active, Pending and Retired
+			$statuses->forget([1, 2, 3]);
+			
 			// Used to set categories_ids
 			$categories = $this->getCategories();
 			
@@ -178,6 +181,9 @@ class ArticleController extends Controller
 			
 			// Used to set status_id
 			$statuses = $this->getStatuses();
+			
+			// Remove Active, Pending and Retired
+			$statuses->forget([1, 2, 3]);
 			
 			// Used to set categories_ids
 			$categories = $this->getCategories();

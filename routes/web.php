@@ -14,9 +14,7 @@
 Auth::routes();
 
 // Cart routes
-Route::get('/cart', 'PageController@page');
 Route::get('/cart/save', 'CartController@save');
-Route::get('/cart/checkout', 'PageController@page');
 Route::get('/cart/restore/{identifier}', 'CartController@restore');
 Route::post('/cart', 'CartController@store');
 Route::put('/cart/{rowId}', 'CartController@update');
@@ -24,7 +22,6 @@ Route::patch('/cart/{rowId}', 'CartController@update');
 Route::delete('/cart', 'CartController@delete');
 
 // Products routes
-Route::get('/products', 'PageController@page');
 Route::get('/products/{slug}', 'ProductController@show');
 
 // Order routes
@@ -108,6 +105,12 @@ Route::post('/cp/products', 'ProductController@store');
 Route::put('/cp/products/{id}', 'ProductController@update');
 Route::patch('/cp/products/{id}', 'ProductController@update');
 Route::delete('/cp/products/{id}', 'ProductController@delete');
+
+// CP > Carts routes
+Route::get('/cp/carts', 'CartController@index');
+
+// CP > Templates routes
+Route::get('/cp/templates', 'TemplateController@index');
 
 // CP > Pages routes
 Route::get('/cp/pages', 'PageController@index');

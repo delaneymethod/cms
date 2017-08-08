@@ -70,6 +70,9 @@ class CategoryController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
+			// Remove Pubished, Private and Draft keys
+			$statuses->forget([3, 4, 5]);
+			
 			return view('cp.categories.create', compact('currentUser', 'title', 'subTitle', 'statuses'));
 		}
 
@@ -155,6 +158,9 @@ class CategoryController extends Controller
 			
 			// Used to set status_id
 			$statuses = $this->getStatuses();
+			
+			// Remove Pubished, Private and Draft keys
+			$statuses->forget([3, 4, 5]);
 			
 			return view('cp.categories.edit', compact('currentUser', 'title', 'subTitle', 'category', 'statuses'));
 		}

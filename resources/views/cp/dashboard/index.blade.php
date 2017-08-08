@@ -21,23 +21,40 @@
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
-				<div class="content padding bg-white">
-					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-12">
-							<canvas id="orderStats" data-orders="{{ $orders }}"></canvas>
+				@if (count($orders) > 0)
+					<div class="content padding bg-white">
+						<div class="row">
+							<div class="col-sm-12 col-md-12 col-lg-12">
+								<canvas id="orderStats" data-orders="{{ $orders }}"></canvas>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="content padding bg-white">
-					<div class="row">
-						<div class="col-sm-12 col-md-6 col-lg-6">
-							<canvas id="allStats" data-total-categories="{{ $categories->count() }}" data-total-users="{{ $users->count() }}" data-total-pages="{{ $pages->count() }}" data-total-orders="{{ $orders->count() }}" data-total-assets="{{ $assets->count() }}" data-total-companies="{{ $companies->count() }}" data-total-articles="{{ $articles->count() }}" data-total-locations="{{ $locations->count() }}"></canvas>
-						</div>
-						<div class="col-sm-12 col-md-6 col-lg-6">
-							<canvas id="roleUsersStats" data-total-super-admins="{{ $roles[0]->users->count() }}" data-total-admins="{{ $roles[1]->users->count() }}" data-total-end-users="{{ $roles[2]->users->count() }}"></canvas>
+				@endif
+				@if (count($statCards) > 0)
+					<div class="content padding bg-white">
+						<div class="row stats">
+							@foreach ($statCards as $statCard)
+								<div class="col-sm-12 col-md-2 col-lg-2 cols">
+									<a href="{{ $statCard->url }}" title="{{ $statCard->label }}">
+										<div class="stat-card text-center alert">
+											<h5>{{ $statCard->label }}</h5>
+											<p>{{ $statCard->count }}</p>
+										</div>
+									</a>
+								</div>
+							@endforeach
 						</div>
 					</div>
-				</div>	
+				@endif
+				@if (count($roles) > 0)
+					<div class="content padding bg-white">
+						<div class="row">
+							<div class="col-sm-12 col-md-4 col-lg-4">
+								<canvas id="roleUsersStats" data-total-super-admins="{{ $roles[0]->users->count() }}" data-total-admins="{{ $roles[1]->users->count() }}" data-total-end-users="{{ $roles[2]->users->count() }}"></canvas>
+							</div>
+						</div>
+					</div>
+				@endif
 			</div>
 		</div>
 @endsection

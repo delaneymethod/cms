@@ -27,6 +27,7 @@ class Page extends Node
 		'lft',
 		'rgt',
 		'depth',
+		'hide_from_nav',
 	];
 	
 	/**

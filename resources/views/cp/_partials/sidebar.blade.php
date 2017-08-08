@@ -18,6 +18,9 @@
 				@if ($currentUser->hasPermission('view_orders'))
 					<li class="{{ setActive('cp/orders') }}"><a href="/cp/orders" title="Orders"><i class="text-center icon fa fa-shopping-cart" aria-hidden="true"></i>Orders</a></li>
 				@endif
+				@if ($currentUser->hasPermission('view_carts'))
+					<li class="{{ setActive('cp/carts') }}"><a href="/cp/carts" title="Carts"><i class="text-center icon fa fa-cart-plus" aria-hidden="true"></i>Carts</a></li>
+				@endif
 				@if ($currentUser->hasPermission('view_categories'))
 					<li class="{{ setActive('cp/categories') }}"><a href="/cp/categories" title="Categories"><i class="text-center icon fa fa-list" aria-hidden="true"></i>Categories</a></li>
 				@endif
@@ -26,6 +29,9 @@
 				@endif
 				@if ($currentUser->hasPermission('view_assets'))	
 					<li class="{{ setActive('cp/assets') }}"><a href="/cp/assets" title="Assets"><i class="text-center icon fa fa-folder-open" aria-hidden="true"></i>Assets</a></li>
+				@endif
+				@if ($currentUser->hasPermission('view_templates'))
+					<li class="{{ setActive('cp/templates') }}"><a href="/cp/templates" title="Templates"><i class="text-center icon fa fa-columns" aria-hidden="true"></i>Templates</a></li>
 				@endif
 				@if ($currentUser->hasPermission('view_pages'))
 					<li class="{{ setActive('cp/pages') }}"><a href="/cp/pages" title="Pages"><i class="text-center icon fa fa-file" aria-hidden="true"></i>Pages</a></li>

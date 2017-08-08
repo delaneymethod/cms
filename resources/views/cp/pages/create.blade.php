@@ -59,17 +59,11 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
-							@foreach ($statuses->chunk(4) as $chunk)
-								<div class="row">
-									@foreach ($chunk as $status)
-										<div class="col-sm-12 col-md-3 col-lg-3">
-											<div class="form-check status_id-{{ $status->id }}">
-												<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
-													<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="5" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($status->id == 4) ? 'checked' : '' }}>{{ $status->title }}
-												</label>
-											</div>
-										</div>
-									@endforeach
+							@foreach ($statuses as $status)
+								<div class="form-check status_id-{{ $status->id }}">
+									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="5" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}
+									</label>
 								</div>
 							@endforeach
 							@if ($errors->has('status_id'))
@@ -112,8 +106,23 @@
 							<span id="helpBlockTemplateId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
+							<label class="control-label font-weight-bold">Hide from Nav</label>
+								<div class="form-check">
+									<label for="hide_from_nav" class="form-check-label">
+									
+									{{ old('hide_from_nav') }}
+									
+										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="8" aria-describedby="helpBlockHideFromNav" {{ (old('hide_from_nav')) ? 'checked' : '' }>
+									</label>
+								</div>
+							@if ($errors->has('hide_from_nav'))
+								<span id="helpBlockHideFromNav" class="form-control-feedback form-text gf-red">- {{ $errors->first('hide_from_nav') }}</span>
+							@endif
+							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Ticking this box will hide the page from the navigation.</span>
+						</div>
+						<div class="form-group">
 							<label for="content" class="control-label font-weight-bold">Content</label>
-							<textarea name="content" id="content" placeholder="e.g New page content..." tabindex="8" aria-describedby="helpBlockContent">{{ old('content') }}</textarea>
+							<textarea name="content" id="content" placeholder="e.g New page content..." tabindex="9" aria-describedby="helpBlockContent">{{ old('content') }}</textarea>
 							@if ($errors->has('content'))
 								<span id="helpBlockContent" class="form-control-feedback form-text gf-red">- {{ $errors->first('content') }}</span>
 							@endif
@@ -121,9 +130,9 @@
 						</div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_pages'))
-								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="10" title="Cancel">Cancel</a>
+								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="11" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="9" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="10" title="Save Changes">Save Changes</button>
 						</div>
 					</form>
 				</div>

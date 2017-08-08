@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Products - '.config('app.name'))
-@section('description', 'Products - '.config('app.name'))
-@section('keywords', 'Products, '.config('app.name'))
+@section('title', 'Carts - '.config('app.name'))
+@section('description', 'Carts - '.config('app.name'))
+@section('keywords', 'Carts, '.config('app.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
@@ -25,15 +25,17 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th>Price</th>
+								<th>Identifier</th>
+								<th>Instance</th>
+								<th>Product</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($products as $product)
+							@foreach ($carts as $cart)
 								<tr>
-									<td>{{ $product->title }}</td>
-									<td>{{ $product->currency }}{{ $product->price }}</td>
+									<td>{{ $cart->identifier }}</td>
+									<td>{{ $cart->instance }}</td>
+									<td>{{ $cart->count }}</td>
 								</tr>
 							@endforeach
 						</tbody>

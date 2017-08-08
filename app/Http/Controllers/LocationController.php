@@ -85,6 +85,9 @@ class LocationController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
+			// Remove Pubished, Private and Draft keys
+			$statuses->forget([3, 4, 5]);
+			
 			return view('cp.locations.create', compact('currentUser', 'title', 'subTitle', 'counties', 'countries', 'companies', 'statuses'));
 		}
 
@@ -192,6 +195,9 @@ class LocationController extends Controller
 		
 			// Used to set status_id
 			$statuses = $this->getStatuses();
+			
+			// Remove Pubished, Private and Draft keys
+			$statuses->forget([3, 4, 5]);
 			
 			$defaultLocationIds = $this->getDefaultLocationIds();
 		

@@ -220,7 +220,8 @@ a,
 	width: 20px;
 }
 
-.status_id-1 {
+.status_id-1,
+.status_id-4 {
 	color: #5cb85c;
 	background-color: transparent;
 }
@@ -230,8 +231,18 @@ a,
 	background-color: transparent;
 }
 
+.status_id-5 {
+	color: $gf-red;
+	background-color: transparent;	
+}
+
 .status_id-3 {
 	color: #9b9b9b;
+	background-color: transparent;
+}
+
+.status_id-6 {
+	color: $gf-blue;
 	background-color: transparent;
 }
 
@@ -244,6 +255,7 @@ a,
 		&:hover {
 			color: #ffffff;
 			background-color: $gf-red;
+			border-color: $gf-red;
 		}
 	}
 }
@@ -267,6 +279,14 @@ a,
 .badge-retired {
 	color: white !important;
 	background-color: #9b9b9b !important;
+}
+
+.dataTables_paginate {
+	padding-top: 0.4em;
+}
+
+.text-muted-lighter {
+	color: #c1c1c1;	
 }
 
 .sidebar {
@@ -432,6 +452,7 @@ a,
 	}
 	
 	.buttons {
+		border-radius: 0.25rem;
 		background-color: #ffffff;
 		padding: 15px 0 0 15px;
 		margin: 10px 0 -10px;
@@ -446,6 +467,7 @@ a,
 	}
 	
 	.content {
+		border-radius: 0.25rem;
 		padding-left: 0;
 		padding-right: 0;
 		padding-top: 15px;
@@ -650,6 +672,45 @@ a,
 			}
 		}
 		
+		.stats {
+			.cols {
+				a {
+					text-decoration: none;
+					
+					.stat-card {
+						background-color: #222d32;
+						color: #b8c7ce;
+						padding: 0;
+						margin: 0;
+						
+						h5 {
+							padding: 10px 0 0 0;
+							font-size: 100%;
+						}
+						
+						p {
+							padding: 0;
+							margin: -20px 0 0 0;
+							font-size: 50px;
+						}
+					}
+					
+					&:hover {
+						.stat-card {
+							color: #ffffff;
+							background-color: #1e282c;
+						}
+					}
+				}
+			}
+			
+			.cols:nth-child(6n) {
+				.stat-card {
+					margin-bottom: 15px;
+				}
+			}
+		}
+		
 		/*
 		.assets {
 			background-color: aqua;
@@ -699,6 +760,7 @@ a,
 	}
 	
 	.content.padding {
+		border-radius: 0.25rem;
 		margin-top: 10px;
 		margin-bottom: 15px;
 		padding: 15px;

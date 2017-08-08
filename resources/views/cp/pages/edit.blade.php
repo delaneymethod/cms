@@ -31,6 +31,7 @@
 							<input type="hidden" name="slug" value="/">
 							<input type="hidden" name="status_id" value="{{ $page->status_id }}">
 							<input type="hidden" name="parent_id" value="0">
+							<input type="hidden" name="hide_from_nav" value="0">
 						@endif
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
@@ -73,17 +74,11 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
-							@foreach ($statuses->chunk(4) as $chunk)
-								<div class="row">
-									@foreach ($chunk as $status)
-										<div class="col-sm-12 col-md-3 col-lg-3">
-											<div class="form-check status_id-{{ $status->id }}">
-												<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
-													<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="5" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $page->status_id == $status->id) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>{{ $status->title }}
-												</label>
-											</div>
-										</div>
-									@endforeach
+							@foreach ($statuses as $status)
+								<div class="form-check status_id-{{ $status->id }}">
+									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="5" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $page->status_id == $status->id) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>{{ $status->title }}
+									</label>
 								</div>
 							@endforeach
 							@if ($errors->has('status_id'))
@@ -132,8 +127,23 @@
 							<span id="helpBlockTemplateId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
+							<label class="control-label font-weight-bold">Hide from Nav</label>
+								<div class="form-check">
+									<label for="hide_from_nav" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
+										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="8" aria-describedby="helpBlockHideFromNav" {{ ((old('hide_from_nav') && old('hide_from_nav') == $page->hide_from_nav) || $page->hide_from_nav == 1 && $page->id != 1) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>
+									</label>
+								</div>
+							@if ($errors->has('hide_from_nav'))
+								<span id="helpBlockHideFromNav" class="form-control-feedback form-text gf-red">- {{ $errors->first('hide_from_nav') }}</span>
+							@endif
+							@if ($page->id == 1)
+								<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-warning">- This field is disabled. Homepage cannot be hidden from the navigation.</span>
+							@endif
+							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Ticking this box will hide the page from the navigation.</span>
+						</div>
+						<div class="form-group">
 							<label for="content" class="control-label font-weight-bold">Content</label>
-							<textarea name="content" id="content" placeholder="New page content..." tabindex="8" aria-describedby="helpBlockContent">{{ old('content') ?? $page->content }}</textarea>
+							<textarea name="content" id="content" placeholder="New page content..." tabindex="9" aria-describedby="helpBlockContent">{{ old('content') ?? $page->content }}</textarea>
 							@if ($errors->has('content'))
 								<span id="helpBlockContent" class="form-control-feedback form-text gf-red">- {{ $errors->first('content') }}</span>
 							@endif
@@ -141,9 +151,9 @@
 						</div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_pages'))
-								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="10" title="Cancel">Cancel</a>
+								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="11" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="9" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="10" title="Save Changes">Save Changes</button>
 							@if ($currentUser->hasPermission('delete_pages') && $page->id != 1)
 								<a href="/cp/pages/{{ $page->id }}/delete" title="Delete Page" class="pull-right btn btn-outline-danger">Delete Page</a>
 							@endif

@@ -5,55 +5,14 @@ https://asgardcms.com/features
 
 
 
-
-
-
-
-add back in templates - checkout, cart
-
-add back in pages - Products, Cart, Contact, Success
-
-
-
-
-add option to hide a page from the navigation
-
-
-
-
-
-add a default template view - https://github.com/tutsplus/build-a-cms-with-laravel
-
-
-
-
-
-setup jobs/queues for sending email - https://scotch.io/tutorials/why-laravel-queues-are-awesome
-
-
-set published default status for articles and pages
-
-hide other statuses from articles and pages
-
-
-update statuses for all pages so its 4 columns
-
-
-set published status to green
-
-add statuses to pages, articles
-
-
-
-add template slug to validation
-
-add product slug to validation
+https://github.com/tutsplus/build-a-cms-with-laravel
+https://scotch.io/tutorials/why-laravel-queues-are-awesome
 
 
 
 
 
 
-
-add carts option to dashboard with stats
-
+<div class="col-sm-12 col-md-6 col-lg-6">
+	<canvas id="allStats" data-total-categories="{{ $categories->count() }}" data-total-users="{{ $users->count() }}" data-total-pages="{{ $pages->count() }}" data-total-orders="{{ $orders->count() }}" data-total-assets="{{ $assets->count() }}" data-total-companies="{{ $companies->count() }}" data-total-articles="{{ $articles->count() }}" data-total-locations="{{ $locations->count() }}"></canvas>
+</div>

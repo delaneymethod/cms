@@ -34,6 +34,7 @@ class CreatePagesTable extends Migration
 			$table->unsignedInteger('lft')->nullable()->index();
 			$table->unsignedInteger('rgt')->nullable()->index();
 			$table->unsignedInteger('depth')->nullable();
+			$table->unsignedInteger('hide_from_nav')->nullable();
 			
 			$table->timestamps();
 		});

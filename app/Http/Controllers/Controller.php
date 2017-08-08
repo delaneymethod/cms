@@ -571,4 +571,30 @@ class Controller extends BaseController
 
 		return $paginator;
 	}
+	
+	protected function recursiveCollect(array $array)
+	{
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$value = $this->recursiveCollect($value);
+				
+				$array[$key] = $value;
+			}
+		}
+	
+		return collect($array);
+	}
+	
+	protected function recursiveObject(array $array)
+	{
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$value = $this->recursiveObject($value);
+				
+				$array[$key] = $value;
+			}
+		}
+	
+		return (object) $array;
+	}
 }

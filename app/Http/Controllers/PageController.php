@@ -165,6 +165,9 @@ class PageController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
+			// Remove Active, Pending and Retired keys
+			$statuses->forget([0, 1, 2]);
+			
 			// Used to set template_id
 			$templates = $this->getTemplates();
 			
@@ -187,7 +190,13 @@ class PageController extends Controller
 		if ($currentUser->hasPermission('create_pages')) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedPage = $this->sanitizerInput($request->all());
-
+			
+			dd($cleanedPage);
+			
+			if (!empty($cleanedPage['hide_from_nav'])) {
+				$rules['hide_from_nav'] = 'nullable|integer';
+			}
+			
 			$rules = $this->getRules('page');
 			
 			// Make sure all the input data is what we actually save
@@ -198,7 +207,7 @@ class PageController extends Controller
 			}
 
 			DB::beginTransaction();
-
+			
 			try {
 				// Create new model
 				$page = new Page;
@@ -212,7 +221,8 @@ class PageController extends Controller
 				$page->status_id = $cleanedPage['status_id'];
 				$page->content = $cleanedPage['content'];
 				$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
-				
+				$page->hide_from_nav = (isset($cleanedPage['hide_from_nav'])) ? $cleanedPage['hide_from_nav'] : 0;
+								
 				$page->save();
 			} catch (QueryException $queryException) {
 				DB::rollback();
@@ -262,6 +272,9 @@ class PageController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
+			// Remove Active, Pending and Retired keys
+			$statuses->forget([0, 1, 2]);
+			
 			// Used to set template_id
 			$templates = $this->getTemplates();
 			
@@ -290,6 +303,10 @@ class PageController extends Controller
 			
 			$rules['slug'] = 'required|string|unique:pages,slug,'.$id.'|max:255';
 			
+			if (!empty($cleanedPage['hide_from_nav'])) {
+				$rules['hide_from_nav'] = 'nullable|integer';
+			}
+			
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedPage, $rules);
 
@@ -315,6 +332,7 @@ class PageController extends Controller
 					$page->status_id = $cleanedPage['status_id'];
 					$page->content = $cleanedPage['content'];
 					$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
+					$page->hide_from_nav = (isset($cleanedPage['hide_from_nav'])) ? $cleanedPage['hide_from_nav'] : 0;
 				}
 				
 				$page->updated_at = $this->datetime;

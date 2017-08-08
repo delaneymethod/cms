@@ -9,7 +9,7 @@
 		let defaults = {};
 		
 		let colours = [
-			'#4D4D4D', // gray
+			'#222D32', // gray
 			'#5DA5DA', // blue
 			'#FAA43A', // orange
 			'#60BD68', // green
@@ -20,6 +20,7 @@
 			'#F15854', // red
 		];
 		
+		/*
 		let loadAllStats = () => {
 			if ($('#allStats').length) {
 				const allStats = $('#allStats');
@@ -71,6 +72,7 @@
 				});
 			}
 		};
+		*/
 		
 		let loadOrderStats = () => {
 			if ($('#orderStats').length) {
@@ -78,28 +80,59 @@
 				
 				const orders = orderStats.data('orders');
 				
-				const data = {
-					'labels': ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-					'datasets': [{
-						'label': 'Pending',
-						'backgroundColor': colours[0],
-						'borderColor': colours[0],
-						'data': [111, 150, 313, 141, 421, 100, 200],
-						'fill': false,
-	                },{
-						'label': 'Approved',
-						'backgroundColor': colours[1],
-						'borderColor': colours[1],
-						'data': [105, 150, 100, 40, 92, 100, 182],
-						'fill': false,
-	                }]
-				};
+				let labels = [];
 				
-				const options = {
+				_.each(orders['months'].reverse(), month => {
+					labels.push(month['textual']);
+				});
+				
+				let datasets = [];
+				
+				let data = [];
+				
+				let max = 0;
+				
+				_.each(orders['pending'].reverse(), pending => {
+					if (max < pending.orders.length) {
+	            		max = pending.orders.length;
+	            	}
+	            	
+	            	data.push(pending.orders.length);
+				});
+				
+				datasets.push({
+					'label': 'Pending Orders',
+					'backgroundColor': colours[0],
+					'borderColor': colours[0],
+					'data': data,
+					'fill': false,
+            	});
+            	
+            	data = [];
+            	
+            	_.each(orders['active'].reverse(), active => {
+	            	if (max < active.orders.length) {
+	            		max = active.orders.length;
+	            	}
+	            	
+					data.push(active.orders.length);
+				});
+				
+				max = max + 2;
+				
+				datasets.push({
+					'label': 'Active Orders',
+					'backgroundColor': colours[1],
+					'borderColor': colours[1],
+					'data': data,
+					'fill': false,
+            	});
+            	
+            	const options = {
 					'responsive': true,
 					'title': {
 						'display': true,
-						'text': 'Monthly Orders'
+						'text': 'Recent Orders'
 					},
 					'tooltips': {
 						'mode': 'index',
@@ -125,8 +158,8 @@
 							},
 							'ticks': {
 								'suggestedMin': 0,
-								'suggestedMax': 500,
-								'stepSize': 100
+								'suggestedMax': max,
+								'stepSize': Math.ceil(max % 5)
 							}
 						}]
 					}
@@ -134,7 +167,10 @@
 					
 				new Chart(orderStats, {
 					'type': 'line',
-					'data': data,
+					'data': {
+						'labels': labels,
+						'datasets': datasets
+					},
 					'options': options
 				});
 			}
@@ -170,7 +206,7 @@
 					},
 					'title': {
 						'display': true,
-						'text': 'Users per Role'
+						'text': 'Roles'
 					},
 					'animation': {
 						'animateScale': true,
@@ -195,7 +231,7 @@
 					
 					$(event.target).next('ul').slideToggle(500);
 			
-					$(event.target).find('span > i').toggleClass('fa-rotate');
+					$(event.target).find('span > i').toggleClass('fa-rotate', 'fast');
 				});
 			}
 			
@@ -206,16 +242,16 @@
 					$('.main .content #pageActions i').removeClass('fa-rotate');
 					
 					if (event.target === event.currentTarget) {
-						$(event.target).find('i').toggleClass('fa-rotate');
+						$(event.target).find('i').toggleClass('fa-rotate', 'fast');
 					} else {
-						$(event.target).toggleClass('fa-rotate');
+						$(event.target).toggleClass('fa-rotate', 'fast');
 					}
 				});
 			}
 			
 			if ($('.main .content #submenu').length) {	
 				$('.main .content #submenu').on('hide.bs.dropdown', () => {
-					$('.main .content #pageActions i').removeClass('fa-rotate');
+					$('.main .content #pageActions i').removeClass('fa-rotate', 'fast');
 				});
 			}
 				
@@ -381,7 +417,7 @@
 			
 			logout();
 			
-			loadAllStats();
+			//loadAllStats();
 			
 			loadOrderStats();
 			

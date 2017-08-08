@@ -22,7 +22,7 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
-					<p>Please confirm that you wish to delete the <strong>{{ $order->title }}</strong> order.</p>
+					<p>Please confirm that you wish to delete the <strong>{{ $order->order_number }}</strong> order.</p>
 					<p class="font-weight-bold text-warning">Caution: This action cannot be undone.</p>
 					<form name="removeOrder" id="removeOrder" class="removeOrder" role="form" method="POST" action="/cp/orders/{{ $order->id }}">
 						{{ csrf_field() }}

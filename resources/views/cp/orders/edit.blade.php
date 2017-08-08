@@ -26,13 +26,20 @@
 					<form name="editOrder" id="editOrder" class="editOrder" role="form" method="POST" action="/cp/orders/{{ $order->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
+						<input type="hidden" name="order_number" value="{{ $order->order_number }}">
+						<input type="hidden" name="user_id" value="{{ $order->user_id }}">
+						<input type="hidden" name="count" value="{{ $order->count }}">
+						<input type="hidden" name="tax" value="{{ $order->tax }}">
+						<input type="hidden" name="subtotal" value="{{ $order->subtotal }}">
+						<input type="hidden" name="total" value="{{ $order->total }}">
 						<div class="form-group">
-							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') ?? $order->title }}" placeholder="e.g Order Title" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
-							@if ($errors->has('title'))
-								<span id="helpBlockTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('title') }}</span>
+							<label for="order_number" class="control-label font-weight-bold">Order Number <span class="text-danger">&#42;</span></label>
+							<input type="text" name="order_number" id="order_number" class="form-control text-disabled" value="{{ old('order_number') ?? $order->order_number }}" placeholder="e.g GF-123456789" tabindex="1" autocomplete="off" aria-describedby="helpBlockOrderNumber" disabled required autofocus>
+							@if ($errors->has('order_number'))
+								<span id="helpBlockOrderNumber" class="form-control-feedback form-text gf-red">- {{ $errors->first('order_number') }}</span>
 							@endif
-							<span id="helpBlockTitle" class="form-control-feedback form-text text-muted"></span>
+							<span id="helpBlockOrderNumber" class="form-control-feedback form-text text-warning">- This field is disabled. The order number cannot be changed for the order.</span>
+							<span id="helpBlockOrderNumber" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
@@ -50,15 +57,20 @@
 						</div>
 						<div class="form-group">
 							<label for="user_id" class="control-label font-weight-bold">Originator</label>
-							<select name="user_id" id="user_id" class="form-control" tabindex="4" aria-describedby="helpBlockUserId" required>
-								@foreach ($users as $user)
-									<option value="{{ $user->id }}" {{ (old('user_id') == $user->id || $order->user_id == $user->id) ? 'selected' : '' }}>{{ $user->first_name }} {{ $user->last_name }}</option>
-								@endforeach
-							</select>
+							<input type="text" name="user_id" id="user_id" class="form-control text-disabled" value="{{ $order->user->first_name.' '.$order->user->last_name }}" placeholder="e.g Grampian Fasteners" tabindex="4" autocomplete="off" aria-describedby="helpBlockUserId" disabled required>
 							@if ($errors->has('user_id'))
 								<span id="helpBlockUserId" class="form-control-feedback form-text gf-red">- {{ $errors->first('user_id') }}</span>
 							@endif
+							<span id="helpBlockUserId" class="form-control-feedback form-text text-warning">- This field is disabled. The originator cannot be changed for the order.</span>
 							<span id="helpBlockUserId" class="form-control-feedback form-text text-muted"></span>
+						</div>
+						<div class="form-group">
+							<label class="control-label font-weight-bold">Products</label>
+							@foreach ($order->products as $product)
+								<div class="form-check">
+									<input type="text" name="product_id" id="product_id" class="form-control text-disabled" value="{{ $product->title }} (Qty: {{ $product->pivot->quantity }}, Tax: {{ $product->pivot->tax_rate }}&#37;, Price: {{ $order->currency }}{{ number_format($product->pivot->price, 2, '.', ',') }}, Total: {{ $order->currency }}{{ number_format($product->pivot->price_tax, 2, '.', ',') }})" tabindex="5" autocomplete="off" disabled required>
+								</div>
+							@endforeach
 						</div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_orders'))

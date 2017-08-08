@@ -395,6 +395,13 @@ class PermissionsTableSeeder extends Seeder
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
+            54 => 
+            array (
+                'id' => 55,
+                'title' => 'view_carts',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
         ));
         
         

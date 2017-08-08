@@ -47,7 +47,7 @@ class OrderController extends Controller
 			$subTitle = $currentUser->company->title;
 		
 			$orders = $this->getOrders();
-		
+			
 			return view('cp.orders.index', compact('currentUser', 'title', 'subTitle', 'orders'));
 		}
 		
@@ -127,20 +127,24 @@ class OrderController extends Controller
 				abort(500, $message);
 			}
 
-			dd('so far so good');
-			
 			DB::beginTransaction();
 
 			try {
-				/*
 				// Create new model
 				$order = new Order;
 	
 				// Set our field data
-				$order->_ = $cleanedOrder['-'];
+				$order->order_number = 'GF-'.time();
+				$order->user_id = $cleanedOrder['user_id'];
+				$order->status_id = 2; // pending
+				$order->count = $cleanedOrder['count'];
+				$order->tax = $cleanedOrder['tax'];
+				$order->subtotal = $cleanedOrder['subtotal'];
+				$order->total = $cleanedOrder['total'];
 				
 				$order->save();
-				*/
+				
+				$order->setProducts($cleanedOrder['products']);
 				
 				// finally empty the cart instance
 				$this->destroyCart();
@@ -190,6 +194,9 @@ class OrderController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
+			// Remove Pubished, Private and Draft keys
+			$statuses->forget([3, 4, 5]);
+			
 			return view('cp.orders.edit', compact('currentUser', 'title', 'subTitle', 'order', 'users', 'statuses'));
 		}
 
@@ -217,6 +224,9 @@ class OrderController extends Controller
 			$validator = $this->validatorInput($cleanedOrder, $rules);
 
 			if ($validator->fails()) {
+				
+				dd($validator->errors());
+				
 				return back()->withErrors($validator)->withInput();
 			}
 			
@@ -227,9 +237,13 @@ class OrderController extends Controller
 				$order = $this->getOrder($id);
 				
 				// Set our field data
-				$order->title = $cleanedOrder['title'];
+				$order->order_number = $cleanedOrder['order_number'];
 				$order->user_id = $cleanedOrder['user_id'];
 				$order->status_id = $cleanedOrder['status_id'];
+				$order->count = $cleanedOrder['count'];
+				$order->tax = $cleanedOrder['tax'];
+				$order->subtotal = $cleanedOrder['subtotal'];
+				$order->total = $cleanedOrder['total'];
 				$order->updated_at = $this->datetime;
 				
 				$order->save();

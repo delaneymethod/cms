@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Products - '.config('app.name'))
-@section('description', 'Products - '.config('app.name'))
-@section('keywords', 'Products, '.config('app.name'))
+@section('title', 'Templates - '.config('app.name'))
+@section('description', 'Templates - '.config('app.name'))
+@section('keywords', 'Templates, '.config('app.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
@@ -26,14 +26,14 @@
 						<thead>
 							<tr>
 								<th>Title</th>
-								<th>Price</th>
+								<th>Filename</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach ($products as $product)
+							@foreach ($templates as $template)
 								<tr>
-									<td>{{ $product->title }}</td>
-									<td>{{ $product->currency }}{{ $product->price }}</td>
+									<td>{{ $template->title }}</td>
+									<td>{{ $template->filename }}</td>
 								</tr>
 							@endforeach
 						</tbody>

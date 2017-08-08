@@ -25,8 +25,12 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th>Title</th>
+								<th>Order Number</th>
 								<th>Originator</th>
+								<th class="text-center">Products</th>
+								<th class="text-right">Tax</th>
+								<th class="text-right">Sub Total</th>
+								<th class="text-right">Total</th>
 								<th class="text-center">Status</th>
 								<th class="no-sort">&nbsp;</th>
 							</tr>
@@ -34,8 +38,12 @@
 						<tbody>
 							@foreach ($orders as $order)
 								<tr>
-									<td>{{ $order->title }}{!! ($order->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}{!! ($order->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
+									<td>{{ $order->order_number }}{!! ($order->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}{!! ($order->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
 									<td>{!! ($order->user) ? $order->user->first_name.' '.$order->user->last_name.(($order->user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '').(($order->user->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->user->status->title.'</span>' : '').(($order->user->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->user->status->title.'</span>' : '') : '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Null</span>' !!}</td>
+									<td class="text-center">{{ $order->count }}</td>
+									<td class="text-right">{{ $order->currency }}{{ $order->tax }}</td>
+									<td class="text-right">{{ $order->currency }}{{ $order->subtotal }}</td>
+									<td class="text-right">{{ $order->currency }}{{ $order->total }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $order->status->id }}" title="{{ $order->status->title }}" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_orders') || $currentUser->hasPermission('delete_orders'))
 										<td class="actions dropdown text-center" id="submenu">

@@ -29,6 +29,29 @@ class CartController extends Controller
 	}
 	
 	/**
+	 * Get carts view.
+	 *
+	 * @params	Request 	$request
+	 * @return 	Response
+	 */
+   	public function index(Request $request)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('view_carts')) {
+			$title = 'Saved Carts';
+			
+			$subTitle = '';
+			
+			$carts = $this->getCarts();
+			
+			return view('cp.carts.index', compact('currentUser', 'title', 'subTitle', 'carts'));
+		}
+		
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
      * Stores a specific product in the cart.
      *
 	 * @params Request 	$request

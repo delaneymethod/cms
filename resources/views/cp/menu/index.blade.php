@@ -21,27 +21,32 @@
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
-				<div class="row">
-					<div class="col">
-						<ul class="list-unstyled list-inline buttons">
-							<li class="list-inline-item"><a href="/cp/pages/create" title="Add Page" class="btn btn-outline-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Page</a></li>
-						</ul>
+				@if ($currentUser->hasPermission('create_pages'))
+					<div class="row">
+						<div class="col">
+							<ul class="list-unstyled list-inline buttons">
+								<li class="list-inline-item"><a href="/cp/pages/create" title="Add Page" class="btn btn-outline-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Page</a></li>
+							</ul>
+						</div>
 					</div>
-				</div>
-				<div class="content padding bg-white">
-					<ol class="sortable list-unstyled" id="nestedSortable">
-						@foreach ($pages as $page)
-							@component('cp._components.renderPage', ['page' => $page, 'currentUser' => $currentUser])
-							@endcomponent
-						@endforeach
-					</ol>
-					<form name="menu" id="menu" class="menu" role="form" method="POST" action="/cp/menu">
-						{{ csrf_field() }}
-						{{ method_field('PUT') }}
-						<input type="hidden" name="tree" id="tree" value="">
-						<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
-					</form>
-		    	</div>
+					<div class="content padding bg-white">
+						<ol class="sortable list-unstyled" id="nestedSortable">
+							@foreach ($pages as $page)
+								@component ('cp._components.renderPage', [
+									'page' => $page, 
+									'currentUser' => $currentUser
+								])
+								@endcomponent
+							@endforeach
+						</ol>
+						<form name="menu" id="menu" class="menu" role="form" method="POST" action="/cp/menu">
+							{{ csrf_field() }}
+							{{ method_field('PUT') }}
+							<input type="hidden" name="tree" id="tree" value="">
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
+						</form>
+			    	</div>
+			    @endif
 			</div>
 		</div>
 @endsection

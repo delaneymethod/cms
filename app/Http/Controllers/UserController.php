@@ -85,6 +85,9 @@ class UserController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
+			// Remove Pubished, Private and Draft keys
+			$statuses->forget([3, 4, 5]);
+			
 			// Used to set location_id
 			if ($companies->count() > 1) {
 				$locations = $companies->map(function($company) {
@@ -204,6 +207,9 @@ class UserController extends Controller
 			
 			// Used to set status_id
 			$statuses = $this->getStatuses();
+			
+			// Remove Pubished, Private and Draft keys
+			$statuses->forget([3, 4, 5]);
 			
 			// Used to set location_id
 			if ($companies->count() > 1) {

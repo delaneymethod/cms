@@ -24,7 +24,7 @@ class Article extends Model
 		'status_id',
 		'content',
 	];
-
+	
 	/**
 	 * Get the user record associated with the article.
 	 */

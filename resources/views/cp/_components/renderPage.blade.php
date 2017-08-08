@@ -1,7 +1,7 @@
 		<li id="page_{{ $page->id }}">
 			<div>
 				<em class="text-center icon fa fa-bars" aria-hidden="true"></em>
-				<span class="page-title">{{ $page->title }}</span>
+				<span class="page-title">{{ $page->title }}{!! $page->hide_from_nav == 1 ? '&nbsp;<i class="text-muted-lighter">(Hidden from Nav)</i>' : '' !!}</span>
 				@if ($currentUser->hasPermission('edit_pages'))
 					<a href="/cp/pages/{{ $page->id }}/edit" title="Edit Page" class="pull-right text-center gf-info"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
 				@endif
@@ -10,7 +10,10 @@
 			@if ($page->children()->count() > 0)
 				<ol>
 					@foreach ($page->children as $child)
-						@component('cp._components.renderPage', ['page' => $child, 'currentUser' => $currentUser])
+						@component ('cp._components.renderPage', [
+							'page' => $child, 
+							'currentUser' => $currentUser
+						])
 						@endcomponent
 					@endforeach
 				</ol>

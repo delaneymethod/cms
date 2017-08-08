@@ -20,6 +20,15 @@ class Product extends Model implements Buyable
 	];
 	
 	/**
+     * Attributes that get appended on serialization
+     *
+     * @var array
+     */
+	protected $appends = [
+		'currency',
+	];
+	
+	/**
      * @var int|string
      */
     private $id;
@@ -82,10 +91,46 @@ class Product extends Model implements Buyable
 	}
 	
 	/**
+	 * Gets orders currency.
+	 *
+	 * @return string
+	 */
+	public function getCurrencyAttribute()
+	{
+		return '&pound;';
+	}
+	
+	/**
+	 * Gets the total formatted with 2 decimal places.
+	 */
+    public function getPriceAttribute($value)
+    {
+        return $this->format2decimals($value);
+    }
+	
+	/**
 	 * Get the order records associated with the product.
 	 */
 	public function orders()
 	{
-		return $this->belongsToMany(Order::class, 'order_product');
+		return $this->belongsToMany(Order::class, 'order_product')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');
+	}
+	
+	/**
+	 * Set orders for the product.
+	 *
+	 * $param 	array 	$orders
+	 */
+	public function setOrders(array $orders)
+	{
+		return $this->orders()->sync($orders);
+	}
+	
+	/**
+	 * Formats value to 2 decimal places.
+	 */
+	protected function format2decimals(float $value)
+	{
+		return number_format($value, 2, '.', ',');
 	}
 }
