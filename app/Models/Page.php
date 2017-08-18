@@ -22,7 +22,6 @@ class Page extends Node
 		'keywords',
 		'template_id',
 		'status_id',
-		'content',
 		'parent_id',
 		'lft',
 		'rgt',

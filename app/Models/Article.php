@@ -5,6 +5,7 @@ namespace App\Models;
 use App\User;
 use App\Models\Status;
 use App\Models\Category;
+use App\Models\Template;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -19,11 +20,18 @@ class Article extends Model
 		'slug',
 		'description',
 		'keywords',
-		'excerpt',
+		'template_id',
 		'user_id',
 		'status_id',
-		'content',
 	];
+	
+	/**
+	 * Get the template record associated with the article.
+	 */
+	public function template()
+	{
+		return $this->belongsTo(Template::class);
+	}
 	
 	/**
 	 * Get the user record associated with the article.

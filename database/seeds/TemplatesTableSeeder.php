@@ -44,8 +44,8 @@ class TemplatesTableSeeder extends Seeder
             3 => 
             array (
                 'id' => 4,
-                'title' => 'Products',
-                'filename' => 'products',
+                'title' => 'Product',
+                'filename' => 'product',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
@@ -62,6 +62,22 @@ class TemplatesTableSeeder extends Seeder
                 'id' => 6,
                 'title' => 'Cart',
                 'filename' => 'cart',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            6 => 
+            array (
+                'id' => 7,
+                'title' => 'Articles',
+                'filename' => 'articles',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            7 => 
+            array (
+                'id' => 8,
+                'title' => 'Article',
+                'filename' => 'article',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),

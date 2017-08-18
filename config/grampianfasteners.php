@@ -91,7 +91,6 @@ return [
 			'keywords' => 'nullable|string',
 			'template_id' => 'required|integer',
 			'status_id' => 'required|integer',
-			'content' => 'nullable|string',
 			'parent_id' => 'required|integer',
 		],
 		'company' => [
@@ -112,10 +111,9 @@ return [
 			'slug' => 'required|string|unique:articles,slug|max:255',
 			'description' => 'nullable|string',
 			'keywords' => 'nullable|string',
+			'template_id' => 'required|integer',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',
-			'excerpt' => 'nullable|string',
-			'content' => 'nullable|string',
 			'published_at' => 'required|date',
 		],
 		'location' => [

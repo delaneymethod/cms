@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Traits\CartTrait;
 use App\Http\Traits\PageTrait;
 use App\Http\Traits\ProductTrait;
+use App\Http\Traits\TemplateTrait;
 use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
@@ -16,6 +17,7 @@ class ProductController extends Controller
 	use CartTrait;
 	use PageTrait;
 	use ProductTrait;
+	use TemplateTrait;
 
 	/**
 	 * Create a new controller instance.
@@ -73,17 +75,35 @@ class ProductController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
+		// Get the requested product based on slug - if it doesnt exist, a 404 is thrown!
 		$product = $this->getProductBySlug($slug);
 		
+		// We're going to use the products page as our page - it is the products parent after all...
+		$page = $this->getPageBySlug('products');
+		
+		// Since the requested product was found, then grab all the pages - builds our navigation and available across all pages
 		$pages = $this->getPages();
 		
-		// Select any cart instances from the current session
+		// Grab a cart instance	- available across all pages
 		$cart = $this->getCartInstance('cart');
 		
-		// Select any wishlist instances from the current session
+		// Grab any wishlist instances since user can add to cart and wishlist on products page
 		$wishlistCart = $this->getCartInstance('wishlist');
-			
-		return view('templates.product', compact('currentUser', 'product', 'pages', 'cart', 'wishlistCart'));
+		
+		// Grab parameters
+		$parameters = $request->route()->parameters();
+		
+		// Pass any global required data to the page template
+		$parameters['currentUser'] = $currentUser;
+		
+		$parameters['wishlistCart'] = $wishlistCart;
+		
+		$parameters['product'] = $product;
+		
+		// Selects the pages template and injects any data required
+		$this->preparePageTemplate($page, $parameters);
+		
+		return view('index', compact('currentUser', 'page', 'pages', 'cart', 'wishlistCart'));
 	}
 	
 	/**

@@ -117,6 +117,7 @@
 						<div class="form-group">
 							<label for="template_id" class="control-label font-weight-bold">Template</label>
 							<select name="template_id" id="template_id" class="form-control" tabindex="7" aria-describedby="helpBlockTemplateId" required>
+								<option value="">----------</option>
 								@foreach ($templates as $template)
 									<option value="{{ $template->id }}" {{ (old('template_id') == $template->id || $page->template_id == $template->id) ? 'selected' : '' }}>{{ $template->title }}</option>
 								@endforeach
@@ -141,19 +142,14 @@
 							@endif
 							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Ticking this box will hide the page from the navigation.</span>
 						</div>
-						<div class="form-group">
-							<label for="content" class="control-label font-weight-bold">Content</label>
-							<textarea name="content" id="content" placeholder="New page content..." tabindex="9" aria-describedby="helpBlockContent">{{ old('content') ?? $page->content }}</textarea>
-							@if ($errors->has('content'))
-								<span id="helpBlockContent" class="form-control-feedback form-text gf-red">- {{ $errors->first('content') }}</span>
-							@endif
-							<span id="helpBlockContent" class="form-control-feedback form-text text-muted"></span>
-						</div>
+						
+						TEMPLATE FIELD LAYOUT
+						
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_pages'))
-								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="11" title="Cancel">Cancel</a>
+								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="10" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
 							@if ($currentUser->hasPermission('delete_pages') && $page->id != 1)
 								<a href="/cp/pages/{{ $page->id }}/delete" title="Delete Page" class="pull-right btn btn-outline-danger">Delete Page</a>
 							@endif

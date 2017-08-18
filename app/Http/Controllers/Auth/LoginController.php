@@ -49,6 +49,8 @@ class LoginController extends Controller
 			$this->deletePasswordReset($user->email);
 		}
 		
+		// https://github.com/tutsplus/build-a-cms-with-laravel/blob/master/app/Listeners/UpdateLastLoginOnLogin.php
+		
 		return redirect($this->redirectTo);
 	}
 }

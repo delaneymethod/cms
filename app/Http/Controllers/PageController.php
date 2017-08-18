@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use App\Http\Traits\CartTrait;
 use App\Http\Traits\PageTrait;
 use App\Http\Traits\StatusTrait;
-use App\Http\Traits\ProductTrait;
 use App\Http\Traits\TemplateTrait;
 use App\Http\Controllers\Controller;
 
@@ -18,7 +17,6 @@ class PageController extends Controller
 	use CartTrait;
 	use PageTrait;
 	use StatusTrait;
-	use ProductTrait;
 	use TemplateTrait;
 	
 	/**
@@ -54,44 +52,45 @@ class PageController extends Controller
 			return redirect('/login');
 		}
 		
+		// Get the URL segments
 		if ($path == '/') {
 			$segments = collect([0 => '']);
 		} else {
 			$segments = collect(explode('/', $request->path()));
 		}
 		
+		// Set slug based on the last segment
 		$slug = $segments->last();
 		
-		// Get requested page
+		// Get the requested page based on slug - if it doesnt exist, a 404 is thrown!
 		$page = $this->getPageBySlug($slug);
 		
-		// If requested page was found, then grab all pages
+		// Since the requested page was found, then grab all the other pages - builds our navigation and available across all pages
 		$pages = $this->getPages();
-			
+		
+		// Grab a cart instance	- available across all pages
 		$cart = $this->getCartInstance('cart');
 		
-		// Select any wishlist instances from the current session
+		// Grab any wishlist instances since user can add to cart and wishlist on products page
 		$wishlistCart = $this->getCartInstance('wishlist');
 		
-		// $this->prepareTemplate($page, $parameters);
+		// Grab parameters
+		$parameters = $request->route()->parameters();
 		
-		// FIXME - template should be picked with this data already available
-		$savedCarts = [];
+		// Pass any global required data to the page template
+		$parameters['currentUser'] = $currentUser;
 		
-		if ($page->slug == 'cart') {
-			// Grab any saved cart instances from the database
-			$savedCarts = $this->getSavedCarts($currentUser->id);
-		}
+		// Add the page to the parameters array - we want to pass the page model data to the template.
+		$parameters['page'] = $page;
 		
-		// FIXME - template should be picked with this data already available
-		$products = [];
+		$parameters['cart'] = $cart;
 		
-		// Pull in all products if we're on the products page
-		if ($page->slug == 'products') {
-			$products = $this->getProducts();
-		}
+		$parameters['wishlistCart'] = $wishlistCart;
 		
-		return view('templates.'.$page->template->filename, compact('currentUser', 'page', 'pages', 'products', 'cart', 'wishlistCart', 'savedCarts'));
+		// Selects the pages template and injects any data required
+		$this->preparePageTemplate($page, $parameters);
+		
+		return view('index', compact('currentUser', 'page', 'pages', 'cart', 'wishlistCart'));
 	}
 
 	/**
@@ -191,6 +190,8 @@ class PageController extends Controller
 			// Remove any Cross-site scripting (XSS)
 			$cleanedPage = $this->sanitizerInput($request->all());
 			
+			// TODO - Grab template layout fields
+			
 			dd($cleanedPage);
 			
 			if (!empty($cleanedPage['hide_from_nav'])) {
@@ -219,7 +220,6 @@ class PageController extends Controller
 				$page->keywords = $this->commaSeparate($cleanedPage['keywords']);
 				$page->template_id = $cleanedPage['template_id'];
 				$page->status_id = $cleanedPage['status_id'];
-				$page->content = $cleanedPage['content'];
 				$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
 				$page->hide_from_nav = (isset($cleanedPage['hide_from_nav'])) ? $cleanedPage['hide_from_nav'] : 0;
 								
@@ -298,7 +298,9 @@ class PageController extends Controller
 		if ($currentUser->hasPermission('edit_pages')) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedPage = $this->sanitizerInput($request->all());
-
+			
+			// TODO - Grab template layout fields
+			
 			$rules = $this->getRules('page');
 			
 			$rules['slug'] = 'required|string|unique:pages,slug,'.$id.'|max:255';
@@ -330,7 +332,6 @@ class PageController extends Controller
 					$page->keywords = $this->commaSeparate($cleanedPage['keywords']);
 					$page->template_id = $cleanedPage['template_id'];
 					$page->status_id = $cleanedPage['status_id'];
-					$page->content = $cleanedPage['content'];
 					$page->parent_id = ($cleanedPage['parent_id'] == 0) ? null : $cleanedPage['parent_id'];
 					$page->hide_from_nav = (isset($cleanedPage['hide_from_nav'])) ? $cleanedPage['hide_from_nav'] : 0;
 				}
@@ -516,36 +517,6 @@ class PageController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	protected function getPageTemplates()
-	{
-		//$templates = config('cms.templates');
-	
-		//return ['' => ''] + array_combine(array_keys($templates), array_keys($templates));
-	}
-	
-	protected function prepareTemplate(Page $page, array $parameters)
-	{
-		/*
-		$templates = config('cms.templates');
-		
-		if (! $page->template || ! isset($templates[$page->template])) {
-			return;
-		}
-		
-		$template = app($templates[$page->template]);
-		
-		$view = sprintf('templates.%s', $template->getView());
-		
-		if (! view()->exists($view)) {
-			return;
-		}
-		
-		$template->prepare($view = view($view), $parameters);
-		
-		$page->view = $view;
-		*/
 	}
 	
 	/**

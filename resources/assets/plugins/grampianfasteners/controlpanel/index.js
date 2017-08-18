@@ -388,6 +388,20 @@
 			}
 		};
 		
+		let convertTitleToKeywords = (element, targetElement) => {
+			if ($(element).length) {
+				$(element).on('keyup change', event => {
+					let keywords = $(event.target).val().toString()
+						.trim()
+						.split(' ')
+						.join(', ')
+						.trim();
+					
+					$(targetElement).val(keywords);
+				});
+			}
+		};
+		
 		let logout = () => {
 			if ($('#logout').length) {
 				$('#logout').on('click', event => {
@@ -458,6 +472,10 @@
 			convertTitleToSlug('#editCategory #title', '#editCategory #slug');
 			
 			convertTitleToSlug('#editCategory #slug', '#editCategory #slug');
+			
+			convertTitleToKeywords('#createPage #title', '#createPage #keywords');
+			
+			convertTitleToKeywords('#editPage #title', '#editPage #keywords');
 			
 			saveMenuChanges('#nestedSortable');
 		};

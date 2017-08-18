@@ -37,6 +37,7 @@
 								<th>Title</th>
 								<th class="no-sort">Slug</th>
 								<th>Parent</th>
+								<th>Template</th>
 								<th class="text-center">Status</th>
 								<th class="no-sort">&nbsp;</th>
 							</tr>
@@ -47,6 +48,7 @@
 									<td>{{ $page->title }}{!! $page->hide_from_nav == 1 ? '&nbsp;<i class="text-muted-lighter">(Hidden from Nav)</i>' : '' !!}</td>
 									<td>{{ $page->slug }}</td>
 									<td>{{ ($page->parent) ? $page->parent->title : '' }}</td>
+									<td>{{ $page->template->title }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $page->status->id }}" title="{{ $page->status->title }}" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_pages') || ($currentUser->hasPermission('delete_pages') && $page->id != 1))
 										<td class="actions dropdown text-center" id="submenu">

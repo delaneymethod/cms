@@ -96,6 +96,7 @@
 						<div class="form-group">
 							<label for="template_id" class="control-label font-weight-bold">Template</label>
 							<select name="template_id" id="template_id" class="form-control" tabindex="7" aria-describedby="helpBlockTemplateId" required>
+								<option value="">----------</option>
 								@foreach ($templates as $template)
 									<option value="{{ $template->id }}" {{ (old('template_id') == $template->id) ? 'selected' : '' }}>{{ $template->title }}</option>
 								@endforeach
@@ -109,10 +110,7 @@
 							<label class="control-label font-weight-bold">Hide from Nav</label>
 								<div class="form-check">
 									<label for="hide_from_nav" class="form-check-label">
-									
-									{{ old('hide_from_nav') }}
-									
-										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="8" aria-describedby="helpBlockHideFromNav" {{ (old('hide_from_nav')) ? 'checked' : '' }>
+										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="8" aria-describedby="helpBlockHideFromNav" {{ old('hide_from_nav') == 1 ? 'checked' : '' }}>
 									</label>
 								</div>
 							@if ($errors->has('hide_from_nav'))
@@ -120,19 +118,26 @@
 							@endif
 							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Ticking this box will hide the page from the navigation.</span>
 						</div>
-						<div class="form-group">
-							<label for="content" class="control-label font-weight-bold">Content</label>
-							<textarea name="content" id="content" placeholder="e.g New page content..." tabindex="9" aria-describedby="helpBlockContent">{{ old('content') }}</textarea>
-							@if ($errors->has('content'))
-								<span id="helpBlockContent" class="form-control-feedback form-text gf-red">- {{ $errors->first('content') }}</span>
-							@endif
-							<span id="helpBlockContent" class="form-control-feedback form-text text-muted"></span>
-						</div>
+						
+						TEMPLATE FIELD LAYOUT<br><br>
+						
+						@foreach ($templates as $template)
+							
+							@foreach ($template->layout->fields as $field)
+								
+								{{ $template->title }} Template - {{ $field->title }} | {{ $field->handle }} | {{ $field->field_type->title }}<br>
+								
+							@endforeach
+							
+							<br>
+							
+						@endforeach
+						
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_pages'))
-								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="11" title="Cancel">Cancel</a>
+								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="10" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
 						</div>
 					</form>
 				</div>

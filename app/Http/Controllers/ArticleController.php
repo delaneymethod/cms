@@ -10,6 +10,7 @@ use App\Http\Traits\UserTrait;
 use App\Http\Traits\StatusTrait;
 use App\Http\Traits\ArticleTrait;
 use App\Http\Traits\CategoryTrait;
+use App\Http\Traits\TemplateTrait;
 use App\Http\Controllers\Controller;
 
 class ArticleController extends Controller
@@ -18,6 +19,7 @@ class ArticleController extends Controller
 	use StatusTrait;
 	use ArticleTrait;
 	use CategoryTrait;
+	use TemplateTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -77,7 +79,10 @@ class ArticleController extends Controller
 			// Used to set categories_ids
 			$categories = $this->getCategories();
 			
-			return view('cp.articles.create', compact('currentUser', 'title', 'subTitle', 'users', 'statuses', 'categories'));
+			// Used to set template_id
+			$templates = $this->getTemplates();
+			
+			return view('cp.articles.create', compact('currentUser', 'title', 'subTitle', 'users', 'statuses', 'categories', 'templates'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -125,10 +130,9 @@ class ArticleController extends Controller
 				$article->slug = $cleanedArticle['slug'];
 				$article->description = $cleanedArticle['description'];
 				$article->keywords = $this->commaSeparate($cleanedArticle['keywords']);
+				$article->template_id = $cleanedArticle['template_id'];
 				$article->user_id = $cleanedArticle['user_id'];
 				$article->status_id = $cleanedArticle['status_id'];
-				$article->excerpt = $cleanedArticle['excerpt'];
-				$article->content = $cleanedArticle['content'];
 				$article->published_at = $cleanedArticle['published_at'];
 				
 				$article->save();
@@ -188,7 +192,10 @@ class ArticleController extends Controller
 			// Used to set categories_ids
 			$categories = $this->getCategories();
 			
-			return view('cp.articles.edit', compact('currentUser', 'title', 'subTitle', 'article', 'users', 'statuses', 'categories'));
+			// Used to set template_id
+			$templates = $this->getTemplates();
+			
+			return view('cp.articles.edit', compact('currentUser', 'title', 'subTitle', 'article', 'users', 'statuses', 'categories', 'templates'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -239,10 +246,9 @@ class ArticleController extends Controller
 				$article->slug = $cleanedArticle['slug'];
 				$article->description = $cleanedArticle['description'];
 				$article->keywords = $this->commaSeparate($cleanedArticle['keywords']);
+				$article->template_id = $cleanedArticle['template_id'];
 				$article->user_id = $cleanedArticle['user_id'];
 				$article->status_id = $cleanedArticle['status_id'];
-				$article->excerpt = $cleanedArticle['excerpt'];
-				$article->content = $cleanedArticle['content'];
 				$article->published_at = $cleanedArticle['published_at'];
 				$article->updated_at = $this->datetime;
 				

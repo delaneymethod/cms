@@ -122,26 +122,26 @@
 							<span id="helpBlockUserId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
-							<label for="excerpt" class="control-label font-weight-bold">Excerpt</label>
-							<textarea name="excerpt" id="excerpt" style="height: 100px !important;" placeholder="e.g Blog Post excerpt..." tabindex="9" aria-describedby="helpBlockExcerpt">{{ old('excerpt') ?? $article->excerpt }}</textarea>
-							@if ($errors->has('excerpt'))
-								<span id="helpBlockExcerpt" class="form-control-feedback form-text gf-red">- {{ $errors->first('excerpt') }}</span>
+							<label for="template_id" class="control-label font-weight-bold">Template</label>
+							<select name="template_id" id="template_id" class="form-control" tabindex="9" aria-describedby="helpBlockTemplateId" required>
+								<option value="">----------</option>
+								@foreach ($templates as $template)
+									<option value="{{ $template->id }}" {{ (old('template_id') == $template->id || $article->template_id == $template->id) ? 'selected' : '' }}>{{ $template->title }}</option>
+								@endforeach
+							</select>
+							@if ($errors->has('template_id'))
+								<span id="helpBlockTemplateId" class="form-control-feedback form-text gf-red">- {{ $errors->first('template_id') }}</span>
 							@endif
-							<span id="helpBlockExcerpt" class="form-control-feedback form-text text-muted"></span>
+							<span id="helpBlockTemplateId" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						<div class="form-group">
-							<label for="content" class="control-label font-weight-bold">Content</label>
-							<textarea name="content" id="content" placeholder="e.g Blog Post content..." tabindex="10" aria-describedby="helpBlockContent">{{ old('content') ?? $article->content }}</textarea>
-							@if ($errors->has('content'))
-								<span id="helpBlockContent" class="form-control-feedback form-text gf-red">- {{ $errors->first('content') }}</span>
-							@endif
-							<span id="helpBlockContent" class="form-control-feedback form-text text-muted"></span>
-						</div>
+						
+						TEMPLATE FIELD LAYOUT
+						
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_articles'))
-								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
+								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="11" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
 							@if ($currentUser->hasPermission('delete_articles'))
 								<a href="/cp/articles/{{ $article->id }}/delete" title="Delete Article" class="pull-right btn btn-outline-danger">Delete Article</a>
 							@endif
