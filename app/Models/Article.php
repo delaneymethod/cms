@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use App\Models\Status;
+use App\Models\Content;
 use App\Models\Category;
 use App\Models\Template;
 use Illuminate\Database\Eloquent\Model;
@@ -47,6 +48,24 @@ class Article extends Model
 	public function status()
 	{
 		return $this->belongsTo(Status::class);
+	}
+	
+	/**
+	 * Get the content records associated with the article.
+	 */
+	public function contents()
+	{
+		return $this->belongsToMany(Content::class, 'article_content');
+	}
+	
+	/**
+	 * Set contents for the article.
+	 *
+	 * $param 	array 	$contents
+	 */
+	public function setContents(array $contents)
+	{
+		return $this->contents()->sync($contents);
 	}
 	
 	/**

@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
                 'location_id' => 2,
                 'status_id' => 1,
                 'role_id' => 1,
-                'remember_token' => 'y5gycaqbueeKo9c2AxjHzJlkuwAINjavBdVnMpnPM8mUUdu3QTm46dXI2wlo',
+                'remember_token' => 'tCg7olSt0G1HUC4CqHZs7t0BanQAr2V71akL1RRD9r6J4DVMvwSyyWlO7rdB',
                 'last_login_at' => '2017-08-01 09:19:39',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-02 13:02:33',

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Baum\Node;
 use App\Models\Status;
+use App\Models\Content;
 use App\Models\Template;
 
 class Page extends Node
@@ -60,6 +61,24 @@ class Page extends Node
 	public function parent()
 	{
 		return $this->belongsTo(Page::class, 'parent_id', 'id');
+	}
+	
+	/**
+	 * Get the content records associated with the page.
+	 */
+	public function contents()
+	{
+		return $this->belongsToMany(Content::class, 'page_content');
+	}
+	
+	/**
+	 * Set contents for the page.
+	 *
+	 * $param 	array 	$contents
+	 */
+	public function setContents(array $contents)
+	{
+		return $this->contents()->sync($contents);
 	}
 	
 	/**

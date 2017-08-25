@@ -384,6 +384,16 @@
 						.replace(/\-\-+/g, '-'); // Replace multiple - with single -
 					
 					$(targetElement).val(slug);
+					
+					if (slug == '') {
+						$('#template_id').attr('disabled', true);
+						
+						$('#helpBlockTemplateIdWarning').show();
+					} else {
+						$('#template_id').attr('disabled', false);
+						
+						$('#helpBlockTemplateIdWarning').hide();
+					}
 				});
 			}
 		};
@@ -408,6 +418,25 @@
 					event.preventDefault();
 				
 					$('#logoutUser').submit();
+				});
+			}
+		};
+		
+		let savePageChangesAndLoadTemplate = element => {
+			if ($(element).length) {
+				$(element).change(event => {
+					event.preventDefault();
+					
+					const form = $(element).closest('form');
+					
+					// Set action URL
+					$(form).attr('action', '/cp/pages/reload');
+					
+					// If there is a method field, make sure to remove it - used when in edit mode
+					$(form).find('input[name="_method"]').remove();
+					
+					// Submit form
+					$('#submit').trigger('click');
 				});
 			}
 		};
@@ -441,9 +470,7 @@
 			
 			attachDatePicker('.input-group.date');
 			
-			attachRedactor('#excerpt');
-			
-			attachRedactor('#content');
+			attachRedactor('.redactor');
 			
 			attachDataTable('#datatable');
 			
@@ -476,6 +503,10 @@
 			convertTitleToKeywords('#createPage #title', '#createPage #keywords');
 			
 			convertTitleToKeywords('#editPage #title', '#editPage #keywords');
+			
+			savePageChangesAndLoadTemplate('#createPage #template_id');
+			
+			savePageChangesAndLoadTemplate('#editPage #template_id');
 			
 			saveMenuChanges('#nestedSortable');
 		};

@@ -26,12 +26,15 @@
 					<form name="editPage" id="editPage" class="editPage" role="form" method="POST" action="/cp/pages/{{ $page->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
+						<input type="hidden" name="id" value="{{ $page->id }}">
+						<input type="hidden" name="old_template_id" value="{{ $page->template_id }}">
 						@if ($page->id == 1)
 							<input type="hidden" name="title" value="{{ $page->title }}">
 							<input type="hidden" name="slug" value="/">
 							<input type="hidden" name="status_id" value="{{ $page->status_id }}">
 							<input type="hidden" name="parent_id" value="0">
 							<input type="hidden" name="hide_from_nav" value="0">
+							<input type="hidden" name="template_id" value="{{ $page->template_id }}">
 						@endif
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
@@ -115,23 +118,10 @@
 							<span id="helpBlockParentId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
-							<label for="template_id" class="control-label font-weight-bold">Template</label>
-							<select name="template_id" id="template_id" class="form-control" tabindex="7" aria-describedby="helpBlockTemplateId" required>
-								<option value="">----------</option>
-								@foreach ($templates as $template)
-									<option value="{{ $template->id }}" {{ (old('template_id') == $template->id || $page->template_id == $template->id) ? 'selected' : '' }}>{{ $template->title }}</option>
-								@endforeach
-							</select>
-							@if ($errors->has('template_id'))
-								<span id="helpBlockTemplateId" class="form-control-feedback form-text gf-red">- {{ $errors->first('template_id') }}</span>
-							@endif
-							<span id="helpBlockTemplateId" class="form-control-feedback form-text text-muted"></span>
-						</div>
-						<div class="form-group">
 							<label class="control-label font-weight-bold">Hide from Nav</label>
 								<div class="form-check">
 									<label for="hide_from_nav" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
-										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="8" aria-describedby="helpBlockHideFromNav" {{ ((old('hide_from_nav') && old('hide_from_nav') == $page->hide_from_nav) || $page->hide_from_nav == 1 && $page->id != 1) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>
+										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-describedby="helpBlockHideFromNav" {{ ((old('hide_from_nav') && old('hide_from_nav') == $page->hide_from_nav) || $page->hide_from_nav == 1 && $page->id != 1) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>
 									</label>
 								</div>
 							@if ($errors->has('hide_from_nav'))
@@ -142,9 +132,29 @@
 							@endif
 							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Ticking this box will hide the page from the navigation.</span>
 						</div>
-						
-						TEMPLATE FIELD LAYOUT
-						
+						<div class="form-group">
+							<label for="template_id" class="control-label font-weight-bold">Template</label>
+							<select name="template_id" id="template_id" class="form-control" tabindex="8" aria-describedby="helpBlockTemplateId" {{ ($page->id == 1) ? 'disabled' : 'required' }}>
+								@foreach ($templates as $template)
+									<option value="{{ $template->id }}" {{ (old('template_id') == $template->id || $page->template_id == $template->id) ? 'selected' : '' }}>{{ $template->title }}</option>
+								@endforeach
+							</select>
+							@if ($errors->has('template_id'))
+								<span id="helpBlockTemplateId" class="form-control-feedback form-text gf-red">- {{ $errors->first('template_id') }}</span>
+							@endif
+							@if ($page->id == 1)
+								<span id="helpBlockTemplateId" class="form-control-feedback form-text text-warning">- This field is disabled. The template cannot be changed for the homepage.</span>
+							@endif
+							<span id="helpBlockTemplateId" class="form-control-feedback form-text text-muted"></span>
+						</div>
+						@foreach ($pageTemplate->fields as $field)
+							<div class="form-group">
+								{{ showField($field, old($field['id']), (9 + $loop->iteration)) }}
+								@if ($errors->has($field['id']))
+									<span id="helpBlock_{{ $field['id'] }}" class="form-control-feedback form-text gf-red">- {{ $errors->first($field['id']) }}</span>
+								@endif
+							</div>
+						@endforeach
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_pages'))
 								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>

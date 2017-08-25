@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use App\Models\Article;
+use App\Models\Content;
 use Illuminate\Http\Request;
 use App\Http\Traits\UserTrait;
 use App\Http\Traits\StatusTrait;
+use App\Http\Traits\ContentTrait;
 use App\Http\Traits\ArticleTrait;
 use App\Http\Traits\CategoryTrait;
 use App\Http\Traits\TemplateTrait;
@@ -18,6 +20,7 @@ class ArticleController extends Controller
 	use UserTrait;
 	use StatusTrait;
 	use ArticleTrait;
+	use ContentTrait;
 	use CategoryTrait;
 	use TemplateTrait;
 	
@@ -79,10 +82,12 @@ class ArticleController extends Controller
 			// Used to set categories_ids
 			$categories = $this->getCategories();
 			
-			// Used to set template_id
-			$templates = $this->getTemplates();
+			// 9 = Article
+			$articleTemplate = $this->getTemplate(9);
 			
-			return view('cp.articles.create', compact('currentUser', 'title', 'subTitle', 'users', 'statuses', 'categories', 'templates'));
+			$articleTemplate = $this->mapFieldsToFieldTypes($articleTemplate);
+			
+			return view('cp.articles.create', compact('currentUser', 'title', 'subTitle', 'users', 'statuses', 'categories', 'articleTemplate'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -112,6 +117,9 @@ class ArticleController extends Controller
 				}
 			}
 			
+			// Grab template fields and create rules based on field type
+			$rules = $this->setTemplateFieldRules($rules, $cleanedArticle['templates']);
+			
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedArticle, $rules);
 
@@ -138,6 +146,35 @@ class ArticleController extends Controller
 				$article->save();
 				
 				$article->setCategories($cleanedArticle['category_ids']);
+				
+				$articleContents = [];
+				
+				// Create our new content entries
+				foreach ($cleanedArticle['templates'][$article->template_id] as $field_id => $data) {
+					if (!empty($data)) {
+						array_push($articleContents, [
+							'field_id' => $field_id,
+							'data' => $data,
+						]);
+					}
+				}
+				
+				// So we can keep track of new content ids
+				$contents = [];
+				
+				// Loop over each row and create new content entries
+				foreach ($articleContents as $articleContent) {
+					$content = new Content;
+					
+					$content->field_id = $articleContent['field_id'];
+					$content->data = $articleContent['data'];
+					
+					$content->save();
+					
+					array_push($contents, $content->id);
+				}
+				
+				$article->setContents($contents);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -192,10 +229,17 @@ class ArticleController extends Controller
 			// Used to set categories_ids
 			$categories = $this->getCategories();
 			
-			// Used to set template_id
-			$templates = $this->getTemplates();
+			// 9 = Article but we still use whats stored in the model
+			$articleTemplate = $this->getTemplate($article->template_id);
 			
-			return view('cp.articles.edit', compact('currentUser', 'title', 'subTitle', 'article', 'users', 'statuses', 'categories', 'templates'));
+			$articleTemplate = $this->mapFieldsToFieldTypes($articleTemplate);
+			
+			if ($article->contents->count() > 0) {
+				// now get article template field values and set defaults / values.
+				$articleTemplate = $this->mapContentsToFields($articleTemplate, $article->contents);
+			}
+			
+			return view('cp.articles.edit', compact('currentUser', 'title', 'subTitle', 'article', 'users', 'statuses', 'categories', 'articleTemplate'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -228,6 +272,9 @@ class ArticleController extends Controller
 			
 			$rules['slug'] = 'required|string|unique:articles,slug,'.$id.'|max:255';
 			
+			// Grab template fields and create rules based on field type
+			$rules = $this->setTemplateFieldRules($rules, $cleanedArticle['templates']);
+			
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedArticle, $rules);
 
@@ -255,6 +302,46 @@ class ArticleController extends Controller
 				$article->save();
 				
 				$article->setCategories($cleanedArticle['category_ids']);
+				
+				// Loop over all current content entries and delete
+				$articleContentIds = $article->contents->pluck('id');
+				
+				if (count($articleContentIds)) {
+					foreach ($articleContentIds as $id) {
+						$content = $this->getContent($id);
+						
+						$content->delete();
+					}
+				}
+				
+				$articleContents = [];
+				
+				// Create our new content entries
+				foreach ($cleanedArticle['templates'][$article->template_id] as $field_id => $data) {
+					if (!empty($data)) {
+						array_push($articleContents, [
+							'field_id' => $field_id,
+							'data' => $data,
+						]);
+					}
+				}
+				
+				// So we can keep track of new content ids
+				$contents = [];
+				
+				// Loop over each row and create new content entries
+				foreach ($articleContents as $articleContent) {
+					$content = new Content;
+					
+					$content->field_id = $articleContent['field_id'];
+					$content->data = $articleContent['data'];
+					
+					$content->save();
+					
+					array_push($contents, $content->id);
+				}
+				
+				$article->setContents($contents);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -320,6 +407,17 @@ class ArticleController extends Controller
 			DB::beginTransaction();
 
 			try {
+				// Loop over all current content entries and delete
+				$articleContentIds = $article->contents->pluck('id');
+				
+				if (count($articleContentIds)) {
+					foreach ($articleContentIds as $id) {
+						$content = $this->getContent($id);
+						
+						$content->delete();
+					}
+				}
+				
 				$article->delete();
 			} catch (QueryException $queryException) {
 				DB::rollback();

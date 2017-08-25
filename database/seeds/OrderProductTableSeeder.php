@@ -22,9 +22,9 @@ class OrderProductTableSeeder extends Seeder
                 'order_id' => 1,
                 'product_id' => 1,
                 'quantity' => 1,
-				'tax_rate' => 20,
-				'price' => 129.99,
-				'price_tax' => 155.99,
+                'tax_rate' => 20,
+                'price' => 129.99,
+                'price_tax' => 155.99,
             ),
         ));
         

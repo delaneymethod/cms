@@ -95,6 +95,10 @@ a,
 	margin-top: -2px;
 }
 
+.hidden {
+	display: none;
+}
+
 @include placeholder {
 	color: #b4b4b4 !important;
 }

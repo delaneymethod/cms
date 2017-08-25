@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use Request;
 use Carbon\Carbon;
+use App\Models\Template;
 use App\Http\Traits\UserTrait;
+use App\Http\Traits\FieldTrait;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -16,10 +19,10 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-
 class Controller extends BaseController
 {
 	use UserTrait;
+	use FieldTrait;
 	use DispatchesJobs;
 	use AuthorizesRequests;
 	use ValidatesRequests;
@@ -596,5 +599,250 @@ class Controller extends BaseController
 		}
 	
 		return (object) $array;
+	}
+	
+	protected function mapFieldsToFieldTypes(Template $template) 
+	{
+		$template->reference = 'template_'.$template->filename;
+			
+		$fields = [];
+		
+		foreach ($template->fields as $field) {
+			if ($field->field_type->id == 1) {
+				// Text
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control',
+					'placeholder' => '',
+					'value' => '',
+					'required' => $field->required == 1 ? true : false,
+					'instructions' => $field->instructions,
+				]);
+			} else if ($field->field_type->id == 2) {
+				// Text - Multiline
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control',
+					'placeholder' => '',
+					'value' => '',
+					'required' => $field->required == 1 ? true : false,
+					'instructions' => $field->instructions,
+				]);
+			} else if ($field->field_type->id == 3) {
+				// Text - Rich
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control redactor',
+					'placeholder' => '',
+					'value' => '',
+					'required' => $field->required == 1 ? true : false,
+					'instructions' => $field->instructions,
+				]);
+			} else if ($field->field_type->id == 4) {
+				// Number
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control',
+					'placeholder' => '',
+					'value' => '',
+					'required' => $field->required == 1 ? true : false,
+					'instructions' => $field->instructions,
+				]);
+			} else if ($field->field_type->id == 5) {
+				// Password
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control',
+					'placeholder' => '',
+					'value' => '',
+					'required' => $field->required == 1 ? true : false,
+					'instructions' => $field->instructions,
+				]);
+			} else if ($field->field_type->id == 6) {
+				// Select
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control',
+					'options' => unserialize($field->options),
+					'required' => $field->required == 1 ? true : false,
+					'default' => [], // array('option4'),
+					'instructions' => $field->instructions,
+				]);
+			} else if ($field->field_type->id == 7) {
+				// Select - Multi
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => 'multiselect',
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control',
+					'options' => unserialize($field->options),
+					'required' => $field->required == 1 ? true : false,
+					'default' => [], // array('option1', 'option4'),
+					'instructions' => $field->instructions,
+				]);
+			} else if ($field->field_type->id == 8) {
+				// Radio
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control',
+					'options' => unserialize($field->options),
+					'required' => $field->required == 1 ? true : false,
+					'default' => [], // array('option3'),
+					'instructions' => $field->instructions,
+				]);
+			} else if ($field->field_type->id == 9) {
+				// Checkbox
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control',
+					'options' => unserialize($field->options),
+					'required' => $field->required == 1 ? true : false,
+					'default' => [], // array('option1', 'option2'),
+					'instructions' => $field->instructions,
+				]);
+			}
+		}
+		
+		$template->fields = $fields;
+		
+		return $template;
+	}
+	
+	protected function mapContentsToFields(Template $template, Collection $contents)
+	{
+		$template->fields = $this->recursiveObject($template->fields);
+		
+		foreach ($template->fields as &$field) {
+			foreach ($contents as $content) {
+				if ($content->field_id == $field->_id) {
+					$field->value = $content->data;
+				}
+				
+				/**
+				 * We still attempt to match content based on field types incase ids dont match.
+				 * We would only enter this logic if the field value is empty and the user was 
+				 * creating or editing a page and picked a different template...
+				 */
+				if (empty($field->value)) {
+					$contentField = $this->getField($content->field_id);
+					
+					if ($contentField->field_type_id == $field->field_type_id) {
+						$field->value = $content->data;
+					}
+				}
+			}
+		}
+		
+		$template->fields = json_decode(json_encode($template->fields), true);
+		
+		return $template;
+	}
+	
+	protected function setTemplateFieldRules(array $rules, array $templates) 
+	{
+		foreach ($templates as $template_id => $fields) {
+			foreach ($fields as $field_id => $field) {
+				if (!empty($field)) {
+					$field = $this->getField($field_id);
+					
+					$fieldRules = [];
+					
+					if ($field->required == 1) {
+						array_push($fieldRules, 'required');
+					} else {
+						array_push($fieldRules, 'nullable');
+					}
+					
+					if ($field->field_type->type == 'text') {
+						array_push($fieldRules, 'string');
+						array_push($fieldRules, 'max:255');
+					}
+					
+					if ($field->field_type->type == 'textarea') {
+						array_push($fieldRules, 'string');
+					}
+					
+					if ($field->field_type->type == 'number') {
+						array_push($fieldRules, 'integer');
+					}
+					
+					if ($field->field_type->type == 'password') {
+						array_push($fieldRules, 'string');
+						array_push($fieldRules, 'max:255');
+					}
+					
+					if ($field->field_type->type == 'select') {
+						array_push($fieldRules, 'integer');
+					}
+					
+					if ($field->field_type->type == 'radio') {
+						array_push($fieldRules, 'integer');
+					}
+					
+					if ($field->field_type->type == 'checkbox' && $field->required) {
+						array_push($fieldRules, 'array');
+						array_push($fieldRules, 'min:1');
+					}
+					
+					if (count($fieldRules) > 0) {
+						$rules['templates.'.$template_id.'.'.$field_id] = implode('|', $fieldRules);
+					}
+				}
+			}
+		}
+		
+		return $rules;
 	}
 }

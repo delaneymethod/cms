@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Page;
-use App\Models\Layout;
+use App\Models\Field;
 use App\Models\Article;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +17,6 @@ class Template extends Model
 	protected $fillable = [
 		'title',
 		'filename',
-		'layout_id',
 	];
 
 	/**
@@ -37,10 +36,20 @@ class Template extends Model
 	}
 	
 	/**
-	 * Get the layout record associated with the template.
+	 * Get the field records associated with the template.
 	 */
-	public function layout()
+	public function fields()
 	{
-		return $this->belongsTo(Layout::class);
+		return $this->belongsToMany(Field::class, 'template_field')->withPivot('order')->orderBy('order');
+	}
+	
+	/**
+	 * Set fields for the template.
+	 *
+	 * $param 	array 	$fields
+	 */
+	public function setFields(array $fields)
+	{
+		return $this->fields()->sync($fields);
 	}
 }

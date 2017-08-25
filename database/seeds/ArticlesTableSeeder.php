@@ -22,14 +22,14 @@ class ArticlesTableSeeder extends Seeder
                 'id' => 1,
                 'title' => 'My First Blog Post',
                 'slug' => 'my-first-blog-post',
-                'keywords' => NULL,
+                'keywords' => '',
                 'description' => NULL,
-                'template_id' => 8,
+                'template_id' => 9,
                 'user_id' => 1,
                 'status_id' => 6,
-                'published_at' => '2017-08-02 18:22:31',
+                'published_at' => '2017-08-25 17:04:25',
                 'created_at' => '2017-08-11 10:00:00',
-                'updated_at' => '2017-08-02 18:16:33',
+                'updated_at' => '2017-08-25 17:04:25',
             ),
         ));
         

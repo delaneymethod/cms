@@ -20,40 +20,40 @@ class TemplatesTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'title' => 'Page',
-                'filename' => 'page',
+                'title' => 'Homepage',
+                'filename' => 'homepage',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             1 => 
             array (
                 'id' => 2,
-                'title' => 'Products',
-                'filename' => 'products',
+                'title' => 'Page',
+                'filename' => 'page',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             2 => 
             array (
                 'id' => 3,
-                'title' => 'Contact',
-                'filename' => 'contact',
+                'title' => 'Products',
+                'filename' => 'products',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             3 => 
             array (
                 'id' => 4,
-                'title' => 'Product',
-                'filename' => 'product',
+                'title' => 'Contact',
+                'filename' => 'contact',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             4 => 
             array (
                 'id' => 5,
-                'title' => 'Checkout',
-                'filename' => 'checkout',
+                'title' => 'Product',
+                'filename' => 'product',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
@@ -68,14 +68,22 @@ class TemplatesTableSeeder extends Seeder
             6 => 
             array (
                 'id' => 7,
-                'title' => 'Articles',
-                'filename' => 'articles',
+                'title' => 'Checkout',
+                'filename' => 'checkout',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             7 => 
             array (
                 'id' => 8,
+                'title' => 'Articles',
+                'filename' => 'articles',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            8 => 
+            array (
+                'id' => 9,
                 'title' => 'Article',
                 'filename' => 'article',
                 'created_at' => '2017-08-01 09:19:39',

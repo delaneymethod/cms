@@ -14,6 +14,7 @@ class FieldType extends Model
 	 */
 	protected $fillable = [
 		'title',
+		'type',
 	];
 
 	/**

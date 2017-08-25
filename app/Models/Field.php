@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Layout;
+use App\Models\Template;
 use App\Models\FieldType;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,10 +17,11 @@ class Field extends Model
 		'title',
 		'handle',
 		'field_type_id',
+		'options',
 		'required',
 		'instructions',
 	];
-
+	
 	/**
 	 * Get the field type record associated with the field.
 	 */
@@ -30,10 +31,20 @@ class Field extends Model
 	}
 	
 	/**
-	 * Get the layout records associated with the field.
+	 * Get the template records associated with the field.
 	 */
-	public function layouts()
+	public function templates()
 	{
-		return $this->belongsToMany(Layout::class, 'layout_field')->orderBy('order');
+		return $this->belongsToMany(Template::class, 'template_field')->withPivot('order')->orderBy('order');
+	}
+	
+	/**
+	 * Set templates for the field.
+	 *
+	 * $param 	array 	$templates
+	 */
+	public function setTemplates(array $templates)
+	{
+		return $this->templates()->sync($templates);
 	}
 }

@@ -30,9 +30,11 @@ class DatabaseSeeder extends Seeder
 		$this->call(CartsTableSeeder::class);
 		$this->call(ProductsTableSeeder::class);
 		$this->call(OrderProductTableSeeder::class);
-		$this->call(LayoutsTableSeeder::class);
 		$this->call(FieldTypesTableSeeder::class);
 		$this->call(FieldsTableSeeder::class);
-		$this->call(LayoutFieldTableSeeder::class);
+		$this->call(TemplateFieldTableSeeder::class);
+		$this->call(ContentsTableSeeder::class);
+		$this->call(PageContentTableSeeder::class);
+		$this->call(ArticleContentTableSeeder::class);
 	}
 }

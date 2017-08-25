@@ -115,9 +115,12 @@ Route::get('/cp/templates', 'TemplateController@index');
 // CP > Pages routes
 Route::get('/cp/pages', 'PageController@index');
 Route::get('/cp/pages/create', 'PageController@create');
+Route::get('/cp/pages/create/{template_id}', 'PageController@create');
 Route::get('/cp/pages/{id}/edit', 'PageController@edit');
+Route::get('/cp/pages/{id}/edit/{template_id}', 'PageController@edit');
 Route::get('/cp/pages/{id}/delete', 'PageController@confirm');
 Route::post('/cp/pages', 'PageController@store');
+Route::post('/cp/pages/reload', 'PageController@reload');
 Route::put('/cp/pages/{id}', 'PageController@update');
 Route::patch('/cp/pages/{id}', 'PageController@update');
 Route::delete('/cp/pages/{id}', 'PageController@delete');

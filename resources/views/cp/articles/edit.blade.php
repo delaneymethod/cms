@@ -26,6 +26,7 @@
 					<form name="editArticle" id="editArticle" class="editArticle" role="form" method="POST" action="/cp/articles/{{ $article->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
+						<input type="hidden" name="template_id" value="{{ $article->template_id }}">
 						<input type="hidden" name="category_ids[]" value="1">
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
@@ -121,22 +122,14 @@
 							@endif
 							<span id="helpBlockUserId" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						<div class="form-group">
-							<label for="template_id" class="control-label font-weight-bold">Template</label>
-							<select name="template_id" id="template_id" class="form-control" tabindex="9" aria-describedby="helpBlockTemplateId" required>
-								<option value="">----------</option>
-								@foreach ($templates as $template)
-									<option value="{{ $template->id }}" {{ (old('template_id') == $template->id || $article->template_id == $template->id) ? 'selected' : '' }}>{{ $template->title }}</option>
-								@endforeach
-							</select>
-							@if ($errors->has('template_id'))
-								<span id="helpBlockTemplateId" class="form-control-feedback form-text gf-red">- {{ $errors->first('template_id') }}</span>
-							@endif
-							<span id="helpBlockTemplateId" class="form-control-feedback form-text text-muted"></span>
-						</div>
-						
-						TEMPLATE FIELD LAYOUT
-						
+						@foreach ($articleTemplate->fields as $field)
+							<div class="form-group">
+								{{ showField($field, old($field['id']), (9 + $loop->iteration)) }}
+								@if ($errors->has($field['id']))
+									<span id="helpBlock_{{ $field['id'] }}" class="form-control-feedback form-text gf-red">- {{ $errors->first($field['id']) }}</span>
+								@endif
+							</div>
+						@endforeach
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_articles'))
 								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
