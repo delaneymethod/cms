@@ -9,7 +9,6 @@ use App\Models\Content;
 use Illuminate\Http\Request;
 use App\Http\Traits\CartTrait;
 use App\Http\Traits\PageTrait;
-use App\Http\Traits\FieldTrait;
 use App\Http\Traits\StatusTrait;
 use App\Http\Traits\ContentTrait;
 use App\Http\Traits\TemplateTrait;
@@ -19,7 +18,6 @@ class PageController extends Controller
 {
 	use CartTrait;
 	use PageTrait;
-	use FieldTrait;
 	use StatusTrait;
 	use ContentTrait;
 	use TemplateTrait;

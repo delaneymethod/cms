@@ -1,7 +1,4 @@
 
-display data on frontend for pages
-
-
 
 
 

@@ -23,6 +23,9 @@ Route::put('/cart/{rowId}', 'CartController@update');
 Route::patch('/cart/{rowId}', 'CartController@update');
 Route::delete('/cart', 'CartController@delete');
 
+// Articles routes
+Route::get('/articles/{slug}', 'ArticleController@show');
+
 // Products routes
 Route::get('/products/{slug}', 'ProductController@show');
 

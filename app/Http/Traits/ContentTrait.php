@@ -2,10 +2,15 @@
 
 namespace App\Http\Traits;
 
+use App\Models\Page;
+use App\Models\Article;
 use App\Models\Content;
+use App\Http\Traits\FieldTrait;
 
 trait ContentTrait
 {
+	use FieldTrait;
+	
 	/**
 	 * Get the specified content based on id.
 	 *
@@ -26,6 +31,44 @@ trait ContentTrait
 	public function getContentByField(int $fieldId)
 	{
 		return Content::where('field_id', $fieldId)->firstOrFail();
+	}
+	
+	/**
+	 * Get the specified content for a page.
+	 *
+	 * @param 	Page		$page
+	 * @return 	Object
+	 */
+	public function getPageContent(Page $page) 
+	{
+		$contents = $page->contents;
+		
+		foreach ($contents as $content) {
+			$field = $this->getField($content->field_id);
+			
+			$page[$field->handle] = $content->data;
+		}
+		
+		return $page;
+	}
+	
+	/**
+	 * Get the specified content for an article.
+	 *
+	 * @param 	Article		$article
+	 * @return 	Object
+	 */
+	public function getArticleContent(Article $article) 
+	{
+		$contents = $article->contents;
+		
+		foreach ($contents as $content) {
+			$field = $this->getField($content->field_id);
+			
+			$article[$field->handle] = $content->data;
+		}
+		
+		return $article;
 	}
 
 	/**

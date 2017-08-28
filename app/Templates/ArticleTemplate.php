@@ -2,9 +2,12 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
+use App\Http\Traits\ContentTrait;
 
 class ArticleTemplate extends Template
 {
+	use ContentTrait;
+	
 	protected $view = 'article';
 	
 	public function __construct()
@@ -15,13 +18,13 @@ class ArticleTemplate extends Template
 	{
 		$currentUser = $parameters['currentUser'];
 		
-		$page = $parameters['page'];
+		$page = $this->getPageContent($parameters['page']);
 		
 		$cart = $parameters['cart'];
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
-		$article = $parameters['article'];
+		$article = $this->getArticleContent($parameters['article']);
 		
 		$page->title = $article->title.' - '.$page->title;
 		

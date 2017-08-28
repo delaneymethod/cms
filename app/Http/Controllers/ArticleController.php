@@ -7,7 +7,9 @@ use Log;
 use App\Models\Article;
 use App\Models\Content;
 use Illuminate\Http\Request;
+use App\Http\Traits\CartTrait;
 use App\Http\Traits\UserTrait;
+use App\Http\Traits\PageTrait;
 use App\Http\Traits\StatusTrait;
 use App\Http\Traits\ContentTrait;
 use App\Http\Traits\ArticleTrait;
@@ -17,7 +19,9 @@ use App\Http\Controllers\Controller;
 
 class ArticleController extends Controller
 {
+	use CartTrait;
 	use UserTrait;
+	use PageTrait;
 	use StatusTrait;
 	use ArticleTrait;
 	use ContentTrait;
@@ -53,6 +57,52 @@ class ArticleController extends Controller
 		$articles = $this->getArticles();
 		
 		return view('cp.articles.index', compact('currentUser', 'title', 'subTitle', 'articles'));
+	}
+	
+	/**
+	 * Gets a article view (Front-end use only).
+	 *
+	 * @params	Request 	$request
+	 * @params	string 		$slug
+	 * @return 	Response
+	 */
+   	public function show(Request $request, string $slug)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		// Get the requested article based on slug - if it doesnt exist, a 404 is thrown!
+		$article = $this->getArticleBySlug($slug);
+		
+		// We're going to use the articles page as our page - it is the articles parent after all...
+		$page = $this->getPageBySlug('articles');
+		
+		// Since the requested product was found, then grab all the pages - builds our navigation and available across all pages
+		$pages = $this->getPages();
+		
+		// Grab a cart instance	- available across all pages
+		$cart = $this->getCartInstance('cart');
+		
+		// Grab any wishlist instances since user can add to cart and wishlist on products page
+		$wishlistCart = $this->getCartInstance('wishlist');
+		
+		// Grab parameters
+		$parameters = $request->route()->parameters();
+		
+		// Pass any global required data to the page template
+		$parameters['currentUser'] = $currentUser;
+		
+		$parameters['page'] = $page;
+		
+		$parameters['cart'] = $cart;
+		
+		$parameters['wishlistCart'] = $wishlistCart;
+		
+		$parameters['article'] = $article;
+		
+		// Selects the pages template and injects any data required
+		$this->preparePageTemplate($page, $parameters);
+		
+		return view('index', compact('currentUser', 'page', 'pages', 'cart', 'wishlistCart'));
 	}
 	
 	/**

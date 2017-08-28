@@ -2,15 +2,13 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\CartTrait;
 use App\Http\Traits\ContentTrait;
 
-class CheckoutTemplate extends Template
+class HomepageTemplate extends Template
 {
-	use CartTrait;
 	use ContentTrait;
-	
-	protected $view = 'checkout';
+
+	protected $view = 'homepage';
 
 	public function __construct()
 	{
@@ -26,8 +24,6 @@ class CheckoutTemplate extends Template
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
-		$savedCarts = $this->getSavedCarts($currentUser->id);
-		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'savedCarts'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart'));
 	}
 }

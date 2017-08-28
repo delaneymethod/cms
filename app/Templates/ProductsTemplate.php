@@ -3,10 +3,12 @@ namespace App\Templates;
 
 use Illuminate\View\View;
 use App\Http\Traits\ProductTrait;
+use App\Http\Traits\ContentTrait;
 
 class ProductsTemplate extends Template
 {
 	use ProductTrait;
+	use ContentTrait;
 	
 	protected $view = 'products';
 	
@@ -18,7 +20,7 @@ class ProductsTemplate extends Template
 	{
 		$currentUser = $parameters['currentUser'];
 		
-		$page = $parameters['page'];
+		$page = $this->getPageContent($parameters['page']);
 		
 		$cart = $parameters['cart'];
 		

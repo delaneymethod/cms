@@ -12,6 +12,7 @@ use App\Templates\ArticleTemplate;
 use App\Templates\CheckoutTemplate;
 use App\Templates\ProductsTemplate;
 use App\Templates\ArticlesTemplate;
+use App\Templates\HomepageTemplate;
 
 trait TemplateTrait
 {
@@ -73,6 +74,7 @@ trait TemplateTrait
 			'checkout' => CheckoutTemplate::class,
 			'products' => ProductsTemplate::class,
 			'articles' => ArticlesTemplate::class,
+			'homepage' => HomepageTemplate::class,
 		];
 		
 		// If no template setup, fall back to default template.

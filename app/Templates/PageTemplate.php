@@ -2,9 +2,12 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
+use App\Http\Traits\ContentTrait;
 
 class PageTemplate extends Template
 {
+	use ContentTrait;
+	
 	protected $view = 'page';
 
 	public function __construct()
@@ -15,7 +18,7 @@ class PageTemplate extends Template
 	{
 		$currentUser = $parameters['currentUser'];
 		
-		$page = $parameters['page'];
+		$page = $this->getPageContent($parameters['page']);
 		
 		$cart = $parameters['cart'];
 		

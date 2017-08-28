@@ -96,6 +96,11 @@ class ProductController extends Controller
 		// Pass any global required data to the page template
 		$parameters['currentUser'] = $currentUser;
 		
+		// Add the page to the parameters array - we want to pass the page model data to the template.
+		$parameters['page'] = $page;
+		
+		$parameters['cart'] = $cart;
+		
 		$parameters['wishlistCart'] = $wishlistCart;
 		
 		$parameters['product'] = $product;
