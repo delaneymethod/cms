@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'connect@grampianfasteners.com'),
-        'name' => env('MAIL_FROM_NAME', 'Grampian Fasteners'),
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@delaneymethod.com'),
+        'name' => env('MAIL_FROM_NAME', 'DelaneyMethod CMS'),
     ],
 
     /*

@@ -302,7 +302,7 @@ a,
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 1.42857143;
-		
+	
 	h3 {
 		font-size: inherit;
 		margin: inherit;
@@ -768,6 +768,18 @@ a,
 		margin-top: 10px;
 		margin-bottom: 15px;
 		padding: 15px;
+	}
+	
+	.content.padding.footer {
+		border-radius: 0;
+		margin: 0;
+		padding: 0;
+		
+		p {
+			background-color: transparent;
+			color: $gf-default;
+			font-size: 12px;
+		}
 	}
 }
 

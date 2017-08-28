@@ -1,11 +1,12 @@
-https://demo.pyrocms.com/admin/navigation
-http://www.statamic.local/cp/users/roles
-https://github.com/BootstrapCMS/CMS/blob/master/SCREENSHOTS.md
-https://asgardcms.com/features
+
+display data on frontend for pages
 
 
 
-https://github.com/tutsplus/build-a-cms-with-laravel
+upgrade bootstrap
+
+
+
 https://scotch.io/tutorials/why-laravel-queues-are-awesome
 
 

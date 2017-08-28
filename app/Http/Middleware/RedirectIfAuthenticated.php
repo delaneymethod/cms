@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
 	    if (Auth::guard($guard)->check() && in_array(Route::current()->uri(), ['register', 'login'])) {
-            return redirect('/dashboard');
+            return redirect('/cp/dashboard');
         }
         
         return $next($request);

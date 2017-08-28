@@ -31,14 +31,14 @@ class AppServiceProvider extends ServiceProvider
 		View::share('pages', $pages);
 		
 		// Added by Sean
-		View::share('sidebarSmCols', config('grampianfasteners.column_widths.cp.sidebar.sm'));
-		View::share('sidebarMdCols', config('grampianfasteners.column_widths.cp.sidebar.md'));
-		View::share('sidebarLgCols', config('grampianfasteners.column_widths.cp.sidebar.lg'));
+		View::share('sidebarSmCols', config('cms.column_widths.cp.sidebar.sm'));
+		View::share('sidebarMdCols', config('cms.column_widths.cp.sidebar.md'));
+		View::share('sidebarLgCols', config('cms.column_widths.cp.sidebar.lg'));
 		
 		// Added by Sean
-		View::share('mainSmCols', config('grampianfasteners.column_widths.cp.main.sm'));
-		View::share('mainMdCols', config('grampianfasteners.column_widths.cp.main.md'));
-		View::share('mainLgCols', config('grampianfasteners.column_widths.cp.main.lg'));
+		View::share('mainSmCols', config('cms.column_widths.cp.main.sm'));
+		View::share('mainMdCols', config('cms.column_widths.cp.main.md'));
+		View::share('mainLgCols', config('cms.column_widths.cp.main.lg'));
     }
 
     /**

@@ -27,7 +27,7 @@ class CreateFieldsTable extends Migration
 			$table->mediumText('options')->nullable();
 			
 			$table->unsignedInteger('field_type_id')->index()->comment('Foreign key to the field types table');
-			$table->unsignedInteger('required')->default(1);
+			$table->unsignedInteger('required')->default(0);
 			
 			$table->timestamps();
 		});

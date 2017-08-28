@@ -13,4 +13,4 @@ window.axios.defaults.headers.common = {
 
 require('bootstrap');
 
-require('../plugins/grampianfasteners');
+require('../plugins/delaneymethod/cms');

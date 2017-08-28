@@ -62,6 +62,7 @@
 						<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
 					</form>
 				</div>
+				@include('cp._partials.footer')
 			</div>
 		</div>
 @endsection

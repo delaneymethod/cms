@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '500 Internal Server Error - '.config('app.name'))
-@section('description', '500 Internal Server Error - '.config('app.name'))
-@section('keywords', '500, Internal, Server, Error, '.config('app.name'))
+@section('title', '500 Internal Server Error - '.config('cms.client.name'))
+@section('description', '500 Internal Server Error - '.config('cms.client.name'))
+@section('keywords', '500, Internal, Server, Error, '.config('cms.client.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">

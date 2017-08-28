@@ -28,9 +28,9 @@ class SetPassword extends Notification implements ShouldQueue
      */
     public function __construct(string $token, string $firstName, string $subject = 'Set Password')
     {
-		$this->appName = config('app.name');
+		$this->appName = config('cms.client.name');
 		
-		$this->appUrl = config('app.url');
+		$this->appUrl = config('cms.client.url');
 		
 		$this->token = $token;
 		

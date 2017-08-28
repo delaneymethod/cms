@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', (($page->title != 'Home') ? $page->title.' - ' : '').config('app.name'))
-@section('description', $page->description.' '.config('app.name'))
-@section('keywords', $page->keywords.','.config('app.name'))
+@section('title', (($page->title != 'Home') ? $page->title.' - ' : '').config('cms.client.name'))
+@section('description', $page->description.' '.config('cms.client.name'))
+@section('keywords', $page->keywords.','.config('cms.client.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">

@@ -32,6 +32,7 @@
 				@endif
 				<div class="content padding bg-white">					
 				</div>
+				@include('cp._partials.footer')
 			</div>
 		</div>
 @endsection

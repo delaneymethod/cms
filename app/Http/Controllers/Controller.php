@@ -71,7 +71,7 @@ class Controller extends BaseController
 	 */
 	public function getRules(string $model)
 	{
-		return config('grampianfasteners.validation_rules.'.$model);
+		return config('cms.validation_rules.'.$model);
 	}
 
 	/**

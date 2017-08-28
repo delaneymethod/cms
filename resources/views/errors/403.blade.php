@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '403 Forbidden - '.config('app.name'))
-@section('description', '403 Forbidden - '.config('app.name'))
-@section('keywords', '403, Forbidden, '.config('app.name'))
+@section('title', '403 Forbidden - '.config('cms.client.name'))
+@section('description', '403 Forbidden - '.config('cms.client.name'))
+@section('keywords', '403, Forbidden, '.config('cms.client.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">

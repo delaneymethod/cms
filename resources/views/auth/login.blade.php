@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Login - '.config('app.name'))
-@section('description', 'Login - '.config('app.name'))
-@section('keywords', 'Login, '.config('app.name'))
+@section('title', 'Login - '.config('cms.client.name'))
+@section('description', 'Login - '.config('cms.client.name'))
+@section('keywords', 'Login, '.config('cms.client.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">

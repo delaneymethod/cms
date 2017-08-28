@@ -41,4 +41,4 @@ require('../plugins/datatables/datatables');
 
 require('../plugins/datatables/datatables-bootstrap');
 
-require('../plugins/grampianfasteners/controlpanel');
+require('../plugins/delaneymethod/cms/cp');

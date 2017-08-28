@@ -579,7 +579,6 @@ class PageController extends Controller
 
 			try {
 				// https://github.com/etrepat/baum/wiki/Example:-Presenting-a-hierarchy
-				
 				$tree = json_decode($cleanedTree['tree'], true);
 				
 				array_shift($tree);

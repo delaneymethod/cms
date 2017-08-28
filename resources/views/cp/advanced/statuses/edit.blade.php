@@ -1,6 +1,6 @@
 @extends('_layouts.default')
 
-@section('title', 'Edit Status - Statuses- '.config('app.name'))
+@section('title', 'Edit Status - Statuses - '.config('app.name'))
 @section('description', 'Edit Status - Statuses - '.config('app.name'))
 @section('keywords', 'Edit, Status, Statuses, '.config('app.name'))
 
@@ -45,6 +45,7 @@
 						</div>
 					</form>
 				</div>
+				@include('cp._partials.footer')
 			</div>
 		</div>
 @endsection

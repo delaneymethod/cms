@@ -1,7 +1,7 @@
 {
-	"name": "grampianfasteners",
+	"name": "delaneymethod-cms",
 	"version": "1.0.0",
-	"description": "Project build files for Grampian Fasteners",
+	"description": "Project build files for DelaneyMethod CMS",
 	"main": "webpack.mix.js",
 	"private": true,
 	"scripts": {

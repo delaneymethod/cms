@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Grampian Fasteners'),
+    'name' => env('APP_NAME', 'DelaneyMethod CMS'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://www.grampianfasteners.com'),
+    'url' => env('APP_URL', 'http://www.delaneymethod.com/cms'),
 
     /*
     |--------------------------------------------------------------------------

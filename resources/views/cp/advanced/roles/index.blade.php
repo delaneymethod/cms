@@ -62,6 +62,7 @@
 						</tbody>
 					</table>
 				</div>
+				@include('cp._partials.footer')
 			</div>
 		</div>
 @endsection
