@@ -7,10 +7,13 @@ use App\Models\Status;
 use App\Models\Content;
 use App\Models\Category;
 use App\Models\Template;
+use Plank\Mediable\Mediable;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+	use Mediable;
+	
 	/**
 	 * The attributes that are mass assignable.
 	 *

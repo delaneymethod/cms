@@ -4,21 +4,22 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use MediaUploader;
 use App\Models\Asset;
 use Illuminate\Http\Request;
 use App\Http\Traits\AssetTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Plank\Mediable\Exceptions\MediaUpload\FileSizeException;
+use Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException;
 
+// http://demo.directorylister.com/
+	
 class AssetController extends Controller
 {
 	use AssetTrait;
 	
-	protected $folder;
-	
-	protected $visibility;
-	
-	protected $publicStorageUrl;
+	protected $maxUploadFilesize;
 	
 	/**
 	 * Create a new controller instance.
@@ -31,11 +32,8 @@ class AssetController extends Controller
 		
 		$this->middleware('auth');
 		
-		$this->folder = 'uploads';
-	
-		$this->visibility = 'public';
-		
-		$this->publicStorageUrl = env('APP_URL').'/storage';
+		// 30 MB
+		$this->maxUploadFileSize = 30000000;
 	}
 
 	/**
@@ -72,30 +70,11 @@ class AssetController extends Controller
 			
 			return response()->json($json);
 		} else {
-			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle'));
+			$assets = $this->getAssets();
+			
+			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle', 'assets'));
 		}
 	}
-	
-	// http://demo.directorylister.com/
-	
-	/*
-	public function browse(Request $request)
-	{
-		$path = $this->buildPath([
-			'',
-			$this->visibility,
-			$this->folder
-		]);
-		
-		$assets = [];
-		
-		$assets['files'] = $this->getAllFiles($path);
-		
-		$assets['folders'] = $this->getAllFolders($path);
-		
-		return $assets;
-	}
-	*/
 	
 	/**
 	 * Shows a form for uploading files.
@@ -141,6 +120,7 @@ class AssetController extends Controller
 				$multiple = true;
 			}
 			
+			/*
 			if ($multiple) {
 				// Create some custom validation rules
 				$files = count($cleanedAssets['files']) - 1;
@@ -151,12 +131,54 @@ class AssetController extends Controller
 			} else {
 				$rules['file'] = 'required|file|max:3000';
 			}
+			*/
 			
-			// Make sure all the input data is what we actually save
-			$validator = $this->validatorInput($cleanedAssets, $rules);
+			// Request has come from Redactor so custom validation is required.
+			if ($request->query('type') == 'image') {
+				// Only allow files of specific extensions ['jpg', 'jpeg', 'png', 'gif'] and under 30MB
+				$rules['file'] = 'required|file|max:3000|mimes:jpg,jpeg,png,gif';
+				
+				// Make sure all the input data is what we actually save
+				$validator = $this->validatorInput($cleanedAssets, $rules);
 
-			if ($validator->fails()) {
-				return back()->withErrors($validator)->withInput();
+				if ($validator->fails()) {
+					$messages = $validator->errors();
+					
+					$message = '';
+					
+					if ($messages->has('file')) {
+						$message = $messages->get('file');
+						
+						$message = $message[0];
+					}
+
+					return response()->json([
+						'error' => true,
+						'message' => $message[0]
+					]);				
+				}
+			} else if ($request->query('type') == 'file') {
+				$rules['file'] = 'required|file|max:3000';
+				
+				// Make sure all the input data is what we actually save
+				$validator = $this->validatorInput($cleanedAssets, $rules);
+
+				if ($validator->fails()) {
+					$messages = $validator->errors();
+					
+					$message = '';
+					
+					if ($messages->has('file')) {
+						$message = $messages->get('file');
+						
+						$message = $message[0];
+					}
+
+					return response()->json([
+						'error' => true,
+						'message' => $message[0]
+					]);
+				}
 			}
 
 			DB::beginTransaction();
@@ -164,81 +186,30 @@ class AssetController extends Controller
 			if ($multiple) {
 				$files = $cleanedAssets['files'];
 			} else {
-				// Keep structure consisent so push single asset into an array.
+				// Keep structure consistent so push single asset into an array.
 				$files = [];
 				
 				array_push($files, $cleanedAssets['file']);
 			}
 				
-			try {
-				foreach ($files as $file) {
-					$originalName = $file->getClientOriginalName();
-						
-					// Creating asset title based on original name value
-					$title = substr($originalName, 0, strripos($originalName, '.'));
-				
-					$title = str_replace('_', ' ', $title);
-				
-					$title = ucwords($title);
-				
-					// Check if asset exists
-					$asset = $this->getAssetByOriginalName($originalName);
+			foreach ($files as $file) {
+				try {
+					$asset = MediaUploader::fromSource($file)->setMaximumSize($this->maxUploadFileSize)->upload();
+				} catch (FileNotSupportedException $fileNotSupportedException) {
+					$errors = [
+						'files' => $fileNotSupportedException->getMessage()
+					];
 					
-					// If the assets doesn't exist, then upload it
-					if (empty($asset)) {
-						$path = $file->storeAs($this->folder, $originalName, $this->visibility);
+					return back()->withErrors($errors)->withInput();
+				} catch (FileSizeException $fileSizeException) {
+					$errors = [
+						'files' => $fileSizeException->getMessage()
+					];
 					
-						// Create new model
-						$asset = new Asset;
-						
-						// Set our field data
-						$asset->hash_name = $file->hashName();
-						
-						$asset->path = $this->buildPath([
-							'',
-							$path
-						]);
-					}
-					
-					// Update our field data
-					$asset->title = $title;
-					$asset->original_name = $originalName;
-					$asset->mime_type = $file->getClientMimeType();
-					$asset->extension = $file->extension();
-					$asset->size = $file->getClientSize();
-					
-					$asset->save();
-				}
-			} catch (QueryException $queryException) {
-				DB::rollback();
-			
-				Log::info('SQL: '.$queryException->getSql());
-
-				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
-				
-				if ($multiple) {
-					abort(500, $queryException);
-				} else {
-					return response()->json([
-						'error' => true,
-						'queryException' => true,
-						'message' => $queryException->getMessage()
-					]);
-				}
-			} catch (Exception $exception) {
-				DB::rollback();
-				
-				if ($multiple) {
-					abort(500, $exception);
-				} else {
-					return response()->json([
-						'error' => true,
-						'exception' => true,
-						'message' => $exception->getMessage()
-					]);
-				}
+					return back()->withErrors($errors)->withInput();
+				}		
 			}
-
+			
 			DB::commit();
 			
 			if ($multiple) {
@@ -251,24 +222,19 @@ class AssetController extends Controller
 				if (!empty($type) && $type === 'image') {
 					return response()->json([
 						'id' => $asset->id,
-						'url' => $this->publicStorageUrl.$asset->path
+						'url' => $asset->getUrl()
 					]);
 				} else {
 					return response()->json([
 						'id' => $asset->id,
-						'filename' => $asset->original_name,
-						'filelink' => $this->publicStorageUrl.$asset->path
+						'filename' => $asset->filename,
+						'filelink' => $asset->getUrl()
 					]);
 				}
 			}
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	private function buildPath(array $uris)
-	{
-		return implode('/', $uris);
 	}
 	
 	/**
@@ -280,21 +246,16 @@ class AssetController extends Controller
 		
 		if (!empty($type) && $type === 'image') {
 			foreach ($assets as $asset) {
-				array_push($json, array(
-					'id' => $asset['id'],
-					'title' => $asset['title'],
-					'thumb' => $this->publicStorageUrl.$asset['thumb'],
-					'url' => $this->publicStorageUrl.$asset['url'],
-				));
+				array_push($json, $asset);
 			}
 		} else {
 			foreach ($assets as $asset) {
 				array_push($json, array(
 					'id' => $asset->id,
-					'title' => $asset->title,
-					'name' => $asset->original_name,
-					'url' => $this->publicStorageUrl.$asset->path,
-					'size' => $asset->filesize
+					'title' => $asset->filename,
+					'name' => $asset->filename,
+					'url' => $asset->getUrl(),
+					'size' => $asset->filesize,
 				));
 			}
 		}
@@ -321,43 +282,14 @@ class AssetController extends Controller
 		foreach ($assets as $asset) {
 			array_push($images, array(
 				'id' => $asset->id, 
-				'title' => $asset->title, 
-				'thumb' => $asset->path, 
-				'url' => $asset->path, 
+				'title' => $asset->filename, 
+				'thumb' => $asset->getUrl(), 
+				'url' => $asset->getUrl(), 
 			));
 		}
 		
 		return $images;
 	}
-	
-	/*
-	private function getAllFiles($path)
-	{
-		$files = Storage::allFiles($path);
-		
-		foreach ($files as &$file) {
-			$file = str_replace(['/', $this->visibility, $this->folder], '', $file);
-			
-			$file = $this->getAssetByOriginalName($file);
-			
-			$file->thumb = $this->publicStorageUrl.$file->path;
-			$file->url = $this->publicStorageUrl.$file->path;
-		}
-		
-		return $files;
-	}
-	
-	private function getAllFolders($path)
-	{
-		$folders = Storage::allDirectories($path);
-	
-		foreach ($folders as &$folder) {
-			$folder = str_replace(['/', $this->visibility, $this->folder], '', $folder);	
-		}
-		
-		return $folders;
-	}
-	*/
 	
 	/**
 	 * Does what it says on the tin!

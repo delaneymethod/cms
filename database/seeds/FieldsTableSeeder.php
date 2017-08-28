@@ -116,11 +116,23 @@ class FieldsTableSeeder extends Seeder
             8 => 
             array (
                 'id' => 9,
-                'title' => 'Text Field',
-                'handle' => 'text_field',
+                'title' => 'Content',
+                'handle' => 'content',
                 'instructions' => NULL,
                 'options' => NULL,
-                'field_type_id' => 1,
+                'field_type_id' => 3,
+                'required' => 0,
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            9 => 
+            array (
+                'id' => 10,
+                'title' => 'Excerpt',
+                'handle' => 'excerpt',
+                'instructions' => NULL,
+                'options' => NULL,
+                'field_type_id' => 2,
                 'required' => 0,
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',

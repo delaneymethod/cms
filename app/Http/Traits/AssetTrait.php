@@ -3,10 +3,13 @@
 namespace App\Http\Traits;
 
 use App\Models\Asset;
+//use Plank\Mediable\Mediable;
 use Illuminate\Support\Facades\File;
 
 trait AssetTrait
 {
+	//use Mediable { media as _oldMedia };
+	
 	/**
 	 * Get the specified asset based on id.
 	 *
@@ -35,17 +38,6 @@ trait AssetTrait
 	}
 	
 	/**
-	 * Get the specified asset based on id.
-	 *
-	 * @param 	int 		$id
-	 * @return 	Object
-	 */
-	public function getAssetByOriginalName(string $originalName)
-	{
-		return Asset::where('original_name', $originalName)->first();
-	}
-	
-	/**
 	 * Does what it says on the tin!
 	 */
 	public function getFileSize($bytes) 
@@ -54,4 +46,11 @@ trait AssetTrait
 		
 		return round($bytes / pow(1024, $i), [0,0,2,2,3][$i]).['B','kB','MB','GB','TB'][$i];
 	}
+	
+	/*
+	public function media()
+	{
+		return $this->morphToMany(config('mediable.model'), 'mediables')->withPivot('tag', 'order')->orderBy('order');
+	}
+	*/
 }

@@ -69,6 +69,12 @@ class TemplateFieldTableSeeder extends Seeder
             array (
                 'template_id' => 9,
                 'field_id' => 9,
+                'order' => 2,
+            ),
+            9 => 
+            array (
+                'template_id' => 9,
+                'field_id' => 10,
                 'order' => 1,
             ),
         ));

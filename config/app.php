@@ -181,11 +181,12 @@ return [
 		Barryvdh\Cors\ServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
 		Orangehill\Iseed\IseedServiceProvider::class,
+		Plank\Mediable\MediableServiceProvider::class,
 		Propaganistas\LaravelIntl\IntlServiceProvider::class,
 		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 		Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
 		
-    ],
+	],
 
     /*
     |--------------------------------------------------------------------------
@@ -236,7 +237,8 @@ return [
         
 		// Added by Sean
 		'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
-
+		'MediaUploader' => Plank\Mediable\MediaUploaderFacade::class,
+		
     ],
 
 ];

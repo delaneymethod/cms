@@ -6,9 +6,12 @@ use Baum\Node;
 use App\Models\Status;
 use App\Models\Content;
 use App\Models\Template;
+use Plank\Mediable\Mediable;
 
 class Page extends Node
 {
+	use Mediable;
+	
 	private $segments = [];
 	
 	/**

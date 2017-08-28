@@ -2,54 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Plank\Mediable\Media;
 
-class Asset extends Model
+class Asset extends Media
 {
+	protected $table = 'assets';
+	
 	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
 	 */
 	protected $fillable = [
-		'title',
-		'hash_name',
-		'original_name',
 		'mime_type',
 		'extension',
-		'path',
 		'size',
+		'disk',
+		'directory',
+		'filename',
+		'aggregate_type',
 	];
-	
-	/**
-     * Attributes that get appended on serialization
-     *
-     * @var array
-     */
-	protected $appends = [
-		'filesize',
-	];
-	
-	/**
-	 * Set the assets filesize in human readable format.
-	 *
-	 * @param  	int  	$value
-	 * @return 	void
-	 */
-	public function setFilesizeAttribute($size)
-	{
-		$this->attributes['filesize'] = $size;
-	}
-	
-	/**
-	 * Gets the assets filesize in human readable format.
-	 *
-	 * @return string
-	 */
-	public function getFilesizeAttribute()
-	{
-		return $this->filesize;
-	}
 	
 	/**
      * Is this asset an audio file?

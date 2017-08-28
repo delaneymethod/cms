@@ -16,6 +16,18 @@ class ArticleContentTableSeeder extends Seeder
 
         \DB::table('article_content')->delete();
         
+        \DB::table('article_content')->insert(array (
+            0 => 
+            array (
+                'article_id' => 1,
+                'content_id' => 42,
+            ),
+            1 => 
+            array (
+                'article_id' => 1,
+                'content_id' => 43,
+            ),
+        ));
         
         
     }

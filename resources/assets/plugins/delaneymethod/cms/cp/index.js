@@ -304,7 +304,7 @@
 				
 				$(element).redactor({
 					'focus': false,
-					'fileUpload': '/cp/assets?_token=' + token,
+					'fileUpload': '/cp/assets?_token=' + token + '&type=file',
 					'fileManagerJson': '/cp/assets?format=json',
 					'imageUpload': '/cp/assets?_token=' + token + '&type=image',
 					'imageManagerJson': '/cp/assets?format=json&type=image',
@@ -320,13 +320,13 @@
 							$(image).attr('id', json.id);
 						},
 						'imageUploadError': (json, xhr) => {
-							alert(json);
+							alert(json.message);
 						},
 						'fileUpload': (link, json) => {
 							$(link).attr('id', json.id);
 						},
 						'fileUploadError': json => {
-							alert(json);
+							alert(json.message);
 						}
 					}
 				});
@@ -370,6 +370,19 @@
 					'isTree': true
 				});
 			}
+		};
+		
+		let attachDropzone = () => {
+			/*
+			window.Dropzone.options.mediaDropzone = {
+				parallelUploads: 1,
+				init: () => {
+					this.on('queuecomplete', file => {
+						location.reload();
+					});
+				}
+			};
+			*/
 		};
 		
 		let convertTitleToSlug = (element, targetElement) => {
@@ -475,6 +488,8 @@
 			attachDataTable('#datatable');
 			
 			attachNestedSortable('#nestedSortable');
+			
+			attachDropzone();
 			
 			convertTitleToSlug('#createPage #title', '#createPage #slug');
 			

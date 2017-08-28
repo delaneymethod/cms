@@ -20,17 +20,20 @@ class CreateAssetsTable extends Migration
 			
 			$table->increments('id');
 			
-			$table->string('title')->index();
-			$table->string('hash_name');
-			$table->string('original_name');
-			$table->string('mime_type')->index();
-			$table->string('extension')->index();
-			$table->string('path');
-			
+			$table->string('mime_type', 128)->index();
+			$table->string('extension', 32)->index();
+			$table->string('disk', 32);
+            $table->string('directory');
+            $table->string('filename');
+            $table->string('aggregate_type', 32)->index();
+        	
 			$table->unsignedInteger('size');
 			
 			$table->timestamps();
-		});
+			
+			$table->index(['disk', 'directory']);
+            $table->unique(['disk', 'directory', 'filename', 'extension']);
+        });
 
 		Schema::table('assets', function (Blueprint $table) {
 		});
