@@ -108,7 +108,12 @@ class Controller extends BaseController
 			'id',
 			'article_id',
 			'category_id',
+			'field_id',
+			'content_id',
+			'field_type_id',
+			'template_id',
 			'user_id',
+			'required',
 			'status_id',
 			'default_location_id',
 			'county_id',
@@ -122,6 +127,8 @@ class Controller extends BaseController
 			'permission_id',
 			'location_id',
 			'size',
+			'hide_from_nav',
+			'order',
 		];
 
 		$floats = [
@@ -138,6 +145,11 @@ class Controller extends BaseController
 			'mobile',
 			'remember_token',
 			'title',
+			'type',
+			'handle',
+			'instructions',
+			'options',
+			'data',
 			'slug',
 			'unit',
 			'building',
@@ -152,6 +164,7 @@ class Controller extends BaseController
 			'mime_type',
 			'extension',
 			'path',
+			'filename',
 		];
 
 		$booleans = [
