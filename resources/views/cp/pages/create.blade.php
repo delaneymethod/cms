@@ -97,7 +97,8 @@
 							<label class="control-label font-weight-bold">Hide from Nav</label>
 							<div class="form-check">
 								<label for="hide_from_nav" class="form-check-label">
-									<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-describedby="helpBlockHideFromNav" {{ old('hide_from_nav') == 1 ? 'checked' : '' }}>
+									<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-label="..." aria-describedby="helpBlockHideFromNav" {{ old('hide_from_nav') == 1 ? 'checked' : '' }}>
+									&nbsp;
 								</label>
 							</div>
 							@if ($errors->has('hide_from_nav'))

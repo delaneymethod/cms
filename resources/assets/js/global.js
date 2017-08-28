@@ -11,6 +11,8 @@ window.axios.defaults.headers.common = {
 	'X-CSRF-TOKEN': window.Laravel.csrfToken
 };
 
+window.Popper = require('popper.js').default;
+
 require('bootstrap');
 
 require('../plugins/delaneymethod/cms');

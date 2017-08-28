@@ -17,7 +17,7 @@
 	},
 	"dependencies": {
 		"axios": "^0.15.3",
-		"bootstrap": "4.0.0-alpha.6",
+		"bootstrap": "4.0.0-beta",
 		"bootstrap-datetime-picker": "^2.4.4",
 		"chart.js": "^2.6.0",
 		"cross-env": "^3.2.3",
@@ -25,7 +25,9 @@
 		"jquery": "^3.1.1",
 		"laravel-mix": "^0.10.0",
 		"lodash": "^4.17.4",
-		"node-sass": "^4.5.3"
+		"node-sass": "^4.5.3",
+		"popper.js": "^1.12.3",
+		"tether": "^1.4.0"
 	},
 	"devDependencies": {}
 }

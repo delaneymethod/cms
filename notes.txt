@@ -3,7 +3,6 @@ display data on frontend for pages
 
 
 
-upgrade bootstrap
 
 
 
