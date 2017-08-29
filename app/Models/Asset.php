@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Plank\Mediable\Media;
+use Spatie\MediaLibrary\Media;
 
 class Asset extends Media
 {
@@ -14,13 +14,17 @@ class Asset extends Media
 	 * @var array
 	 */
 	protected $fillable = [
+		'model_id',
+		'model_type',
+		'collection_name',
+		'name',
+		'file_name',
 		'mime_type',
-		'extension',
-		'size',
 		'disk',
-		'directory',
-		'filename',
-		'aggregate_type',
+		'size',
+		'order_column',
+		'manipulations',
+		'custom_properties',
 	];
 	
 	/**

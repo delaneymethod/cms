@@ -19,21 +19,23 @@ class CreateAssetsTable extends Migration
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->increments('id');
-			
-			$table->string('mime_type', 128)->index();
-			$table->string('extension', 32)->index();
-			$table->string('disk', 32);
-            $table->string('directory');
-            $table->string('filename');
-            $table->string('aggregate_type', 32)->index();
-        	
-			$table->unsignedInteger('size');
-			
-			$table->timestamps();
-			
-			$table->index(['disk', 'directory']);
-            $table->unique(['disk', 'directory', 'filename', 'extension']);
-        });
+            
+            $table->morphs('model');
+            
+            $table->string('collection_name');
+            $table->string('name');
+            $table->string('file_name');
+            $table->string('mime_type')->nullable();
+            $table->string('disk');
+            
+            $table->unsignedInteger('size');
+            $table->unsignedInteger('order_column')->nullable();
+            
+            $table->text('manipulations');
+            $table->text('custom_properties');
+            
+            $table->timestamps();
+		});
 
 		Schema::table('assets', function (Blueprint $table) {
 		});

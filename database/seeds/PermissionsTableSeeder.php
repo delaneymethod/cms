@@ -104,300 +104,314 @@ class PermissionsTableSeeder extends Seeder
             12 => 
             array (
                 'id' => 13,
-                'title' => 'delete_assets',
+                'title' => 'edit_assets',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             13 => 
             array (
                 'id' => 14,
-                'title' => 'view_statuses',
+                'title' => 'move_assets',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             14 => 
             array (
                 'id' => 15,
-                'title' => 'create_statuses',
+                'title' => 'delete_assets',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             15 => 
             array (
                 'id' => 16,
-                'title' => 'edit_statuses',
+                'title' => 'view_statuses',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             16 => 
             array (
                 'id' => 17,
-                'title' => 'delete_statuses',
+                'title' => 'create_statuses',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             17 => 
             array (
                 'id' => 18,
-                'title' => 'view_roles',
+                'title' => 'edit_statuses',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             18 => 
             array (
                 'id' => 19,
-                'title' => 'create_roles',
+                'title' => 'delete_statuses',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             19 => 
             array (
                 'id' => 20,
-                'title' => 'edit_roles',
+                'title' => 'view_roles',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             20 => 
             array (
                 'id' => 21,
-                'title' => 'delete_roles',
+                'title' => 'create_roles',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             21 => 
             array (
                 'id' => 22,
-                'title' => 'view_orders',
+                'title' => 'edit_roles',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             22 => 
             array (
                 'id' => 23,
-                'title' => 'create_orders',
+                'title' => 'delete_roles',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             23 => 
             array (
                 'id' => 24,
-                'title' => 'edit_orders',
+                'title' => 'view_orders',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             24 => 
             array (
                 'id' => 25,
-                'title' => 'delete_orders',
+                'title' => 'create_orders',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             25 => 
             array (
                 'id' => 26,
-                'title' => 'view_articles',
+                'title' => 'edit_orders',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             26 => 
             array (
                 'id' => 27,
-                'title' => 'create_articles',
+                'title' => 'delete_orders',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             27 => 
             array (
                 'id' => 28,
-                'title' => 'edit_articles',
+                'title' => 'view_articles',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             28 => 
             array (
                 'id' => 29,
-                'title' => 'delete_articles',
+                'title' => 'create_articles',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             29 => 
             array (
                 'id' => 30,
-                'title' => 'view_pages',
+                'title' => 'edit_articles',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             30 => 
             array (
                 'id' => 31,
-                'title' => 'create_pages',
+                'title' => 'delete_articles',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             31 => 
             array (
                 'id' => 32,
-                'title' => 'edit_pages',
+                'title' => 'view_pages',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             32 => 
             array (
                 'id' => 33,
-                'title' => 'delete_pages',
+                'title' => 'create_pages',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             33 => 
             array (
                 'id' => 34,
-                'title' => 'view_companies',
+                'title' => 'edit_pages',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             34 => 
             array (
                 'id' => 35,
-                'title' => 'create_companies',
+                'title' => 'delete_pages',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             35 => 
             array (
                 'id' => 36,
-                'title' => 'edit_companies',
+                'title' => 'view_companies',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             36 => 
             array (
                 'id' => 37,
-                'title' => 'delete_companies',
+                'title' => 'create_companies',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             37 => 
             array (
                 'id' => 38,
-                'title' => 'view_locations',
+                'title' => 'edit_companies',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             38 => 
             array (
                 'id' => 39,
-                'title' => 'create_locations',
+                'title' => 'delete_companies',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             39 => 
             array (
                 'id' => 40,
-                'title' => 'edit_locations',
+                'title' => 'view_locations',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             40 => 
             array (
                 'id' => 41,
-                'title' => 'retire_locations',
+                'title' => 'create_locations',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             41 => 
             array (
                 'id' => 42,
-                'title' => 'delete_locations',
+                'title' => 'edit_locations',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             42 => 
             array (
                 'id' => 43,
-                'title' => 'view_categories',
+                'title' => 'retire_locations',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             43 => 
             array (
                 'id' => 44,
-                'title' => 'create_categories',
+                'title' => 'delete_locations',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             44 => 
             array (
                 'id' => 45,
-                'title' => 'edit_categories',
+                'title' => 'view_categories',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             45 => 
             array (
                 'id' => 46,
-                'title' => 'delete_categories',
+                'title' => 'create_categories',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             46 => 
             array (
                 'id' => 47,
-                'title' => 'view_templates',
+                'title' => 'edit_categories',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             47 => 
             array (
                 'id' => 48,
-                'title' => 'create_templates',
+                'title' => 'delete_categories',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             48 => 
             array (
                 'id' => 49,
-                'title' => 'edit_templates',
+                'title' => 'view_templates',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             49 => 
             array (
                 'id' => 50,
-                'title' => 'delete_templates',
+                'title' => 'create_templates',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             50 => 
             array (
                 'id' => 51,
-                'title' => 'view_products',
+                'title' => 'edit_templates',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             51 => 
             array (
                 'id' => 52,
-                'title' => 'create_products',
+                'title' => 'delete_templates',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             52 => 
             array (
                 'id' => 53,
-                'title' => 'edit_products',
+                'title' => 'view_products',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             53 => 
             array (
                 'id' => 54,
-                'title' => 'delete_products',
+                'title' => 'create_products',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',
             ),
             54 => 
             array (
                 'id' => 55,
+                'title' => 'edit_products',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            55 => 
+            array (
+                'id' => 56,
+                'title' => 'delete_products',
+                'created_at' => '2017-08-01 09:19:39',
+                'updated_at' => '2017-08-01 09:19:39',
+            ),
+            56 => 
+            array (
+                'id' => 57,
                 'title' => 'view_carts',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-01 09:19:39',

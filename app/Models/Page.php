@@ -6,11 +6,12 @@ use Baum\Node;
 use App\Models\Status;
 use App\Models\Content;
 use App\Models\Template;
-use Plank\Mediable\Mediable;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Page extends Node
+class Page extends Node implements HasMediaConversions
 {
-	use Mediable;
+	use HasMediaTrait;
 	
 	private $segments = [];
 	
@@ -115,4 +116,9 @@ class Page extends Node
 			$this->getPageSlug($page->parent);
 		}
 	}
+	
+	public function registerMediaConversions()
+    {
+		$this->addMediaConversion('thumbnail')->width(368)->height(232)->sharpen(10);
+    }
 }

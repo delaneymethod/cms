@@ -7,12 +7,13 @@ use App\Models\Status;
 use App\Models\Content;
 use App\Models\Category;
 use App\Models\Template;
-use Plank\Mediable\Mediable;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Article extends Model
+class Article extends Model implements HasMediaConversions
 {
-	use Mediable;
+	use HasMediaTrait;
 	
 	/**
 	 * The attributes that are mass assignable.
@@ -88,4 +89,9 @@ class Article extends Model
 	{
 		return $this->categories()->sync($categories);
 	}
+	
+	public function registerMediaConversions()
+    {
+		$this->addMediaConversion('thumbnail')->width(368)->height(232)->sharpen(10);
+    }
 }

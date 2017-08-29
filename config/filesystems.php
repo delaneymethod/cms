@@ -48,6 +48,7 @@ return [
             'root' => storage_path('app'),
         ],
         
+        // Added by Sean
         'uploads' => [
 			'driver' => 'local',
 			'root' => public_path('uploads'),

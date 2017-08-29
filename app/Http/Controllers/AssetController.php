@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
-use MediaUploader;
+
 use App\Models\Asset;
 use Illuminate\Http\Request;
 use App\Http\Traits\AssetTrait;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
-use Plank\Mediable\Exceptions\MediaUpload\FileSizeException;
-use Plank\Mediable\Exceptions\MediaUpload\FileNotSupportedException;
 
 // http://demo.directorylister.com/
 	
@@ -120,19 +117,6 @@ class AssetController extends Controller
 				$multiple = true;
 			}
 			
-			/*
-			if ($multiple) {
-				// Create some custom validation rules
-				$files = count($cleanedAssets['files']) - 1;
-			
-				foreach (range(0, $files) as $index) {
-					$rules['files.'.$index] = 'required|file|max:3000';
-				}
-			} else {
-				$rules['file'] = 'required|file|max:3000';
-			}
-			*/
-			
 			// Request has come from Redactor so custom validation is required.
 			if ($request->query('type') == 'image') {
 				// Only allow files of specific extensions ['jpg', 'jpeg', 'png', 'gif'] and under 30MB
@@ -193,6 +177,7 @@ class AssetController extends Controller
 			}
 				
 			foreach ($files as $file) {
+				/*
 				try {
 					$asset = MediaUploader::fromSource($file)->setMaximumSize($this->maxUploadFileSize)->upload();
 				} catch (FileNotSupportedException $fileNotSupportedException) {
@@ -207,7 +192,8 @@ class AssetController extends Controller
 					];
 					
 					return back()->withErrors($errors)->withInput();
-				}		
+				}
+				*/		
 			}
 			
 			DB::commit();
@@ -232,6 +218,92 @@ class AssetController extends Controller
 					]);
 				}
 			}
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Moves a specific asset.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function move(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('move_assets')) {
+			$asset = $this->getAsset($id);
+			
+			$directory = '';
+
+			DB::beginTransaction();
+
+			try {
+				$asset->move($directory);
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Asset moved successfully.', $level = 'info');
+
+			return redirect('/cp/assets');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Deletes a specific asset.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function delete(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('delete_assets')) {
+			$asset = $this->getAsset($id);
+			
+			DB::beginTransaction();
+
+			try {
+				$asset->delete();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Asset deleted successfully.', $level = 'info');
+
+			return redirect('/cp/assets');
 		}
 
 		abort(403, 'Unauthorised action');
