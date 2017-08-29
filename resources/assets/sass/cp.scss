@@ -111,6 +111,11 @@ a,
 	display: none;
 }
 
+.text-wrap {
+	overflow: wrap;
+	white-space: normal;
+}
+
 @include placeholder {
 	color: #b4b4b4 !important;
 }
@@ -303,6 +308,26 @@ a,
 
 .text-muted-lighter {
 	color: #c1c1c1;	
+}
+
+.breadcrumbs {
+	a {
+		&:visited,
+		&:active,
+		&:focus {
+			color: $gf-default;
+			text-decoration: none;
+		}
+		
+		&:hover {
+			color: $gf-red;
+			text-decoration: none;
+		}
+	}
+	
+	.divider {
+		margin-right: -5px;
+	}
 }
 
 .sidebar {

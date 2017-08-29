@@ -20,20 +20,6 @@ class CreateAssetsTable extends Migration
 			
 			$table->increments('id');
             
-            $table->morphs('model');
-            
-            $table->string('collection_name');
-            $table->string('name');
-            $table->string('file_name');
-            $table->string('mime_type')->nullable();
-            $table->string('disk');
-            
-            $table->unsignedInteger('size');
-            $table->unsignedInteger('order_column')->nullable();
-            
-            $table->text('manipulations');
-            $table->text('custom_properties');
-            
             $table->timestamps();
 		});
 

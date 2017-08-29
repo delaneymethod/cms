@@ -1,4 +1,5 @@
 <?php
+	
 namespace App\Templates;
 
 use Illuminate\View\View;

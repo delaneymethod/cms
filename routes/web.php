@@ -167,7 +167,12 @@ Route::group(['prefix' => 'cp'], function () {
 	// CP > Assets routes
 	Route::get('/assets', 'AssetController@index');
 	Route::get('/assets/upload', 'AssetController@upload');
+	Route::get('/assets/{id}/move', 'AssetController@where');
+	Route::get('/assets/{id}/delete', 'AssetController@confirm');
 	Route::post('/assets', 'AssetController@store');
+	Route::put('/assets/{id}/move', 'AssetController@move');
+	Route::patch('/assets/{id}/move', 'AssetController@move');
+	Route::delete('/assets/{id}', 'AssetController@delete');
 });
 
 // CATCH ALL ROUTE

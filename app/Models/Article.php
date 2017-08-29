@@ -92,6 +92,10 @@ class Article extends Model implements HasMediaConversions
 	
 	public function registerMediaConversions()
     {
-		$this->addMediaConversion('thumbnail')->width(368)->height(232)->sharpen(10);
+		$this->addMediaConversion('thumbnail')
+			 ->width(300)
+			 ->height(200)
+			 ->extractVideoFrameAtSecond(5) // If it's a video; grab the still frame from the 5th second in the video
+			 ->sharpen(10);
     }
 }

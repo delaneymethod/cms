@@ -2,10 +2,15 @@
 
 namespace App\Models;
 
-use Spatie\MediaLibrary\Media;
+use Spatie\Image\Manipulations;
+use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Asset extends Media
+class Asset extends Model implements HasMediaConversions
 {
+	use HasMediaTrait;
+	
 	protected $table = 'assets';
 	
 	/**
@@ -14,17 +19,6 @@ class Asset extends Media
 	 * @var array
 	 */
 	protected $fillable = [
-		'model_id',
-		'model_type',
-		'collection_name',
-		'name',
-		'file_name',
-		'mime_type',
-		'disk',
-		'size',
-		'order_column',
-		'manipulations',
-		'custom_properties',
 	];
 	
 	/**
@@ -87,5 +81,14 @@ class Asset extends Media
     public function extensionIsOneOf($filetypes = [])
     {
         return (in_array(strtolower($this->extension()), $filetypes));
+    }
+    
+    public function registerMediaConversions()
+    {
+	    $this->addMediaConversion('redactor')->fit(Manipulations::FIT_CROP, 100, 75)->apply()->extractVideoFrameAtSecond(5);
+	    
+		$this->addMediaConversion('grid')->fit(Manipulations::FIT_CROP, 100, 100)->apply()->extractVideoFrameAtSecond(5);
+
+		$this->addMediaConversion('modal')->width(450)->height(300)->extractVideoFrameAtSecond(5);
     }
 }
