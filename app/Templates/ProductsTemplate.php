@@ -28,6 +28,10 @@ class ProductsTemplate extends Template
 		
 		$products = $this->getProducts();
 		
+		$page->description = '';
+		
+		$page->keywords = '';
+		
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'products'));
 	}
 }

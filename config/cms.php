@@ -12,9 +12,9 @@ return [
     
     'client' => [
 	    
-		'name' => env('CLIENT_NAME', 'Grampian Fasteners'),
-		'url' => env('CLIENT_URL', 'http://www.grampianfasteners.com'),
-		'email' => env('MAIL_FROM_ADDRESS', 'connect@grampianfasteners.com'),
+		'name' => env('CLIENT_NAME', 'DelaneyMethod'),
+		'url' => env('CLIENT_URL', 'http://www.delaneymethod.com'),
+		'email' => env('MAIL_FROM_ADDRESS', 'hello@delaneymethod.com'),
     
     ],
 	

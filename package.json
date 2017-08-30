@@ -1,5 +1,5 @@
 {
-	"name": "delaneymethod-cms",
+	"name": "cms",
 	"version": "1.0.0",
 	"description": "Project build files for DelaneyMethod CMS",
 	"main": "webpack.mix.js",

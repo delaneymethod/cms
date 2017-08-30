@@ -24,6 +24,10 @@ class PageTemplate extends Template
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
+		$page->description = '';
+		
+		$page->keywords = '';
+		
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart'));
 	}
 }

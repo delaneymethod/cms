@@ -28,6 +28,10 @@ class CartTemplate extends Template
 		
 		$savedCarts = $this->getSavedCarts($currentUser->id);
 		
+		$page->description = '';
+		
+		$page->keywords = '';
+		
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'savedCarts'));
 	}
 }

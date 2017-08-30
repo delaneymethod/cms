@@ -29,6 +29,10 @@ class ArticlesTemplate extends Template
 		
 		$articles = $this->getArticles();
 		
+		$page->description = '';
+		
+		$page->keywords = '';
+		
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles'));
 	}
 }
