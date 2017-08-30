@@ -3,7 +3,6 @@
 namespace App\Http\Traits;
 
 use App\Models\Asset;
-use Illuminate\Support\Facades\File;
 
 trait AssetTrait
 {
@@ -33,7 +32,7 @@ trait AssetTrait
 		
 		return $asset;
 	}
-
+	
 	/**
 	 * Get all the assets.
 	 *

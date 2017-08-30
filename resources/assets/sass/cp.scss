@@ -753,46 +753,71 @@ a,
 		}
 		
 		.assets {
+			margin-bottom: 0;
+			
 			.asset {
-				a {
+				margin-bottom: 10px;
+				
+				.asset-opener {
+					padding: 10px 15px;
+					margin: 0;
+					background-color: rgba(0, 0, 0, 0.05);
+					border: 1px solid #eceeef;
+					color: #748885;
 					width: 100%;
 					height: 100%;
 					display: block;
-				}
-								
-				/*
-				.folder,
-				.file {
-					width: 100px;
-					height: 100px;
-				}
-				
-				.folder {
-					padding: 0;
-					margin: 0;
-					display: inline-block;
-					background-image: url('/assets/img/folder.svg');
-					background-position: top center;
-					background-repeat: no-repeat;
-					background-size: contain;
-				}
-				
-				.file {
-					padding: 0;
-					margin: 0;
-					display: inline-block;
-					background-position: top center;
-					background-repeat: no-repeat;
-					background-size: 100% auto;
+					border-radius: 0.25rem;
+					
+					i {
+						margin-bottom: 5px;	
+					}
+					
+					span {
+						display: block;
+						padding: 0;
+						margin: 0;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+					}
+					
+					&:hover {
+						color: #333333;
+						border: 1px solid #dddddd;
+						background-color: rgba(0, 0, 0, 0.075);
+						text-decoration: none;
+					}
 				}
 				
-				.meta {
-					display: block;
-					background-color: fuchsia;
+				.image {
 					padding: 0;
-					margin: 0;
+					border: 0;
+					opacity: 0.8;
+					background-color: transparent;
+					background-origin: border-box;
+					background-size: cover;
+					
+					span {
+						display: none;
+					}
+					
+					&:hover {
+						background-color: transparent;
+						border: 0;
+						opacity: 1;
+					}
 				}
-				*/
+				
+				.modal-body {
+					a {
+						color: $gf-default;
+						
+						&:hover {
+							color: $gf-red;
+						}
+					}
+				}
 			}
 		}
 	}

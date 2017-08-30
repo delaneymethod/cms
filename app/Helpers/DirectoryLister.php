@@ -1,6 +1,4 @@
 <?php 
-	
-namespace App\Helpers;
 
 /**
  * A simple PHP based directory lister that lists the contents
@@ -15,8 +13,15 @@ namespace App\Helpers;
  * @author Chris Kankiewicz (http://www.chriskankiewicz.com)
  * @copyright 2017 Chris Kankiewicz
  */
+
+namespace App\Helpers;
+
+use App\Http\Traits\MediaTrait;
+
 class DirectoryLister
 {
+	use MediaTrait;
+	
 	// Define application version
 	const VERSION = '2.7.0';
 	
@@ -107,7 +112,7 @@ class DirectoryLister
 			chdir($directory);
 	
 			// TODO: Probably we have to parse exclude list more carefully
-			$exclude_list = implode(' ', array_merge($this->_config['hidden_files'], array('index.php')));
+			$exclude_list = implode(' ', array_merge($this->_config['hidden_files'], ['index.php']));
 			
 			$exclude_list = str_replace('*', '\*', $exclude_list);
 	
@@ -182,9 +187,9 @@ class DirectoryLister
 		$dirArray = explode('/', $directory);
 	
 		// Statically set the Home breadcrumb
-		$breadcrumbsArray[] = [
-			'link' => $this->_appURL.'cp/assets',
-			'text' => $this->_config['home_label']
+		$breadcrumbs[] = [
+			'title' => $this->_config['home_label'],
+			'url' => $this->_appURL.'cp/assets',
 		];
 	
 		// Generate breadcrumbs
@@ -198,15 +203,15 @@ class DirectoryLister
 				// Combine the base path and dir path
 				$link = $this->_appURL.'cp/assets?directory='.rawurlencode($dirPath);
 				
-				$breadcrumbsArray[] = [
-					'link' => $link,
-					'text' => $dir,
+				$breadcrumbs[] = [
+					'title' => $dir,
+					'url' => $link,
 				];
 			}
 		}
 			
 		// Return the breadcrumb array
-		return $breadcrumbsArray;
+		return $breadcrumbs;
 	}
 	
 	/**
@@ -281,9 +286,9 @@ class DirectoryLister
 	public function getSystemMessages() 
 	{
 		if (isset($this->_systemMessage) && is_array($this->_systemMessage)) {
-			return collect($this->_systemMessage);
+			return $this->_systemMessage;
 		} else {
-			return collect([]);
+			return [];
 		}
 	}
 	
@@ -300,7 +305,7 @@ class DirectoryLister
 		$bytes = filesize($filePath);
 	
 		// Array of file size suffixes
-		$sizes = array('B', 'KB', 'MB', 'GB', 'TB', 'PB');
+		$sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
 	
 		// Calculate file size suffix factor
 		$factor = floor((strlen($bytes) - 1) / 3);
@@ -321,7 +326,7 @@ class DirectoryLister
 	public function getFileHash($filePath) 
 	{
 		// Placeholder array
-		$hashArray = array();
+		$hashArray = [];
 	
 		// Verify file path exists and is a directory
 		if (!file_exists($filePath)) {
@@ -393,14 +398,14 @@ class DirectoryLister
 	{
 		// Create empty message array if it doesn't already exist
 		if (isset($this->_systemMessage) && !is_array($this->_systemMessage)) {
-			$this->_systemMessage = array();
+			$this->_systemMessage = [];
 		}
 	
 		// Set the error message
-		$this->_systemMessage[] = array(
+		$this->_systemMessage[] = [
+			'text' => $text,
 			'type' => $type,
-			'text' => $text
-		);
+		];
 	
 		return true;
 	}
@@ -425,7 +430,7 @@ class DirectoryLister
 		}
 	
 		// Remove trailing slash if present
-		if(substr($dir, -1, 1) == '/') {
+		if (substr($dir, -1, 1) == '/') {
 			$dir = substr($dir, 0, -1);
 		}
 	
@@ -535,14 +540,14 @@ class DirectoryLister
 						}
 						
 						// Add file info to the array
-						$directoryArray['..'] = array(
+						$directoryArray['..'] = [
 							'file_path' => $this->_appURL.$directoryPath,
 							'url_path' => $this->_appURL.$directoryPath,
 							'file_size' => '-',
 							'mod_time' => date($this->_config['date_format'], filemtime($realPath)),
 							'icon_class' => 'fa-level-up',
-							'sort' => 0
-						);
+							'sort' => 0,
+						];
 					}
 				} elseif (!$this->_isHidden($relativePath)) {
 					// Add all non-hidden files to the array
@@ -553,16 +558,24 @@ class DirectoryLister
 						if (is_dir($relativePath)) {
 							$urlPath = $this->containsIndex($relativePath) ? $relativePath : '/cp/assets?directory='.$urlPath;
 						}
-				
-						// Add the info to the main array
-						$directoryArray[pathinfo($relativePath, PATHINFO_BASENAME)] = array(
+						
+						$info = [
 							'file_path' => $relativePath,
 							'url_path' => $urlPath,
 							'file_size' => is_dir($realPath) ? '-' : $this->getFileSize($realPath),
 							'mod_time' => date($this->_config['date_format'], filemtime($realPath)),
 							'icon_class' => $iconClass,
-							'sort' => $sort
-						);
+							'sort' => $sort,
+						];
+						
+						if (!is_dir($realPath)) {
+							$media = $this->getMediaByFileName($file);
+												
+							$info['media'] = $media;
+						}
+						
+						// Add the info to the main array
+						$directoryArray[pathinfo($relativePath, PATHINFO_BASENAME)] = $info;
 					}
 				}
 			}
@@ -589,9 +602,9 @@ class DirectoryLister
 	protected function _arraySort($array, $sortMethod, $reverse = false) 
 	{
 		// Create empty arrays
-		$sortedArray = array();
+		$sortedArray = [];
 		
-		$finalArray  = array();
+		$finalArray = [];
 	
 		// Create new array of just the keys and sort it
 		$keys = array_keys($array);
@@ -695,7 +708,7 @@ class DirectoryLister
 	{
 		// Add dot files to hidden files array
 		if ($this->_config['hide_dot_files']) {
-			$this->_config['hidden_files'] = array_merge($this->_config['hidden_files'], array('.*', '*/.*'));
+			$this->_config['hidden_files'] = array_merge($this->_config['hidden_files'], ['.*', '*/.*']);
 		}
 		
 		// Compare path array to all hidden file paths
@@ -751,7 +764,7 @@ class DirectoryLister
 		$arrayMax = max(count($fromPathArray), count($toPathArray));
 	
 		// Set some default variables
-		$diffArray = array();
+		$diffArray = [];
 		
 		$samePath = true;
 		

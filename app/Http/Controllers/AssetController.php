@@ -100,33 +100,17 @@ class AssetController extends Controller
 				}
 			}
 			
-			/*
-				
-					<a href="{{ $asset->media->getUrl() }}" title="{{ $asset->media->filename }}" class="asset" 
-									<img src="{{ $asset->media->getUrl('grid') }}" width="100%" height="100%" alt="{{ $asset->media->name }}">
-								</a>
-								
-							</div>
-						@endforeach
-					</div>				
-								
-								
-				@if ($asset->media->width && $asset->media->height)
-																<div class="form-group">
-																	<label>Dimensions: <strong>{{ $asset->media->width }} x {{ $asset->media->height }}</strong></label>
-																</div>
-															@endif
-				*/
+			$assets = $this->recursiveObject($assets);
 			
 			$path = $this->directoryLister->getListedPath();
 			
-			$breadcrumbs = $this->directoryLister->listBreadcrumbs();
+			$breadcrumbs = $this->recursiveObject($this->directoryLister->listBreadcrumbs());
 			
 			$zipEnabled = $this->directoryLister->isZipEnabled();
 			
 			$zipDownloadPath = $this->directoryLister->getDirectoryPath();
 			
-			$messages = $this->directoryLister->getSystemMessages();
+			$messages = collect($this->recursiveObject($this->directoryLister->getSystemMessages()));
 			
 			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle', 'path', 'breadcrumbs', 'zipEnabled', 'zipDownloadPath', 'messages', 'assets'));
 		}
