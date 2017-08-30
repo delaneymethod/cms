@@ -6,6 +6,7 @@
 /public/mix-manifest.json
 /public/mix.js
 /public/assets
+/public/uploads
 .idea
 .vagrant
 .DS_Store
