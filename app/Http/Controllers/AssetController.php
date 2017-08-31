@@ -136,7 +136,9 @@ class AssetController extends Controller
 			$directory = $request->get('directory');
 			
 			$directory = str_replace('uploads', '', $directory);
-
+			
+			$directory = (empty($directory)) ? '/' : $directory;
+			
 			$title = 'Upload Assets';
 		
 			$subTitle = 'Assets';
@@ -349,6 +351,8 @@ class AssetController extends Controller
 			
 			$directory = $request()->get('directory');
 			
+			$directory = (empty($directory)) ? '/' : $directory;
+			
 			return view('cp.assets.folder.move', compact('currentUser', 'title', 'subTitle', 'asset', 'directory'));
 			*/
 		}
@@ -482,6 +486,8 @@ class AssetController extends Controller
 			$directory = $request->get('directory');
 			
 			$directory = str_replace('uploads', '', $directory);
+			
+			$directory = (empty($directory)) ? '/' : $directory;
 			
 			$title = 'Create Folder';
 			

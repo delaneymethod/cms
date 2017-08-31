@@ -25,10 +25,10 @@
 					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="uploadAsset" id="uploadAsset" class="uploadAsset" role="form" method="POST" action="/cp/assets" enctype="multipart/form-data">
 						{{ csrf_field() }}
-						<input type="hidden" name="directory" value="{{ ($directory) == '' ? '/' : $directory }}">
+						<input type="hidden" name="directory" value="{{ $directory }}">
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Directory</label>
-							<input type="text" class="form-control" value="{{ ($directory) == '' ? '/' : $directory }}" tabindex="1" aria-describedby="helpBlockDirectory" readonly>
+							<input type="text" class="form-control" value="{{ $directory }}" tabindex="1" aria-describedby="helpBlockDirectory" readonly>
 						</div>
 						<div class="form-group">
 							<label for="files" class="control-label font-weight-bold">Files <span class="text-danger">&#42;</span></label>
