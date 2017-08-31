@@ -6,13 +6,9 @@ use Baum\Node;
 use App\Models\Status;
 use App\Models\Content;
 use App\Models\Template;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Page extends Node implements HasMediaConversions
+class Page extends Node
 {
-	use HasMediaTrait;
-	
 	private $segments = [];
 	
 	/**
@@ -116,13 +112,4 @@ class Page extends Node implements HasMediaConversions
 			$this->getPageSlug($page->parent);
 		}
 	}
-	
-	public function registerMediaConversions()
-    {
-		$this->addMediaConversion('thumbnail')
-			 ->width(300)
-			 ->height(200)
-			 ->extractVideoFrameAtSecond(5) // If it's a video; grab the still frame from the 5th second in the video
-			 ->sharpen(10);
-    }
 }

@@ -16,11 +16,9 @@
 
 namespace App\Helpers;
 
-use Spatie\MediaLibrary\Media;
 use App\Http\Traits\MediaTrait;
-use Spatie\MediaLibrary\PathGenerator\PathGenerator;
 
-class DirectoryHelper implements PathGenerator
+class DirectoryHelper
 {
 	use MediaTrait;
 	
@@ -39,8 +37,6 @@ class DirectoryHelper implements PathGenerator
 	
 	protected $_systemMessage = null;
 	
-	//protected $path;
-
 	/**
 	 * Create a new instance.
 	 *
@@ -64,27 +60,6 @@ class DirectoryHelper implements PathGenerator
 		
 		// Set the file types array to a global variable
 		$this->_fileTypes = config('cms.directory_helper.file_types');
-		
-		//$this->path = app()->env . '/';
-    }
-	
-	/**	
-	 * Get the path for the given media, relative to the root storage path.
-	 */
-	public function getPath(Media $media) : string
-	{
-		// Set path to root level 
-		return '';
-	}
-	
-	/**
-	 * Get the path for conversions of the given media, relative to the root storage path.
-	 * @return string
-	 */
-	public function getPathForConversions(Media $media) : string
-	{
-		// Sets asset conversions in a folder called "conversions/model_id"
-		return 'conversions/'.$media->model->id.'/';
 	}
 	
 	/**
@@ -598,9 +573,9 @@ class DirectoryHelper implements PathGenerator
 						];
 						
 						if (!is_dir($realPath)) {
-							$media = $this->getMediaByFileName($file);
+							//$media = $this->getMediaByFileName($file);
 												
-							$info['media'] = $media;
+							//$info['media'] = $media;
 						}
 						
 						// Add the info to the main array

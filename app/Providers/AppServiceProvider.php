@@ -26,11 +26,6 @@ class AppServiceProvider extends ServiceProvider
 		Schema::defaultStringLength(191);
 		
 		// Added by Sean
-		$pages = $this->getPages();
-		
-		View::share('pages', $pages);
-		
-		// Added by Sean
 		View::share('sidebarSmCols', config('cms.column_widths.cp.sidebar.sm'));
 		View::share('sidebarMdCols', config('cms.column_widths.cp.sidebar.md'));
 		View::share('sidebarLgCols', config('cms.column_widths.cp.sidebar.lg'));

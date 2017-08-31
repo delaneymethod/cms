@@ -4,65 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "02b4c79faeee674f2e00a0fdcbdecea6",
+    "content-hash": "7129e5ce52abef70422385c3e973d3b1",
     "packages": [
-        {
-            "name": "alchemy/binary-driver",
-            "version": "1.6.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/alchemy-fr/BinaryDriver.git",
-                "reference": "80c6633890afb71d2417ae851d0ad167d8b00b95"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/alchemy-fr/BinaryDriver/zipball/80c6633890afb71d2417ae851d0ad167d8b00b95",
-                "reference": "80c6633890afb71d2417ae851d0ad167d8b00b95",
-                "shasum": ""
-            },
-            "require": {
-                "evenement/evenement": "^2.0|^1.0",
-                "monolog/monolog": "^1.3",
-                "php": ">=5.5",
-                "psr/log": "^1.0",
-                "symfony/process": "^2.0|^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0|^5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Alchemy": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Romain Neutron",
-                    "email": "imprec@gmail.com",
-                    "homepage": "http://www.lickmychip.com/"
-                },
-                {
-                    "name": "Phraseanet Team",
-                    "email": "info@alchemy.fr",
-                    "homepage": "http://www.phraseanet.com/"
-                },
-                {
-                    "name": "Nicolas Le Goff",
-                    "email": "legoff.n@gmail.com"
-                }
-            ],
-            "description": "A set of tools to build binary drivers",
-            "keywords": [
-                "binary",
-                "driver"
-            ],
-            "time": "2016-03-02T13:49:15+00:00"
-        },
         {
             "name": "barryvdh/laravel-cors",
             "version": "v0.9.3",
@@ -259,80 +202,6 @@
             "time": "2014-10-24T07:27:01+00:00"
         },
         {
-            "name": "doctrine/cache",
-            "version": "v1.7.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/cache.git",
-                "reference": "b3217d58609e9c8e661cd41357a54d926c4a2a1a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/cache/zipball/b3217d58609e9c8e661cd41357a54d926c4a2a1a",
-                "reference": "b3217d58609e9c8e661cd41357a54d926c4a2a1a",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~7.1"
-            },
-            "conflict": {
-                "doctrine/common": ">2.2,<2.4"
-            },
-            "require-dev": {
-                "alcaeus/mongo-php-adapter": "^1.1",
-                "mongodb/mongodb": "^1.1",
-                "phpunit/phpunit": "^5.7",
-                "predis/predis": "~1.0"
-            },
-            "suggest": {
-                "alcaeus/mongo-php-adapter": "Required to use legacy MongoDB driver"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.7.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "Caching library offering an object-oriented API for many cache backends",
-            "homepage": "http://www.doctrine-project.org",
-            "keywords": [
-                "cache",
-                "caching"
-            ],
-            "time": "2017-08-25T07:02:50+00:00"
-        },
-        {
             "name": "doctrine/inflector",
             "version": "v1.2.0",
             "source": {
@@ -440,54 +309,6 @@
                 "parser"
             ],
             "time": "2017-05-14T14:47:48+00:00"
-        },
-        {
-            "name": "evenement/evenement",
-            "version": "v2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/igorw/evenement.git",
-                "reference": "6ba9a777870ab49f417e703229d53931ed40fd7a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/igorw/evenement/zipball/6ba9a777870ab49f417e703229d53931ed40fd7a",
-                "reference": "6ba9a777870ab49f417e703229d53931ed40fd7a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.0||^5.7||^4.8.35"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Evenement": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Igor Wiedler",
-                    "email": "igor@wiedler.ch"
-                }
-            ],
-            "description": "Événement is a very simple event dispatching library for PHP",
-            "keywords": [
-                "event-dispatcher",
-                "event-emitter"
-            ],
-            "time": "2017-07-17T17:39:19+00:00"
         },
         {
             "name": "giggsey/libphonenumber-for-php",
@@ -657,194 +478,6 @@
             "time": "2017-01-25T09:56:35+00:00"
         },
         {
-            "name": "guzzlehttp/psr7",
-            "version": "1.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
-                "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/http-message": "~1.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Tobias Schultze",
-                    "homepage": "https://github.com/Tobion"
-                }
-            ],
-            "description": "PSR-7 message implementation that also provides common utility methods",
-            "keywords": [
-                "http",
-                "message",
-                "request",
-                "response",
-                "stream",
-                "uri",
-                "url"
-            ],
-            "time": "2017-03-20T17:10:46+00:00"
-        },
-        {
-            "name": "intervention/image",
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Intervention/image.git",
-                "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/322a4ade249467179c50a3e50eda8760ff3af2a3",
-                "reference": "322a4ade249467179c50a3e50eda8760ff3af2a3",
-                "shasum": ""
-            },
-            "require": {
-                "ext-fileinfo": "*",
-                "guzzlehttp/psr7": "~1.1",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.2",
-                "phpunit/phpunit": "^4.8 || ^5.7"
-            },
-            "suggest": {
-                "ext-gd": "to use GD library based image processing.",
-                "ext-imagick": "to use Imagick based image processing.",
-                "intervention/imagecache": "Caching extension for the Intervention Image library"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Intervention\\Image\\ImageServiceProvider"
-                    ],
-                    "aliases": {
-                        "Image": "Intervention\\Image\\Facades\\Image"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Intervention\\Image\\": "src/Intervention/Image"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Oliver Vogel",
-                    "email": "oliver@olivervogel.com",
-                    "homepage": "http://olivervogel.com/"
-                }
-            ],
-            "description": "Image handling and manipulation library with support for Laravel integration",
-            "homepage": "http://image.intervention.io/",
-            "keywords": [
-                "gd",
-                "image",
-                "imagick",
-                "laravel",
-                "thumbnail",
-                "watermark"
-            ],
-            "time": "2017-07-03T15:50:40+00:00"
-        },
-        {
-            "name": "intervention/imagecache",
-            "version": "2.3.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Intervention/imagecache.git",
-                "reference": "7936b90e695daee1aafbd25221815352ef97bcbc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/imagecache/zipball/7936b90e695daee1aafbd25221815352ef97bcbc",
-                "reference": "7936b90e695daee1aafbd25221815352ef97bcbc",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/cache": "~4|~5",
-                "illuminate/filesystem": "~4|~5",
-                "intervention/image": "dev-master|~2,>=2.2.0",
-                "jeremeamia/superclosure": "~1|~2",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.2",
-                "phpunit/phpunit": "3.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Intervention\\Image\\": "src/Intervention/Image"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Oliver Vogel",
-                    "email": "oliver@olivervogel.net",
-                    "homepage": "http://olivervogel.net/"
-                }
-            ],
-            "description": "Caching extension for the Intervention Image Class",
-            "homepage": "http://image.intervention.io",
-            "keywords": [
-                "cache",
-                "gd",
-                "image",
-                "imagick",
-                "laravel"
-            ],
-            "time": "2015-09-22T15:22:47+00:00"
-        },
-        {
             "name": "jakub-onderka/php-console-color",
             "version": "0.1",
             "source": {
@@ -997,64 +630,6 @@
             "time": "2017-06-30T11:51:03+00:00"
         },
         {
-            "name": "jeremeamia/SuperClosure",
-            "version": "2.3.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jeremeamia/super_closure.git",
-                "reference": "443c3df3207f176a1b41576ee2a66968a507b3db"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jeremeamia/super_closure/zipball/443c3df3207f176a1b41576ee2a66968a507b3db",
-                "reference": "443c3df3207f176a1b41576ee2a66968a507b3db",
-                "shasum": ""
-            },
-            "require": {
-                "nikic/php-parser": "^1.2|^2.0|^3.0",
-                "php": ">=5.4",
-                "symfony/polyfill-php56": "^1.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0|^5.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "SuperClosure\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeremy Lindblom",
-                    "email": "jeremeamia@gmail.com",
-                    "homepage": "https://github.com/jeremeamia",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Serialize Closure objects, including their context and binding",
-            "homepage": "https://github.com/jeremeamia/super_closure",
-            "keywords": [
-                "closure",
-                "function",
-                "lambda",
-                "parser",
-                "serializable",
-                "serialize",
-                "tokenizer"
-            ],
-            "time": "2016-12-07T09:37:55+00:00"
-        },
-        {
             "name": "julien-c/iso3166",
             "version": "2.0.1",
             "source": {
@@ -1089,16 +664,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.4.35",
+            "version": "v5.4.36",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "54aa18a4e8495c4b6902d9665ec9fa4d3a1f3d2e"
+                "reference": "1062a22232071c3e8636487c86ec1ae75681bbf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/54aa18a4e8495c4b6902d9665ec9fa4d3a1f3d2e",
-                "reference": "54aa18a4e8495c4b6902d9665ec9fa4d3a1f3d2e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/1062a22232071c3e8636487c86ec1ae75681bbf9",
+                "reference": "1062a22232071c3e8636487c86ec1ae75681bbf9",
                 "shasum": ""
             },
             "require": {
@@ -1214,7 +789,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-08-24T12:30:18+00:00"
+            "time": "2017-08-30T09:26:16+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1361,67 +936,6 @@
                 "storage"
             ],
             "time": "2017-08-06T17:41:04+00:00"
-        },
-        {
-            "name": "league/glide",
-            "version": "1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/glide.git",
-                "reference": "8077f529a07ded3eed6c5dcf7f688249b626ddf3"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/glide/zipball/8077f529a07ded3eed6c5dcf7f688249b626ddf3",
-                "reference": "8077f529a07ded3eed6c5dcf7f688249b626ddf3",
-                "shasum": ""
-            },
-            "require": {
-                "intervention/image": "^2.1",
-                "league/flysystem": "^1.0",
-                "php": "^5.4 | ^7.0",
-                "psr/http-message": "^1.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/php-token-stream": "^1.4",
-                "phpunit/phpunit": "~4.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\Glide\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jonathan Reinink",
-                    "email": "jonathan@reinink.ca",
-                    "homepage": "http://reinink.ca"
-                }
-            ],
-            "description": "Wonderfully easy on-demand image manipulation library with an HTTP based API.",
-            "homepage": "http://glide.thephpleague.com",
-            "keywords": [
-                "ImageMagick",
-                "editing",
-                "gd",
-                "image",
-                "imagick",
-                "league",
-                "manipulation",
-                "processing"
-            ],
-            "time": "2017-05-09T17:41:49+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -1599,46 +1113,6 @@
             "time": "2017-01-16T07:55:07+00:00"
         },
         {
-            "name": "neutron/temporary-filesystem",
-            "version": "2.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/romainneutron/Temporary-Filesystem.git",
-                "reference": "0a72a1c858b95fd469d87baa333f627978504ea8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/romainneutron/Temporary-Filesystem/zipball/0a72a1c858b95fd469d87baa333f627978504ea8",
-                "reference": "0a72a1c858b95fd469d87baa333f627978504ea8",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.3.9 || ^7.0",
-                "symfony/filesystem": "^2.3 || ^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Neutron": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Romain Neutron",
-                    "email": "imprec@gmail.com"
-                }
-            ],
-            "description": "Symfony filesystem extension to handle temporary files",
-            "time": "2016-03-05T10:22:50+00:00"
-        },
-        {
             "name": "nikic/php-parser",
             "version": "v3.1.0",
             "source": {
@@ -1790,136 +1264,6 @@
             "time": "2017-03-13T16:27:32+00:00"
         },
         {
-            "name": "php-ffmpeg/extras",
-            "version": "0.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/alchemy-fr/PHP-FFMpeg-Extras.git",
-                "reference": "4b3f87467e27c828641c3361ad395492775ab98c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/alchemy-fr/PHP-FFMpeg-Extras/zipball/4b3f87467e27c828641c3361ad395492775ab98c",
-                "reference": "4b3f87467e27c828641c3361ad395492775ab98c",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "php-ffmpeg/php-ffmpeg": "~0.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~3.7",
-                "sami/sami": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "FFMpeg": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alchemy",
-                    "email": "dev.team@alchemy.fr",
-                    "homepage": "http://www.alchemy.fr/"
-                }
-            ],
-            "description": "A set of audio/video formats compatible with PHP-FFMpeg",
-            "keywords": [
-                "codecs",
-                "ffmpeg"
-            ],
-            "time": "2014-02-24T10:48:44+00:00"
-        },
-        {
-            "name": "php-ffmpeg/php-ffmpeg",
-            "version": "0.9.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHP-FFMpeg/PHP-FFMpeg.git",
-                "reference": "96225b2dff65a4c3b0b541f2420742ffe5851127"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHP-FFMpeg/PHP-FFMpeg/zipball/96225b2dff65a4c3b0b541f2420742ffe5851127",
-                "reference": "96225b2dff65a4c3b0b541f2420742ffe5851127",
-                "shasum": ""
-            },
-            "require": {
-                "alchemy/binary-driver": "^1.5",
-                "doctrine/cache": "^1.0",
-                "evenement/evenement": "^2.0 || ^1.0",
-                "neutron/temporary-filesystem": "^2.1.1",
-                "php": "^5.3.9 || ^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8",
-                "sami/sami": "~1.0",
-                "silex/silex": "~1.0"
-            },
-            "suggest": {
-                "php-ffmpeg/extras": "A compilation of common audio & video drivers for PHP-FFMpeg"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "0.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "FFMpeg": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Romain Neutron",
-                    "email": "imprec@gmail.com",
-                    "homepage": "http://www.lickmychip.com/"
-                },
-                {
-                    "name": "Phraseanet Team",
-                    "email": "info@alchemy.fr",
-                    "homepage": "http://www.phraseanet.com/"
-                },
-                {
-                    "name": "Patrik Karisch",
-                    "email": "patrik@karisch.guru",
-                    "homepage": "http://www.karisch.guru"
-                },
-                {
-                    "name": "Romain Biard",
-                    "email": "romain.biard@gmail.com",
-                    "homepage": "https://www.strime.io/"
-                }
-            ],
-            "description": "FFMpeg PHP, an Object Oriented library to communicate with AVconv / ffmpeg",
-            "keywords": [
-                "audio",
-                "audio processing",
-                "avconv",
-                "avprobe",
-                "ffmpeg",
-                "ffprobe",
-                "video",
-                "video processing"
-            ],
-            "time": "2017-06-30T19:27:10+00:00"
-        },
-        {
             "name": "propaganistas/laravel-intl",
             "version": "1.2.0",
             "source": {
@@ -2034,56 +1378,6 @@
                 "validation"
             ],
             "time": "2017-06-02T10:28:43+00:00"
-        },
-        {
-            "name": "psr/http-message",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "homepage": "https://github.com/php-fig/http-message",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "psr/log",
@@ -2286,280 +1580,6 @@
                 "uuid"
             ],
             "time": "2017-08-04T13:39:04+00:00"
-        },
-        {
-            "name": "spatie/image",
-            "version": "1.3.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/image.git",
-                "reference": "61a43bd5a85257b30b58b6c5b9f0000fc1487bf8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image/zipball/61a43bd5a85257b30b58b6c5b9f0000fc1487bf8",
-                "reference": "61a43bd5a85257b30b58b6c5b9f0000fc1487bf8",
-                "shasum": ""
-            },
-            "require": {
-                "league/glide": "^1.2",
-                "php": "^7.0",
-                "spatie/image-optimizer": "^1.0",
-                "spatie/temporary-directory": "^1.0.0",
-                "symfony/process": "^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.0",
-                "symfony/var-dumper": "^3.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\Image\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Manipulate images with an expressive API",
-            "homepage": "https://github.com/spatie/image",
-            "keywords": [
-                "image",
-                "spatie"
-            ],
-            "time": "2017-07-25T18:32:37+00:00"
-        },
-        {
-            "name": "spatie/image-optimizer",
-            "version": "1.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/image-optimizer.git",
-                "reference": "77d920c2c47bce6b6bfcde906cb04045ead0a393"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/77d920c2c47bce6b6bfcde906cb04045ead0a393",
-                "reference": "77d920c2c47bce6b6bfcde906cb04045ead0a393",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0",
-                "psr/log": "^1.0",
-                "symfony/process": "^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^6.2",
-                "symfony/var-dumper": "^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\ImageOptimizer\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Easily optimize images using PHP",
-            "homepage": "https://github.com/spatie/image-optimizer",
-            "keywords": [
-                "image-optimizer",
-                "spatie"
-            ],
-            "time": "2017-07-29T13:48:36+00:00"
-        },
-        {
-            "name": "spatie/laravel-medialibrary",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "2e03c9ad5a2af67d66dbc4ce92b65c6832d6369b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/2e03c9ad5a2af67d66dbc4ce92b65c6832d6369b",
-                "reference": "2e03c9ad5a2af67d66dbc4ce92b65c6832d6369b",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/bus": "~5.4.0",
-                "illuminate/console": "~5.4.0",
-                "illuminate/database": "~5.4.0",
-                "illuminate/pipeline": "~5.4.0",
-                "illuminate/support": "~5.4.0",
-                "php": "^7.0",
-                "spatie/image": "^1.0.0",
-                "spatie/pdf-to-image": "^1.2",
-                "spatie/temporary-directory": "^1.1"
-            },
-            "conflict": {
-                "php-ffmpeg/php-ffmpeg": "<0.6.1"
-            },
-            "require-dev": {
-                "doctrine/dbal": "^2.5.2",
-                "league/flysystem-aws-s3-v3": "^1.0.13",
-                "mockery/mockery": "^0.9.4",
-                "orchestra/testbench": "~3.4.0",
-                "phpunit/phpunit": "^6.0"
-            },
-            "suggest": {
-                "league/flysystem-aws-s3-v3": "Required to use AWS S3 file storage",
-                "php-ffmpeg/php-ffmpeg": "Required for generating video thumbnails"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Spatie\\MediaLibrary\\MediaLibraryServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\MediaLibrary\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://murze.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Associate files with Eloquent models",
-            "homepage": "https://github.com/spatie/laravel-medialibrary",
-            "keywords": [
-                "cms",
-                "conversion",
-                "downloads",
-                "images",
-                "laravel",
-                "laravel-medialibrary",
-                "media",
-                "spatie"
-            ],
-            "time": "2017-08-25T17:19:23+00:00"
-        },
-        {
-            "name": "spatie/pdf-to-image",
-            "version": "1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/pdf-to-image.git",
-                "reference": "9a5cb264a99e87e010c65d4ece03b51f821d55bd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/pdf-to-image/zipball/9a5cb264a99e87e010c65d4ece03b51f821d55bd",
-                "reference": "9a5cb264a99e87e010c65d4ece03b51f821d55bd",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.*",
-                "scrutinizer/ocular": "~1.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\PdfToImage\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Freek Van der Herten",
-                    "email": "freek@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Convert a pdf to an image",
-            "homepage": "https://github.com/spatie/pdf-to-image",
-            "keywords": [
-                "convert",
-                "image",
-                "pdf",
-                "pdf-to-image",
-                "spatie"
-            ],
-            "time": "2016-12-14T15:37:00+00:00"
-        },
-        {
-            "name": "spatie/temporary-directory",
-            "version": "1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/spatie/temporary-directory.git",
-                "reference": "58e80a88c3fd463d502807614e88c1aec62e79dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/58e80a88c3fd463d502807614e88c1aec62e79dc",
-                "reference": "58e80a88c3fd463d502807614e88c1aec62e79dc",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "5.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\TemporaryDirectory\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Alex Vanderbist",
-                    "email": "alex@spatie.be",
-                    "homepage": "https://spatie.be",
-                    "role": "Developer"
-                }
-            ],
-            "description": "The `temporary-directory` package allows you to easily create, use and destroy temporary directories.",
-            "homepage": "https://github.com/spatie/temporary-directory",
-            "keywords": [
-                "spatie",
-                "temporary-directory"
-            ],
-            "time": "2017-02-02T13:08:42+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2856,55 +1876,6 @@
             "time": "2017-07-29T21:54:42+00:00"
         },
         {
-            "name": "symfony/filesystem",
-            "version": "v3.3.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/filesystem.git",
-                "reference": "b32a0e5f928d0fa3d1dd03c78d020777e50c10cb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/b32a0e5f928d0fa3d1dd03c78d020777e50c10cb",
-                "reference": "b32a0e5f928d0fa3d1dd03c78d020777e50c10cb",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5.9|>=7.0.8"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Filesystem\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Filesystem Component",
-            "homepage": "https://symfony.com",
-            "time": "2017-07-29T21:54:42+00:00"
-        },
-        {
             "name": "symfony/finder",
             "version": "v3.3.8",
             "source": {
@@ -3150,114 +2121,6 @@
                 "shim"
             ],
             "time": "2017-06-14T15:44:48+00:00"
-        },
-        {
-            "name": "symfony/polyfill-php56",
-            "version": "v1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-php56.git",
-                "reference": "e85ebdef569b84e8709864e1a290c40f156b30ca"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php56/zipball/e85ebdef569b84e8709864e1a290c40f156b30ca",
-                "reference": "e85ebdef569b84e8709864e1a290c40f156b30ca",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "symfony/polyfill-util": "~1.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Php56\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill backporting some PHP 5.6+ features to lower PHP versions",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2017-06-14T15:44:48+00:00"
-        },
-        {
-            "name": "symfony/polyfill-util",
-            "version": "v1.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-util.git",
-                "reference": "67925d1cf0b84bd234a83bebf26d4eb281744c6d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-util/zipball/67925d1cf0b84bd234a83bebf26d4eb281744c6d",
-                "reference": "67925d1cf0b84bd234a83bebf26d4eb281744c6d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.5-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Util\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony utilities for portability of PHP codes",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compat",
-                "compatibility",
-                "polyfill",
-                "shim"
-            ],
-            "time": "2017-07-05T15:09:33+00:00"
         },
         {
             "name": "symfony/process",
@@ -3930,22 +2793,22 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.2.2",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "4aada1f93c72c35e22fb1383b47fee43b8f1d157"
+                "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/4aada1f93c72c35e22fb1383b47fee43b8f1d157",
-                "reference": "4aada1f93c72c35e22fb1383b47fee43b8f1d157",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/86e24012a3139b42a7b71155cfaa325389f00f1f",
+                "reference": "86e24012a3139b42a7b71155cfaa325389f00f1f",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5",
+                "php": "^7.0",
                 "phpdocumentor/reflection-common": "^1.0@dev",
-                "phpdocumentor/type-resolver": "^0.3.0",
+                "phpdocumentor/type-resolver": "^0.4.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
@@ -3971,20 +2834,20 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-08-08T06:39:58+00:00"
+            "time": "2017-08-29T19:37:41+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.3.0",
+            "version": "0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "fb3933512008d8162b3cdf9e18dba9309b7c3773"
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/fb3933512008d8162b3cdf9e18dba9309b7c3773",
-                "reference": "fb3933512008d8162b3cdf9e18dba9309b7c3773",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9c977708995954784726e25d0cd1dddf4e65b0f7",
+                "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7",
                 "shasum": ""
             },
             "require": {
@@ -4018,7 +2881,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2017-06-03T08:32:36+00:00"
+            "time": "2017-07-14T14:27:02+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -5095,8 +3958,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "orangehill/iseed": 20,
-        "spatie/laravel-medialibrary": 20
+        "orangehill/iseed": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

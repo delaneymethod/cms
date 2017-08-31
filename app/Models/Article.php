@@ -8,13 +8,9 @@ use App\Models\Content;
 use App\Models\Category;
 use App\Models\Template;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\HasMedia\Interfaces\HasMediaConversions;
 
-class Article extends Model implements HasMediaConversions
+class Article extends Model
 {
-	use HasMediaTrait;
-	
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -89,13 +85,4 @@ class Article extends Model implements HasMediaConversions
 	{
 		return $this->categories()->sync($categories);
 	}
-	
-	public function registerMediaConversions()
-    {
-		$this->addMediaConversion('thumbnail')
-			 ->width(300)
-			 ->height(200)
-			 ->extractVideoFrameAtSecond(5) // If it's a video; grab the still frame from the 5th second in the video
-			 ->sharpen(10);
-    }
 }

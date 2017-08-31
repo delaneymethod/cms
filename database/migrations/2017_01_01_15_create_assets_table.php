@@ -19,6 +19,13 @@ class CreateAssetsTable extends Migration
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->increments('id');
+			
+            $table->string('filename');
+            $table->string('extension', 32);
+            $table->string('mime_type', 128);
+            $table->string('path');
+            
+            $table->unsignedInteger('size');
             
             $table->timestamps();
 		});

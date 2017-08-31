@@ -182,7 +182,6 @@ return [
 		Baum\Providers\BaumServiceProvider::class,
 		Orangehill\Iseed\IseedServiceProvider::class,
 		Propaganistas\LaravelIntl\IntlServiceProvider::class,
-		Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
 		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 		Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
 		

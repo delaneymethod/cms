@@ -16,6 +16,7 @@ trait AssetTrait
 	{
 		$asset = Asset::findOrFail($id);
 		
+		/*
 		$asset->media = $asset->getMedia('assets')->first();
 		
 		if (!empty($asset->media)) {
@@ -29,6 +30,7 @@ trait AssetTrait
 		
 			$asset->media->directory = $asset->media->disk;
 		}
+		*/
 		
 		return $asset;
 	}
@@ -43,6 +45,7 @@ trait AssetTrait
 		$assets = Asset::all();
 		
 		foreach ($assets as $asset) {
+			/*
 			$asset->media = $asset->getMedia('assets')->first();
 			
 			if (!empty($asset->media)) { 
@@ -56,6 +59,7 @@ trait AssetTrait
 				
 				$asset->media->directory = $asset->media->disk;
 			}
+			*/
 		}
 		
 		return $assets;

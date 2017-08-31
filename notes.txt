@@ -20,3 +20,19 @@ https://scotch.io/tutorials/why-laravel-queues-are-awesome
 									@endif
 									<option value="{{ $directory->path }}" {{ (old('path') == $directory->path || $asset->media->disk == $directory->path) ? 'selected' : '' }}>{{ $indent }}{{ $directory->title }}</option>
 								@endforeach
+								
+								
+								
+								
+								
+								
+								
+								file uploads via assets view
+								
+								
+								
+								add files to model via add assets button which opens up a modal window.
+								
+								all files are listed the same as assets view is but each image is selectable.
+								
+								user clicks select and file urls are saved back to parent page and preview is loaded with option to delete each file. 

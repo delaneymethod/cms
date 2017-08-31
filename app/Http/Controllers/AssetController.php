@@ -17,7 +17,7 @@ class AssetController extends Controller
 	
 	protected $assetsDisk;
 	
-	protected $mediaCollection;
+	//protected $mediaCollection;
 	
 	protected $directoryHelper;
 	
@@ -36,7 +36,7 @@ class AssetController extends Controller
 		
 		$this->assetsDisk = 'uploads';
 		
-		$this->mediaCollection = 'assets';
+		//$this->mediaCollection = 'assets';
 		
 		// 30 MB
 		$this->maxUploadFileSize = 30000000;
@@ -269,7 +269,7 @@ class AssetController extends Controller
 					
 					$asset->save();
 					
-					$asset->addMedia($file)->toMediaCollection($this->mediaCollection);
+					//$asset->addMedia($file)->toMediaCollection($this->mediaCollection);
 				}
 			} catch (QueryException $queryException) {
 				DB::rollback();
@@ -310,18 +310,18 @@ class AssetController extends Controller
 			} else {
 				$type = $request->get('type');
 				
-				$asset->media = $asset->getMedia($this->mediaCollection)->first();
+				//$asset->media = $asset->getMedia($this->mediaCollection)->first();
 				
 				if (!empty($type) && $type === 'image') {
 					return response()->json([
 						'id' => $asset->id,
-						'url' => $asset->media->getUrl()
+						'url' => '',// $asset->media->getUrl()
 					]);
 				} else {
 					return response()->json([
 						'id' => $asset->id,
-						'filename' => $asset->media->file_name,
-						'filelink' => $asset->media->getUrl()
+						'filename' => '', //$asset->media->file_name,
+						'filelink' => '', //$asset->media->getUrl()
 					]);
 				}
 			}
@@ -447,7 +447,7 @@ class AssetController extends Controller
 			DB::beginTransaction();
 
 			try {
-				$asset->forceDelete();
+				$asset->delete();
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -634,10 +634,10 @@ class AssetController extends Controller
 			foreach ($assets as $asset) {
 				array_push($json, array(
 					'id' => $asset->id,
-					'title' => $asset->media->name,
-					'name' => $asset->media->file_name,
-					'url' => $asset->media->getUrl(),
-					'size' => $asset->media->human_readable_size,
+					'title' => '', //$asset->media->name,
+					'name' => '', //$asset->media->file_name,
+					'url' => '', //$asset->media->getUrl(),
+					'size' => '', //$asset->media->human_readable_size,
 				));
 			}
 		}
@@ -652,6 +652,7 @@ class AssetController extends Controller
 	{
 		$images = [];
 		
+		/*
 		$assets = $assets->filter(function ($asset) {
 			return starts_with($asset->media->mime_type, 'image');
 		});
@@ -664,6 +665,7 @@ class AssetController extends Controller
 				'url' => $asset->media->getUrl(),
 			));
 		}
+		*/
 		
 		return $images;
 	}
