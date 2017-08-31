@@ -25,9 +25,14 @@
 					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="uploadAsset" id="uploadAsset" class="uploadAsset" role="form" method="POST" action="/cp/assets" enctype="multipart/form-data">
 						{{ csrf_field() }}
+						<input type="hidden" name="directory" value="{{ ($directory) == '' ? '/' : $directory }}">
 						<div class="form-group">
-							<label for="files" class="control-label font-weight-bold">Assets <span class="text-danger">&#42;</span></label>
-							<input type="file" name="files[]" id="files" class="form-control-file" tabindex="1" autocomplete="off" aria-describedby="helpBlockFiles" required multiple>
+							<label class="control-label font-weight-bold">Directory</label>
+							<input type="text" class="form-control" value="{{ ($directory) == '' ? '/' : $directory }}" tabindex="1" aria-describedby="helpBlockDirectory" readonly>
+						</div>
+						<div class="form-group">
+							<label for="files" class="control-label font-weight-bold">Files <span class="text-danger">&#42;</span></label>
+							<input type="file" name="files[]" id="files" class="form-control-file" tabindex="2" autocomplete="off" aria-describedby="helpBlockFiles" required multiple>
 							@if ($errors->has('files'))
 								<span id="helpBlockFiles" class="form-control-feedback form-text gf-red">- {{ $errors->first('files') }}</span>
 							@endif

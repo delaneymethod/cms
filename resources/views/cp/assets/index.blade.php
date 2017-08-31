@@ -39,10 +39,11 @@
 					<div class="row">
 						<div class="col">
 							<ul class="list-unstyled list-inline buttons">
-								<li class="list-inline-item"><a href="/cp/assets/upload" title="Upload Assets" class="btn btn-outline-success"><i class="fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
+								<li class="list-inline-item"><a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-outline-success"><i class="fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
 								@if ($zipEnabled)
 									<li class="list-inline-item"><a href="/cp/assets?zip={{ $zipDownloadPath }}" title="Download Assets" class="btn btn-outline-secondary"><i class="fa fa-download" aria-hidden="true"></i>Download Assets</a></li>
 								@endif
+								<li class="list-inline-item"><a href="/cp/assets/folder/create{{ $uploadDirectory }}" title="Create Folder" class="btn btn-outline-secondary"><i class="fa fa-folder" aria-hidden="true"></i>Create Folder</a></li>
 							</ul>
 						</div>
 					</div>
@@ -89,7 +90,7 @@
 																<a href="{{ $meta->media->getUrl() }}" title="{{ $meta->media->name }}" target="_blank"><img src="{{ $meta->media->getUrl('modal') }}" width="100%" class="align-top text-center" alt="{{ $meta->media->name }}"></a>
 															@else
 																<p>&nbsp;</p>
-																<p><i class="fa {{ $meta->icon_class }} fa-5x align-middle" aria-hidden="true"></i><br><br>No Preview Available</p>
+																<p><a href="{{ $meta->media->getUrl() }}" title="{{ $meta->media->name }}" target="_blank"><i class="fa {{ $meta->icon_class }} fa-5x align-middle" aria-hidden="true"></i><br><br>No Preview Available</a></p>
 															@endif
 														</div>
 														<div class="col-5 text-left">

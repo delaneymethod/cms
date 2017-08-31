@@ -213,7 +213,7 @@ return [
 	
 	],
 	
-	'directory_lister' => [
+	'directory_helper' => [
 		'home_label' => 'Assets',
 		'hide_dot_files' => true,
 		'list_folders_first' => true,
@@ -221,19 +221,20 @@ return [
 		'date_format' => 'Y-m-d H:i:s',
 	
 		'hidden_files' => [
+			'resources',
+			'resources/*',
+			'assets',
+			'assets/*',
+			'*/conversions',
 			'.ht*',
 			'*/.ht*',
 			'.htaccess',
-			'resources',
-			'resources/*',
 			'favicon.ico',
 			'mix-manifest.json',
 			'mix.*',
 			'mix.js',
 			'robots.txt',
 			'web.config',
-			'assets',
-			'conversions',
 		],
 	
 		// If set to 'true' an directory with an index file (as defined below) will
