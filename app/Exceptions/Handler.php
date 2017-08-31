@@ -3,11 +3,16 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Http\Traits\PageTrait;
+use Illuminate\Support\Facades\View;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
+	use PageTrait;
+	
 	/**
      * A list of the exception types that should not be reported.
      *
@@ -44,6 +49,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+	    // Added by Sean
+		if ($exception instanceof ModelNotFoundException) {
+			$pages = $this->getPages();
+		
+			View::share('pages', $pages);
+	    }
+	    
 	    return parent::render($request, $exception);
     }
 

@@ -39,11 +39,14 @@
 					<div class="row">
 						<div class="col">
 							<ul class="list-unstyled list-inline buttons">
-								<li class="list-inline-item"><a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-outline-success"><i class="fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
-								@if ($zipEnabled)
-									<li class="list-inline-item"><a href="/cp/assets?zip={{ $zipDownloadPath }}" title="Download Assets" class="btn btn-outline-secondary"><i class="fa fa-download" aria-hidden="true"></i>Download Assets</a></li>
+								<li class="list-inline-item"><a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-outline-success"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
+								@if ($zipEnabled && count($assets) > 0)
+									<li class="list-inline-item"><a href="/cp/assets?zip={{ $zipDownloadPath }}" title="Download Assets" class="btn btn-outline-secondary"><i class="icon fa fa-download" aria-hidden="true"></i>Download Assets</a></li>
 								@endif
-								<li class="list-inline-item"><a href="/cp/assets/folder/create{{ $uploadDirectory }}" title="Create Folder" class="btn btn-outline-secondary"><i class="fa fa-folder" aria-hidden="true"></i>Create Folder</a></li>
+								@if ($deleteFolderEnabled)
+									<li class="list-inline-item"><a href="/cp/assets/folder/delete{{ $uploadDirectory }}" title="Delete Folder" class="btn btn-outline-danger"><i class="icon fa fa-folder" aria-hidden="true"></i>Delete Folder</a></li>
+								@endif
+								<li class="list-inline-item"><a href="/cp/assets/folder/create{{ $uploadDirectory }}" title="Create Folder" class="btn btn-outline-secondary"><i class="icon fa fa-folder" aria-hidden="true"></i>Create Folder</a></li>
 							</ul>
 						</div>
 					</div>
@@ -52,6 +55,7 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<ul class="breadcrumbs list-unstyled list-inline">
+								<li class="list-inline-item">You are here:</li>
 								@foreach ($breadcrumbs as $breadcrumb)
 									@if ($breadcrumb != end($breadcrumbs))
 										<li class="list-inline-item"><a href="{{ $breadcrumb->url }}" title="{{ $breadcrumb->title }}">{{ $breadcrumb->title }}</a>&nbsp;<span class="divider">/</span></li>
@@ -63,76 +67,88 @@
 						</div>
 					</div>
 					<div class="row assets">
-						@foreach ($assets as $name => $meta)
-							<div class="col-sm-3 col-md-3 col-lg-2 asset text-center">
-								@if (!empty($meta->media))
-									@if (starts_with($meta->media->mime_type, 'image'))	
-										<a href="javascript:void(0);" title="{{ $meta->media->name }}" class="image asset-opener" style="background-image: url('{{ $meta->media->getUrl("grid") }}');" data-toggle="modal" data-target=".asset-{{ $meta->media->id }}-modal-lg">
-											<span>{{ $name }}</span>
-										</a>
-									@else
-										<a href="javascript:void(0);" title="{{ $meta->media->name }}" class="asset-opener" data-toggle="modal" data-target=".asset-{{ $meta->media->id }}-modal-lg">
-											<i class="fa {{ $meta->icon_class }} fa-5x" aria-hidden="true"></i>
-											<span>{{ $name }}</span>
-										</a>
-									@endif
-									<div class="modal fade asset-{{ $meta->media->id }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="assetModalLabel" aria-hidden="true">
-										<div class="modal-dialog modal-lg">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="assetModalLabel">{{ $meta->media->name }}</h5>
-													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-												</div>
-												<div class="modal-body">
-													<div class="row">
-														<div class="col-7 text-center">
-															@if (file_exists($meta->media->getPath('modal')))
-																<a href="{{ $meta->media->getUrl() }}" title="{{ $meta->media->name }}" target="_blank"><img src="{{ $meta->media->getUrl('modal') }}" width="100%" class="align-top text-center" alt="{{ $meta->media->name }}"></a>
-															@else
-																<p>&nbsp;</p>
-																<p><a href="{{ $meta->media->getUrl() }}" title="{{ $meta->media->name }}" target="_blank"><i class="fa {{ $meta->icon_class }} fa-5x align-middle" aria-hidden="true"></i><br><br>No Preview Available</a></p>
-															@endif
-														</div>
-														<div class="col-5 text-left">
-															<form>
-																<div class="form-group">
-																	<label class="d-block">File Uploaded: <strong>{{ $meta->mod_time }}</strong></label>
-																</div>
-																<div class="form-group">
-																	<label for="file_url">File URL:</label>
-																	<input type="text" class="form-control" value="{{ config('app.url') }}{{ $meta->media->getUrl() }}" id="file_url" readonly>
-																</div>
-																<div class="form-group">
-																	<label>File type: <strong>{{ $meta->media->mime_type }}</strong></label>
-																</div>
-																<div class="form-group">
-																	<label>File size: <strong>{{ $meta->media->human_readable_size }}</strong></label>
-																</div>
-																@if ($meta->media->width && $meta->media->height)
-																	<div class="form-group">
-																		<label>Dimensions: <strong>{{ $meta->media->width }} x {{ $meta->media->height }}</strong></label>
-																	</div>
+						@if (count($assets) > 0)
+							@foreach ($assets as $filename => $meta)
+								<div class="col-sm-3 col-md-3 col-lg-2 asset text-center">
+									@if (!empty($meta->mime_type))
+										@if (starts_with($meta->mime_type, 'image'))	
+											<a href="javascript:void(0);" title="{{ $filename }}" class="image asset-opener" style="background-image: url('{{ $meta->url_path }}');" data-toggle="modal" data-target=".asset-{{ $meta->id }}-modal-lg">
+												<span>{{ $filename }}</span>
+											</a>
+										@else
+											<a href="javascript:void(0);" title="{{ $filename }}" class="asset-opener" data-toggle="modal" data-target=".asset-{{ $meta->id }}-modal-lg">
+												<i class="fa {{ $meta->icon_class }} fa-5x" aria-hidden="true"></i>
+												<span>{{ $filename }}</span>
+											</a>
+										@endif
+										<div class="modal fade asset-{{ $meta->id }}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="assetModalLabel" aria-hidden="true">
+											<div class="modal-dialog modal-lg">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="assetModalLabel">{{ $filename }}</h5>
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													</div>
+													<div class="modal-body">
+														<div class="row">
+															<div class="col-sm-12 col-md-12 col-lg-7 text-center">
+																@if (file_exists($meta->file_path))
+																	<a href="{{ $meta->url_path }}" title="{{ $filename }}" target="_blank"><img src="{{ $meta->url_path }}" width="100%" class="align-top text-center" alt="{{ $filename }}"></a>
+																@else
+																	<p>&nbsp;</p>
+																	<p><a href="{{ $meta->url_path }}" title="{{ $filename }}" target="_blank"><i class="fa {{ $meta->icon_class }} fa-5x align-middle" aria-hidden="true"></i><br><br>No Preview Available</a></p>
 																@endif
-															</form>	
+															</div>
+															<div class="col-sm-12 col-md-12 col-lg-5 text-left">
+																<form>
+																	<div class="form-group">
+																		<label class="d-block">File Uploaded: <strong>{{ $meta->mod_time }}</strong></label>
+																	</div>
+																	<div class="form-group">
+																		<label for="file_url">File URL:</label>
+																		<input type="text" class="form-control" value="{{ $meta->url_path }}" id="file_url" readonly>
+																	</div>
+																	<div class="form-group">
+																		<label>File type: <strong>{{ $meta->mime_type }}</strong></label>
+																	</div>
+																	<div class="form-group">
+																		<label>File size: <strong>{{ $meta->file_size }}</strong></label>
+																	</div>
+																	@if ($meta->width && $meta->height)
+																		<div class="form-group">
+																			<label>Dimensions: <strong>{{ $meta->width }} x {{ $meta->height }}</strong></label>
+																		</div>
+																	@endif
+																</form>	
+															</div>
 														</div>
 													</div>
-												</div>
-												<div class="modal-footer">
-													<a href="/cp/assets/{{ $meta->media->model_id }}/delete" title="Delete" class="btn btn-danger">Delete</a>
-													<a href="/cp/assets/{{ $meta->media->model_id }}/move" title="Move" class="btn btn-info">Move</a>
-													<button type="button" class="float-right btn btn-secondary" data-dismiss="modal">Close</button>
+													<div class="modal-footer">
+														<a href="/cp/assets/{{ $meta->id }}/delete{{ $uploadDirectory }}" title="Delete" class="btn btn-outline-danger">Delete</a>
+														<a href="/cp/assets/{{ $meta->id }}/move{{ $uploadDirectory }}" title="Move" class="btn btn-outline-info">Move</a>
+														<button type="button" class="float-right btn btn-outline-secondary" data-dismiss="modal">Close</button>
+													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								@else
-									<a href="{{ $meta->url_path }}" title="{{ $name }}" class="asset-opener">
-										<i class="fa {{ $meta->icon_class }} fa-5x" aria-hidden="true"></i>
-										<span>{{ $name }}</span>
-									</a>
-								@endif
+									@else
+										<a href="{{ $meta->url_path }}" title="{{ $filename }}" class="asset-opener">
+											<i class="fa {{ $meta->icon_class }} fa-5x" aria-hidden="true"></i>
+											<span>{{ $filename }}</span>
+										</a>
+									@endif
+								</div>
+							@endforeach
+						@else
+							<div class="col-sm-12 col-md-12 col-lg-12 text-center">
+								<p>&nbsp;</p>
+								<h4><i class="fa fa-folder-o fa-5x" aria-hidden="true"></i><br>Empty folder</h4>
+								<p>&nbsp;</p>
+								<p>You may upload new assets into this folder by clicking Upload Assets button above.</p>
+								<p>&nbsp;</p>
+								<p>&nbsp;</p>
+								<p>&nbsp;</p>
 							</div>
-						@endforeach
+						@endif
 					</div>
 				</div>
 				@include('cp._partials.footer')

@@ -37,6 +37,8 @@ class Controller extends BaseController
 	
 	protected $maxLimit;
 	
+	protected $assetsDisk;
+	
 	protected $cachingEnabled;
 
 	protected $httpStatusCode;
@@ -57,6 +59,8 @@ class Controller extends BaseController
 		$this->env = env('APP_ENV');
 		
 		$this->httpStatusCode = 200;
+		
+		$this->assetsDisk = 'uploads';
 		
 		$this->cachingEnabled = config('cache.enabled');
 

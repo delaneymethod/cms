@@ -15,10 +15,6 @@ class AssetController extends Controller
 {
 	use AssetTrait;
 	
-	protected $assetsDisk;
-	
-	//protected $mediaCollection;
-	
 	protected $directoryHelper;
 	
 	protected $maxUploadFilesize;
@@ -33,10 +29,6 @@ class AssetController extends Controller
 		parent::__construct();
 		
 		$this->middleware('auth');
-		
-		$this->assetsDisk = 'uploads';
-		
-		//$this->mediaCollection = 'assets';
 		
 		// 30 MB
 		$this->maxUploadFileSize = 30000000;
@@ -70,7 +62,7 @@ class AssetController extends Controller
 		
 		$uploadDirectory = '';
 		
-		if ($directory != 'uploads') {
+		if ($directory != $this->assetsDisk) {
 			$uploadDirectory = '?directory='.$directory;
 		}
 			
@@ -106,7 +98,18 @@ class AssetController extends Controller
 				$assets = $this->directoryHelper->listDirectory($directory);
 			}
 			
-			$assets = $this->recursiveObject($assets);
+			$deleteFolderEnabled = true;
+			
+			// If we are viewing top level folder, remove up icon.
+			if ($directory == $this->assetsDisk) {
+				$deleteFolderEnabled = false;
+				
+				unset($assets['..']);
+			}
+			
+			if (count($assets) > 0) {
+				$assets = $this->recursiveObject($assets);
+			}
 			
 			$path = $this->directoryHelper->getListedPath();
 			
@@ -118,7 +121,7 @@ class AssetController extends Controller
 			
 			$messages = collect($this->recursiveObject($this->directoryHelper->getSystemMessages()));
 			
-			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle', 'path', 'breadcrumbs', 'zipEnabled', 'zipDownloadPath', 'messages', 'assets', 'uploadDirectory'));
+			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle', 'path', 'breadcrumbs', 'deleteFolderEnabled', 'zipEnabled', 'zipDownloadPath', 'messages', 'assets', 'uploadDirectory'));
 		}
 	}
 	
@@ -135,9 +138,11 @@ class AssetController extends Controller
 		if ($currentUser->hasPermission('upload_assets')) {
 			$directory = $request->get('directory');
 			
-			$directory = str_replace('uploads', '', $directory);
-			
-			$directory = (empty($directory)) ? '/' : $directory;
+			if (!empty($directory)) {
+				$directory = $this->cleanDirectory($directory);
+			} else {
+				$directory = DIRECTORY_SEPARATOR;
+			}
 			
 			$title = 'Upload Assets';
 		
@@ -176,49 +181,9 @@ class AssetController extends Controller
 			if ($request->query('type') == 'image') {
 				// Only allow files of specific extensions ['jpg', 'jpeg', 'png', 'gif'] and under 30MB
 				$rules['file'] = 'required|file|max:3000|mimes:jpg,jpeg,png,gif';
-				
-				// Make sure all the input data is what we actually save
-				$validator = $this->validatorInput($cleanedAssets, $rules);
-
-				if ($validator->fails()) {
-					$messages = $validator->errors();
-					
-					$message = '';
-					
-					if ($messages->has('file')) {
-						$message = $messages->get('file');
-						
-						$message = $message[0];
-					}
-
-					return response()->json([
-						'error' => true,
-						'message' => $message[0]
-					]);				
-				}
 			// Request has come from Redactor File Upload Plugin so we require some custom validation.	
 			} else if ($request->query('type') == 'file') {
 				$rules['file'] = 'required|file|max:3000';
-				
-				// Make sure all the input data is what we actually save
-				$validator = $this->validatorInput($cleanedAssets, $rules);
-
-				if ($validator->fails()) {
-					$messages = $validator->errors();
-					
-					$message = '';
-					
-					if ($messages->has('file')) {
-						$message = $messages->get('file');
-						
-						$message = $message[0];
-					}
-
-					return response()->json([
-						'error' => true,
-						'message' => $message[0]
-					]);
-				}
 			// Request has come from the Assets upload view so standard validation	
 			} else {
 				if ($multiple) {
@@ -233,15 +198,33 @@ class AssetController extends Controller
 				}
 				
 				$rules['directory'] = 'required|string|max:255';
-				
-				// Make sure all the input data is what we actually save
-				$validator = $this->validatorInput($cleanedAssets, $rules);
+			}
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedAssets, $rules);
 
-				if ($validator->fails()) {
+			if ($validator->fails()) {
+				// Request has come from Redactor Image Upload Plugin so we require some custom validation.
+				if ($request->query('type') == 'image' || $request->query('type') == 'file') {
+					$messages = $validator->errors();
+					
+					$message = '';
+					
+					if ($messages->has('file')) {
+						$message = $messages->get('file');
+						
+						$message = $message[0];
+					}
+
+					return response()->json([
+						'error' => true,
+						'message' => $message[0]
+					]);
+				} else {
 					return back()->withErrors($validator)->withInput();
 				}
 			}
-
+			
 			DB::beginTransaction();
 			
 			if ($multiple) {
@@ -256,20 +239,35 @@ class AssetController extends Controller
 			try {
 				$directory = $cleanedAssets['directory'];
 				
-				$directory = str_replace(['//', 'uploads/'], ['/', ''], $directory);
-				
-				if ($directory == '/') {
-					$directory = '';
-				}
-				
-				// TODO - allow specific folder
+				$directory = $this->cleanDirectory($directory);
 				
 				foreach ($files as $file) {
-					$asset = new Asset;
+					$filename = $file->getClientOriginalName();
+					
+					// Check if asset exists
+					$asset = $this->getAssetByFilename($filename);
+					
+					// If the assets doesn't exist, then upload it
+					if (empty($asset)) {
+						$path = $file->storeAs($directory, $filename);
+						
+						// Create new model
+						$asset = new Asset;
+						
+						$asset->path = $this->buildPath([
+							'',
+							$this->assetsDisk,
+							$path
+						]);
+					}
+					
+					// Update our field data
+					$asset->filename = $filename;
+					$asset->mime_type = $file->getClientMimeType();
+					$asset->extension = $file->extension();
+					$asset->size = $file->getClientSize();
 					
 					$asset->save();
-					
-					//$asset->addMedia($file)->toMediaCollection($this->mediaCollection);
 				}
 			} catch (QueryException $queryException) {
 				DB::rollback();
@@ -310,18 +308,16 @@ class AssetController extends Controller
 			} else {
 				$type = $request->get('type');
 				
-				//$asset->media = $asset->getMedia($this->mediaCollection)->first();
-				
 				if (!empty($type) && $type === 'image') {
 					return response()->json([
 						'id' => $asset->id,
-						'url' => '',// $asset->media->getUrl()
+						'url' => $asset->path,
 					]);
 				} else {
 					return response()->json([
 						'id' => $asset->id,
-						'filename' => '', //$asset->media->file_name,
-						'filelink' => '', //$asset->media->getUrl()
+						'filename' => $asset->filename,
+						'filelink' => $asset->path,
 					]);
 				}
 			}
@@ -342,19 +338,45 @@ class AssetController extends Controller
 		$currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('move_assets')) {
-			/*
+			$directory = $request->get('directory');
+			
+			if (!empty($directory)) {
+				$directory = $this->cleanDirectory($directory);
+			} else {
+				$directory = DIRECTORY_SEPARATOR;
+			}
+			
+			$directories = [];
+			
+			array_push($directories, [
+				'path' => DIRECTORY_SEPARATOR.$this->assetsDisk,
+				'depth' => 1,
+			]);
+
+			$this->directoryHelper->listDirectoriesRecursive($this->assetsDisk);
+			
+			$folders = $this->directoryHelper->getDirectories();
+			
+			foreach ($folders as $folder) {
+				$depth = count(explode(DIRECTORY_SEPARATOR, $folder));
+					
+				array_push($directories, [
+					'path' => DIRECTORY_SEPARATOR.$folder,
+					'depth' => $depth,
+				]);
+			}
+			
+			$directories = $this->recursiveObject($directories);
+			
 			$asset = $this->getAsset($id);
+			
+			$path = str_replace(DIRECTORY_SEPARATOR.$asset->filename, '', $asset->path);
 			
 			$title = 'Move Asset';
 			
 			$subTitle = 'Assets';
 			
-			$directory = $request()->get('directory');
-			
-			$directory = (empty($directory)) ? '/' : $directory;
-			
-			return view('cp.assets.folder.move', compact('currentUser', 'title', 'subTitle', 'asset', 'directory'));
-			*/
+			return view('cp.assets.move', compact('currentUser', 'title', 'subTitle', 'asset', 'path', 'directory', 'directories'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -372,15 +394,40 @@ class AssetController extends Controller
 		$currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('move_assets')) {
-			/*
+			// Remove any Cross-site scripting (XSS)
+			$rules = [];
+			
+			$cleanedAssets = $this->sanitizerInput($request->all());
+
+			$rules['new_path'] = 'required|string|max:255';
+			
+			// Make sure all the input data is what we actually save
+			$validator = $this->validatorInput($cleanedAssets, $rules);
+			
+			if ($validator->fails()) {
+				return back()->withErrors($validator)->withInput();
+			}
+
 			$asset = $this->getAsset($id);
 			
-			$directory = '';
-
+			$old = $this->getPath($asset);
+			
+			$new = public_path($this->assetsDisk).str_replace(DIRECTORY_SEPARATOR.$this->assetsDisk, '', $cleanedAssets['new_path'].DIRECTORY_SEPARATOR.$asset->filename);
+			
+			$directory = str_replace(DIRECTORY_SEPARATOR.$this->assetsDisk, $this->assetsDisk, $cleanedAssets['new_path']);
+			
 			DB::beginTransaction();
 
 			try {
-				$asset->move($directory);
+				$asset->path = DIRECTORY_SEPARATOR.str_replace(public_path('uploads'), $this->assetsDisk, $new);
+				
+				unset($asset->filesize);
+				unset($asset->width);
+				unset($asset->height);
+				
+				$asset->save();
+			
+				rename($old, $new);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -396,13 +443,12 @@ class AssetController extends Controller
 			}
 
 			DB::commit();
-
+				
 			flash('Asset moved successfully.', $level = 'info');
-
-			return redirect('/cp/assets');
-			*/
-		}
-
+			
+			return redirect('/cp/assets?directory='.$directory);
+		}	
+		
 		abort(403, 'Unauthorised action');
 	}
 	
@@ -424,7 +470,15 @@ class AssetController extends Controller
 			
 			$subTitle = 'Assets';
 			
-			return view('cp.assets.delete', compact('currentUser', 'title', 'subTitle', 'asset'));
+			$directory = $request->get('directory');
+			
+			if (!empty($directory)) {
+				$directory = $this->cleanDirectory($directory);
+			} else {
+				$directory = DIRECTORY_SEPARATOR;
+			}
+			
+			return view('cp.assets.delete', compact('currentUser', 'title', 'subTitle', 'asset', 'directory'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -442,11 +496,20 @@ class AssetController extends Controller
 		$currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('delete_assets')) {
+			$cleanedAssets = $this->sanitizerInput($request->all());
+			
+			$directory = $cleanedAssets['directory'];
+			
 			$asset = $this->getAsset($id);
 			
 			DB::beginTransaction();
 
 			try {
+				$path = $this->getPath($asset);
+				
+				// Delete our file
+				array_map('unlink', glob($path));
+				
 				$asset->delete();
 			} catch (QueryException $queryException) {
 				DB::rollback();
@@ -466,7 +529,7 @@ class AssetController extends Controller
 
 			flash('Asset deleted successfully.', $level = 'info');
 
-			return redirect('/cp/assets');
+			return redirect('/cp/assets?directory='.$this->assetsDisk.$directory);
 		}
 
 		abort(403, 'Unauthorised action');
@@ -485,9 +548,11 @@ class AssetController extends Controller
 		if ($currentUser->hasPermission('move_assets')) {
 			$directory = $request->get('directory');
 			
-			$directory = str_replace('uploads', '', $directory);
-			
-			$directory = (empty($directory)) ? '/' : $directory;
+			if (!empty($directory)) {
+				$directory = $this->cleanDirectory($directory);
+			} else {
+				$directory = DIRECTORY_SEPARATOR;
+			}
 			
 			$title = 'Create Folder';
 			
@@ -525,21 +590,16 @@ class AssetController extends Controller
 				return back()->withErrors($validator)->withInput();
 			}
 
-			try {
-				// Build our directory
-				$directory = strtolower($cleanedAssets['directory'].'/'.$cleanedAssets['folder']);
-				
-				// Clean up any issues					
-				$directory = str_replace(['//', 'uploads/'], ['/', ''], $directory);
-				
-				Storage::disk($this->assetsDisk)->makeDirectory($directory);
-			} catch (Exception $exception) {
-				abort(500, $exception);
-			}	
+			// Build our directory
+			$directory = strtolower($cleanedAssets['directory'].DIRECTORY_SEPARATOR.$cleanedAssets['folder']);
+			
+			$directory = $this->cleanDirectory($directory);
+			
+			Storage::disk($this->assetsDisk)->makeDirectory($directory);
 					
 			flash('Folder created successfully.', $level = 'success');
-
-			return redirect('/cp/assets');
+			
+			return redirect('/cp/assets?directory='.$this->assetsDisk.$directory);
 		}
 
 		abort(403, 'Unauthorised action');
@@ -549,23 +609,32 @@ class AssetController extends Controller
 	 * Shows a form for deleting an folder.
 	 *
 	 * @params	Request 	$request
-	 * @param	int			$id
 	 * @return 	Response
 	 */
-	public function folderConfirm(Request $request, int $id)
+	public function folderConfirm(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('move_assets')) {
-			/*
-			$asset = $this->getAsset($id);
+			$directory = $request->get('directory');
 			
-			$title = 'Delete Asset';
+			if (!empty($directory)) {
+				$directory = $this->cleanDirectory($directory);
+			} else {
+				$directory = DIRECTORY_SEPARATOR;
+			}
+			
+			$folders = explode(DIRECTORY_SEPARATOR, $directory);
+			
+			$folders = array_reverse($folders);
+			
+			$folder = $folders[0];
+			
+			$title = 'Delete Folder';
 			
 			$subTitle = 'Assets';
 			
-			return view('cp.assets.delete', compact('currentUser', 'title', 'subTitle', 'asset'));
-			*/
+			return view('cp.assets.folder.delete', compact('currentUser', 'title', 'subTitle', 'folder', 'directory'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -582,7 +651,6 @@ class AssetController extends Controller
 		$currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('move_assets')) {
-			/*
 			// Remove any Cross-site scripting (XSS)
 			$rules = [];
 			
@@ -599,24 +667,51 @@ class AssetController extends Controller
 			}
 
 			try {
-				// Build our directory
-				$directory = strtolower($cleanedAssets['directory'].'/'.$cleanedAssets['folder']);
+				$directory = $cleanedAssets['directory'];
 				
-				// Clean up any issues					
-				$directory = str_replace(['//', 'uploads/'], ['/', ''], $directory);
+				$assets = $this->directoryHelper->listDirectory($this->assetsDisk.$directory);
 				
-				Storage::disk($this->assetsDisk)->makeDirectory($directory);
+				if (count($assets) > 0) {
+					foreach ($assets as $asset) {
+						if (!empty($asset['filename'])) {
+							$asset = $this->getAssetByFilename($asset['filename']);
+					
+							$asset->delete();
+						}
+					}
+				}
+				
+				// Delete our directory
+				Storage::disk($this->assetsDisk)->deleteDirectory($directory);
+				
+				$directory = strtolower(str_replace(DIRECTORY_SEPARATOR.$cleanedAssets['folder'], '', $directory));
+				
+				$directory = $this->cleanDirectory($directory);
 			} catch (Exception $exception) {
 				abort(500, $exception);
 			}	
 					
-			flash('Folder created successfully.', $level = 'success');
-
-			return redirect('/cp/assets');
-			*/
+			flash('Folder deleted successfully.', $level = 'success');
+			
+			return redirect('/cp/assets?directory='.$this->assetsDisk.$directory);
 		}
 
 		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Does what it says on the tin!
+	 *
+	 * @params	String 		$directory
+	 * @return 	String
+	 */
+	protected function cleanDirectory(string $directory)
+	{
+		$directory = str_replace(['//', $this->assetsDisk], [DIRECTORY_SEPARATOR, ''], $directory);
+		
+		$directory = (empty($directory)) ? DIRECTORY_SEPARATOR : $directory;
+		
+		return $directory;
 	}
 	
 	/**
@@ -634,10 +729,10 @@ class AssetController extends Controller
 			foreach ($assets as $asset) {
 				array_push($json, array(
 					'id' => $asset->id,
-					'title' => '', //$asset->media->name,
-					'name' => '', //$asset->media->file_name,
-					'url' => '', //$asset->media->getUrl(),
-					'size' => '', //$asset->media->human_readable_size,
+					'title' => $asset->filename,
+					'name' => $asset->filename,
+					'url' => $asset->path,
+					'size' => $asset->filesize,
 				));
 			}
 		}
@@ -647,25 +742,39 @@ class AssetController extends Controller
 	
 	/**
 	 * Does what it says on the tin!
+	 *
+	 * @params	Array 		$uris
+	 * @return 	String
+	 */
+	private function buildPath(array $uris)
+	{
+		return implode(DIRECTORY_SEPARATOR, $uris);
+	}
+	
+	/**
+	 * Does what it says on the tin!
 	 */
 	private function filterByImage($assets)
 	{
 		$images = [];
 		
-		/*
-		$assets = $assets->filter(function ($asset) {
-			return starts_with($asset->media->mime_type, 'image');
-		});
+		$mimeTypes = [
+			'image/jpg',
+			'image/jpeg',
+			'image/png',
+			'image/gif',
+		];
+		
+		$assets = $assets->whereIn('mime_type', $mimeTypes);
 		
 		foreach ($assets as $asset) {
 			array_push($images, array(
 				'id' => $asset->id,
-				'title' => $asset->media->name,
-				'thumb' => $asset->media->getUrl('redactor'),
-				'url' => $asset->media->getUrl(),
+				'title' => $asset->filename, 
+				'thumb' => $asset->path, 
+				'url' => $asset->path,
 			));
 		}
-		*/
 		
 		return $images;
 	}

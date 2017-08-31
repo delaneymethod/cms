@@ -16,11 +16,11 @@
 
 namespace App\Helpers;
 
-use App\Http\Traits\MediaTrait;
+use App\Http\Traits\AssetTrait;
 
 class DirectoryHelper
 {
-	use MediaTrait;
+	use AssetTrait;
 	
 	// Define application version
 	const VERSION = '2.7.0';
@@ -36,6 +36,8 @@ class DirectoryHelper
 	protected $_fileTypes = null;
 	
 	protected $_systemMessage = null;
+	
+	protected $_directories = [];
 	
 	/**
 	 * Create a new instance.
@@ -53,7 +55,7 @@ class DirectoryHelper
 		$this->_appDir = __DIR__;
 		
 		// Build the application URL
-		$this->_appURL = config('app.url').'/';
+		$this->_appURL = config('app.url').DIRECTORY_SEPARATOR;
 		
 		// Load the configuration file
 		$this->_config = config('cms.directory_helper');
@@ -169,6 +171,27 @@ class DirectoryHelper
 		return $this->_readDirectory($directory);
 	}
 	
+	public function listDirectoriesRecursive($directory)
+	{
+		if (is_dir($directory)) {
+			$dirs = scandir($directory);
+	
+			foreach ($dirs as $dir) {
+				if ($dir == '.' || $dir == '..') {
+					continue;
+				}
+			
+				$path = $directory.DIRECTORY_SEPARATOR.$dir;
+				
+				if (is_dir($path)) {
+					$this->_directories[] = $path;
+				
+					$this->listDirectoriesRecursive($path);
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Parses and returns an array of breadcrumbs
 	 *
@@ -184,34 +207,34 @@ class DirectoryHelper
 		}
 	
 		// Explode the path into an array
-		$dirArray = explode('/', $directory);
+		$dirArray = explode(DIRECTORY_SEPARATOR, $directory);
 	
 		// Statically set the Home breadcrumb
 		$breadcrumbs[] = [
 			'title' => $this->_config['home_label'],
 			'url' => $this->_appURL.'cp/assets',
 		];
-	
+		
 		// Generate breadcrumbs
 		$dirPath  = null;
-	
+		
 		foreach ($dirArray as $key => $dir) {
 			if ($dir != '.') {
 				// Build the directory path
-				$dirPath = is_null($dirPath) ? $dir : $dirPath.'/'.$dir;
+				$dirPath = is_null($dirPath) ? $dir : $dirPath.DIRECTORY_SEPARATOR.$dir;
 				
 				// Combine the base path and dir path
 				$link = $this->_appURL.'cp/assets?directory='.rawurlencode($dirPath);
 				
-				$breadcrumbs[] = [
+				array_push($breadcrumbs, [
 					'title' => $dir,
 					'url' => $link,
-				];
+				]);
 			}
 		}
 		
-		// TODO - remove "uploads" from breadcrumbs
-			
+		unset($breadcrumbs[1]);
+		
 		// Return the breadcrumb array
 		return $breadcrumbs;
 	}
@@ -229,7 +252,7 @@ class DirectoryHelper
 		if ($this->linksDirsWithIndex()) {
 			// Check if directory contains an index file
 			foreach ($this->_config['index_files'] as $indexFile) {
-				if (file_exists($dirPath.'/'.$indexFile)) {
+				if (file_exists($dirPath.DIRECTORY_SEPARATOR.$indexFile)) {
 					return true;
 				}
 			}
@@ -343,7 +366,7 @@ class DirectoryHelper
 		}
 	
 		// Prevent access to parent folders
-		if (strpos($filePath, '<') !== false || strpos($filePath, '>') !== false || strpos($filePath, '..') !== false || strpos($filePath, '/') === 0) {
+		if (strpos($filePath, '<') !== false || strpos($filePath, '>') !== false || strpos($filePath, '..') !== false || strpos($filePath, DIRECTORY_SEPARATOR) === 0) {
 			return json_encode($hashArray);
 		}
 	
@@ -390,6 +413,11 @@ class DirectoryHelper
 		return $this->_directory;
 	}
 	
+	public function getDirectories() 
+	{
+		return $this->_directories;
+	}
+	
 	/**
 	 * Add a message to the system message array
 	 *
@@ -430,11 +458,11 @@ class DirectoryHelper
 	
 		// Eliminate double slashes
 		while (strpos($dir, '//')) {
-			$dir = str_replace('//', '/', $dir);
+			$dir = str_replace('//', DIRECTORY_SEPARATOR, $dir);
 		}
 	
 		// Remove trailing slash if present
-		if (substr($dir, -1, 1) == '/') {
+		if (substr($dir, -1, 1) == DIRECTORY_SEPARATOR) {
 			$dir = substr($dir, 0, -1);
 		}
 	
@@ -457,7 +485,7 @@ class DirectoryHelper
 		}
 	
 		// Prevent access to parent folders
-		if (strpos($dir, '<') !== false || strpos($dir, '>') !== false || strpos($dir, '..') !== false || strpos($dir, '/') === 0) {
+		if (strpos($dir, '<') !== false || strpos($dir, '>') !== false || strpos($dir, '..') !== false || strpos($dir, DIRECTORY_SEPARATOR) === 0) {
 			// Set the error message
 			$this->setSystemMessage('danger', '<strong>Error:</strong> An invalid path string was detected');
 	
@@ -492,7 +520,7 @@ class DirectoryHelper
 		foreach ($files as $file) {
 			if ($file != '.') {
 				// Get files relative path
-				$relativePath = $directory.'/'.$file;
+				$relativePath = $directory.DIRECTORY_SEPARATOR.$file;
 	
 				if (substr($relativePath, 0, 2) == './') {
 					$relativePath = substr($relativePath, 2);
@@ -527,13 +555,13 @@ class DirectoryHelper
 				if ($file == '..') {
 					if ($this->_directory != '.') {
 						// Get parent directory path
-						$pathArray = explode('/', $relativePath);
+						$pathArray = explode(DIRECTORY_SEPARATOR, $relativePath);
 						
 						unset($pathArray[count($pathArray) - 1]);
 						
 						unset($pathArray[count($pathArray) - 1]);
 						
-						$directoryPath = implode('/', $pathArray);
+						$directoryPath = implode(DIRECTORY_SEPARATOR, $pathArray);
 				
 						if (!empty($directoryPath)) {
 							$directoryPath = 'cp/assets?directory='.rawurlencode($directoryPath);
@@ -557,7 +585,7 @@ class DirectoryHelper
 					// Add all non-hidden files to the array
 					if ($this->_directory != '.' || $file != 'index.php') {
 						// Build the file path
-						$urlPath = implode('/', array_map('rawurlencode', explode('/', $relativePath)));
+						$urlPath = implode(DIRECTORY_SEPARATOR, array_map('rawurlencode', explode(DIRECTORY_SEPARATOR, $relativePath)));
 						
 						if (is_dir($relativePath)) {
 							$urlPath = $this->containsIndex($relativePath) ? $relativePath : '/cp/assets?directory='.$urlPath;
@@ -565,7 +593,7 @@ class DirectoryHelper
 						
 						$info = [
 							'file_path' => $relativePath,
-							'url_path' => $urlPath,
+							'url_path' => config('app.url').DIRECTORY_SEPARATOR.$urlPath,
 							'file_size' => is_dir($realPath) ? '-' : $this->getFileSize($realPath),
 							'mod_time' => date($this->_config['date_format'], filemtime($realPath)),
 							'icon_class' => $iconClass,
@@ -573,9 +601,18 @@ class DirectoryHelper
 						];
 						
 						if (!is_dir($realPath)) {
-							//$media = $this->getMediaByFileName($file);
-												
-							//$info['media'] = $media;
+							$asset = $this->getAssetByFilename($file);
+							
+							if (!empty($asset)) {
+								$info['id'] = $asset->id;
+								$info['filename'] = $asset->filename;
+								$info['extension'] = $asset->extension;
+								$info['mime_type'] = $asset->mime_type;
+								$info['path'] = $asset->path;
+								$info['size'] = $asset->size;
+								$info['width'] = $asset->width;
+								$info['height'] = $asset->height;
+							}
 						}
 						
 						// Add the info to the main array
@@ -802,7 +839,7 @@ class DirectoryHelper
 		}
 	
 		// Set the relative thumbnail directory path
-		$relativePath = implode('/', $diffArray);
+		$relativePath = implode(DIRECTORY_SEPARATOR, $diffArray);
 	
 		// Return the relative path
 		return $relativePath;

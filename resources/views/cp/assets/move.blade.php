@@ -22,23 +22,35 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
-					<p>Please select the directory you want to move the <strong>{{ $asset->media->name }}</strong> asset too.</p>
+					<p>Please select the new directory you want to move the <strong>{{ $asset->filename }}</strong> asset into.</p>
 					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="moveAsset" id="moveAsset" class="moveAsset" role="form" method="POST" action="/cp/assets/{{ $asset->id }}/move">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
-						<input type="hidden" name="disk" value="{{ $asset->media->disk }}">
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Current Directory</label>
-							<input type="text" name="_directory" id="_directory" class="form-control" value="{{ $asset->media->disk }}" tabindex="1" aria-describedby="helpBlockDisk" disabled>
+							<input type="text" name="_directory" id="_directory" class="form-control" value="{{ $path }}" tabindex="1" disabled>
 						</div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">New Directory</label>
-							
-							@if ($errors->has('directory'))
-								<span id="helpBlockDirectory" class="form-control-feedback form-text gf-red">- {{ $errors->first('directory') }}</span>
+							<select name="new_path" id="new_path" class="form-control">
+								@foreach ($directories as $directory)
+									@php ($indent = '')
+									@php ($depth = $directory->depth)
+									@while ($depth > 0)
+										@php ($indent .= '-')
+										@php ($depth--)
+									@endwhile
+									@if ($indent > '')
+										@php ($indent .= '&nbsp;')
+									@endif
+									<option value="{{ $directory->path }}" {{ (old('new_path') == $directory->path || $path == $directory->path) ? 'disabled' : '' }}>{{ $indent }}{{ $directory->path }}</option>
+								@endforeach
+							</select>
+							@if ($errors->has('new_path'))
+								<span id="helpBlockNewPath" class="form-control-feedback form-text gf-red">- {{ $errors->first('new_path') }}</span>
 							@endif
-							<span id="helpBlockDirectory" class="form-control-feedback form-text text-muted"></span>
+							<span id="helpBlockNewPath" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						@if ($currentUser->hasPermission('view_assets'))
 							<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>

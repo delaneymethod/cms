@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
 {
-	protected $table = 'assets';
-	
 	/**
 	 * The attributes that are mass assignable.
 	 *
 	 * @var array
 	 */
 	protected $fillable = [
+		'filename',
+		'extension',
+		'mime_type',
+		'path',
+		'size',
 	];
 	
 	/**

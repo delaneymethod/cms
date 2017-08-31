@@ -32,7 +32,7 @@
 						</div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Folder Name</label>
-							<input type="text" name="folder" id="folder" class="form-control" value="{{ old('folder') }}" tabindex="2" aria-describedby="helpBlockFolder" required>
+							<input type="text" name="folder" id="folder" class="form-control" value="{{ old('folder') }}" tabindex="2" aria-describedby="helpBlockFolder" focus required>
 							@if ($errors->has('folder'))
 								<span id="helpBlockFolder" class="form-control-feedback form-text gf-red">- {{ $errors->first('folder') }}</span>
 							@endif

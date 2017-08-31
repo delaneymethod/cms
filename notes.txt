@@ -7,32 +7,8 @@ https://scotch.io/tutorials/why-laravel-queues-are-awesome
 
 
 
+Bug in creating/editing article and adding categories
 
-@foreach ($directories as $directory)
-									@php ($indent = '')
-									@php ($depth = $directory->depth)
-									@while ($depth > 0)
-										@php ($indent .= '-')
-										@php ($depth--)
-									@endwhile
-									@if ($indent > '')
-										@php ($indent .= '&nbsp;')
-									@endif
-									<option value="{{ $directory->path }}" {{ (old('path') == $directory->path || $asset->media->disk == $directory->path) ? 'selected' : '' }}>{{ $indent }}{{ $directory->title }}</option>
-								@endforeach
-								
-								
-								
-								
-								
-								
-								
-								file uploads via assets view
-								
-								
-								
-								add files to model via add assets button which opens up a modal window.
-								
-								all files are listed the same as assets view is but each image is selectable.
-								
-								user clicks select and file urls are saved back to parent page and preview is loaded with option to delete each file. 
+Bug in editing article and setting status
+
+Move categories under Articles

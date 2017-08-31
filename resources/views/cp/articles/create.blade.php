@@ -132,6 +132,26 @@
 							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
 						</div>
 					</form>
+					<div class="modal fade add-assets-modal-lg" tabindex="-1" role="dialog" aria-labelledby="addAssetsModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="assetModalLabel">Assets</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								</div>
+								<div class="modal-body">
+									<div class="row">
+										<div class="col-sm-12 col-md-12 col-lg-12">
+										</div>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="float-right btn btn-outline-secondary" data-dismiss="modal">Close</button>
+									<button type="button" class="float-right btn btn-outline-primary">Insert Assets</button>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				@include('cp._partials.footer')
 			</div>
