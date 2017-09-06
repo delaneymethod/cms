@@ -21,6 +21,7 @@ class OrdersTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'order_number' => '1234567890',
+                'order_type_id' => 1,
                 'user_id' => 1,
                 'status_id' => 1,
                 'count' => 1,

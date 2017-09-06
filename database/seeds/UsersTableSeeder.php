@@ -31,7 +31,7 @@ class UsersTableSeeder extends Seeder
                 'location_id' => 2,
                 'status_id' => 1,
                 'role_id' => 1,
-                'remember_token' => 'RNhrcR7AfkI7V1nuNvLai2SQyQRI1eg2t0xfcMek3oWIKutGZN6uSt4TNLCt',
+                'remember_token' => 'mWWYaOb7rKAsJrg2MLf1EBXGcGKjM2ctbsUR38n8GtbHUroftjrAx4eDspIv',
                 'last_login_at' => '2017-08-01 09:19:39',
                 'created_at' => '2017-08-01 09:19:39',
                 'updated_at' => '2017-08-02 13:02:33',
@@ -53,7 +53,7 @@ class UsersTableSeeder extends Seeder
                 'remember_token' => NULL,
                 'last_login_at' => NULL,
                 'created_at' => '2017-08-01 11:56:34',
-                'updated_at' => '2017-08-01 12:02:15',
+                'updated_at' => '2017-09-06 14:34:00',
             ),
             2 => 
             array (
@@ -67,7 +67,7 @@ class UsersTableSeeder extends Seeder
                 'mobile' => '+44 7889 571 206',
                 'company_id' => 1,
                 'location_id' => 4,
-                'status_id' => 1,
+                'status_id' => 7,
                 'role_id' => 1,
                 'remember_token' => 'Jcaetqx1f06qAcl4NBSfu17sdxIWdLJCuP5zsSlr5nC5FQ3nRDeBtWdHdVgo',
                 'last_login_at' => NULL,

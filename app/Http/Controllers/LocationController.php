@@ -339,6 +339,54 @@ class LocationController extends Controller
 	}
 	
 	/**
+	 * Suspends a specific location.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function suspend(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('suspend_locations')) {
+			$location = $this->getLocation($id);
+				
+			$this->authorize('userOwnsThis', $location);
+			
+			DB::beginTransaction();
+
+			try {
+				// Suspended status
+				$location->status_id = 7;
+				$location->updated_at = $this->datetime;
+				
+				$location->save();
+			} catch (QueryException $queryException) {
+				DB::rollback();
+			
+				Log::info('SQL: '.$queryException->getSql());
+
+				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+
+				abort(500, $queryException);
+			} catch (Exception $exception) {
+				DB::rollback();
+
+				abort(500, $exception);
+			}
+
+			DB::commit();
+
+			flash('Location suspended successfully.', $level = 'info');
+
+			return redirect('/cp/locations');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
 	 * Shows a form for deleting a location.
 	 *
 	 * @params	Request 	$request

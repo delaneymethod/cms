@@ -75,7 +75,7 @@
 							@foreach ($statuses as $status)
 								<div class="form-check status_id-{{ $status->id }}">
 									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label">
-										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="6" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="6" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id) ? 'checked' : ($loop->first) ? 'checked' : '' }}>{{ $status->title }}@if (!empty($status->description))&nbsp;<i class="fa fa-info-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{ $status->description }}" aria-hidden="true"></i>@endif
 									</label>
 								</div>
 							@endforeach
@@ -93,7 +93,7 @@
 										<div class="col-sm-12 col-md-4 col-lg-4">
 											<div class="form-check">
 												<label for="category_id-{{ $category->slug }}" class="form-check-label">
-													<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="7" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : ($loop->first) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
+													<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="7" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
 												</label>
 											</div>
 										</div>

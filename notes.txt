@@ -7,8 +7,22 @@ https://scotch.io/tutorials/why-laravel-queues-are-awesome
 
 
 
-Bug in creating/editing article and adding categories
 
-Bug in editing article and setting status
+create shipping_methods table
 
-Move categories under Articles
+part delivery
+full delivery
+collection
+
+
+
+add shipping method id to orders table
+add notes to orders table
+add po_number to orders table
+
+validation
+model
+
+
+
+update to laravel 5.5

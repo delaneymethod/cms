@@ -148,7 +148,7 @@ class DashboardController extends Controller
 			
 			array_push($statCards, [
 				'label' => 'Categories',
-				'url' => '/cp/categories',
+				'url' => '/cp/articles/categories',
 				'count' => $categories->count()
 			]);
 		}

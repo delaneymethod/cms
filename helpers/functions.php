@@ -18,6 +18,10 @@ if (!function_exists('setActive')) {
 	 */
 	function setActive($path)
 	{
+		if (is_array($path)) {
+			return in_array(request()->path(), $path) ? 'active' : '';
+		}
+		
 		return request()->is($path.'*') ? 'active' : '';
 	}
 }
@@ -30,6 +34,10 @@ if (!function_exists('setClass')) {
 	 */
 	function setClass($path, $class)
 	{
+		if (is_array($path)) {
+			return in_array(request()->path(), $path) ? 'active' : '';
+		}
+		
 		return request()->is($path.'*') ? $class : '';
 	}
 }

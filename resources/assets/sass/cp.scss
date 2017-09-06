@@ -8,8 +8,6 @@
 
 @import 'node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker';
 
-@import 'node_modules/dropzone/src/dropzone';
-
 @import '../plugins/datatables/datatables-bootstrap';
 
 @import '../plugins/redactor/_scss/redactor';
@@ -86,16 +84,6 @@ button,
 * {
 	outline: 0 !important;
 }
-
-/*
-.dropzone {
-	border-style: dashed;
-
-	.dz-message {
-		font-size: 2em;
-	}
-}
-*/
 
 a,
 .btn {
@@ -252,7 +240,8 @@ a,
 	background-color: transparent;
 }
 
-.status_id-5 {
+.status_id-5,
+.status_id-7 {
 	color: $gf-red;
 	background-color: transparent;	
 }
@@ -300,6 +289,11 @@ a,
 .badge-retired {
 	color: white !important;
 	background-color: #9b9b9b !important;
+}
+
+.badge-suspended {
+	color: white !important;
+	background-color: $gf-red !important;
 }
 
 .dataTables_paginate {
@@ -537,6 +531,7 @@ a,
 			
 			input[type='radio'],
 			input[type='checkbox'] {
+				margin-top: 4px;
 				margin-right: 5px;
 			}
 			

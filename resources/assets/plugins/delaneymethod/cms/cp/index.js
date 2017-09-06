@@ -223,8 +223,8 @@
 		};
 		
 		let loadAnimations = () => {
-			if ($('.sidebar #advanced').length) {
-				$('.sidebar #advanced').on('click', event => {
+			if ($('.sidebar #submenu').length) {
+				$('.sidebar #submenu').on('click', event => {
 					event.preventDefault();
 					
 					$(event.target).toggleClass('highlight');
@@ -372,19 +372,6 @@
 			}
 		};
 		
-		let attachDropzone = () => {
-			/*
-			window.Dropzone.options.mediaDropzone = {
-				parallelUploads: 1,
-				init: () => {
-					this.on('queuecomplete', file => {
-						location.reload();
-					});
-				}
-			};
-			*/
-		};
-		
 		let convertTitleToSlug = (element, targetElement) => {
 			if ($(element).length) {
 				$(element).on('keyup change', event => {
@@ -487,6 +474,8 @@
 			
 			this.settings = $.extend({}, defaults, options);
 			
+			$('[data-toggle="tooltip"]').tooltip();
+			
 			logout();
 			
 			//loadAllStats();
@@ -504,8 +493,6 @@
 			attachDataTable('#datatable');
 			
 			attachNestedSortable('#nestedSortable');
-			
-			attachDropzone();
 			
 			convertTitleToSlug('#createPage #title', '#createPage #slug');
 			

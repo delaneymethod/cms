@@ -10,6 +10,7 @@ use App\Http\Traits\CartTrait;
 use App\Http\Traits\UserTrait;
 use App\Http\Traits\OrderTrait;
 use App\Http\Traits\StatusTrait;
+use App\Http\Traits\OrderTypeTrait;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
@@ -18,6 +19,7 @@ class OrderController extends Controller
 	use UserTrait;
 	use OrderTrait;
 	use StatusTrait;
+	use OrderTypeTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -122,8 +124,6 @@ class OrderController extends Controller
 				
 				$message = implode(' ', $errors);
 				
-				dd($message);
-				
 				abort(500, $message);
 			}
 
@@ -135,6 +135,7 @@ class OrderController extends Controller
 	
 				// Set our field data
 				$order->order_number = 'GF-'.time();
+				$order->order_type_id = 1; // Web
 				$order->user_id = $cleanedOrder['user_id'];
 				$order->status_id = 2; // pending
 				$order->count = $cleanedOrder['count'];
@@ -171,167 +172,24 @@ class OrderController extends Controller
     }
 	
 	/**
-	 * Shows a form for editing a order.
+	 * Shows an order.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
 	 * @return 	Response
 	 */
-   	public function edit(Request $request, int $id)
+   	public function show(Request $request, int $id)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($currentUser->hasPermission('edit_orders')) {
-			$title = 'Edit Order';
-		
-			$subTitle = $currentUser->company->title;
-			
+		if ($currentUser->hasPermission('view_orders')) {
 			$order = $this->getOrder($id);
 			
-			// Used to set user_id
-			$users = $this->getUsers();
-			
-			// Used to set status_id
-			$statuses = $this->getStatuses();
-			
-			// Remove Pubished, Private and Draft keys
-			$statuses->forget([3, 4, 5]);
-			
-			return view('cp.orders.edit', compact('currentUser', 'title', 'subTitle', 'order', 'users', 'statuses'));
-		}
-
-		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Updates a specific order.
-	 *
-	 * @params	Request 	$request
-	 * @param	int			$id
-	 * @return 	Response
-	 */
-   	public function update(Request $request, int $id)
-	{
-		$currentUser = $this->getAuthenticatedUser();
-
-		if ($currentUser->hasPermission('edit_orders')) {
-			// Remove any Cross-site scripting (XSS)
-			$cleanedOrder = $this->sanitizerInput($request->all());
-
-			$rules = $this->getRules('order');
-			
-			// Make sure all the input data is what we actually save
-			$validator = $this->validatorInput($cleanedOrder, $rules);
-
-			if ($validator->fails()) {
-				
-				dd($validator->errors());
-				
-				return back()->withErrors($validator)->withInput();
-			}
-			
-			DB::beginTransaction();
-
-			try {
-				// Create new model
-				$order = $this->getOrder($id);
-				
-				// Set our field data
-				$order->order_number = $cleanedOrder['order_number'];
-				$order->user_id = $cleanedOrder['user_id'];
-				$order->status_id = $cleanedOrder['status_id'];
-				$order->count = $cleanedOrder['count'];
-				$order->tax = $cleanedOrder['tax'];
-				$order->subtotal = $cleanedOrder['subtotal'];
-				$order->total = $cleanedOrder['total'];
-				$order->updated_at = $this->datetime;
-				
-				$order->save();
-			} catch (QueryException $queryException) {
-				DB::rollback();
-			
-				Log::info('SQL: '.$queryException->getSql());
-
-				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
-
-				abort(500, $queryException);
-			} catch (Exception $exception) {
-				DB::rollback();
-
-				abort(500, $exception);
-			}
-
-			DB::commit();
-
-			flash('Order updated successfully.', $level = 'success');
-
-			return redirect('/cp/orders');
-		}
-
-		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Shows a form for deleting a order.
-	 *
-	 * @params	Request 	$request
-	 * @param	int			$id
-	 * @return 	Response
-	 */
-   	public function confirm(Request $request, int $id)
-	{
-		$currentUser = $this->getAuthenticatedUser();
+			$title = 'View Order';
 		
-		if ($currentUser->hasPermission('delete_orders')) {
-			$order = $this->getOrder($id);
-		
-			$title = 'Delete Order';
+			$subTitle = 'Orders';
 			
-			$subTitle = $currentUser->company->title;
-			
-			return view('cp.orders.delete', compact('currentUser', 'title', 'subTitle', 'order'));
-		}
-
-		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Deletes a specific order.
-	 *
-	 * @params	Request 	$request
-	 * @param	int			$id
-	 * @return 	Response
-	 */
-   	public function delete(Request $request, int $id)
-	{
-		$currentUser = $this->getAuthenticatedUser();
-		
-		if ($currentUser->hasPermission('delete_orders')) {
-			$order = $this->getOrder($id);
-			
-			DB::beginTransaction();
-
-			try {
-				$order->delete();
-			} catch (QueryException $queryException) {
-				DB::rollback();
-			
-				Log::info('SQL: '.$queryException->getSql());
-
-				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
-
-				abort(500, $queryException);
-			} catch (Exception $exception) {
-				DB::rollback();
-
-				abort(500, $exception);
-			}
-
-			DB::commit();
-
-			flash('Order deleted successfully.', $level = 'info');
-
-			return redirect('/cp/orders');
+			return view('cp.orders.show', compact('currentUser', 'title', 'subTitle', 'order'));
 		}
 
 		abort(403, 'Unauthorised action');

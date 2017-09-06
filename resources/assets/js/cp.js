@@ -13,8 +13,6 @@ window.axios.defaults.headers.common = {
 
 window.Popper = require('popper.js').default;
 
-window.Dropzone = require('dropzone');
-
 require('bootstrap');
 
 require('bootstrap-datetime-picker');

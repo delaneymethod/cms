@@ -20,12 +20,12 @@ class ArticleContentTableSeeder extends Seeder
             0 => 
             array (
                 'article_id' => 1,
-                'content_id' => 42,
+                'content_id' => 52,
             ),
             1 => 
             array (
                 'article_id' => 1,
-                'content_id' => 43,
+                'content_id' => 53,
             ),
         ));
         

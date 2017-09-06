@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use App\Models\Role;
+use App\Models\Group;
 use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
@@ -15,7 +16,16 @@ class Permission extends Model
 	 */
 	protected $fillable = [
 		'title',
+		'group_id',
 	];
+	
+	/**
+	 * Get the group record associated with the permission.
+	 */
+	public function group()
+	{
+		return $this->belongsTo(Group::class);
+	}
 
 	/**
 	 * Get the role records associated with the permission.

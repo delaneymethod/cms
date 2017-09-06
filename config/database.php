@@ -59,6 +59,7 @@ return [
             'prefix' => env('PREFIX', ''),
             'strict' => true,
             'engine' => null,
+			'sticky' => true,
         ],
 
         'pgsql' => [

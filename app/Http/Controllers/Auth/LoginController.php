@@ -33,11 +33,20 @@ class LoginController extends Controller
 	 */
 	protected function authenticated(Request $request, $user)
 	{
-		// Check if the user status is closed
+		// Check if the user status is pending
 		if ($user->status->id === 2) {
 			auth()->logout();
 
-			flash('Your account has been closed! Please contact your account owner.', $level = 'warning');
+			flash('Your account is pending! Please contact your account owner.', $level = 'warning');
+
+			return back();
+		}
+		
+		// Check if the user status is retired
+		if ($user->status->id === 3) {
+			auth()->logout();
+
+			flash('Your account has been retired! Please contact your account owner.', $level = 'warning');
 
 			return back();
 		}

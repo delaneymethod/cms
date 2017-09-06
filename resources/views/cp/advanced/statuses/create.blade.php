@@ -33,11 +33,19 @@
 							@endif
 							<span id="helpBlockTitle" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="form-group">
+							<label for="description" class="control-label font-weight-bold">Description <span class="text-danger">&#42;</span></label>
+							<input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}" placeholder="" tabindex="2" autocomplete="off" aria-describedby="helpBlockDescription" required>
+							@if ($errors->has('description'))
+								<span id="helpBlockDescription" class="form-control-feedback form-text gf-red">- {{ $errors->first('description') }}</span>
+							@endif
+							<span id="helpBlockDescription" class="form-control-feedback form-text text-muted"></span>
+						</div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_statuses'))
-								<a href="/cp/advanced/statuses" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="3" title="Cancel">Cancel</a>
+								<a href="/cp/advanced/statuses" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="2" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="3" title="Save Changes">Save Changes</button>
 						</div>
 					</form>
 				</div>

@@ -44,7 +44,7 @@
 						<tbody>
 							@foreach ($locations as $location)
 								<tr class="{{ str_slug($location->status->title) }}">
-									<td>{{ $location->title }}{!! ($location->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}{!! ($location->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}</td>
+									<td>{{ $location->title }}{!! ($location->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}{!! ($location->status->id == 7) ? '&nbsp;<span class="badge badge-pill badge-suspended align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}{!! ($location->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$location->status->title.'</span>' : '' !!}</td>
 									<td>{{ $location->postal_address }}</td>
 									<td>{{ $location->telephone }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $location->status->id }}" title="{{ $location->status->title }}" aria-hidden="true"></i></td>
@@ -57,6 +57,9 @@
 												@endif
 												@if ($currentUser->hasPermission('retire_locations') && !in_array($location->id, $defaultLocationIds) && $location->status_id != 3)
 													<li class="dropdown-item gf-default"><a href="/cp/locations/{{ $location->id }}/retire" title="Retire Location"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire Location</a></li>
+												@endif
+												@if ($currentUser->hasPermission('suspend_locations') && !in_array($location->id, $defaultLocationIds) && $location->status_id != 7)
+													<li class="dropdown-item gf-default"><a href="/cp/locations/{{ $location->id }}/suspend" title="Suspend Location"><i class="icon fa fa-ban" aria-hidden="true"></i>Suspend Location</a></li>
 												@endif
 												@if ($currentUser->hasPermission('delete_locations') && !in_array($location->id, $defaultLocationIds))
 													<li class="dropdown-item gf-danger"><a href="/cp/locations/{{ $location->id }}/delete" title="Delete Location"><i class="icon fa fa-trash" aria-hidden="true"></i>Delete Location</a></li>

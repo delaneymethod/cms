@@ -21,6 +21,7 @@ class CreateStatusesTable extends Migration
 			$table->increments('id');
 			
 			$table->string('title')->index();
+			$table->string('description')->nullable();
 
 			$table->timestamps();
 		});

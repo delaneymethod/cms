@@ -46,7 +46,7 @@ class CategoryController extends Controller
 			
 			$statuses = $this->getStatuses();
 			
-			return view('cp.categories.index', compact('currentUser', 'title', 'subTitle', 'categories', 'statues'));
+			return view('cp.articles.categories.index', compact('currentUser', 'title', 'subTitle', 'categories', 'statues'));
 		}
 		
 		abort(403, 'Unauthorised action');
@@ -70,10 +70,10 @@ class CategoryController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
-			// Remove Pubished, Private and Draft keys
-			$statuses->forget([3, 4, 5]);
+			// Remove Pubished, Private, Draft and Suspended keys
+			$statuses->forget([3, 4, 5, 6]);
 			
-			return view('cp.categories.create', compact('currentUser', 'title', 'subTitle', 'statuses'));
+			return view('cp.articles.categories.create', compact('currentUser', 'title', 'subTitle', 'statuses'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -132,7 +132,7 @@ class CategoryController extends Controller
 
 			flash('Category created successfully.', $level = 'success');
 
-			return redirect('/cp/categories');
+			return redirect('/cp/articles/categories');
 		}
 
 		abort(403, 'Unauthorised action');
@@ -159,10 +159,10 @@ class CategoryController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
-			// Remove Pubished, Private and Draft keys
-			$statuses->forget([3, 4, 5]);
+			// Remove Pubished, Private, Draft and Suspended keys
+			$statuses->forget([3, 4, 5, 6]);
 			
-			return view('cp.categories.edit', compact('currentUser', 'title', 'subTitle', 'category', 'statuses'));
+			return view('cp.articles.categories.edit', compact('currentUser', 'title', 'subTitle', 'category', 'statuses'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -225,7 +225,7 @@ class CategoryController extends Controller
 
 			flash('Category updated successfully.', $level = 'success');
 
-			return redirect('/cp/categories');
+			return redirect('/cp/articles/categories');
 		}
 
 		abort(403, 'Unauthorised action');
@@ -248,14 +248,14 @@ class CategoryController extends Controller
 			if ($category->id == $id && $id == 1) {
 				flash('You cannot delete the '.$category->title.' category.', $level = 'warning');
 	
-				return redirect('/cp/categories');
+				return redirect('/cp/articles/categories');
 			}
 			
 			$title = 'Delete Category';
 			
 			$subTitle = 'Categories';
 			
-			return view('cp.categories.delete', compact('currentUser', 'title', 'subTitle', 'category'));
+			return view('cp.articles.categories.delete', compact('currentUser', 'title', 'subTitle', 'category'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -278,7 +278,7 @@ class CategoryController extends Controller
 			if ($category->id == $id && $id == 1) {
 				flash('You cannot delete the '.$category->title.' category.', $level = 'warning');
 	
-				return redirect('/cp/categories');
+				return redirect('/cp/articles/categories');
 			}
 			
 			DB::beginTransaction();
@@ -303,7 +303,7 @@ class CategoryController extends Controller
 
 			flash('Category deleted successfully.', $level = 'info');
 
-			return redirect('/cp/categories');
+			return redirect('/cp/articles/categories');
 		}
 
 		abort(403, 'Unauthorised action');

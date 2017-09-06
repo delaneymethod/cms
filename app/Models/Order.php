@@ -5,6 +5,7 @@ namespace App\Models;
 use App\User;
 use App\Models\Status;
 use App\Models\Product;
+use App\Models\OrderType;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -16,6 +17,7 @@ class Order extends Model
 	 */
 	protected $fillable = [
 		'order_number',
+		'order_type_id',
 		'user_id',
 		'status_id',
 		'count',
@@ -66,6 +68,14 @@ class Order extends Model
     {
         return $this->format2decimals($value);
     }
+    
+    /**
+	 * Get the order type record associated with the order.
+	 */
+	public function order_type()
+	{
+		return $this->belongsTo(OrderType::class);
+	}
 
 	/**
 	 * Get the user record associated with the order.

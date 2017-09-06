@@ -69,6 +69,7 @@ Route::group(['prefix' => 'cp'], function () {
 	Route::get('/locations/create', 'LocationController@create');
 	Route::get('/locations/{id}/edit', 'LocationController@edit');
 	Route::get('/locations/{id}/retire', 'LocationController@retire');
+	Route::get('/locations/{id}/suspend', 'LocationController@suspend');
 	Route::get('/locations/{id}/delete', 'LocationController@confirm');
 	Route::post('/locations', 'LocationController@store');
 	Route::put('/locations/{id}', 'LocationController@update');
@@ -77,31 +78,33 @@ Route::group(['prefix' => 'cp'], function () {
 	
 	// CP > Orders routes
 	Route::get('/orders', 'OrderController@index');
-	Route::get('/orders/{id}/edit', 'OrderController@edit');
-	Route::get('/orders/{id}/delete', 'OrderController@confirm');
-	Route::put('/orders/{id}', 'OrderController@update');
-	Route::patch('/orders/{id}', 'OrderController@update');
-	Route::delete('/orders/{id}', 'OrderController@delete');
+	Route::get('/orders/{id}', 'OrderController@show');
 	
-	// CP > Articles routes
-	Route::get('/articles', 'ArticleController@index');
-	Route::get('/articles/create', 'ArticleController@create');
-	Route::get('/articles/{id}/edit', 'ArticleController@edit');
-	Route::get('/articles/{id}/delete', 'ArticleController@confirm');
-	Route::post('/articles', 'ArticleController@store');
-	Route::put('/articles/{id}', 'ArticleController@update');
-	Route::patch('/articles/{id}', 'ArticleController@update');
-	Route::delete('/articles/{id}', 'ArticleController@delete');
+	Route::group(['prefix' => 'articles'], function () {
+		// CP > Articles routes
+		Route::get('/', function () {
+			return redirect('/cp/articles/all');
+		});
 	
-	// CP > Categories routes
-	Route::get('/categories', 'CategoryController@index');
-	Route::get('/categories/create', 'CategoryController@create');
-	Route::get('/categories/{id}/edit', 'CategoryController@edit');
-	Route::get('/categories/{id}/delete', 'CategoryController@confirm');
-	Route::post('/categories', 'CategoryController@store');
-	Route::put('/categories/{id}', 'CategoryController@update');
-	Route::patch('/categories/{id}', 'CategoryController@update');
-	Route::delete('/categories/{id}', 'CategoryController@delete');
+		Route::get('/all', 'ArticleController@index');
+		Route::get('/create', 'ArticleController@create');
+		Route::get('/{id}/edit', 'ArticleController@edit');
+		Route::get('/{id}/delete', 'ArticleController@confirm');
+		Route::post('/', 'ArticleController@store');
+		Route::put('/{id}', 'ArticleController@update');
+		Route::patch('/{id}', 'ArticleController@update');
+		Route::delete('/{id}', 'ArticleController@delete');
+		
+		// CP > Categories routes
+		Route::get('/categories', 'CategoryController@index');
+		Route::get('/categories/create', 'CategoryController@create');
+		Route::get('/categories/{id}/edit', 'CategoryController@edit');
+		Route::get('/categories/{id}/delete', 'CategoryController@confirm');
+		Route::post('/categories', 'CategoryController@store');
+		Route::put('/categories/{id}', 'CategoryController@update');
+		Route::patch('/categories/{id}', 'CategoryController@update');
+		Route::delete('/categories/{id}', 'CategoryController@delete');
+	});
 	
 	// CP > Products routes
 	Route::get('/products', 'ProductController@index');
@@ -137,33 +140,37 @@ Route::group(['prefix' => 'cp'], function () {
 	Route::put('/menu', 'PageController@tree');
 	Route::patch('/menu', 'PageController@tree');
 	
-	// CP > Advanced routes
-	Route::get('/advanced', 'RoleController@index');
+	Route::group(['prefix' => 'advanced'], function () {
+		// CP > Advanced routes
+		Route::get('/', function () {
+			return redirect('/cp/advanced/roles');
+		});
 	
-	// CP > Roles routes
-	Route::get('/advanced/roles', 'RoleController@index');
-	Route::get('/advanced/roles/create', 'RoleController@create');
-	Route::get('/advanced/roles/{id}/edit', 'RoleController@edit');
-	Route::get('/advanced/roles/{id}/delete', 'RoleController@confirm');
-	Route::post('/advanced/roles', 'RoleController@store');
-	Route::post('/advanced/roles/permissions', 'RoleController@permissions');
-	Route::put('/advanced/roles/{id}', 'RoleController@update');
-	Route::patch('/advanced/roles/{id}', 'RoleController@update');
-	Route::delete('/advanced/roles/{id}', 'RoleController@delete');
-	
-	// CP > Permissions routes
-	Route::get('/advanced/permissions', 'PermissionController@index');
-	
-	// CP > Statuses routes
-	Route::get('/advanced/statuses', 'StatusController@index');
-	Route::get('/advanced/statuses/create', 'StatusController@create');
-	Route::get('/advanced/statuses/{id}/edit', 'StatusController@edit');
-	Route::get('/advanced/statuses/{id}/delete', 'StatusController@confirm');
-	Route::post('/advanced/statuses', 'StatusController@store');
-	Route::put('/advanced/statuses/{id}', 'StatusController@update');
-	Route::patch('/advanced/statuses/{id}', 'StatusController@update');
-	Route::delete('/advanced/statuses/{id}', 'StatusController@delete');
-	
+		// CP > Roles routes
+		Route::get('/roles', 'RoleController@index');
+		Route::get('/roles/create', 'RoleController@create');
+		Route::get('/roles/{id}/edit', 'RoleController@edit');
+		Route::get('/roles/{id}/delete', 'RoleController@confirm');
+		Route::post('/roles', 'RoleController@store');
+		Route::post('/roles/permissions', 'RoleController@permissions');
+		Route::put('/roles/{id}', 'RoleController@update');
+		Route::patch('/roles/{id}', 'RoleController@update');
+		Route::delete('/roles/{id}', 'RoleController@delete');
+		
+		// CP > Permissions routes
+		Route::get('/permissions', 'PermissionController@index');
+		
+		// CP > Statuses routes
+		Route::get('/statuses', 'StatusController@index');
+		Route::get('/statuses/create', 'StatusController@create');
+		Route::get('/statuses/{id}/edit', 'StatusController@edit');
+		Route::get('/statuses/{id}/delete', 'StatusController@confirm');
+		Route::post('/statuses', 'StatusController@store');
+		Route::put('/statuses/{id}', 'StatusController@update');
+		Route::patch('/statuses/{id}', 'StatusController@update');
+		Route::delete('/statuses/{id}', 'StatusController@delete');
+	});
+		
 	// CP > Assets routes
 	Route::get('/assets', 'AssetController@index');
 	Route::get('/assets/upload', 'AssetController@upload');

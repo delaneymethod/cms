@@ -180,7 +180,8 @@ return [
 		// Added by Sean
 		Barryvdh\Cors\ServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
-		Orangehill\Iseed\IseedServiceProvider::class,
+		App\Providers\ComposerServiceProvider::class,
+        Orangehill\Iseed\IseedServiceProvider::class,
 		Propaganistas\LaravelIntl\IntlServiceProvider::class,
 		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 		Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,

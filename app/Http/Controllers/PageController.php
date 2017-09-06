@@ -68,9 +68,6 @@ class PageController extends Controller
 		// Get the requested page based on slug - if it doesnt exist, a 404 is thrown!
 		$page = $this->getPageBySlug($slug);
 		
-		// Since the requested page was found, then grab all the other pages - builds our navigation and available across all pages
-		$pages = $this->getPages();
-		
 		// Grab a cart instance	- available across all pages
 		$cart = $this->getCartInstance('cart');
 		
@@ -90,10 +87,10 @@ class PageController extends Controller
 		
 		$parameters['wishlistCart'] = $wishlistCart;
 		
-		// Selects the pages template and injects any data required
+		// Selects the page template and injects any data required
 		$this->preparePageTemplate($page, $parameters);
 		
-		return view('index', compact('currentUser', 'page', 'pages', 'cart', 'wishlistCart'));
+		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
 	}
 
 	/**
@@ -113,9 +110,7 @@ class PageController extends Controller
 			
 			$this->rebuildPages();
 		
-			$pages = $this->getPages();
-			
-			return view('cp.pages.index', compact('currentUser', 'title', 'subTitle', 'pages'));
+			return view('cp.pages.index', compact('currentUser', 'title', 'subTitle'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -162,19 +157,16 @@ class PageController extends Controller
 		
 			$subTitle = 'Pages';
 			
-			// Used to set parent_id
-			$pages = $this->getPages();
-			
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
-			// Remove Active, Pending and Retired keys
-			$statuses->forget([0, 1, 2]);
+			// Remove Active, Pending, Retired and Suspended keys
+			$statuses->forget([0, 1, 2, 6]);
 			
 			// Used to set template_id
 			$templates = $this->getTemplates();
 			
-			return view('cp.pages.create', compact('currentUser', 'title', 'subTitle', 'pages', 'statuses', 'templates'));
+			return view('cp.pages.create', compact('currentUser', 'title', 'subTitle', 'statuses', 'templates'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -299,14 +291,11 @@ class PageController extends Controller
 			
 			$page = $this->getPage($id);
 			
-			// Used to set parent_id
-			$pages = $this->getPages();
-			
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
-			// Remove Active, Pending and Retired keys
-			$statuses->forget([0, 1, 2]);
+			// Remove Active, Pending, Retired and Suspended keys
+			$statuses->forget([0, 1, 2, 6]);
 			
 			// Used to set template_id
 			$templates = $this->getTemplates();
@@ -322,7 +311,7 @@ class PageController extends Controller
 				$pageTemplate = $this->mapContentsToFields($pageTemplate, $page->contents);
 			}
 			
-			return view('cp.pages.edit', compact('currentUser', 'title', 'subTitle', 'page', 'pages', 'statuses', 'templates', 'pageTemplate'));
+			return view('cp.pages.edit', compact('currentUser', 'title', 'subTitle', 'page', 'statuses', 'templates', 'pageTemplate'));
 		}
 
 		abort(403, 'Unauthorised action');

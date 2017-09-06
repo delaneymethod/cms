@@ -76,9 +76,6 @@ class ArticleController extends Controller
 		// We're going to use the articles page as our page - it is the articles parent after all...
 		$page = $this->getPageBySlug('articles');
 		
-		// Since the requested product was found, then grab all the pages - builds our navigation and available across all pages
-		$pages = $this->getPages();
-		
 		// Grab a cart instance	- available across all pages
 		$cart = $this->getCartInstance('cart');
 		
@@ -99,10 +96,10 @@ class ArticleController extends Controller
 		
 		$parameters['article'] = $article;
 		
-		// Selects the pages template and injects any data required
+		// Selects the page template and injects any data required
 		$this->preparePageTemplate($page, $parameters);
 		
-		return view('index', compact('currentUser', 'page', 'pages', 'cart', 'wishlistCart'));
+		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
 	}
 	
 	/**
@@ -126,8 +123,8 @@ class ArticleController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
-			// Remove Active, Pending and Retired
-			$statuses->forget([1, 2, 3]);
+			// Remove Active, Pending, Retired, Suspended keys
+			$statuses->forget([1, 2, 3, 6]);
 			
 			// Used to set categories_ids
 			$categories = $this->getCategories();
@@ -243,7 +240,7 @@ class ArticleController extends Controller
 
 			flash('Article created successfully.', $level = 'success');
 
-			return redirect('/cp/articles');
+			return redirect('/cp/articles/all');
 		}
 
 		abort(403, 'Unauthorised action');
@@ -273,8 +270,8 @@ class ArticleController extends Controller
 			// Used to set status_id
 			$statuses = $this->getStatuses();
 			
-			// Remove Active, Pending and Retired
-			$statuses->forget([1, 2, 3]);
+			// Remove Active, Pending, Retired, Suspended keys
+			$statuses->forget([1, 2, 3, 6]);
 			
 			// Used to set categories_ids
 			$categories = $this->getCategories();
@@ -410,7 +407,7 @@ class ArticleController extends Controller
 
 			flash('Article updated successfully.', $level = 'success');
 
-			return redirect('/cp/articles');
+			return redirect('/cp/articles/all');
 		}
 
 		abort(403, 'Unauthorised action');
@@ -487,7 +484,7 @@ class ArticleController extends Controller
 
 			flash('Article deleted successfully.', $level = 'info');
 
-			return redirect('/cp/articles');
+			return redirect('/cp/articles/all');
 		}
 
 		abort(403, 'Unauthorised action');

@@ -80,7 +80,7 @@
 							@foreach ($statuses as $status)
 								<div class="form-check status_id-{{ $status->id }}">
 									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
-										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="5" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $page->status_id == $status->id) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>{{ $status->title }}
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="5" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $page->status_id == $status->id) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>{{ $status->title }}@if (!empty($status->description))&nbsp;<i class="fa fa-info-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{ $status->description }}" aria-hidden="true"></i>@endif
 									</label>
 								</div>
 							@endforeach

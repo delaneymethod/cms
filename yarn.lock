@@ -1792,10 +1792,6 @@ download@^4.0.0, download@^4.1.2:
     vinyl-fs "^2.2.0"
     ware "^1.2.0"
 
-dropzone@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/dropzone/-/dropzone-5.1.1.tgz#9f5b02fc4aa84e6466e046ba770bc82776ea49de"
-
 duplexer2@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/duplexer2/-/duplexer2-0.0.2.tgz#c614dcf67e2fb14995a91711e5a617e8a60a31db"

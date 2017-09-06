@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
 			
 			$table->string('order_number')->index();
 			
+			$table->unsignedInteger('order_type_id')->nullable()->index()->comment('Foreign key to the order types table');
 			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
 			$table->unsignedInteger('count')->nullable();
@@ -34,6 +35,7 @@ class CreateOrdersTable extends Migration
 		});
 
 		Schema::table('orders', function (Blueprint $table) {
+			$table->foreign('order_type_id')->references('id')->on('order_types')->onDelete('set null');
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 		});

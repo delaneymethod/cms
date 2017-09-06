@@ -81,9 +81,6 @@ class ProductController extends Controller
 		// We're going to use the products page as our page - it is the products parent after all...
 		$page = $this->getPageBySlug('products');
 		
-		// Since the requested product was found, then grab all the pages - builds our navigation and available across all pages
-		$pages = $this->getPages();
-		
 		// Grab a cart instance	- available across all pages
 		$cart = $this->getCartInstance('cart');
 		
@@ -105,10 +102,10 @@ class ProductController extends Controller
 		
 		$parameters['product'] = $product;
 		
-		// Selects the pages template and injects any data required
+		// Selects the page template and injects any data required
 		$this->preparePageTemplate($page, $parameters);
 		
-		return view('index', compact('currentUser', 'page', 'pages', 'cart', 'wishlistCart'));
+		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
 	}
 	
 	/**

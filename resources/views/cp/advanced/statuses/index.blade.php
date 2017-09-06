@@ -35,6 +35,7 @@
 						<thead>
 							<tr>
 								<th>Title</th>
+								<th>Description</th>
 								<th class="no-sort">&nbsp;</th>
 							</tr>
 						</thead>
@@ -42,6 +43,7 @@
 							@foreach ($statuses as $status)
 								<tr>
 									<td>{{ $status->title }}</td>
+									<td>{{ $status->description }}</td>
 									@if ($currentUser->hasPermission('edit_statuses') || $currentUser->hasPermission('delete_statuses'))
 										<td class="actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Status Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>

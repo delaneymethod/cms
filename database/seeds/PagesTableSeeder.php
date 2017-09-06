@@ -32,7 +32,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 0,
                 'hide_from_nav' => 0,
                 'created_at' => '2017-08-01 09:19:40',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             1 => 
             array (
@@ -49,7 +49,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 0,
                 'hide_from_nav' => 0,
                 'created_at' => '2017-08-01 11:51:41',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             2 => 
             array (
@@ -66,7 +66,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 0,
                 'hide_from_nav' => 0,
                 'created_at' => '2017-08-01 11:51:58',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             3 => 
             array (
@@ -83,7 +83,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 0,
                 'hide_from_nav' => 0,
                 'created_at' => '2017-08-01 11:51:58',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             4 => 
             array (
@@ -100,7 +100,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 0,
                 'hide_from_nav' => 0,
                 'created_at' => '2017-08-01 11:51:58',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             5 => 
             array (
@@ -117,7 +117,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 1,
                 'hide_from_nav' => 0,
                 'created_at' => '2017-08-01 11:51:58',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             6 => 
             array (
@@ -134,7 +134,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 2,
                 'hide_from_nav' => 1,
                 'created_at' => '2017-08-01 11:51:58',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             7 => 
             array (
@@ -151,7 +151,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 0,
                 'hide_from_nav' => 1,
                 'created_at' => '2017-08-01 11:51:58',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             8 => 
             array (
@@ -168,7 +168,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 0,
                 'hide_from_nav' => 0,
                 'created_at' => '2017-08-01 11:51:58',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
             9 => 
             array (
@@ -185,7 +185,7 @@ class PagesTableSeeder extends Seeder
                 'depth' => 1,
                 'hide_from_nav' => 0,
                 'created_at' => '2017-08-25 16:20:43',
-                'updated_at' => '2017-08-28 11:41:02',
+                'updated_at' => '2017-09-06 15:35:12',
             ),
         ));
         

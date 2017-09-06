@@ -59,11 +59,15 @@
 					</tfoot>
 				</table>
 				
-				<form name="createOrder" id="createOrder" class="createOrder" role="form" method="POST" action="/orders">
-					{{ csrf_field() }}
-					<input type="hidden" name="user_id" value="{{ $currentUser->id }}">
-					<button type="submit" name="submit" id="submit" title="Place Order">Place Order</button>
-				</form>
+				@if ($currentUser->location->status->id == 7)
+				
+				@else
+					<form name="createOrder" id="createOrder" class="createOrder" role="form" method="POST" action="/orders">
+						{{ csrf_field() }}
+						<input type="hidden" name="user_id" value="{{ $currentUser->id }}">
+						<button type="submit" name="submit" id="submit" title="Place Order">Place Order</button>
+					</form>
+				@endif
 				
 			@else
 				<p>There are currently no items in your cart!</p>

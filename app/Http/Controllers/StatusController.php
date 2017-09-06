@@ -100,6 +100,7 @@ class StatusController extends Controller
 	
 				// Set our field data
 				$status->title = $cleanedStatus['title'];
+				$status->description = $cleanedStatus['description'];
 				
 				$status->save();
 			} catch (QueryException $queryException) {
@@ -182,6 +183,7 @@ class StatusController extends Controller
 				
 				// Set our field data
 				$status->title = $cleanedStatus['title'];
+				$status->description = $cleanedStatus['description'];
 				$status->updated_at = $this->datetime;
 				
 				$status->save();

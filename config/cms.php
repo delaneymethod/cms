@@ -52,6 +52,7 @@ return [
 		],
 		'order' => [
 			'order_number' => 'required|string|max:255',
+			'order_type_id' => 'required|integer',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',
 			'count' => 'required|integer',
@@ -99,6 +100,7 @@ return [
 		],
 		'status' => [
 			'title' => 'required|string|max:255',
+			'description' => 'string|max:255',
 		],
 		'permission' => [
 			'title' => 'required|string|max:255',

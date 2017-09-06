@@ -16,6 +16,8 @@ class CreateJobsTable extends Migration
 		 Schema::enableForeignKeyConstraints();
 		 
 		Schema::create('jobs', function (Blueprint $table) {
+			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
+			
 			$table->bigIncrements('id');
 			
 			$table->string('queue');

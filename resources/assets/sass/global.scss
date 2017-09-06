@@ -43,3 +43,47 @@ button {
 * {
 	outline: 0 !important;
 }
+
+.icon {
+	width: 20px;
+}
+
+.message {
+	display: none;
+	margin-right: -15px;
+	margin-left: -15px;
+	margin-bottom: 0;
+	padding: 20px 30px;
+	background-color: $main-message-bg-color;
+	color: #ffffff;
+	font-weight: 600;
+	font-size: 16px;
+	
+	a,
+	a:hover {
+		color: #ffffff;
+		background-color: transparent;
+		text-decoration: none;
+	}
+}
+
+.message.success {
+	display: block;
+	background-color: green;
+}
+
+.message.info {
+	display: block;
+	background-color: $gf-info;
+}
+
+.message.warning {
+	display: block;
+	background-color: $gf-warning;
+}
+
+.message.danger {
+	display: block;
+	background-color: $main-message-bg-color;	
+}
+	

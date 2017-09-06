@@ -43,19 +43,19 @@ class ContentsTableSeeder extends Seeder
             ),
             3 => 
             array (
-                'id' => 42,
+                'id' => 52,
                 'field_id' => 10,
                 'data' => 'This is an example excerpt field.',
-                'created_at' => '2017-08-28 08:48:16',
-                'updated_at' => '2017-08-28 08:48:16',
+                'created_at' => '2017-09-06 12:13:10',
+                'updated_at' => '2017-09-06 12:13:10',
             ),
             4 => 
             array (
-                'id' => 43,
+                'id' => 53,
                 'field_id' => 9,
                 'data' => '<p>This<em> is</em> an <del>example</del> <strong>content</strong> field.</p>',
-                'created_at' => '2017-08-28 08:48:16',
-                'updated_at' => '2017-08-28 08:48:16',
+                'created_at' => '2017-09-06 12:13:10',
+                'updated_at' => '2017-09-06 12:13:10',
             ),
         ));
         

@@ -24,6 +24,6 @@ trait PermissionTrait
 	 */
 	public function getPermissions()
 	{
-		return Permission::all();
+		return Permission::all()->groupBy('group_id');
 	}
 }
