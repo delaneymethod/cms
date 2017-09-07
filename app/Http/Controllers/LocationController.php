@@ -309,8 +309,9 @@ class LocationController extends Controller
 			DB::beginTransaction();
 
 			try {
-				// Retired status
-				$location->status_id = 3;
+				$status = $this->getStatusByTitle('Retired');
+				
+				$location->status_id = $status->id;
 				$location->updated_at = $this->datetime;
 				
 				$location->save();
@@ -357,8 +358,9 @@ class LocationController extends Controller
 			DB::beginTransaction();
 
 			try {
-				// Suspended status
-				$location->status_id = 7;
+				$status = $this->getStatusByTitle('Suspended');
+				
+				$location->status_id = $status->id;
 				$location->updated_at = $this->datetime;
 				
 				$location->save();

@@ -179,6 +179,7 @@ return [
         
 		// Added by Sean
 		Barryvdh\Cors\ServiceProvider::class,
+		Barryvdh\Snappy\ServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
 		App\Providers\ComposerServiceProvider::class,
         Orangehill\Iseed\IseedServiceProvider::class,
@@ -236,7 +237,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         
 		// Added by Sean
+		'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
 		'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+		'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
 		
     ],
 

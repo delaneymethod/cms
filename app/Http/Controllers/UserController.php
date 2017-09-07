@@ -376,8 +376,9 @@ class UserController extends Controller
 			DB::beginTransaction();
 
 			try {
-				// Retired status
-				$user->status_id = 3;
+				$status = $this->getStatusByTitle('Retired');
+				
+				$user->status_id = $status->id;
 				$user->updated_at = $this->datetime;
 				
 				$user->save();

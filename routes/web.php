@@ -30,6 +30,7 @@ Route::get('/articles/{slug}', 'ArticleController@show');
 Route::get('/products/{slug}', 'ProductController@show');
 
 // Order routes
+Route::get('/orders/{id}/pdf', 'OrderController@pdf');
 Route::post('/orders', 'OrderController@store');
 
 // BACK END ROUTES
@@ -79,6 +80,7 @@ Route::group(['prefix' => 'cp'], function () {
 	// CP > Orders routes
 	Route::get('/orders', 'OrderController@index');
 	Route::get('/orders/{id}', 'OrderController@show');
+	Route::get('/orders/{id}/pdf', 'OrderController@pdf');
 	
 	Route::group(['prefix' => 'articles'], function () {
 		// CP > Articles routes

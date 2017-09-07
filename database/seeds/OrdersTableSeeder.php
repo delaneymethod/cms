@@ -21,7 +21,11 @@ class OrdersTableSeeder extends Seeder
             array (
                 'id' => 1,
                 'order_number' => '1234567890',
+                'po_number' => '1234567890',
+                'notes' => 'nl2br — Inserts HTML line breaks before all newlines in a string.',
                 'order_type_id' => 1,
+                'delivery_method_id' => 1,
+                'location_id' => 1,
                 'user_id' => 1,
                 'status_id' => 1,
                 'count' => 1,

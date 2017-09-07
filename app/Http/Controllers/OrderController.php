@@ -4,22 +4,23 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use App;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Traits\CartTrait;
-use App\Http\Traits\UserTrait;
 use App\Http\Traits\OrderTrait;
 use App\Http\Traits\StatusTrait;
 use App\Http\Traits\OrderTypeTrait;
+use App\Http\Traits\DeliveryMethodTrait;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
 	use CartTrait;
-	use UserTrait;
 	use OrderTrait;
 	use StatusTrait;
 	use OrderTypeTrait;
+	use DeliveryMethodTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -53,6 +54,31 @@ class OrderController extends Controller
 			return view('cp.orders.index', compact('currentUser', 'title', 'subTitle', 'orders'));
 		}
 		
+		abort(403, 'Unauthorised action');
+	}
+	
+	
+	/**
+	 * Shows an order.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function show(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('view_orders')) {
+			$order = $this->getOrder($id);
+			
+			$title = 'View Order';
+		
+			$subTitle = 'Orders';
+			
+			return view('cp.orders.show', compact('currentUser', 'title', 'subTitle', 'order'));
+		}
+
 		abort(403, 'Unauthorised action');
 	}
 	
@@ -95,7 +121,9 @@ class OrderController extends Controller
 			
 			// Set some dynamic rules to valid our order
 			$rules = [];
+			$rules['delivery_id'] = 'required|integer';
 			$rules['user_id'] = 'required|integer';
+			$rules['notes'] = 'nullable|string';
 			
 			foreach (range(0, $products) as $index) {
 				$rules['products.'.$index.'.product_id'] = 'required|integer';
@@ -132,12 +160,20 @@ class OrderController extends Controller
 			try {
 				// Create new model
 				$order = new Order;
-	
+				
+				$orderType = $this->getOrderTypeBySlug('web');
+				
+				$status = $this->getStatusByTitle('Pending');
+				
+				// FIXME - move GF prefix to config file
+				
 				// Set our field data
 				$order->order_number = 'GF-'.time();
-				$order->order_type_id = 1; // Web
+				$order->order_type_id = $orderType->id;
+				$order->delivery_id = $cleanedOrder['delivery_id'];
 				$order->user_id = $cleanedOrder['user_id'];
-				$order->status_id = 2; // pending
+				$order->status_id = $status->id;
+				$order->notes = $cleanedOrder['notes'];
 				$order->count = $cleanedOrder['count'];
 				$order->tax = $cleanedOrder['tax'];
 				$order->subtotal = $cleanedOrder['subtotal'];
@@ -170,26 +206,27 @@ class OrderController extends Controller
 
 		abort(403, 'Unauthorised action');
     }
-	
-	/**
-	 * Shows an order.
-	 *
-	 * @params	Request 	$request
-	 * @param	int			$id
-	 * @return 	Response
-	 */
-   	public function show(Request $request, int $id)
-	{
-		$currentUser = $this->getAuthenticatedUser();
+    
+    /**
+     * Creates a PDF version of an order.
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+    public function pdf(Request $request, int $id) 
+    {
+	    $currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('view_orders')) {
 			$order = $this->getOrder($id);
 			
-			$title = 'View Order';
-		
-			$subTitle = 'Orders';
+			$pdf = app()->make('snappy.pdf.wrapper');
 			
-			return view('cp.orders.show', compact('currentUser', 'title', 'subTitle', 'order'));
+			$html = '<h1>Bill</h1><p>You owe me money, dude.</p>';
+			
+			$pdf->loadHTML($html);
+			
+			return $pdf->download($order->order_number.'.pdf');
 		}
 
 		abort(403, 'Unauthorised action');

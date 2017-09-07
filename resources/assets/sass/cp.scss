@@ -450,6 +450,14 @@ a,
 	color: $sidebar-a-hover-bg-color;
 	background-color: $main-bg-color;
 	
+	a:not(.btn) {
+		color: $gf-red;
+		
+		&:hover {
+			color: $sidebar-bg-color;
+		}
+	}
+	
 	.message {
 		display: none;
 		margin-right: -15px;

@@ -1,4 +1,4 @@
-			@if ($currentUser->location->status->id == 7)
+			@if ($currentUser && $currentUser->location->status->id == 7)
 				<div class="row">
 					<div class="col">
 						<p class="message danger"><i class="icon fa fa-exclamation-triangle" aria-hidden="true"></i>Your office location is suspended.</p>

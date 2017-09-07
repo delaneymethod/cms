@@ -6,23 +6,14 @@ https://scotch.io/tutorials/why-laravel-queues-are-awesome
 </div>
 
 
-
-
-create shipping_methods table
-
-part delivery
-full delivery
-collection
+look into queues / jobs etc
 
 
 
-add shipping method id to orders table
-add notes to orders table
-add po_number to orders table
 
-validation
-model
-
-
+update env setup to follow craft 3
 
 update to laravel 5.5
+
+
+update to php 7

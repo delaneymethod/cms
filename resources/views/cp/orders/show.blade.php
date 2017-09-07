@@ -23,36 +23,39 @@
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
 					<div class="row">
-						<div class="col-sm-12 col-md-6 col-lg-4">
+						<div class="col-sm-12 col-md-4 col-lg-4">
 							<h5>Order Type</h5>
 							<p class="text-muted">{{ $order->order_type->title }}</p>
 						</div>
-						<div class="col-sm-12 col-md-6 col-lg-4">
+						<div class="col-sm-12 col-md-4 col-lg-4">
 							<h5>Order Number</h5>
 							<p class="text-muted">{{ $order->order_number }}</p>
 						</div>
-						<div class="col-sm-12 col-md-6 col-lg-4">
-							<h5>Order PO Number</h5>
+						<div class="col-sm-12 col-md-4 col-lg-4">
+							<h5>PO Number</h5>
 							<p class="text-muted">{{ $order->po_number }}</p>
 						</div>
-						<div class="col-sm-12 col-md-6 col-lg-4">
+						<div class="col-sm-12 col-md-4 col-lg-4">
 							<h5>Order Status</h5>
-							<p class="text-muted">{{ $order->status->title }}</p>
+							<p class="status_id-{{ $order->status->id }}">{{ $order->status->title }}</p>
 						</div>
-						<div class="col-sm-12 col-md-6 col-lg-4">
+						<div class="col-sm-12 col-md-4 col-lg-4">
 							<h5>Order Date</h5>
 							<p class="text-muted">{{ $order->created_at }}</p>
 						</div>
-						<div class="col-sm-12 col-md-6 col-lg-4">
-							<h5>Order Originator</h5>
-							<p class="text-muted">{{ $order->user->first_name }} {{ $order->user->last_name }}</p>
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<h5>Originator</h5>
+							<p class="text-muted">{{ $order->user->first_name }} {{ $order->user->last_name }}<br><a href="mailto:{{ $order->user->email }}" title="Email {{ $order->user->first_name }}">{{ $order->user->email }}</a><br>{{ $order->user->telephone }} / {{ $order->user->mobile }}<br>{{ $order->user->company->title }}</p>
 						</div>
-						<div class="col-sm-12 col-md-12 col-lg-4">
-							<h5>Order Location</h5>
-							@php($postalAddress = str_replace(',', '<br>', $order->user->location->postal_address))
-							<p class="text-muted">{{ $order->user->location->title }}<br>{!! nl2br($postalAddress) !!}</p>
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<h5>Order Delivery Method</h5>
+							<p class="text-muted">{{ $order->delivery_method->title }}</p>
 						</div>
-						<div class="col-sm-12 col-md-12 col-lg-8">
+						<div class="col-sm-12 col-md-12 col-lg-12">
+							<h5>Order Delivery Location</h5>
+							<p class="text-muted">{!! nl2br($order->postal_address) !!}<br>{{ $order->user->telephone }}</p>
+						</div>
+						<div class="col-sm-12 col-md-12 col-lg-12">
 							<h5>Order Notes</h5>
 							<p class="text-muted">{{ $order->notes }}</p>
 						</div>
@@ -85,8 +88,12 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-12">
-							<p>&nbsp;<br><a href="/cp/orders" title="View All Orders" class="btn btn-outline-secondary">View All Orders</a></p>
+						<div class="col">
+							<p></p>
+							<ul class="list-unstyled list-inline">
+								<li class="list-inline-item"><a href="/cp/orders" title="View All Orders" class="btn btn-outline-secondary">View All Orders</a></li>
+								<li class="list-inline-item"><a href="/cp/orders/{{ $order->id }}/pdf" title="Download PDF Version" class="btn btn-outline-secondary">Download PDF Version</a></li>
+							</ul>
 						</div>
 					</div>
 				</div>

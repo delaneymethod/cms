@@ -73,9 +73,9 @@ class LocationsTableSeeder extends Seeder
                 'county_id' => 1,
                 'country_id' => 1,
                 'company_id' => 2,
-                'status_id' => 7,
+                'status_id' => 1,
                 'created_at' => '2017-08-02 12:36:01',
-                'updated_at' => '2017-09-06 13:51:37',
+                'updated_at' => '2017-09-06 16:14:22',
             ),
             3 => 
             array (
@@ -93,9 +93,9 @@ class LocationsTableSeeder extends Seeder
                 'county_id' => 22,
                 'country_id' => 1,
                 'company_id' => 1,
-                'status_id' => 7,
+                'status_id' => 1,
                 'created_at' => '2017-08-02 13:00:58',
-                'updated_at' => '2017-09-06 13:47:55',
+                'updated_at' => '2017-09-06 16:14:32',
             ),
         ));
         

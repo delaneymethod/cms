@@ -200,8 +200,8 @@ class DashboardController extends Controller
 		$orders = [];
 		
 		if ($currentUser->hasPermission('view_orders')) {
-			// Remove Retired, Published, Private, Draft
-			$statuses->forget([2, 3, 4, 5]);
+			// Remove Retired, Published, Private, Draft and Suspended
+			$statuses->forget([2, 3, 4, 5, 6]);
 			
 			$orders = [];
 			

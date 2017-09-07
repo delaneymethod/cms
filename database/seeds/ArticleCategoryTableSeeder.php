@@ -32,16 +32,6 @@ class ArticleCategoryTableSeeder extends Seeder
                 'article_id' => 1,
                 'category_id' => 2,
             ),
-            3 => 
-            array (
-                'article_id' => 2,
-                'category_id' => 1,
-            ),
-            4 => 
-            array (
-                'article_id' => 2,
-                'category_id' => 3,
-            ),
         ));
         
         

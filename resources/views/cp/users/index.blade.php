@@ -53,7 +53,7 @@
 									<td>{{ $user->telephone }}</td>
 									<td>{{ $user->mobile }}</td>
 									<td>{{ $user->location->title }}</td>
-									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" aria-hidden="true"></i></td>
+									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->isAdmin() && $user->isSuperAdmin())
 										<td>&nbsp;</td>
 									@else

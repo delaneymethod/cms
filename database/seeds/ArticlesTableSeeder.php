@@ -31,20 +31,6 @@ class ArticlesTableSeeder extends Seeder
                 'created_at' => '2017-08-11 10:00:00',
                 'updated_at' => '2017-09-06 12:13:10',
             ),
-            1 => 
-            array (
-                'id' => 2,
-                'title' => 'My First Blog Post 2',
-                'slug' => 'my-first-blog-post-2',
-                'keywords' => 'My,First,Blog,Post,2',
-                'description' => NULL,
-                'template_id' => 9,
-                'user_id' => 1,
-                'status_id' => 6,
-                'published_at' => '2017-09-06 12:14:31',
-                'created_at' => '2017-09-06 12:14:18',
-                'updated_at' => '2017-09-06 12:14:31',
-            ),
         ));
         
         

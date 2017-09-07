@@ -6,6 +6,7 @@ use App\User;
 use App\Models\Status;
 use App\Models\Product;
 use App\Models\OrderType;
+use App\Models\DeliveryMethod;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -17,7 +18,10 @@ class Order extends Model
 	 */
 	protected $fillable = [
 		'order_number',
+		'po_number',
+		'notes',
 		'order_type_id',
+		'delivery_method_id',
 		'user_id',
 		'status_id',
 		'count',
@@ -33,6 +37,7 @@ class Order extends Model
      */
 	protected $appends = [
 		'currency',
+		'postal_address',
 	];
 	
 	/**
@@ -43,6 +48,24 @@ class Order extends Model
 	public function getCurrencyAttribute()
 	{
 		return '&pound;';
+	}
+	
+	/**
+	 * Gets orders currency.
+	 *
+	 * @return string
+	 */
+	public function getPostalAddressAttribute()
+	{
+		$locationPostalAddress = explode(',', $this->user->location->postal_address);
+			
+		$locationPostalAddress = array_map('trim', $locationPostalAddress);
+
+		$locationPostalAddress = array_merge([], [$this->user->location->title], $locationPostalAddress);
+		
+		$locationPostalAddress = implode('<br>', $locationPostalAddress);
+		
+		return $locationPostalAddress;
 	}
 	
 	/**
@@ -69,12 +92,20 @@ class Order extends Model
         return $this->format2decimals($value);
     }
     
-    /**
+	/**
 	 * Get the order type record associated with the order.
 	 */
 	public function order_type()
 	{
 		return $this->belongsTo(OrderType::class);
+	}
+	
+	/**
+	 * Get the delivery method record associated with the order.
+	 */
+	public function delivery_method()
+	{
+		return $this->belongsTo(DeliveryMethod::class);
 	}
 
 	/**

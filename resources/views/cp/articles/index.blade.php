@@ -49,7 +49,7 @@
 									<td>{{ $article->slug }}</td>
 									<td>{{ $article->user->first_name }} {{ $article->user->last_name }}</td>
 									<td>{{ $article->published_at }}</td>
-									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $article->status->id }}" title="{{ $article->status->title }}" aria-hidden="true"></i></td>
+									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $article->status->id }}" title="{{ $article->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_articles') || $currentUser->hasPermission('delete_articles'))
 										<td class="actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Article Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>

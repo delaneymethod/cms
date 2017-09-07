@@ -16,6 +16,17 @@ trait StatusTrait
 	{
 		return Status::findOrFail($id);
 	}
+	
+	/**
+	 * Get the specified status based on title.
+	 *
+	 * @param 	string 		$title
+	 * @return 	Object
+	 */
+	public function getStatusByTitle(string $title)
+	{
+		return Status::where('title', $title)->firstOrFail();
+	}
 
 	/**
 	 * Get all the statuses.

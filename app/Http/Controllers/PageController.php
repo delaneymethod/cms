@@ -133,9 +133,9 @@ class PageController extends Controller
 			
 			$this->rebuildPages();
 			
-			$pages = $this->getPagesHierarchy();
+			$pagesHierarchy = $this->getPagesHierarchy();
 			
-			return view('cp.menu.index', compact('currentUser', 'title', 'subTitle', 'pages'));
+			return view('cp.menu.index', compact('currentUser', 'title', 'subTitle', 'pagesHierarchy'));
 		}
 
 		abort(403, 'Unauthorised action');

@@ -14,6 +14,7 @@ class OrderType extends Model
 	 */
 	protected $fillable = [
 		'title',
+		'slug',
 	];
 
 	/**

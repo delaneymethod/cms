@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-php artisan migrate:refresh --seed
+clear && php artisan migrate:refresh --seed

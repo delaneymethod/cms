@@ -31,9 +31,9 @@
 					</div>
 					<div class="content padding bg-white">
 						<ol class="sortable list-unstyled" id="nestedSortable">
-							@foreach ($pages as $page)
+							@foreach ($pagesHierarchy as $page)
 								@component ('cp._components.renderPage', [
-									'page' => $page, 
+									'page' => $page,
 									'currentUser' => $currentUser
 								])
 								@endcomponent
