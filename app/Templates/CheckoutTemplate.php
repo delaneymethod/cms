@@ -28,10 +28,12 @@ class CheckoutTemplate extends Template
 		
 		$savedCarts = $this->getSavedCarts($currentUser->id);
 		
+		$locations = $currentUser->company->locations;
+		
 		$page->description = '';
 		
 		$page->keywords = '';
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'savedCarts'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'savedCarts', 'locations'));
 	}
 }

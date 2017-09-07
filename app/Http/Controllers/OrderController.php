@@ -222,9 +222,64 @@ class OrderController extends Controller
 			
 			$pdf = app()->make('snappy.pdf.wrapper');
 			
-			$html = '<h1>Bill</h1><p>You owe me money, dude.</p>';
+			$template = '';
+			$template .= '<!doctype html>';
+			$template .= '<html lang="en">';
+			$template .= '<head>';
+			$template .= '	<meta charset="utf-8">';
+			$template .= '	<title>'.$order->order_number.' Order Details</title>';
+			$template .= '	<meta name="author" content="delaneymethod.com">';
+			$template .= '</head>';
+			$template .= '<body>';
+			$template .= '	<p><strong>Order Type</strong></p>';
+			$template .= '	<p>'.$order->order_type->title.'</p>';
+			$template .= '	<p><strong>Order Number</strong></p>';
+			$template .= '	<p>'.$order->order_number.'</p>';
+			$template .= '	<p><strong>PO Number</strong></p>';
+			$template .= '	<p>'.$order->po_number.'</p>';
+			$template .= '	<p><strong>Order Status</strong></p>';
+			$template .= '	<p>'.$order->status->title.'</p>';
+			$template .= '	<p><strong>Order Date</strong></p>';
+			$template .= '	<p>'.$order->created_at.'</p>';
+			$template .= '	<p><strong>Originator</strong></p>';
+			$template .= '	<p>'.$order->user->first_name.' '.$order->user->last_name.'<br>'.$order->user->email.'<br>'.$order->user->telephone.' / '.$order->user->mobile.'<br>'.$order->user->company->title.'</p>';
+			$template .= '	<p><strong>Order Delivery Method</strong></p>';
+			$template .= '	<p>'.$order->delivery_method->title.'</p>';
+			$template .= '	<p><strong>Order Delivery Location</strong></p>';
+			$template .= '	<p>'.nl2br($order->postal_address).'<br>'.$order->user->telephone.'</p>';
+			$template .= '	<p><strong>Order Notes</strong></p>';
+			$template .= '	<p>'.$order->notes.'</p>';
+			$template .= '	<p><strong>Order Items</strong></p>';
+			$template .= '	<table cellspacing="0" border="1" cellpadding="10" width="100%">';
+			$template .= '		<thead>';
+			$template .= '			<tr>';
+			$template .= '				<th align="left">Title</th>';
+			$template .= '				<th>Qty</th>';
+			$template .= '				<th align="right">Tax</th>';
+			$template .= '				<th align="right">Price</th>';
+			$template .= '				<th align="right">Total</th>';
+			$template .= '			</tr>';
+			$template .= '		</thead>';
+			$template .= '		<tbody>';
+					
+			foreach ($order->products as $product) {
+				$template .= '			<tr>';
+				$template .= '				<td>'.$product->title.'</td>';
+				$template .= '				<td align="center">'.$product->pivot->quantity.'</td>';
+				$template .= '				<td align="right">'.$product->pivot->tax_rate.'&#37;</td>';
+				$template .= '				<td align="right">'.$order->currency.number_format($product->pivot->price, 2, '.', ',').'</td>';
+				$template .= '				<td align="right">'.$order->currency.number_format($product->pivot->price_tax, 2, '.', ',').'</td>';
+				$template .= '			</tr>';
+			}
+				
+			$template .= '		</tbody>';
+			$template .= '	</table>';
+			$template .= '</body>';
+			$template .= '</html>';
 			
-			$pdf->loadHTML($html);
+			$pdf->loadHTML($template);
+			
+			// return $pdf->inline();
 			
 			return $pdf->download($order->order_number.'.pdf');
 		}

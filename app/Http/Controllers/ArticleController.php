@@ -124,7 +124,7 @@ class ArticleController extends Controller
 			$statuses = $this->getStatuses();
 			
 			// Remove Active, Pending, Retired, Suspended keys
-			$statuses->forget([1, 2, 3, 6]);
+			$statuses->forget([0, 1, 2, 6]);
 			
 			// Used to set categories_ids
 			$categories = $this->getCategories();
@@ -271,7 +271,7 @@ class ArticleController extends Controller
 			$statuses = $this->getStatuses();
 			
 			// Remove Active, Pending, Retired, Suspended keys
-			$statuses->forget([1, 2, 3, 6]);
+			$statuses->forget([0, 1, 2, 6]);
 			
 			// Used to set categories_ids
 			$categories = $this->getCategories();

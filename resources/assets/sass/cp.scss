@@ -152,6 +152,7 @@ a,
 		}
 			
 		a {
+			color: black !important;
 			background-size: cover;
 			border: none !important;
 			background-color: #f7f7f7;
@@ -160,6 +161,7 @@ a,
 			height: auto !important;
 			
 			&:hover {
+				color: white !important;
 				margin-top: -1px;
 				border-top: 1px solid #222d32 !important;
 				background-color: #222d32;
