@@ -10,6 +10,15 @@ look into queues / jobs etc
 
 
 
+look into custom blade if statements
+
+
+@auth and @guest. They do exactly what you'd imagine, so say goodbye to the constant @if (auth()->check()).
+
+Use optional() helper
+
+
+
 tidy up CSS so classes are not duplicated
 
 

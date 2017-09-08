@@ -36,10 +36,8 @@ Route::post('/orders', 'OrderController@store');
 // BACK END ROUTES
 Route::group(['prefix' => 'cp'], function () {
 	// CP route
-	Route::get('/', function () {
-		return redirect('/cp/dashboard');
-	});
-
+	Route::redirect('/', '/cp/dashboard', 301);
+	
 	// CP > Dashboard routes
 	Route::get('/dashboard', 'DashboardController@index');
 
@@ -84,10 +82,8 @@ Route::group(['prefix' => 'cp'], function () {
 	
 	Route::group(['prefix' => 'articles'], function () {
 		// CP > Articles routes
-		Route::get('/', function () {
-			return redirect('/cp/articles/all');
-		});
-	
+		Route::redirect('/', '/cp/articles/all', 301);
+		
 		Route::get('/all', 'ArticleController@index');
 		Route::get('/create', 'ArticleController@create');
 		Route::get('/{id}/edit', 'ArticleController@edit');
@@ -144,10 +140,8 @@ Route::group(['prefix' => 'cp'], function () {
 	
 	Route::group(['prefix' => 'advanced'], function () {
 		// CP > Advanced routes
-		Route::get('/', function () {
-			return redirect('/cp/advanced/roles');
-		});
-	
+		Route::redirect('/', '/cp/advanced/roles', 301);
+		
 		// CP > Roles routes
 		Route::get('/roles', 'RoleController@index');
 		Route::get('/roles/create', 'RoleController@create');
