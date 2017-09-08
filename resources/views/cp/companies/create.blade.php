@@ -27,7 +27,7 @@
 						{{ csrf_field() }}
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" placeholder="e.g Grampian Fasteners" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
+							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" placeholder="e.g {{ config('cms.site.name') }}" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
 							@if ($errors->has('title'))
 								<span id="helpBlockTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('title') }}</span>
 							@endif
@@ -37,7 +37,7 @@
 							<label for="default_location_id" class="control-label font-weight-bold">Default Location</label>
 							<select name="default_location_id" id="default_location_id" class="form-control" tabindex="2" aria-describedby="helpBlockDefaultLocationId" required>
 								@foreach ($locations as $location)
-									<option value="{{ $location->id }}" {{ (old('default_location_id') == $location->id) ? 'selected' : '' }}>{{ $location->title }}{{ ($location->status->id == 2 || $location->status->id == 3) ? '&nbsp;('.$location->status->title.')' : '' }}</option>
+									<option value="{{ $location->id }}" {{ (old('default_location_id') == $location->id) ? 'selected' : '' }}>{{ $location->title }}{{ ($location->isPending() || $location->isRetired()) ? '&nbsp;('.$location->status->title.')' : '' }}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('default_location_id'))

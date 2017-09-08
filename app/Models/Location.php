@@ -102,4 +102,34 @@ class Location extends Model
 	{
 		return $this->belongsTo(Status::class);
 	}
+	
+	/**
+	 * Checks if location is pending.
+	 *
+	 * @return bool
+	 */
+	public function isPending()
+	{
+		return $this->status_id == 2;
+	}
+	
+	/**
+	 * Checks if location is retired.
+	 *
+	 * @return bool
+	 */
+	public function isRetired()
+	{
+		return $this->status_id == 3;
+	}
+	
+	/**
+	 * Checks if location is suspened.
+	 *
+	 * @return bool
+	 */
+	public function isSuspended()
+	{
+		return $this->status_id == 7;
+	}
 }

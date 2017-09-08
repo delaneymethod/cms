@@ -183,4 +183,4 @@ Route::group(['prefix' => 'cp'], function () {
 });
 
 // CATCH ALL ROUTE
-Route::get('{catchAll}', 'PageController@page')->where('catchAll', '(.*)');
+Route::get('{catchAll}', 'PageController@show')->where('catchAll', '(.*)');

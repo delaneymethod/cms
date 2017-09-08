@@ -38,7 +38,7 @@
 							@foreach ($orders as $order)
 								<tr>
 									<td data-search="{{ $order->user->company->title }}">{{ $order->order_type->title }}</td>
-									<td>{{ $order->order_number }}{!! ($order->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}{!! ($order->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
+									<td>{{ $order->order_number }}{!! ($order->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
 									<td>{{ $order->po_number }}</td>
 									<td>{{ str_replace('<br>', ', ', $order->postal_address) }}</td>
 									<td data-search="{{ $order->created_at->format('d F Y H:i:s A') }}">{{ $order->created_at }}</td>

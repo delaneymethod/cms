@@ -38,7 +38,7 @@
 						@endif
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="title" id="title" class="form-control {{ ($page->id == 1) ? 'text-disabled' : '' }}" value="{{ old('title') ?? $page->title }}" placeholder="New Page" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" {{ ($page->id == 1) ? 'disabled' : 'required' }} autofocus>
+							<input type="text" name="title" id="title" class="form-control {{ ($page->id == 1) ? 'text-disabled' : '' }}" value="{{ old('title', optional($page)->title) }}" placeholder="New Page" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" {{ ($page->id == 1) ? 'disabled' : 'required' }} autofocus>
 							@if ($errors->has('title'))
 								<span id="helpBlockTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('title') }}</span>
 							@endif
@@ -61,7 +61,7 @@
 						</div>
 						<div class="form-group">
 							<label for="description" class="control-label font-weight-bold">Meta Description</label>
-							<input type="text" name="description" id="description" class="form-control" value="{{ old('description') ?? $page->description }}" placeholder="e.g New Page Description" tabindex="3" autocomplete="off" aria-describedby="helpBlockDescription">
+							<input type="text" name="description" id="description" class="form-control" value="{{ old('description', optional($page)->description) }}" placeholder="e.g New Page Description" tabindex="3" autocomplete="off" aria-describedby="helpBlockDescription">
 							@if ($errors->has('description'))
 								<span id="helpBlockDescription" class="form-control-feedback form-text gf-red">- {{ $errors->first('description') }}</span>
 							@endif
@@ -69,7 +69,7 @@
 						</div>
 						<div class="form-group">
 							<label for="keywords" class="control-label font-weight-bold">Meta Keywords</label>
-							<input type="text" name="keywords" id="keywords" class="form-control" value="{{ old('keywords') ?? $page->keywords }}" placeholder="e.g New Page, Keywords" tabindex="4" autocomplete="off" aria-describedby="helpBlockKeywords">
+							<input type="text" name="keywords" id="keywords" class="form-control" value="{{ old('keywords', optional($page)->keywords) }}" placeholder="e.g New Page, Keywords" tabindex="4" autocomplete="off" aria-describedby="helpBlockKeywords">
 							@if ($errors->has('keywords'))
 								<span id="helpBlockKeywords" class="form-control-feedback form-text gf-red">- {{ $errors->first('keywords') }}</span>
 							@endif
@@ -121,7 +121,7 @@
 							<label class="control-label font-weight-bold">Hide from Nav</label>
 								<div class="form-check">
 									<label for="hide_from_nav" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
-										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-label="..." aria-describedby="helpBlockHideFromNav" {{ ((old('hide_from_nav') && old('hide_from_nav') == $page->hide_from_nav) || $page->hide_from_nav == 1 && $page->id != 1) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>
+										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-label="..." aria-describedby="helpBlockHideFromNav" {{ ((old('hide_from_nav') && old('hide_from_nav') == $page->hide_from_nav) || $page->isHiddenFromNav() && $page->id != 1) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>
 										&nbsp;
 									</label>
 								</div>

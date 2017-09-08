@@ -33,33 +33,55 @@ class PageController extends Controller
 		
 		$this->middleware('auth', [
 			'except' => [
-				'page'
+				'show'
 			]
 		]);
+	}
+	
+	/**
+	 * Get pages view.
+	 *
+	 * @params	Request 	$request
+	 * @return 	Response
+	 */
+	public function index(Request $request)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('view_pages')) {
+			$title = 'Pages';
+			
+			$subTitle = '';
+			
+			$this->rebuildPages();
+		
+			return view('cp.pages.index', compact('currentUser', 'title', 'subTitle'));
+		}
+
+		abort(403, 'Unauthorised action');
 	}
 	
 	/**
 	 * Get a pages view.
 	 *
 	 * @params	Request 	$request
+	 * @params	string 		$slug
 	 * @return 	Response
 	 */
-	public function page(Request $request)
+	public function show(Request $request, $slug = '/')
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		$path = $request->path();
-		
-		// Cart access requires logged in user
-		if ($path == 'cart' && $currentUser == null) {
+		// Cart and Cart subpage access requires a logged in user
+		if (str_contains($slug, 'cart') && $currentUser == null) {
 			return redirect('/login');
 		}
 		
 		// Get the URL segments
-		if ($path == '/') {
+		if ($slug == '/') {
 			$segments = collect([0 => '']);
 		} else {
-			$segments = collect(explode('/', $request->path()));
+			$segments = collect(explode('/', $slug));
 		}
 		
 		// Set slug based on the last segment
@@ -91,29 +113,6 @@ class PageController extends Controller
 		$this->preparePageTemplate($page, $parameters);
 		
 		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
-	}
-
-	/**
-	 * Get pages view.
-	 *
-	 * @params	Request 	$request
-	 * @return 	Response
-	 */
-	public function index(Request $request)
-	{
-		$currentUser = $this->getAuthenticatedUser();
-		
-		if ($currentUser->hasPermission('view_pages')) {
-			$title = 'Pages';
-			
-			$subTitle = '';
-			
-			$this->rebuildPages();
-		
-			return view('cp.pages.index', compact('currentUser', 'title', 'subTitle'));
-		}
-
-		abort(403, 'Unauthorised action');
 	}
 	
 	/**

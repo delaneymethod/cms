@@ -372,6 +372,26 @@
 			}
 		};
 		
+		let attachClipboard = () => {
+			let clipboard = new Clipboard('[data-clipboard]');	
+			
+			clipboard.on('success', event => {
+				event.clearSelection();
+				
+				$('#clipboard-tooltip').tooltip('show');
+				
+				$('#clipboard-tooltip').on('hidden.bs.tooltip', () => {
+					$('#clipboard-tooltip').tooltip('dispose');
+				});
+			});
+			
+			clipboard.on('error', event => {
+				console.error('Action:', event.action);
+				
+				console.error('Trigger:', event.trigger);
+			});
+		};
+		
 		let convertTitleToSlug = (element, targetElement) => {
 			if ($(element).length) {
 				$(element).on('keyup change', event => {
@@ -493,6 +513,8 @@
 			attachDataTable('#datatable');
 			
 			attachNestedSortable('#nestedSortable');
+			
+			attachClipboard();
 			
 			convertTitleToSlug('#createPage #title', '#createPage #slug');
 			

@@ -43,7 +43,7 @@
 						<tbody>
 							@foreach ($categories as $category)
 								<tr>
-									<td>{{ $category->title }}{!! ($category->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$category->status->title.'</span>' : '' !!}{!! ($category->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$category->status->title.'</span>' : '' !!}</td>
+									<td>{{ $category->title }}{!! ($category->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$category->status->title.'</span>' : '' !!}{!! ($category->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$category->status->title.'</span>' : '' !!}</td>
 									<td>{{ $category->slug }}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $category->status->id }}" title="{{ $category->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_categories') || ($currentUser->hasPermission('delete_categories') && $category->id != 1))

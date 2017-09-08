@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '429 Too Many Attempts - '.config('cms.client.name'))
-@section('description', '429 Too Many Attempts - '.config('cms.client.name'))
-@section('keywords', '429, Too, Many, Attempts, '.config('cms.client.name'))
+@section('title', '429 Too Many Attempts - '.config('cms.site.name'))
+@section('description', '429 Too Many Attempts - '.config('cms.site.name'))
+@section('keywords', '429, Too, Many, Attempts, '.config('cms.site.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">

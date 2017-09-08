@@ -4,8 +4,8 @@
 			
 			<ul>
 				@foreach ($articles as $article)
-					@if ($article->status_id == 4)
-						<li><a href="/articles/{{ $article->slug }}" title="{{ $article->title }}">{{ $article->title }}</a></li>	
+					@if ($article->isPublished())
+						<li><a href="{{ $article->url }}" title="{{ $article->title }}">{{ $article->title }}</a></li>	
 					@endif
 				@endforeach
 			</ul>

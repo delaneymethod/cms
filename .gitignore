@@ -12,6 +12,8 @@
 .DS_Store
 .DS_Store?
 .env
+.env.backup
 Homestead.json
 Homestead.yaml
 npm-debug.log
+yarn-error.log

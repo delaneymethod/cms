@@ -28,7 +28,7 @@
 						{{ method_field('PUT') }}
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') ?? $status->title }}" placeholder="e.g Open" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
+							<input type="text" name="title" id="title" class="form-control" value="{{ old('title', optional($status)->title) }}" placeholder="e.g Open" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
 							@if ($errors->has('title'))
 								<span id="helpBlockTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('title') }}</span>
 							@endif
@@ -36,7 +36,7 @@
 						</div>
 						<div class="form-group">
 							<label for="description" class="control-label font-weight-bold">Description <span class="text-danger">&#42;</span></label>
-							<input type="text" name="description" id="description" class="form-control" value="{{ old('description') ?? $status->description }}" placeholder="" tabindex="2" autocomplete="off" aria-describedby="helpBlockDescription" required>
+							<input type="text" name="description" id="description" class="form-control" value="{{ old('description', optional($status)->description) }}" placeholder="" tabindex="2" autocomplete="off" aria-describedby="helpBlockDescription" required>
 							@if ($errors->has('description'))
 								<span id="helpBlockDescription" class="form-control-feedback form-text gf-red">- {{ $errors->first('description') }}</span>
 							@endif

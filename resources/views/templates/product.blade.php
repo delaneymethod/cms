@@ -2,7 +2,7 @@
 			
 			<p>Price: {{ $product->price }}</p>
 			
-			@if ($currentUser && $currentUser->hasPermission('create_orders'))
+			@if (optional($currentUser)->hasPermission('create_orders'))
 				@component('_components.cart.addProduct', [
 					'product' => $product, 
 					'instance' => 'cart', 

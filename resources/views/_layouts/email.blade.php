@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>{{ config('cms.client.name') }}</title>
+	<title>{{ config('cms.site.name') }}</title>
 	<style type="text/css">
 	</style>
 </head>
@@ -21,7 +21,7 @@
 		</tr>
 		<tr>
 			<td align="center" bgcolor="#ffffff" style="padding: 0 20px 20px 20px;font-family: Arial, sans-serif;font-size: 16px;line-height: 20px;color: #000000;">
-				{{ config('cms.client.name') }} - Powered by {{ config('app.name') }}
+				{{ config('cms.site.name') }} - Powered by {{ config('app.name') }}
 			</td>
 		</tr>
 	</table>

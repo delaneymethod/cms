@@ -22,6 +22,8 @@
 			 		$('.main .message').fadeOut('fast');
 				});
 			}
+			
+			$('[data-toggle="tooltip"]').tooltip();
 		};
 		
 		let init = () => {

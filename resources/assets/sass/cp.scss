@@ -1,12 +1,14 @@
 @import 'variables';
 
+@import 'reboot';
+
 @import url('//fonts.googleapis.com/css?family=Source+Sans+Pro');
 
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap';
 
-@import 'node_modules/font-awesome/scss/font-awesome';
+@import '~font-awesome/scss/font-awesome';
 
-@import 'node_modules/bootstrap-datetime-picker/css/bootstrap-datetimepicker';
+@import '~bootstrap-datetime-picker/css/bootstrap-datetimepicker';
 
 @import '../plugins/datatables/datatables-bootstrap';
 
@@ -99,9 +101,21 @@ a,
 	display: none;
 }
 
+.text-gf-red {
+	color: $gf-red;
+	
+	&:hover {
+		color: $gf-red;
+	}
+}
+
 .text-wrap {
 	overflow: wrap;
 	white-space: normal;
+}
+
+.extra-breathing-space {
+	letter-spacing: 0.0625em;
 }
 
 @include placeholder {
@@ -451,14 +465,6 @@ a,
 .main {
 	color: $sidebar-a-hover-bg-color;
 	background-color: $main-bg-color;
-	
-	a:not(.btn) {
-		color: $gf-red;
-		
-		&:hover {
-			color: $sidebar-bg-color;
-		}
-	}
 	
 	.message {
 		display: none;

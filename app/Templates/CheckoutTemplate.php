@@ -13,10 +13,6 @@ class CheckoutTemplate extends Template
 	use ShippingMethodTrait;
 	
 	protected $view = 'checkout';
-
-	public function __construct()
-	{
-	}
 	
 	public function prepare(View $view, array $parameters)
 	{

@@ -23,7 +23,7 @@
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
 					<p>Please confirm that you wish to delete the <strong>{{ $asset->filename }}</strong> asset.</p>
-					<p class="font-weight-bold text-warning">Caution: This action cannot be undone.</p>
+					<p class="font-weight-bold text-warning"><i class="icon fa fa-exclamation-triangle" aria-hidden="true"></i>Caution: This action cannot be undone.</p>
 					<form name="removeAsset" id="removeAsset" class="removeAsset" role="form" method="POST" action="/cp/assets/{{ $asset->id }}">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}

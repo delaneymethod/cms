@@ -47,8 +47,8 @@
 						<tbody>
 							@foreach ($users as $user)
 								<tr class="{{ str_slug($user->status->title) }}">
-									<td>{{ $user->first_name }} {{ $user->last_name }}{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->status->id == 3) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->status->id == 2) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}</td>
-									<td><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline">{{ $user->email }}</a></td>
+									<td>{{ $user->first_name }} {{ $user->last_name }}{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}</td>
+									<td><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
 									<td>{{ $user->job_title }}</td>
 									<td>{{ $user->telephone }}</td>
 									<td>{{ $user->mobile }}</td>
@@ -63,7 +63,7 @@
 												@if ($currentUser->hasPermission('edit_users') || $currentUser->id == $user->id)
 													<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit User</a></li>
 												@endif
-												@if ($currentUser->hasPermission('retire_users') && $user->status_id != 3 && $user->id != $currentUser->id)
+												@if ($currentUser->hasPermission('retire_users') && !$user->isRetired() && $user->id != $currentUser->id)
 													<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>
 												@endif
 												@if ($currentUser->hasPermission('edit_passwords_users') || $currentUser->id == $user->id)

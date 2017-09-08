@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '503 Be Right Back - '.config('cms.client.name'))
-@section('description', '503 Be Right Back - '.config('cms.client.name'))
-@section('keywords', '503, Be, Right, Back, '.config('cms.client.name'))
+@section('title', '503 Be Right Back - '.config('cms.site.name'))
+@section('description', '503 Be Right Back - '.config('cms.site.name'))
+@section('keywords', '503, Be, Right, Back, '.config('cms.site.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">

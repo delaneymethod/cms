@@ -1,6 +1,6 @@
 		<div class="{{ $sidebarSmCols }} {{ $sidebarMdCols }} {{ $sidebarLgCols }} sidebar">
 			<h3>{{ $currentUser->first_name }} {{ $currentUser->last_name }}</h3>
-			<h4 class="text-uppercase">Administration</h4>
+			<h4 class="text-uppercase extra-breathing-space">Administration</h4>
 			<ul class="list-unstyled">
 				<li class="{{ setActive('cp/dashboard') }}"><a href="/cp/dashboard" title=""><i class="text-center icon fa fa-tachometer" aria-hidden="true"></i>Dashboard</a></li>
 				@if ($currentUser->hasPermission('view_companies'))

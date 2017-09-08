@@ -9,10 +9,6 @@ class PageTemplate extends Template
 	use ContentTrait;
 	
 	protected $view = 'page';
-
-	public function __construct()
-	{
-	}
 	
 	public function prepare(View $view, array $parameters)
 	{

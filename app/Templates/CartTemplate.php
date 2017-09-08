@@ -11,10 +11,6 @@ class CartTemplate extends Template
 	use ContentTrait;
 	
 	protected $view = 'cart';
-
-	public function __construct()
-	{
-	}
 	
 	public function prepare(View $view, array $parameters)
 	{

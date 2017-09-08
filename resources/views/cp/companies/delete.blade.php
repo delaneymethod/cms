@@ -23,7 +23,7 @@
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
 					<p>Please confirm that you wish to delete the <strong>{{ $company->title }}</strong> company.</p>
-					<p class="font-weight-bold text-warning">Caution: This action cannot be undone.</p>
+					<p class="font-weight-bold text-warning"><i class="icon fa fa-exclamation-triangle" aria-hidden="true"></i>Caution: This action cannot be undone.</p>
 					<form name="removeCompany" id="removeCompany" class="removeCompany" role="form" method="POST" action="/cp/companies/{{ $company->id }}">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}

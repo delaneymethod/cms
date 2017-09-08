@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '404 Page not found - '.config('cms.client.name'))
-@section('description', '404 Page not found - '.config('cms.client.name'))
-@section('keywords', '404, Page, not, found, '.config('cms.client.name'))
+@section('title', '404 Page not found - '.config('cms.site.name'))
+@section('description', '404 Page not found - '.config('cms.site.name'))
+@section('keywords', '404, Page, not, found, '.config('cms.site.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">

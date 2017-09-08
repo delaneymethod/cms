@@ -10,10 +10,6 @@ class ArticleTemplate extends Template
 	
 	protected $view = 'article';
 	
-	public function __construct()
-	{
-	}
-	
 	public function prepare(View $view, array $parameters)
 	{
 		$currentUser = $parameters['currentUser'];

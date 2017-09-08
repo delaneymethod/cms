@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Register - '.config('cms.client.name'))
-@section('description', 'Register - '.config('cms.client.name'))
-@section('keywords', 'Register, '.config('cms.client.name'))
+@section('title', 'Register - '.config('cms.site.name'))
+@section('description', 'Register - '.config('cms.site.name'))
+@section('keywords', 'Register, '.config('cms.site.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">

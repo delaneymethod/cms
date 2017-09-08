@@ -31,7 +31,7 @@
 						@endif
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') ?? $location->title }}" placeholder="e.g Dyce Office" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
+							<input type="text" name="title" id="title" class="form-control" value="{{ old('title', optional($location)->title) }}" placeholder="e.g Dyce Office" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
 							@if ($errors->has('title'))
 								<span id="helpBlockTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('title') }}</span>
 							@endif
@@ -39,7 +39,7 @@
 						</div>
 						<div class="form-group">
 							<label for="unit" class="control-label font-weight-bold">Unit</label>
-							<input type="text" name="unit" id="unit" class="form-control" value="{{ old('unit') ?? $location->unit }}" placeholder="" tabindex="2" autocomplete="off" aria-describedby="helpBlockUnit">
+							<input type="text" name="unit" id="unit" class="form-control" value="{{ old('unit', optional($location)->unit) }}" placeholder="" tabindex="2" autocomplete="off" aria-describedby="helpBlockUnit">
 							@if ($errors->has('unit'))
 								<span id="helpBlockUnit" class="form-control-feedback form-text gf-red">- {{ $errors->first('unit') }}</span>
 							@endif
@@ -47,7 +47,7 @@
 						</div>
 						<div class="form-group">
 							<label for="building" class="control-label font-weight-bold">Building</label>
-							<input type="text" name="building" id="building" class="form-control" value="{{ old('building') ?? $location->building }}" placeholder="e.g Grampian House" tabindex="3" autocomplete="off" aria-describedby="helpBlockBuilding">
+							<input type="text" name="building" id="building" class="form-control" value="{{ old('building', optional($location)->building) }}" placeholder="e.g Grampian House" tabindex="3" autocomplete="off" aria-describedby="helpBlockBuilding">
 							@if ($errors->has('building'))
 								<span id="helpBlockBuilding" class="form-control-feedback form-text gf-red">- {{ $errors->first('building') }}</span>
 							@endif
@@ -55,7 +55,7 @@
 						</div>
 						<div class="form-group">
 							<label for="street_address_1" class="control-label font-weight-bold">Street Address 1 <span class="text-danger">&#42;</span></label>
-							<input type="text" name="street_address_1" id="street_address_1" class="form-control" value="{{ old('street_address_1') ?? $location->street_address_1 }}" placeholder="e.g Pitmedden Road" tabindex="4" autocomplete="off" aria-describedby="helpBlockStreetAddress1" required>
+							<input type="text" name="street_address_1" id="street_address_1" class="form-control" value="{{ old('street_address_1', optional($location)->street_address_1) }}" placeholder="e.g Pitmedden Road" tabindex="4" autocomplete="off" aria-describedby="helpBlockStreetAddress1" required>
 							@if ($errors->has('street_address_1'))
 								<span id="helpBlockStreetAddress1" class="form-control-feedback form-text gf-red">- {{ $errors->first('street_address_1') }}</span>
 							@endif
@@ -63,7 +63,7 @@
 						</div>
 						<div class="form-group">
 							<label for="street_address_2" class="control-label font-weight-bold">Street Address 2</label>
-							<input type="text" name="street_address_2" id="street_address_2" class="form-control" value="{{ old('street_address_2') ?? $location->street_address_2 }}" placeholder="e.g Dyce" tabindex="5" autocomplete="off" aria-describedby="helpBlockStreetAddress2">
+							<input type="text" name="street_address_2" id="street_address_2" class="form-control" value="{{ old('street_address_2', optional($location)->street_address_2) }}" placeholder="e.g Dyce" tabindex="5" autocomplete="off" aria-describedby="helpBlockStreetAddress2">
 							@if ($errors->has('street_address_2'))
 								<span id="helpBlockStreetAddress2" class="form-control-feedback form-text gf-red">- {{ $errors->first('street_address_2') }}</span>
 							@endif
@@ -71,7 +71,7 @@
 						</div>
 						<div class="form-group">
 							<label for="street_address_3" class="control-label font-weight-bold">Street Address 3</label>
-							<input type="text" name="street_address_3" id="street_address_3" class="form-control" value="{{ old('street_address_3') ?? $location->street_address_3 }}" placeholder="" tabindex="6" autocomplete="off" aria-describedby="helpBlockStreetAddress3">
+							<input type="text" name="street_address_3" id="street_address_3" class="form-control" value="{{ old('street_address_3', optional($location)->street_address_3) }}" placeholder="" tabindex="6" autocomplete="off" aria-describedby="helpBlockStreetAddress3">
 							@if ($errors->has('street_address_3'))
 								<span id="helpBlockStreetAddress3" class="form-control-feedback form-text gf-red">- {{ $errors->first('street_address_3') }}</span>
 							@endif
@@ -79,7 +79,7 @@
 						</div>
 						<div class="form-group">
 							<label for="street_address_4" class="control-label font-weight-bold">Street Address 4</label>
-							<input type="text" name="street_address_4" id="street_address_4" class="form-control" value="{{ old('street_address_4') ?? $location->street_address_4 }}" placeholder="" tabindex="7" autocomplete="off" aria-describedby="helpBlockStreetAddress4">
+							<input type="text" name="street_address_4" id="street_address_4" class="form-control" value="{{ old('street_address_4', optional($location)->street_address_4) }}" placeholder="" tabindex="7" autocomplete="off" aria-describedby="helpBlockStreetAddress4">
 							@if ($errors->has('street_address_4'))
 								<span id="helpBlockStreetAddress4" class="form-control-feedback form-text gf-red">- {{ $errors->first('street_address_4') }}</span>
 							@endif
@@ -87,7 +87,7 @@
 						</div>
 						<div class="form-group">
 							<label for="town_city" class="control-label font-weight-bold">Town / City <span class="text-danger">&#42;</span></label>
-							<input type="text" name="town_city" id="town_city" class="form-control" value="{{ old('town_city') ?? $location->town_city }}" placeholder="e.g Aberdeen" tabindex="8" autocomplete="off" aria-describedby="helpBlockTownCity" required>
+							<input type="text" name="town_city" id="town_city" class="form-control" value="{{ old('town_city', optional($location)->town_city) }}" placeholder="e.g Aberdeen" tabindex="8" autocomplete="off" aria-describedby="helpBlockTownCity" required>
 							@if ($errors->has('town_city'))
 								<span id="helpBlockTownCity" class="form-control-feedback form-text gf-red">- {{ $errors->first('town_city') }}</span>
 							@endif
@@ -95,7 +95,7 @@
 						</div>
 						<div class="form-group">
 							<label for="postal_code" class="control-label font-weight-bold">Postal Code</label>
-							<input type="text" name="postal_code" id="postal_code" class="form-control" value="{{ old('postal_code') ?? $location->postal_code }}" placeholder="e.g AB21 0DP" tabindex="9" autocomplete="off" aria-describedby="helpBlockPostalCode">
+							<input type="text" name="postal_code" id="postal_code" class="form-control" value="{{ old('postal_code', optional($location)->postal_code) }}" placeholder="e.g AB21 0DP" tabindex="9" autocomplete="off" aria-describedby="helpBlockPostalCode">
 							@if ($errors->has('postal_code'))
 								<span id="helpBlockPostalCode" class="form-control-feedback form-text gf-red">- {{ $errors->first('postal_code') }}</span>
 							@endif
@@ -127,7 +127,7 @@
 						</div>
 						<div class="form-group">
 							<label for="telephone" class="control-label font-weight-bold">Telephone <span class="text-danger">&#42;</span></label>
-							<input type="tel" name="telephone" id="telephone" class="form-control" value="{{ old('telephone') ?? $location->telephone }}" placeholder="e.g +44 1224 772 777" tabindex="12" autocomplete="off" aria-describedby="helpBlockTelephone" required>
+							<input type="tel" name="telephone" id="telephone" class="form-control" value="{{ old('telephone', optional($location)->telephone) }}" placeholder="e.g +44 1224 772 777" tabindex="12" autocomplete="off" aria-describedby="helpBlockTelephone" required>
 							@if ($errors->has('telephone'))
 								<span id="helpBlockTelephone" class="form-control-feedback form-text gf-red">- {{ $errors->first('telephone') }}</span>
 							@endif

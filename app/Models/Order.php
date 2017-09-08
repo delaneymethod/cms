@@ -149,4 +149,24 @@ class Order extends Model
 	{
 		return number_format($value, 2, '.', ',');
 	}
+	
+	/**
+	 * Checks if order is active.
+	 *
+	 * @return bool
+	 */
+	public function isActive()
+	{
+		return $this->status_id == 1;
+	}
+	
+	/**
+	 * Checks if order is pending.
+	 *
+	 * @return bool
+	 */
+	public function isPending()
+	{
+		return $this->status_id == 2;
+	}
 }

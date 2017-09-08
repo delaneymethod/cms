@@ -112,4 +112,44 @@ class Page extends Node
 			$this->getPageSlug($page->parent);
 		}
 	}
+	
+	/**
+	 * Checks if page is published
+	 *
+	 * @return bool
+	 */
+	public function isPublished()
+	{
+		return $this->status_id == 4;
+	}
+	
+	/**
+	 * Checks if page is private
+	 *
+	 * @return bool
+	 */
+	public function isPrivate()
+	{
+		return $this->status_id == 5;
+	}
+	
+	/**
+	 * Checks if page is draft
+	 *
+	 * @return bool
+	 */
+	public function isDraft()
+	{
+		return $this->status_id == 6;
+	}
+	
+	/**
+	 * Checks if page is hidden from nav
+	 *
+	 * @return bool
+	 */
+	public function isHiddenFromNav()
+	{
+		return $this->hide_from_nav == 1;
+	}
 }

@@ -136,6 +136,36 @@ class User extends Authenticatable
 	}
 	
 	/**
+	 * Checks if user is retired.
+	 *
+	 * @return bool
+	 */
+	public function isRetired()
+	{
+		return $this->status_id == 3;
+	}
+	
+	/**
+	 * Checks if user is pending.
+	 *
+	 * @return bool
+	 */
+	public function isPending()
+	{
+		return $this->status_id == 2;
+	}
+	
+	/**
+	 * Checks if user location is suspended.
+	 *
+	 * @return bool
+	 */
+	public function isLocationSuspended()
+	{
+		return optional($this->location)->status_id == 7;
+	}
+	
+	/**
 	 * Route notifications for the mail channel.
 	 *
 	 * @return string

@@ -34,7 +34,7 @@
 						<input type="hidden" name="password" value="{{ $user->password }}">
 						<div class="form-group">
 							<label for="first_name" class="control-label font-weight-bold">First Name <span class="text-danger">&#42;</span></label>
-							<input type="text" name="first_name" id="first_name" class="form-control" value="{{ old('first_name') ?? $user->first_name }}" placeholder="e.g Joe" tabindex="1" autocomplete="off" aria-describedby="helpBlockFirstName" required autofocus>
+							<input type="text" name="first_name" id="first_name" class="form-control" value="{{ old('first_name', optional($user)->first_name) }}" placeholder="e.g Joe" tabindex="1" autocomplete="off" aria-describedby="helpBlockFirstName" required autofocus>
 							@if ($errors->has('first_name'))
 								<span id="helpBlockFirstName" class="form-control-feedback form-text gf-red">- {{ $errors->first('first_name') }}</span>
 							@endif
@@ -42,7 +42,7 @@
 						</div>
 						<div class="form-group">
 							<label for="last_name" class="control-label font-weight-bold">Last Name <span class="text-danger">&#42;</span></label>
-							<input type="text" name="last_name" id="last_name" class="form-control" value="{{ old('last_name') ?? $user->last_name }}" placeholder="e.g Bloggs" tabindex="2" autocomplete="off" aria-describedby="helpBlockLastName" required>
+							<input type="text" name="last_name" id="last_name" class="form-control" value="{{ old('last_name', optional($user)->last_name) }}" placeholder="e.g Bloggs" tabindex="2" autocomplete="off" aria-describedby="helpBlockLastName" required>
 							@if ($errors->has('last_name'))
 								<span id="helpBlockLastName" class="form-control-feedback form-text gf-red">- {{ $errors->first('last_name') }}</span>
 							@endif
@@ -50,7 +50,7 @@
 						</div>
 						<div class="form-group">
 							<label for="email" class="control-label font-weight-bold">Email Address <span class="text-danger">&#42;</span></label>
-							<input type="email" name="email" id="email" class="form-control" value="{{ old('email') ?? $user->email }}" placeholder="e.g joe@bloggs.com" tabindex="3" autocomplete="off" aria-describedby="helpBlockEmailAddress" required>
+							<input type="email" name="email" id="email" class="form-control" value="{{ old('email', optional($user)->email) }}" placeholder="e.g joe@bloggs.com" tabindex="3" autocomplete="off" aria-describedby="helpBlockEmailAddress" required>
 							@if ($errors->has('email'))
 								<span id="helpBlockEmailAddress" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 							@endif
@@ -58,7 +58,7 @@
 						</div>
 						<div class="form-group">
 							<label for="job_title" class="control-label font-weight-bold">Job Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="job_title" id="job_title" class="form-control" value="{{ old('job_title') ?? $user->job_title }}" placeholder="e.g Manager" tabindex="4" autocomplete="off" aria-describedby="helpBlockJobTitle" required>
+							<input type="text" name="job_title" id="job_title" class="form-control" value="{{ old('job_title', optional($user)->job_title) }}" placeholder="e.g Manager" tabindex="4" autocomplete="off" aria-describedby="helpBlockJobTitle" required>
 							@if ($errors->has('job_title'))
 								<span id="helpBlockJobTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('job_title') }}</span>
 							@endif
@@ -66,7 +66,7 @@
 						</div>
 						<div class="form-group">
 							<label for="telephone" class="control-label font-weight-bold">Telephone <span class="text-danger">&#42;</span></label>
-							<input type="tel" name="telephone" id="telephone" class="form-control" value="{{ old('telephone') ?? $user->telephone }}" placeholder="E.g: &#43;44 1224 123456" tabindex="5" autocomplete="off" aria-describedby="helpBlockTelephone" required>
+							<input type="tel" name="telephone" id="telephone" class="form-control" value="{{ old('telephone', optional($user)->telephone) }}" placeholder="E.g: &#43;44 1224 123456" tabindex="5" autocomplete="off" aria-describedby="helpBlockTelephone" required>
 							@if ($errors->has('telephone'))
 								<span id="helpBlockTelephone" class="form-control-feedback form-text gf-red">- {{ $errors->first('telephone') }}</span>
 							@endif
@@ -74,7 +74,7 @@
 						</div>
 						<div class="form-group">
 							<label for="mobile" class="control-label font-weight-bold">Mobile</label>
-							<input type="tel" name="mobile" id="mobile" class="form-control" value="{{ old('mobile') ?? $user->mobile }}" placeholder="E.g: &#43;44 7700 123 456" tabindex="6" autocomplete="off" aria-describedby="helpBlockMobile">
+							<input type="tel" name="mobile" id="mobile" class="form-control" value="{{ old('mobile', optional($user)->mobile) }}" placeholder="E.g: &#43;44 7700 123 456" tabindex="6" autocomplete="off" aria-describedby="helpBlockMobile">
 							@if ($errors->has('mobile'))
 								<span id="helpBlockMobile" class="form-control-feedback form-text gf-red">- {{ $errors->first('mobile') }}</span>
 							@endif

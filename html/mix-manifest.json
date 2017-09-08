@@ -1,7 +1,6 @@
 {
-  "/assets/js/cp.js": "/assets/js/cp.b35dc38f7f37d27b6791.js",
-  "/assets/js/global.js": "/assets/js/global.ebfe8f9ea4a76c1fced8.js",
-  "/mix.js": "/mix.79793ec09b6bac6bd12c.js",
-  "/assets/css/global.css": "/assets/css/global.ddc6e361fa28eff6d327.css",
-  "/assets/css/cp.css": "/assets/css/cp.ddc6e361fa28eff6d327.css"
+    "/assets/js/cp.js": "/assets/js/cp.js?id=36bece0c28f84a7adf9b",
+    "/assets/js/global.js": "/assets/js/global.js?id=1b1a660a937256b81654",
+    "/assets/css/global.css": "/assets/css/global.css?id=5357ad3823e8235fd28b",
+    "/assets/css/cp.css": "/assets/css/cp.css?id=58ec410a4a765d005a22"
 }

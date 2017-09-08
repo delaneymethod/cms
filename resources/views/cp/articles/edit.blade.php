@@ -30,7 +30,7 @@
 						<input type="hidden" name="category_ids[]" value="1">
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') ?? $article->title }}" placeholder="e.g Blog Post Title" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
+							<input type="text" name="title" id="title" class="form-control" value="{{ old('title', optional($article)->title) }}" placeholder="e.g Blog Post Title" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
 							@if ($errors->has('title'))
 								<span id="helpBlockTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('title') }}</span>
 							@endif
@@ -38,7 +38,7 @@
 						</div>
 						<div class="form-group">
 							<label for="slug" class="control-label font-weight-bold">Slug <span class="text-danger">&#42;</span></label>
-							<input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') ?? $article->slug }}" placeholder="e.g blog-post-title" tabindex="2" autocomplete="off" aria-describedby="helpBlockSlug" required>
+							<input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', optional($article)->slug) }}" placeholder="e.g blog-post-title" tabindex="2" autocomplete="off" aria-describedby="helpBlockSlug" required>
 							@if ($errors->has('slug'))
 								<span id="helpBlockSlug" class="form-control-feedback form-text gf-red">- {{ $errors->first('slug') }}</span>
 							@endif
@@ -46,7 +46,7 @@
 						</div>
 						<div class="form-group">
 							<label for="description" class="control-label font-weight-bold">Meta Description</label>
-							<input type="text" name="description" id="description" class="form-control" value="{{ old('description') ?? $article->description }}" placeholder="e.g Blog Post Description" tabindex="3" autocomplete="off" aria-describedby="helpBlockDescription">
+							<input type="text" name="description" id="description" class="form-control" value="{{ old('description', optional($article)->description) }}" placeholder="e.g Blog Post Description" tabindex="3" autocomplete="off" aria-describedby="helpBlockDescription">
 							@if ($errors->has('description'))
 								<span id="helpBlockDescription" class="form-control-feedback form-text gf-red">- {{ $errors->first('description') }}</span>
 							@endif
@@ -54,7 +54,7 @@
 						</div>
 						<div class="form-group">
 							<label for="keywords" class="control-label font-weight-bold">Meta Keywords</label>
-							<input type="text" name="keywords" id="keywords" class="form-control" value="{{ old('keywords') ?? $article->keywords }}" placeholder="e.g Blog, Post, Keywords" tabindex="4" autocomplete="off" aria-describedby="helpBlockKeywords">
+							<input type="text" name="keywords" id="keywords" class="form-control" value="{{ old('keywords', optional($article)->keywords) }}" placeholder="e.g Blog, Post, Keywords" tabindex="4" autocomplete="off" aria-describedby="helpBlockKeywords">
 							@if ($errors->has('keywords'))
 								<span id="helpBlockKeywords" class="form-control-feedback form-text gf-red">- {{ $errors->first('keywords') }}</span>
 							@endif
@@ -64,7 +64,7 @@
 							<label for="published_at" class="control-label font-weight-bold">Published Date <span class="text-danger">&#42;</span></label>
 							<div class="input-group date">
 								<span class="input-group-addon" id="helpBlockPublishedAt"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-								<input type="text" name="published_at" id="published_at" class="form-control" value="{{ old('published_at') ?? $article->published_at }}" placeholder="e.g yyyy-mm-dd h:i:s" tabindex="5" autocomplete="off" aria-describedby="helpBlockPublishedAt" required>
+								<input type="text" name="published_at" id="published_at" class="form-control" value="{{ old('published_at', optional($article)->published_at) }}" placeholder="e.g yyyy-mm-dd h:i:s" tabindex="5" autocomplete="off" aria-describedby="helpBlockPublishedAt" required>
 							</div>
 							@if ($errors->has('published_at'))
 								<span id="helpBlockPublishedAt" class="form-control-feedback form-text gf-red">- {{ $errors->first('published_at') }}</span>

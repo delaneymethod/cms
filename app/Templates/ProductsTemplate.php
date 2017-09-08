@@ -12,10 +12,6 @@ class ProductsTemplate extends Template
 	
 	protected $view = 'products';
 	
-	public function __construct()
-	{
-	}
-	
 	public function prepare(View $view, array $parameters)
 	{
 		$currentUser = $parameters['currentUser'];

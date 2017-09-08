@@ -45,7 +45,7 @@
 						<tbody>
 							@foreach ($pages as $page)
 								<tr>
-									<td>{{ $page->title }}{!! $page->hide_from_nav == 1 ? '&nbsp;<i class="text-muted-lighter">(Hidden from Nav)</i>' : '' !!}</td>
+									<td>{{ $page->title }}{!! $page->isHiddenFromNav() ? '&nbsp;<i class="text-muted-lighter">(Hidden from Nav)</i>' : '' !!}</td>
 									<td>{{ $page->slug }}</td>
 									<td>{{ ($page->parent) ? $page->parent->title : '' }}</td>
 									<td>{{ $page->template->title }}</td>

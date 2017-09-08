@@ -28,7 +28,7 @@
 						{{ method_field('PUT') }}
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') ?? $role->title }}" placeholder="e.g Editor" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
+							<input type="text" name="title" id="title" class="form-control" value="{{ old('title', optional($role)->title) }}" placeholder="e.g Editor" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
 							@if ($errors->has('title'))
 								<span id="helpBlockTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('title') }}</span>
 							@endif

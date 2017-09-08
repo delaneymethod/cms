@@ -10,11 +10,11 @@ return [
     
     'version' => '1.0.0',
     
-    'client' => [
+    'site' => [
 	    
-		'name' => env('CLIENT_NAME', 'DelaneyMethod'),
-		'url' => env('CLIENT_URL', 'http://www.delaneymethod.com'),
-		'email' => env('MAIL_FROM_ADDRESS', 'hello@delaneymethod.com'),
+		'name' => env('SITE_NAME', 'Test Site'),
+		'url' => env('SITE_URL', 'http://www.delaneymethod.com'),
+		'email' => env('SITE_EMAIL', 'hello@delaneymethod.com'),
     
     ],
 	

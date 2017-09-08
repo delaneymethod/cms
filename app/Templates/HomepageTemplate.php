@@ -9,10 +9,6 @@ class HomepageTemplate extends Template
 	use ContentTrait;
 
 	protected $view = 'homepage';
-
-	public function __construct()
-	{
-	}
 	
 	public function prepare(View $view, array $parameters)
 	{

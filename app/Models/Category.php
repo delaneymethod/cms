@@ -45,4 +45,24 @@ class Category extends Model
 	{
 		return $this->articles()->sync($articles);
 	}
+	
+	/**
+	 * Checks if category is retired.
+	 *
+	 * @return bool
+	 */
+	public function isRetired()
+	{
+		return $this->status_id == 2;
+	}
+	
+	/**
+	 * Checks if category is pending.
+	 *
+	 * @return bool
+	 */
+	public function isPending()
+	{
+		return $this->status_id == 3;
+	}
 }

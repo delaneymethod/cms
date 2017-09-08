@@ -28,7 +28,7 @@
 						{{ method_field('PUT') }}
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
-							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') ?? $category->title }}" placeholder="e.g News &amp; Events" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
+							<input type="text" name="title" id="title" class="form-control" value="{{ old('title', optional($category)->title) }}" placeholder="e.g News &amp; Events" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
 							@if ($errors->has('title'))
 								<span id="helpBlockTitle" class="form-control-feedback form-text gf-red">- {{ $errors->first('title') }}</span>
 							@endif
@@ -36,7 +36,7 @@
 						</div>
 						<div class="form-group">
 							<label for="slug" class="control-label font-weight-bold">Slug <span class="text-danger">&#42;</span></label>
-							<input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') ?? $category->slug }}" placeholder="e.g news-events" tabindex="2" autocomplete="off" aria-describedby="helpBlockSlug" required>
+							<input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug', optional($category)->slug) }}" placeholder="e.g news-events" tabindex="2" autocomplete="off" aria-describedby="helpBlockSlug" required>
 							@if ($errors->has('slug'))
 								<span id="helpBlockSlug" class="form-control-feedback form-text gf-red">- {{ $errors->first('slug') }}</span>
 							@endif

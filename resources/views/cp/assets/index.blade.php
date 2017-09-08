@@ -105,7 +105,10 @@
 																	</div>
 																	<div class="form-group">
 																		<label for="file_url">File URL:</label>
-																		<input type="text" class="form-control" value="{{ $meta->url_path }}" id="file_url" readonly>
+																		<div class="input-group">
+																			<input type="text" class="form-control bg-transparent" value="{{ $meta->url_path }}" id="file_url" readonly>
+																			<span class="input-group-addon"><a href="javascript:void(0);" title="Copy File URL to clipboard" data-clipboard data-clipboard-target="#file_url"><i class="fa fa-clipboard" id="clipboard-tooltip" title="Copied!" aria-hidden="true"></i></a></span>
+																		</div>
 																	</div>
 																	<div class="form-group">
 																		<label>File type: <strong>{{ $meta->mime_type }}</strong></label>

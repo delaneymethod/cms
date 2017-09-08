@@ -27,6 +27,15 @@ class Article extends Model
 	];
 	
 	/**
+     * Attributes that get appended on serialization
+     *
+     * @var array
+     */
+	protected $appends = [
+		'url',
+	];
+	
+	/**
 	 * Get the template record associated with the article.
 	 */
 	public function template()
@@ -84,5 +93,45 @@ class Article extends Model
 	public function setCategories(array $categories)
 	{
 		return $this->categories()->sync($categories);
+	}
+	
+	/**
+	 * Gets article url.
+	 *
+	 * @return string
+	 */
+	public function getUrlAttribute()
+	{
+		return '/articles/'.$this->slug;
+	}
+	
+	/**
+	 * Checks if article is published
+	 *
+	 * @return bool
+	 */
+	public function isPublished()
+	{
+		return $this->status_id == 4;
+	}
+	
+	/**
+	 * Checks if article is private
+	 *
+	 * @return bool
+	 */
+	public function isPrivate()
+	{
+		return $this->status_id == 5;
+	}
+	
+	/**
+	 * Checks if article is draft
+	 *
+	 * @return bool
+	 */
+	public function isDraft()
+	{
+		return $this->status_id == 6;
 	}
 }

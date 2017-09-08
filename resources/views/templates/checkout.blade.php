@@ -78,7 +78,7 @@
 											<label for="location_id" class="control-label font-weight-bold">Shipping Location</label>
 											<select name="location_id" id="location_id" class="form-control">
 												@foreach ($locations as $location)
-													@if (!empty($currentUser->location_id) && !is_null($currentUser->location_id)) 
+													@if (optional($currentUser)->location_id) 
 														@if ($location->id == $currentUser->location->id) 
 															@php($selected = ' selected')
 														@else	
@@ -165,9 +165,7 @@
 										</tr>
 									</tfoot>
 								</table>
-								@if (!empty($currentUser->location_id) && !is_null($currentUser->location_id) && $currentUser->location->status->id == 7)
-								
-								@else
+								@if (!optional($currentUser)->isLocationSuspended())
 									<button type="submit" name="submit" id="submit" title="Place Order" class="btn btn-outline-secondary">Place Order</button>
 								@endif
 							</div>

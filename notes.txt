@@ -5,27 +5,11 @@ https://scotch.io/tutorials/why-laravel-queues-are-awesome
 	<canvas id="allStats" data-total-categories="{{ $categories->count() }}" data-total-users="{{ $users->count() }}" data-total-pages="{{ $pages->count() }}" data-total-orders="{{ $orders->count() }}" data-total-assets="{{ $assets->count() }}" data-total-companies="{{ $companies->count() }}" data-total-articles="{{ $articles->count() }}" data-total-locations="{{ $locations->count() }}"></canvas>
 </div>
 
-
 look into queues / jobs etc
-
-
-
-look into custom blade if statements
-
-
-@auth and @guest. They do exactly what you'd imagine, so say goodbye to the constant @if (auth()->check()).
-
-Use optional() helper
-
-
 
 tidy up CSS so classes are not duplicated
 
-
-
 update env setup to follow craft 3
 
-update to laravel 5.5
-
-
 update to php 7
+
