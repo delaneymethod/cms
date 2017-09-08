@@ -11,7 +11,7 @@ use App\Http\Traits\CartTrait;
 use App\Http\Traits\OrderTrait;
 use App\Http\Traits\StatusTrait;
 use App\Http\Traits\OrderTypeTrait;
-use App\Http\Traits\DeliveryMethodTrait;
+use App\Http\Traits\ShippingMethodTrait;
 use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
@@ -20,7 +20,7 @@ class OrderController extends Controller
 	use OrderTrait;
 	use StatusTrait;
 	use OrderTypeTrait;
-	use DeliveryMethodTrait;
+	use ShippingMethodTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -243,9 +243,9 @@ class OrderController extends Controller
 			$template .= '	<p>'.$order->created_at.'</p>';
 			$template .= '	<p><strong>Originator</strong></p>';
 			$template .= '	<p>'.$order->user->first_name.' '.$order->user->last_name.'<br>'.$order->user->email.'<br>'.$order->user->telephone.' / '.$order->user->mobile.'<br>'.$order->user->company->title.'</p>';
-			$template .= '	<p><strong>Order Delivery Method</strong></p>';
-			$template .= '	<p>'.$order->delivery_method->title.'</p>';
-			$template .= '	<p><strong>Order Delivery Location</strong></p>';
+			$template .= '	<p><strong>Order Shipping Method</strong></p>';
+			$template .= '	<p>'.$order->shipping_method->title.'</p>';
+			$template .= '	<p><strong>Order Shipping Location</strong></p>';
 			$template .= '	<p>'.nl2br($order->postal_address).'<br>'.$order->user->telephone.'</p>';
 			$template .= '	<p><strong>Order Notes</strong></p>';
 			$template .= '	<p>'.$order->notes.'</p>';

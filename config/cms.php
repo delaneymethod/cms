@@ -55,7 +55,7 @@ return [
 			'po_number' => 'required|string|max:255',
 			'notes' => 'nullable|string',
 			'order_type_id' => 'required|integer',
-			'delivery_method_id' => 'required|integer',
+			'shipping_method_id' => 'required|integer',
 			'location_id' => 'required|integer',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',

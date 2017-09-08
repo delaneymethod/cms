@@ -4,11 +4,13 @@ namespace App\Templates;
 use Illuminate\View\View;
 use App\Http\Traits\CartTrait;
 use App\Http\Traits\ContentTrait;
+use App\Http\Traits\ShippingMethodTrait;
 
 class CheckoutTemplate extends Template
 {
 	use CartTrait;
 	use ContentTrait;
+	use ShippingMethodTrait;
 	
 	protected $view = 'checkout';
 
@@ -30,10 +32,12 @@ class CheckoutTemplate extends Template
 		
 		$locations = $currentUser->company->locations;
 		
+		$shippingMethods = $this->getShippingMethods();
+		
 		$page->description = '';
 		
 		$page->keywords = '';
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'savedCarts', 'locations'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'savedCarts', 'locations', 'shippingMethods'));
 	}
 }

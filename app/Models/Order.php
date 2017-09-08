@@ -6,7 +6,7 @@ use App\User;
 use App\Models\Status;
 use App\Models\Product;
 use App\Models\OrderType;
-use App\Models\DeliveryMethod;
+use App\Models\ShippingMethod;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -21,7 +21,7 @@ class Order extends Model
 		'po_number',
 		'notes',
 		'order_type_id',
-		'delivery_method_id',
+		'shipping_method_id',
 		'user_id',
 		'status_id',
 		'count',
@@ -101,11 +101,11 @@ class Order extends Model
 	}
 	
 	/**
-	 * Get the delivery method record associated with the order.
+	 * Get the shipping method record associated with the order.
 	 */
-	public function delivery_method()
+	public function shipping_method()
 	{
-		return $this->belongsTo(DeliveryMethod::class);
+		return $this->belongsTo(ShippingMethod::class);
 	}
 
 	/**

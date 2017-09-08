@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
 			$table->longText('notes')->nullable();
 			
 			$table->unsignedInteger('order_type_id')->nullable()->index()->comment('Foreign key to the order types table');
-			$table->unsignedInteger('delivery_method_id')->nullable()->index()->comment('Foreign key to the delivery methods table');
+			$table->unsignedInteger('shipping_method_id')->nullable()->index()->comment('Foreign key to the shipping methods table');
 			$table->unsignedInteger('location_id')->nullable()->index()->comment('Foreign key to the locations table');
 			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
@@ -41,7 +41,7 @@ class CreateOrdersTable extends Migration
 
 		Schema::table('orders', function (Blueprint $table) {
 			$table->foreign('order_type_id')->references('id')->on('order_types')->onDelete('set null');
-			$table->foreign('delivery_method_id')->references('id')->on('delivery_methods')->onDelete('set null');
+			$table->foreign('shipping_method_id')->references('id')->on('shipping_methods')->onDelete('set null');
 			$table->foreign('location_id')->references('id')->on('locations')->onDelete('set null');
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');

@@ -24,8 +24,19 @@ body {
 	overflow-x: hidden;
 }
 
+a,
 .btn {
-	cursor: pointer;	
+	font-family: inherit;
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}
+
+.text-wrap {
+	overflow: wrap;
+	white-space: normal;
 }
 
 form,
@@ -46,6 +57,58 @@ button {
 
 .icon {
 	width: 20px;
+}
+
+
+.btn-outline-gf-red {
+	color: $gf-red;
+	font-family: inherit;
+	background-image: none;
+	background-color: transparent;
+	border-color: $gf-red;
+	
+	&:hover {
+		color: #ffffff;
+		background-color: $gf-red;
+		border-color: $gf-red;
+	}
+}
+
+.btn-outline-primary {
+	color: $gf-blue;
+	font-family: inherit;
+	background-image: none;
+	background-color: transparent;
+	border-color: $gf-blue;
+	
+	&:hover {
+		color: #ffffff;
+		background-color: $gf-blue;
+		border-color: $gf-blue;
+	}
+}
+
+.btn-outline-secondary {
+	color: #636c72;
+	font-family: inherit;
+	background-image: none;
+	background-color: transparent;
+	border-color: #636c72;
+	
+	&:hover {
+		color: #ffffff;
+		background-color: #636c72;
+		border-color: #636c72;
+	} 
+}
+ 
+.form-control {
+	font-family: inherit !important;
+	font-size: 14px !important;
+	
+	&:focus {
+		border-color: rgba(151, 151, 151, 1);
+	}
 }
 
 .message {

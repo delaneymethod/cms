@@ -10,6 +10,9 @@ look into queues / jobs etc
 
 
 
+tidy up CSS so classes are not duplicated
+
+
 
 update env setup to follow craft 3
 
