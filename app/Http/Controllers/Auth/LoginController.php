@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Traits\PasswordResetTrait;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -31,7 +32,7 @@ class LoginController extends Controller
 	 * @param  mixed  $user
 	 * @return mixed
 	 */
-	protected function authenticated(Request $request, $user)
+	protected function authenticated(Request $request, $user) : RedirectResponse
 	{
 		// Check if the user status is pending
 		if ($user->status->id === 2) {

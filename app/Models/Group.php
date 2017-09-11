@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Group extends Model
 {
@@ -19,7 +20,7 @@ class Group extends Model
 	/**
 	 * Get the permissions records associated with the group.
 	 */
-	public function permissions()
+	public function permissions() : HasMany
 	{
 		return $this->hasMany(Permission::class);
 	}

@@ -4,6 +4,7 @@ namespace App\Http\Traits;
 
 use App\Models\Asset;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait AssetTrait
 {
@@ -15,7 +16,7 @@ trait AssetTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getAsset(int $id)
+	public function getAsset(int $id) : Asset
 	{
 		$asset = Asset::findOrFail($id);
 		
@@ -40,7 +41,7 @@ trait AssetTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getAssetByFilename(string $filename)
+	public function getAssetByFilename(string $filename) : Asset
 	{
 		$asset = Asset::where('filename', $filename)->first();
 		
@@ -66,7 +67,7 @@ trait AssetTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getAssets()
+	public function getAssets() : CollectionResponse
 	{
 		$assets = Asset::all();
 		
@@ -90,7 +91,7 @@ trait AssetTrait
 	/**
 	 * Does what it says on the tin!
 	 */
-	public function getSize($bytes) 
+	public function getSize($bytes) : string
 	{
 		$i = floor(log($bytes, 1024));
 		
@@ -100,7 +101,7 @@ trait AssetTrait
 	/**
 	 * Does what it says on the tin!
 	 */
-	protected function getPath(Asset $asset) 
+	protected function getPath(Asset $asset) : string
 	{
 		return public_path($this->disk).str_replace('/'.$this->disk, '', $asset->path);
 	}

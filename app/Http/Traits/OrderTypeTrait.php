@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\OrderType;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait OrderTypeTrait
 {
@@ -12,7 +13,7 @@ trait OrderTypeTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getOrderType(int $id)
+	public function getOrderType(int $id) : OrderType
 	{
 		return OrderType::findOrFail($id);
 	}
@@ -23,7 +24,7 @@ trait OrderTypeTrait
 	 * @param 	string 		$slug
 	 * @return 	Object
 	 */
-	public function getOrderTypeBySlug(string $slug)
+	public function getOrderTypeBySlug(string $slug) : OrderType
 	{
 		return OrderType::where('slug', $slug)->firstOrFail();
 	}
@@ -33,7 +34,7 @@ trait OrderTypeTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getOrderTypes()
+	public function getOrderTypes() : CollectionResponse
 	{
 		return OrderType::all();
 	}

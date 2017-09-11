@@ -6,9 +6,8 @@ use DB;
 use Log;
 use App\Models\Permission;
 use Illuminate\Http\Request;
-use App\Http\Traits\RoleTrait;
-use App\Http\Traits\PermissionTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{RoleTrait, PermissionTrait};
 
 class PermissionController extends Controller
 {

@@ -6,12 +6,8 @@ use DB;
 use Log;
 use App\Models\Location;
 use Illuminate\Http\Request;
-use App\Http\Traits\StatusTrait;
-use App\Http\Traits\CountyTrait;
-use App\Http\Traits\CountryTrait;
-use App\Http\Traits\CompanyTrait;
-use App\Http\Traits\LocationTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{StatusTrait, CountyTrait, CountryTrait, CompanyTrait, LocationTrait};
 
 class LocationController extends Controller
 {

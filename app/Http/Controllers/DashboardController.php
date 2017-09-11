@@ -4,21 +4,10 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Http\Traits\CartTrait;
-use App\Http\Traits\PageTrait;
-use App\Http\Traits\UserTrait;
-use App\Http\Traits\RoleTrait;
-use App\Http\Traits\OrderTrait;
-use App\Http\Traits\AssetTrait;
-use App\Http\Traits\StatusTrait;
-use App\Http\Traits\ProductTrait;
-use App\Http\Traits\CompanyTrait;
-use App\Http\Traits\ArticleTrait;
-use App\Http\Traits\LocationTrait;
-use App\Http\Traits\CategoryTrait;
-use App\Http\Traits\TemplateTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, ProductTrait, CompanyTrait, ArticleTrait, LocationTrait, CategoryTrait, TemplateTrait};
 
 class DashboardController extends Controller
 {
@@ -54,7 +43,7 @@ class DashboardController extends Controller
 	 * @params	Request 	$request
 	 * @return 	Response
 	 */
-   	public function index(Request $request)
+   	public function index(Request $request) : View
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		

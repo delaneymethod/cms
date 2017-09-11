@@ -38,7 +38,7 @@
 							@if ($currentUser->hasPermission('view_roles'))
 								<a href="/cp/advanced/roles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="3" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="2" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="2" title="Save Changes">Save Changes</button>
 							@if ($currentUser->hasPermission('delete_roles'))
 								<a href="/cp/advanced/roles/{{ $role->id }}/delete" title="Delete Role" class="pull-right btn btn-outline-danger">Delete Role</a>
 							@endif

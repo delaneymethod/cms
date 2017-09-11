@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\ShippingMethod;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait ShippingMethodTrait
 {
@@ -12,7 +13,7 @@ trait ShippingMethodTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getShippingMethod(int $id)
+	public function getShippingMethod(int $id) : ShippingMethod
 	{
 		return ShippingMethod::findOrFail($id);
 	}
@@ -22,7 +23,7 @@ trait ShippingMethodTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getShippingMethods()
+	public function getShippingMethods() : CollectionResponse
 	{
 		return ShippingMethod::all();
 	}

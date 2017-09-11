@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Page;
-use App\Models\Field;
-use App\Models\Article;
+use App\Models\{Page, Field, Article};
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Content extends Model
 {
@@ -22,7 +21,7 @@ class Content extends Model
 	/**
 	 * Get the page records associated with the content.
 	 */
-	public function pages()
+	public function pages() : BelongsToMany
 	{
 		return $this->belongsToMany(Page::class, 'page_content');
 	}
@@ -30,7 +29,7 @@ class Content extends Model
 	/**
 	 * Get the article records associated with the content.
 	 */
-	public function articles()
+	public function articles() : BelongsToMany
 	{
 		return $this->belongsToMany(Article::class, 'article_content');
 	}
@@ -38,7 +37,7 @@ class Content extends Model
 	/**
 	 * Get the field record associated with the content.
 	 */
-	public function field()
+	public function field() : BelongsTo
 	{
 		return $this->belongsTo(Field::class);
 	}

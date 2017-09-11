@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use App\User;
-use App\Models\Status;
-use App\Models\Product;
-use App\Models\OrderType;
-use App\Models\ShippingMethod;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{Status, Product, OrderType, ShippingMethod};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Order extends Model
 {
@@ -45,7 +43,7 @@ class Order extends Model
 	 *
 	 * @return string
 	 */
-	public function getCurrencyAttribute()
+	public function getCurrencyAttribute() : string
 	{
 		return '&pound;';
 	}
@@ -55,7 +53,7 @@ class Order extends Model
 	 *
 	 * @return string
 	 */
-	public function getPostalAddressAttribute()
+	public function getPostalAddressAttribute() : string
 	{
 		$locationPostalAddress = explode(',', $this->user->location->postal_address);
 			
@@ -71,7 +69,7 @@ class Order extends Model
 	/**
 	 * Gets the tax formatted with 2 decimal places.
 	 */
-	public function getTaxAttribute($value)
+	public function getTaxAttribute($value) : float
     {
         return $this->format2decimals($value);
     }
@@ -79,7 +77,7 @@ class Order extends Model
     /**
 	 * Gets the subtotal formatted with 2 decimal places.
 	 */
-    public function getSubtotalAttribute($value)
+    public function getSubtotalAttribute($value) : float
     {
         return $this->format2decimals($value);
     }
@@ -87,7 +85,7 @@ class Order extends Model
     /**
 	 * Gets the total formatted with 2 decimal places.
 	 */
-    public function getTotalAttribute($value)
+    public function getTotalAttribute($value) : float
     {
         return $this->format2decimals($value);
     }
@@ -95,7 +93,7 @@ class Order extends Model
 	/**
 	 * Get the order type record associated with the order.
 	 */
-	public function order_type()
+	public function order_type() : BelongsTo
 	{
 		return $this->belongsTo(OrderType::class);
 	}
@@ -103,7 +101,7 @@ class Order extends Model
 	/**
 	 * Get the shipping method record associated with the order.
 	 */
-	public function shipping_method()
+	public function shipping_method() : BelongsTo
 	{
 		return $this->belongsTo(ShippingMethod::class);
 	}
@@ -111,7 +109,7 @@ class Order extends Model
 	/**
 	 * Get the user record associated with the order.
 	 */
-	public function user()
+	public function user() : BelongsTo
 	{
 		return $this->belongsTo(User::class);
 	}
@@ -119,7 +117,7 @@ class Order extends Model
 	/**
 	 * Get the status record associated with the order.
 	 */
-	public function status()
+	public function status() : BelongsTo
 	{
 		return $this->belongsTo(Status::class);
 	}
@@ -127,7 +125,7 @@ class Order extends Model
 	/**
 	 * Get the product records associated with the order.
 	 */
-	public function products()
+	public function products() : BelongsToMany
 	{
 		return $this->belongsToMany(Product::class, 'order_product')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');;
 	}
@@ -145,7 +143,7 @@ class Order extends Model
 	/**
 	 * Formats value to 2 decimal places.
 	 */
-	protected function format2decimals(float $value)
+	protected function format2decimals(float $value) : float
 	{
 		return number_format($value, 2, '.', ',');
 	}
@@ -155,7 +153,7 @@ class Order extends Model
 	 *
 	 * @return bool
 	 */
-	public function isActive()
+	public function isActive() : bool
 	{
 		return $this->status_id == 1;
 	}
@@ -165,7 +163,7 @@ class Order extends Model
 	 *
 	 * @return bool
 	 */
-	public function isPending()
+	public function isPending() : bool
 	{
 		return $this->status_id == 2;
 	}

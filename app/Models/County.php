@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Country;
-use App\Models\Location;
+use App\Models\{Country, Location};
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo};
 
 class County extends Model
 {
@@ -21,7 +21,7 @@ class County extends Model
 	/**
 	 * Get the location records associated with the county.
 	 */
-	public function locations()
+	public function locations() : HasMany
 	{
 		return $this->hasMany(Location::class);
 	}
@@ -29,7 +29,7 @@ class County extends Model
 	/**
 	 * Get the country record associated with the county.
 	 */
-	public function country()
+	public function country() : BelongsTo
 	{
 		return $this->belongsTo(Country::class);
 	}

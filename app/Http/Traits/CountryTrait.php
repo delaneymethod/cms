@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Country;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait CountryTrait
 {
@@ -12,7 +13,7 @@ trait CountryTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getCountry(int $id)
+	public function getCountry(int $id) : Country
 	{
 		return Country::findOrFail($id);
 	}
@@ -22,10 +23,8 @@ trait CountryTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getCountries()
+	public function getCountries() : CollectionResponse
 	{
-		$limit = $this->getLimit();
-
-		return $this->paginateCollection(Country::all(), $limit);
+		return Country::all();
 	}
 }

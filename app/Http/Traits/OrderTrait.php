@@ -5,6 +5,8 @@ namespace App\Http\Traits;
 use DB;
 use Carbon\Carbon;
 use App\Models\Order;
+use Illuminate\Support\Collection as SupportCollectionResponse;
+use Illuminate\Database\Eloquent\Collection as EloquentCollectionResponse;
 
 trait OrderTrait
 {
@@ -14,7 +16,7 @@ trait OrderTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getOrder(int $id)
+	public function getOrder(int $id) : Order
 	{
 		$order = Order::findOrFail($id);
 	
@@ -26,13 +28,9 @@ trait OrderTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getOrders()
+	public function getOrders() : EloquentCollectionResponse
 	{
-		$orders = $this->filterOrders(Order::all());
-		
-		$limit = $this->getLimit();
-
-		return $this->paginateCollection($orders, $limit);
+		return Order::all();
 	}
 	
 	/**
@@ -41,7 +39,7 @@ trait OrderTrait
 	 * @param 	int			$month
 	 * @return 	Response
 	 */
-	public function getOrdersByMonth(int $month)
+	public function getOrdersByMonth(int $month) : SupportCollectionResponse
 	{
 		return $this->filterOrders(Order::where(DB::raw('MONTH(created_at)'), '=', $month)->get());
 	}
@@ -53,7 +51,7 @@ trait OrderTrait
 	 * @param 	int			$status_id 
 	 * @return 	Response
 	 */
-	public function getOrdersByMonthStatus(int $month, int $statusId)
+	public function getOrdersByMonthStatus(int $month, int $statusId) : SupportCollectionResponse
 	{
 		return $this->filterOrders(Order::where(DB::raw('MONTH(created_at)'), '=', $month)->where('status_id', $statusId)->get());
 	}

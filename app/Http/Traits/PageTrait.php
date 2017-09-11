@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Page;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait PageTrait
 {
@@ -12,7 +13,7 @@ trait PageTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getPage(int $id)
+	public function getPage(int $id) : Page
 	{
 		return Page::find($id);
 	}
@@ -23,7 +24,7 @@ trait PageTrait
 	 * @param 	string 		$slug
 	 * @return 	Object
 	 */
-	public function getPageBySlug(string $slug)
+	public function getPageBySlug(string $slug) : Page
 	{
 		return Page::where('slug', $slug)->where('status_id', 4)->firstOrFail();
 	}
@@ -34,7 +35,7 @@ trait PageTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getPageOrFail(int $id)
+	public function getPageOrFail(int $id) : Page
 	{
 		return Page::findOrFail($id);
 	}
@@ -44,7 +45,7 @@ trait PageTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getPages()
+	public function getPages() : CollectionResponse
 	{
 		return Page::all();
 	}
@@ -54,7 +55,7 @@ trait PageTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getPagesHierarchy()
+	public function getPagesHierarchy() : CollectionResponse
 	{
 		return Page::all()->toHierarchy();
 	}
@@ -62,7 +63,7 @@ trait PageTrait
 	/**
 	 * Rebuilds (or reindexes) the Tree-structure 
 	 *
-	 * @return 	bool
+	 * @return 	void
 	 */
 	public function rebuildPages()
 	{

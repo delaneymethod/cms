@@ -9,7 +9,7 @@ abstract class Template
 	
 	abstract public function prepare(View $view, array $parameters);
 	
-	public function getView()
+	public function getView() : string
 	{
 		return $this->view;
 	}

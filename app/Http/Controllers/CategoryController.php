@@ -6,9 +6,8 @@ use DB;
 use Log;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Http\Traits\StatusTrait;
-use App\Http\Traits\CategoryTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{StatusTrait, CategoryTrait};
 
 class CategoryController extends Controller
 {

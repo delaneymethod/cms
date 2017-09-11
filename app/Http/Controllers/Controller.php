@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use Request;
+use App\User;
 use Carbon\Carbon;
 use App\Models\Template;
-use App\Http\Traits\UserTrait;
-use App\Http\Traits\FieldTrait;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Traits\{UserTrait, FieldTrait};
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Support\Collection as CollectionResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Validation\Validator as ValidatorResponse;
+use Illuminate\Support\Facades\{File, Auth, Cache, Validator};
 
 class Controller extends BaseController
 {
@@ -73,7 +72,7 @@ class Controller extends BaseController
 	 * @param	string 		$model
 	 * @return 	array
 	 */
-	public function getRules(string $model)
+	public function getRules(string $model) : array
 	{
 		return config('cms.validation_rules.'.$model);
 	}
@@ -83,7 +82,7 @@ class Controller extends BaseController
 	 *
 	 * @return	String
 	 */
-	public function getToken($length = 191)
+	public function getToken($length = 191) : string
 	{
 		return hash_hmac('sha256', str_random($length), config('app.key'));
 	}
@@ -95,7 +94,7 @@ class Controller extends BaseController
 	 * @param	array	$data
 	 * @return 	\Illuminate\Contracts\Validation\Validator
 	 */
-	protected function validatorInput(array $data, array $rules)
+	protected function validatorInput(array $data, array $rules) : ValidatorResponse
 	{
 		return Validator::make($data, $rules);
 	}
@@ -106,7 +105,7 @@ class Controller extends BaseController
 	 * @param  	array  $data
 	 * @return 	\Illuminate\Contracts\Validation\Validator
 	 */
-	protected function sanitizerInput(array $data)
+	protected function sanitizerInput(array $data) : array
 	{
 		$integers = [
 			'id',
@@ -235,7 +234,7 @@ class Controller extends BaseController
 	 *
 	 * @return 	boolean
 	 */
-	protected function runningInConsole()
+	protected function runningInConsole() : bool
 	{
 		return (php_sapi_name() == 'cli');
 	}
@@ -245,7 +244,7 @@ class Controller extends BaseController
 	 *
 	 * @return String
 	 */
-	protected function getRequestType()
+	protected function getRequestType() : string
 	{
 		return Auth::guard('api')->check() ? 'api' : 'web';
 	}
@@ -255,7 +254,7 @@ class Controller extends BaseController
 	 *
 	 * @return Object
 	 */
-	protected function getAuthenticatedUserId()
+	protected function getAuthenticatedUserId() : User
 	{
 		return Auth::id();
 	}
@@ -265,7 +264,7 @@ class Controller extends BaseController
 	 *
 	 * @return Object
 	 */
-	protected function getAuthenticatedUser()
+	protected function getAuthenticatedUser() : User
 	{
 		return Auth::user();
 	}
@@ -290,7 +289,7 @@ class Controller extends BaseController
 	 *
 	 * @return 	Response
 	 */
-	protected function getStatusCode()
+	protected function getStatusCode() : int
 	{
 		return $this->httpStatusCode;
 	}
@@ -314,7 +313,7 @@ class Controller extends BaseController
 	 *
 	 * @return 	Response
 	 */
-	protected function getLimit()
+	protected function getLimit() : int
 	{
 		return $this->limit;
 	}
@@ -325,7 +324,7 @@ class Controller extends BaseController
 	 * @param 	int 		$limit
 	 * @return  Response
 	 */
-	protected function setLimit(int $limit)
+	protected function setLimit(int $limit) : int
 	{
 		$this->limit = ($limit === 0 || $limit > $this->maxLimit) ? $this->maxLimit : $limit;
 	}
@@ -371,7 +370,7 @@ class Controller extends BaseController
 	 * @param  String 	$string
 	 * @return String
 	 */
-	protected function commaSeparate($string)
+	protected function commaSeparate($string) : string
 	{
 		if (!empty($string)) {
 			// Stripe whitespace
@@ -407,7 +406,7 @@ class Controller extends BaseController
 	 * @param  Collection 	$companies
 	 * @return Collection
 	 */
-	protected function filterCompanies($companies)
+	protected function filterCompanies($companies) : CollectionResponse
 	{
 		if (count($companies) == 0) {
 			return collect($companies);
@@ -437,7 +436,7 @@ class Controller extends BaseController
 	 * @param  Collection 	$users
 	 * @return Collection
 	 */
-	protected function filterUsers($users)
+	protected function filterUsers($users) : CollectionResponse
 	{
 		if (count($users) == 0) {
 			return collect($users);
@@ -467,7 +466,7 @@ class Controller extends BaseController
 	 * @param  Collection 	$locations
 	 * @return Collection
 	 */
-	protected function filterLocations($locations)
+	protected function filterLocations($locations) : CollectionResponse
 	{
 		if (count($locations) == 0) {		
 			return collect($locations);
@@ -501,7 +500,7 @@ class Controller extends BaseController
 	 * @param  Collection 	$orders
 	 * @return Collection
 	 */
-	protected function filterOrders($orders)
+	protected function filterOrders($orders) : CollectionResponse
 	{
 		if (count($orders) == 0) {		
 			return collect($orders);
@@ -585,7 +584,7 @@ class Controller extends BaseController
 	 * @param  mixed 		$fragment
 	 * @return Collection
 	 */
-	protected function paginateCollection($collection, $perPage, $pageName = 'page', $fragment = null)
+	protected function paginateCollection($collection, $perPage, $pageName = 'page', $fragment = null) : LengthAwarePaginator
 	{
 		$currentPage = LengthAwarePaginator::resolveCurrentPage($pageName);
 
@@ -611,7 +610,7 @@ class Controller extends BaseController
 		return $paginator;
 	}
 	
-	protected function recursiveCollect(array $array)
+	protected function recursiveCollect(array $array) : CollectionResponse
 	{
 		foreach ($array as $key => $value) {
 			if (is_array($value)) {
@@ -637,7 +636,7 @@ class Controller extends BaseController
 		return (object) $array;
 	}
 	
-	protected function mapFieldsToFieldTypes(Template $template) 
+	protected function mapFieldsToFieldTypes(Template $template) : Template
 	{
 		$template->reference = 'template_'.$template->filename;
 			
@@ -796,7 +795,7 @@ class Controller extends BaseController
 		return $template;
 	}
 	
-	protected function mapContentsToFields(Template $template, Collection $contents)
+	protected function mapContentsToFields(Template $template, Collection $contents) : Template
 	{
 		$template->fields = $this->recursiveObject($template->fields);
 		
@@ -826,7 +825,7 @@ class Controller extends BaseController
 		return $template;
 	}
 	
-	protected function setTemplateFieldRules(array $rules, array $templates) 
+	protected function setTemplateFieldRules(array $rules, array $templates) : array
 	{
 		foreach ($templates as $template_id => $fields) {
 			foreach ($fields as $field_id => $field) {

@@ -145,7 +145,7 @@
 							@if ($currentUser->hasPermission('view_users'))
 								<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="11" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="11" title="Save Changes">Save Changes</button>
 							@if ($currentUser->hasPermission('delete_users') && $user->id != $currentUser->id)
 								<a href="/cp/users/{{ $user->id }}/delete" title="Delete User" class="pull-right btn btn-outline-danger">Delete User</a>
 							@endif

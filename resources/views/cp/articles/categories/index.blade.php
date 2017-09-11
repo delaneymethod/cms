@@ -25,7 +25,7 @@
 					<div class="row">
 						<div class="col">
 							<ul class="list-unstyled list-inline buttons">
-								<li class="list-inline-item"><a href="/cp/articles/categories/create" title="Add Category" class="btn btn-outline-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Category</a></li>
+								<li class="list-inline-item"><a href="/cp/articles/categories/create" title="Add Category" class="btn btn-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Category</a></li>
 							</ul>
 						</div>
 					</div>

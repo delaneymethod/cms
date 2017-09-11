@@ -50,7 +50,7 @@
 							@if ($currentUser->hasPermission('view_companies'))
 								<a href="/cp/companies" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" tabindex="3" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
 							@if ($currentUser->hasPermission('delete_companies') && $company->id != $currentUser->company_id)
 								<a href="/cp/companies/{{ $company->id }}/delete" title="Delete Company" class="pull-right btn btn-outline-danger">Delete Company</a>
 							@endif

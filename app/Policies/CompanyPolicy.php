@@ -17,7 +17,7 @@ class CompanyPolicy
 	 * @param	Company		$company
 	 * @return mixed
 	 */
-	public function userOwnsThis(User $currentUser, Company $company)
+	public function userOwnsThis(User $currentUser, Company $company) : bool
 	{
 		// If the current user is a super admin, who can do everything, just return true.
 		if ($currentUser->isSuperAdmin()) {

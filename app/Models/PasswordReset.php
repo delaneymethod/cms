@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PasswordReset extends Model
 {
@@ -29,7 +30,7 @@ class PasswordReset extends Model
 	/**
 	 * Get the user record associated with the user activation.
 	 */
-	public function user()
+	public function user() : BelongsTo
 	{
 		return $this->belongsTo(User::class, 'email');
 	}

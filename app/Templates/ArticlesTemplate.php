@@ -3,8 +3,7 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\ArticleTrait;
-use App\Http\Traits\ContentTrait;
+use App\Http\Traits\{ArticleTrait, ContentTrait};
 
 class ArticlesTemplate extends Template
 {

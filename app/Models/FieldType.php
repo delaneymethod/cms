@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Field;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FieldType extends Model
 {
@@ -20,7 +21,7 @@ class FieldType extends Model
 	/**
 	 * Get the field records associated with the field type.
 	 */
-	public function fields()
+	public function fields() : HasMany
 	{
 		return $this->hasMany(Field::class);
 	}

@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Company;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait CompanyTrait
 {
@@ -12,7 +13,7 @@ trait CompanyTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getCompany(int $id)
+	public function getCompany(int $id) : Company
 	{
 		$company = Company::findOrFail($id);
 		
@@ -24,13 +25,9 @@ trait CompanyTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getCompanies()
+	public function getCompanies() : CollectionResponse
 	{
-		$companies = $this->filterCompanies(Company::all());
-		
-		$limit = $this->getLimit();
-
-		return $this->paginateCollection($companies, $limit);
+		return Company::all();
 	}
 	
 	/**
@@ -38,7 +35,7 @@ trait CompanyTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getDefaultLocationIds()
+	public function getDefaultLocationIds() : array
 	{
 		$defaultLocationIds = [];
 		

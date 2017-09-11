@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\{Request, JsonResponse};
 
 class ApiController extends Controller
 {
@@ -28,7 +28,7 @@ class ApiController extends Controller
 	 *
 	 * @return 	Response
 	 */
-   	public function index(Request $request)
+   	public function index(Request $request) : JsonResponse
 	{	
 		return response()->json(['message' => 'Welcome to our API.'], 200, $this->headers);
 	}
@@ -40,7 +40,7 @@ class ApiController extends Controller
 	 * @param 	array 		$headers
 	 * @return 	Response
 	 */
-	public function respondWithData($data, array $headers = [])
+	public function respondWithData($data, array $headers = []) : JsonResponse
 	{
 		$headers = array_merge($headers, $this->headers);
 		
@@ -68,7 +68,7 @@ class ApiController extends Controller
 	 * @param 	array 		$headers
 	 * @return 	Response
 	 */
-	public function respondWithNoContent(string $message, array $headers = [])
+	public function respondWithNoContent(string $message, array $headers = []) : JsonResponse
 	{
 		$headers = array_merge($headers, $this->headers);
 		
@@ -89,7 +89,7 @@ class ApiController extends Controller
 	 * @param 	array 		$headers
 	 * @return 	Response
 	 */
-	public function respondWithError(array $messages = [], array $headers = [])
+	public function respondWithError(array $messages = [], array $headers = []) : JsonResponse
 	{
 		$headers = array_merge($headers, $this->headers);
 		
@@ -124,7 +124,7 @@ class ApiController extends Controller
 	 *
 	 * @return 	Response
 	 */
-	public function respondWithInvalidLimit()
+	public function respondWithInvalidLimit() : JsonResponse
 	{
 		return $this->respondWithError(['error' => 'Limit must be a valid integer.']);
 	}
@@ -134,7 +134,7 @@ class ApiController extends Controller
 	 *
 	 * @return array
 	 */
-	private function _getErrorMessages()
+	private function _getErrorMessages() : array
 	{
 		return config('cms.api_error_messages');
 	}

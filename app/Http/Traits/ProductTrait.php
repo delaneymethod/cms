@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait ProductTrait
 {
@@ -12,7 +13,7 @@ trait ProductTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getProduct(int $id)
+	public function getProduct(int $id) : Product
 	{
 		return Product::findOrFail($id);
 	}
@@ -23,7 +24,7 @@ trait ProductTrait
 	 * @param 	string 		$slug
 	 * @return 	Object
 	 */
-	public function getProductBySlug(string $slug)
+	public function getProductBySlug(string $slug) : Product
 	{
 		return Product::where('slug', $slug)->firstOrFail();
 	}
@@ -33,7 +34,7 @@ trait ProductTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getProducts()
+	public function getProducts() : CollectionResponse
 	{
 		return Product::all();
 	}

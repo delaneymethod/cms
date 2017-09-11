@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Permission;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait PermissionTrait
 {
@@ -12,7 +13,7 @@ trait PermissionTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getPermission(int $id)
+	public function getPermission(int $id) : Permission
 	{
 		return Permission::findOrFail($id);
 	}
@@ -22,7 +23,7 @@ trait PermissionTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getPermissions()
+	public function getPermissions() : CollectionResponse
 	{
 		return Permission::all()->groupBy('group_id');
 	}

@@ -4,18 +4,11 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
-use App\Models\Article;
-use App\Models\Content;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Http\Traits\CartTrait;
-use App\Http\Traits\UserTrait;
-use App\Http\Traits\PageTrait;
-use App\Http\Traits\StatusTrait;
-use App\Http\Traits\ContentTrait;
-use App\Http\Traits\ArticleTrait;
-use App\Http\Traits\CategoryTrait;
-use App\Http\Traits\TemplateTrait;
+use App\Models\{Article, Content};
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{CartTrait, UserTrait, PageTrait, StatusTrait, ContentTrait, ArticleTrait, CategoryTrait, TemplateTrait};
 
 class ArticleController extends Controller
 {
@@ -50,7 +43,7 @@ class ArticleController extends Controller
 	 * @params	Request 	$request
 	 * @return 	Response
 	 */
-   	public function index(Request $request)
+   	public function index(Request $request) : View
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
@@ -70,7 +63,7 @@ class ArticleController extends Controller
 	 * @params	string 		$slug
 	 * @return 	Response
 	 */
-   	public function show(Request $request, string $slug)
+   	public function show(Request $request, string $slug) : View
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		

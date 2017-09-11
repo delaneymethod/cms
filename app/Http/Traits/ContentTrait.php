@@ -2,10 +2,9 @@
 
 namespace App\Http\Traits;
 
-use App\Models\Page;
-use App\Models\Article;
-use App\Models\Content;
 use App\Http\Traits\FieldTrait;
+use App\Models\{Page, Article, Content};
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait ContentTrait
 {
@@ -17,7 +16,7 @@ trait ContentTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getContent(int $id)
+	public function getContent(int $id) : Content
 	{
 		return Content::findOrFail($id);
 	}
@@ -28,7 +27,7 @@ trait ContentTrait
 	 * @param 	int		$fieldId
 	 * @return 	Object
 	 */
-	public function getContentByField(int $fieldId)
+	public function getContentByField(int $fieldId) : Content
 	{
 		return Content::where('field_id', $fieldId)->firstOrFail();
 	}
@@ -39,7 +38,7 @@ trait ContentTrait
 	 * @param 	Page		$page
 	 * @return 	Object
 	 */
-	public function getPageContent(Page $page) 
+	public function getPageContent(Page $page) : Page
 	{
 		$contents = $page->contents;
 		
@@ -58,7 +57,7 @@ trait ContentTrait
 	 * @param 	Article		$article
 	 * @return 	Object
 	 */
-	public function getArticleContent(Article $article) 
+	public function getArticleContent(Article $article) : Article
 	{
 		$contents = $article->contents;
 		
@@ -76,7 +75,7 @@ trait ContentTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getContents()
+	public function getContents() : CollectionResponse
 	{
 		return Content::all();
 	}

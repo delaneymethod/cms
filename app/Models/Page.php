@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Baum\Node;
-use App\Models\Status;
-use App\Models\Content;
-use App\Models\Template;
+use App\Models\{Status, Content, Template};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Page extends Node
 {
@@ -42,7 +41,7 @@ class Page extends Node
 	/**
 	 * Get the template record associated with the page.
 	 */
-	public function template()
+	public function template() : BelongsTo
 	{
 		return $this->belongsTo(Template::class);
 	}
@@ -50,7 +49,7 @@ class Page extends Node
 	/**
 	 * Get the status record associated with the page.
 	 */
-	public function status()
+	public function status() : BelongsTo
 	{
 		return $this->belongsTo(Status::class);
 	}
@@ -58,7 +57,7 @@ class Page extends Node
 	/**
 	 * Get the page record associated with the page.
 	 */
-	public function parent()
+	public function parent() : BelongsTo
 	{
 		return $this->belongsTo(Page::class, 'parent_id', 'id');
 	}
@@ -66,7 +65,7 @@ class Page extends Node
 	/**
 	 * Get the content records associated with the page.
 	 */
-	public function contents()
+	public function contents() : BelongsToMany
 	{
 		return $this->belongsToMany(Content::class, 'page_content');
 	}
@@ -86,7 +85,7 @@ class Page extends Node
 	 *
 	 * @return string
 	 */
-	public function getUrlAttribute()
+	public function getUrlAttribute() : string
 	{
 		$this->getPageSlug($this);
 		
@@ -118,7 +117,7 @@ class Page extends Node
 	 *
 	 * @return bool
 	 */
-	public function isPublished()
+	public function isPublished() : bool
 	{
 		return $this->status_id == 4;
 	}
@@ -128,7 +127,7 @@ class Page extends Node
 	 *
 	 * @return bool
 	 */
-	public function isPrivate()
+	public function isPrivate() : bool
 	{
 		return $this->status_id == 5;
 	}
@@ -138,7 +137,7 @@ class Page extends Node
 	 *
 	 * @return bool
 	 */
-	public function isDraft()
+	public function isDraft() : bool
 	{
 		return $this->status_id == 6;
 	}
@@ -148,7 +147,7 @@ class Page extends Node
 	 *
 	 * @return bool
 	 */
-	public function isHiddenFromNav()
+	public function isHiddenFromNav() : bool
 	{
 		return $this->hide_from_nav == 1;
 	}

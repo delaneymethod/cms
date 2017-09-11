@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\FieldType;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait FieldTypeTrait
 {
@@ -12,7 +13,7 @@ trait FieldTypeTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getFieldType(int $id)
+	public function getFieldType(int $id) : FieldType
 	{
 		return FieldType::findOrFail($id);
 	}
@@ -22,7 +23,7 @@ trait FieldTypeTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getFieldTypes()
+	public function getFieldTypes() : CollectionResponse
 	{
 		return FieldType::all();
 	}

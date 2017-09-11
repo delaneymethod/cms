@@ -71,7 +71,7 @@ class DirectoryHelper
 	 * @return true or false
 	 * @access public
 	 */
-	public function isZipEnabled() 
+	public function isZipEnabled() : bool
 	{
 		foreach ($this->_config['zip_disable'] as $disabledPath) {
 			if (fnmatch($disabledPath, $this->_directory)) {
@@ -157,7 +157,7 @@ class DirectoryHelper
 	 * @return array Array of directory being listed
 	 * @access public
 	 */
-	public function listDirectory($directory) 
+	public function listDirectory($directory) : array
 	{
 		// Set directory
 		$directory = $this->setDirectoryPath($directory);
@@ -171,7 +171,7 @@ class DirectoryHelper
 		return $this->_readDirectory($directory);
 	}
 	
-	public function listDirectoriesRecursive($directory)
+	public function listDirectoriesRecursive($directory) : array
 	{
 		if (is_dir($directory)) {
 			$dirs = scandir($directory);
@@ -199,7 +199,7 @@ class DirectoryHelper
 	 * @return array Array of breadcrumbs
 	 * @access public
 	 */
-	public function listBreadcrumbs($directory = null) 
+	public function listBreadcrumbs($directory = null) : array
 	{
 		// Set directory variable if left blank
 		if ($directory === null) {
@@ -246,7 +246,7 @@ class DirectoryHelper
 	 * @return boolean Returns true if directory contains a valid index file, false if not
 	 * @access public
 	 */
-	public function containsIndex($dirPath) 
+	public function containsIndex($dirPath) : bool
 	{
 		// Check if links_dirs_with_index is enabled
 		if ($this->linksDirsWithIndex()) {
@@ -267,7 +267,7 @@ class DirectoryHelper
 	 * @return string Path of the listed directory
 	 * @access public
 	 */
-	public function getListedPath() 
+	public function getListedPath() : string
 	{
 		// Build the path
 		if ($this->_directory == '.') {
@@ -288,7 +288,7 @@ class DirectoryHelper
 	 * @return boolean Returns true if in config is enabled open links in another window, false if not
 	 * @access public
 	 */
-	public function externalLinksNewWindow() 
+	public function externalLinksNewWindow() : bool
 	{
 		return $this->_config['external_links_new_window'];
 	}
@@ -299,7 +299,7 @@ class DirectoryHelper
 	 * @return boolean Returns true if in config is enabled links for directories with index, false if not
 	 * @access public
 	 */
-	public function linksDirsWithIndex()
+	public function linksDirsWithIndex() : bool
 	{
 		return $this->_config['links_dirs_with_index'];
 	}
@@ -310,7 +310,7 @@ class DirectoryHelper
 	 * @return array|bool Array of error messages or false
 	 * @access public
 	 */
-	public function getSystemMessages() 
+	public function getSystemMessages() : array
 	{
 		if (isset($this->_systemMessage) && is_array($this->_systemMessage)) {
 			return $this->_systemMessage;
@@ -326,7 +326,7 @@ class DirectoryHelper
 	 * @return string Human-readable file size
 	 * @access public
 	 */
-	function getFileSize($filePath) 
+	function getFileSize($filePath) : string
 	{
 		// Get file size
 		$bytes = filesize($filePath);
@@ -350,7 +350,7 @@ class DirectoryHelper
 	 * @return array Array of file hashes
 	 * @access public
 	 */
-	public function getFileHash($filePath) 
+	public function getFileHash($filePath) : array
 	{
 		// Placeholder array
 		$hashArray = [];
@@ -394,7 +394,7 @@ class DirectoryHelper
 	 * @return string Sanitizd path to directory
 	 * @access public
 	 */
-	public function setDirectoryPath($path = null) 
+	public function setDirectoryPath($path = null) : string
 	{
 		// Set the directory global variable
 		$this->_directory = $this->_setDirectoryPath($path);
@@ -408,12 +408,12 @@ class DirectoryHelper
 	 * @return string Sanitizd path to directory
 	 * @access public
 	 */
-	public function getDirectoryPath() 
+	public function getDirectoryPath() : string
 	{
 		return $this->_directory;
 	}
 	
-	public function getDirectories() 
+	public function getDirectories() : array
 	{
 		return $this->_directories;
 	}
@@ -426,7 +426,7 @@ class DirectoryHelper
 	 * @return bool true on success
 	 * @access public
 	 */
-	public function setSystemMessage($type, $text) 
+	public function setSystemMessage($type, $text) : bool
 	{
 		// Create empty message array if it doesn't already exist
 		if (isset($this->_systemMessage) && !is_array($this->_systemMessage)) {
@@ -449,7 +449,7 @@ class DirectoryHelper
 	 * @return string Directory path to be listed
 	 * @access protected
 	 */
-	protected function _setDirectoryPath($dir) 
+	protected function _setDirectoryPath($dir) : string
 	{
 		// Check for an empty variable
 		if (empty($dir) || $dir == '.') {
@@ -509,7 +509,7 @@ class DirectoryHelper
 	 * @return array Array of the directory contents
 	 * @access protected
 	 */
-	protected function _readDirectory($directory, $sort = 'natcase') 
+	protected function _readDirectory($directory, $sort = 'natcase') : array
 	{
 		$directoryArray = [];
 	
@@ -640,7 +640,7 @@ class DirectoryHelper
 	 * @return array
 	 * @access protected
 	 */
-	protected function _arraySort($array, $sortMethod, $reverse = false) 
+	protected function _arraySort($array, $sortMethod, $reverse = false) : array
 	{
 		// Create empty arrays
 		$sortedArray = [];
@@ -745,7 +745,7 @@ class DirectoryHelper
 	 * @return boolean Returns true if file is in hidden array, false if not
 	 * @access protected
 	 */
-	protected function _isHidden($filePath) 
+	protected function _isHidden($filePath) : bool
 	{
 		// Add dot files to hidden files array
 		if ($this->_config['hide_dot_files']) {
@@ -770,7 +770,7 @@ class DirectoryHelper
 	 * @return string $relativePath Relative path from $fromPath to $toPath
 	 * @access protected
 	 */
-	protected function _getRelativePath($fromPath, $toPath) 
+	protected function _getRelativePath($fromPath, $toPath) : string
 	{
 		// Define the OS specific directory separator
 		if (!defined('DS')) {

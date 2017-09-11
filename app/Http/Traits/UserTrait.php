@@ -4,6 +4,7 @@ namespace App\Http\Traits;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait UserTrait
 {
@@ -13,7 +14,7 @@ trait UserTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getUser(int $id)
+	public function getUser(int $id) : User
 	{
 		$user = User::findOrFail($id);
 		
@@ -32,19 +33,15 @@ trait UserTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getUsers()
+	public function getUsers() : CollectionResponse
 	{
-		$users = $this->filterUsers(User::all());
-		
-		$limit = $this->getLimit();
-
-		return $this->paginateCollection($users, $limit);
+		return User::all();
 	}
 	
 	/**
 	 * Get the user record by their id - mainly used for user activation since we dont want to filter the users array in getUser above..
 	 */
-	public function getUserById(int $id)
+	public function getUserById(int $id) : User
 	{
 		return User::where('id', $id)->first();
 	}
@@ -52,7 +49,7 @@ trait UserTrait
 	/**
 	 * Get the user record by their email.
 	 */
-	public function getUserByEmail(string $email)
+	public function getUserByEmail(string $email) : User
 	{
 		return User::where('email', $email)->first();
 	}
@@ -62,7 +59,7 @@ trait UserTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getSuperAdmins()
+	public function getSuperAdmins() : CollectionResponse
 	{
 		return User::where('role_id', 1);
 	}
@@ -72,7 +69,7 @@ trait UserTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getAdmins()
+	public function getAdmins() : CollectionResponse
 	{
 		return User::where('role_id', 2);
 	}
@@ -80,7 +77,7 @@ trait UserTrait
 	/**
 	 * Get the user record by their email off the User Model.
 	 */
-	public static function getByEmail(string $email)
+	public static function getByEmail(string $email) : User
 	{
 		return self::where('email', $email)->first();
 	}

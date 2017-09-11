@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Category;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait CategoryTrait
 {
@@ -12,7 +13,7 @@ trait CategoryTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getCategory(int $id)
+	public function getCategory(int $id) : Category
 	{
 		return Category::findOrFail($id);
 	}
@@ -22,7 +23,7 @@ trait CategoryTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getCategories()
+	public function getCategories() : CollectionResponse
 	{
 		return Category::all();
 	}

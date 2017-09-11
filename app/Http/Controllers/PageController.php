@@ -4,15 +4,10 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
-use App\Models\Page;
-use App\Models\Content;
 use Illuminate\Http\Request;
-use App\Http\Traits\CartTrait;
-use App\Http\Traits\PageTrait;
-use App\Http\Traits\StatusTrait;
-use App\Http\Traits\ContentTrait;
-use App\Http\Traits\TemplateTrait;
+use App\Models\{Page, Content};
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{CartTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait};
 
 class PageController extends Controller
 {

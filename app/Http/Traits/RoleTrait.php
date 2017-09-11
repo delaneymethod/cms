@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait RoleTrait
 {
@@ -12,7 +13,7 @@ trait RoleTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getRole(int $id)
+	public function getRole(int $id) : Role
 	{
 		return Role::findOrFail($id);
 	}
@@ -22,7 +23,7 @@ trait RoleTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getRoles()
+	public function getRoles() : CollectionResponse
 	{
 		return Role::all();
 	}

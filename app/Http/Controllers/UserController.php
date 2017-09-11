@@ -6,13 +6,9 @@ use DB;
 use Log;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Traits\RoleTrait;
-use App\Http\Traits\UserTrait;
-use App\Http\Traits\StatusTrait;
-use App\Http\Traits\CompanyTrait;
-use App\Http\Traits\LocationTrait;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Password;
+use App\Http\Traits\{RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait};
 
 class UserController extends Controller
 {

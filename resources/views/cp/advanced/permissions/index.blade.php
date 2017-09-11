@@ -59,7 +59,7 @@
 								@endforeach
 							</tbody>
 						</table>
-						<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
+						<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
 					</form>
 				</div>
 				@include('cp._partials.footer')

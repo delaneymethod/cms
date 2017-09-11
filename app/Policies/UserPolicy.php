@@ -16,7 +16,7 @@ class UserPolicy
 	 * @param	User	$user
 	 * @return mixed
 	 */
-	public function userOwnsThis(User $currentUser, User $user)
+	public function userOwnsThis(User $currentUser, User $user) : bool
 	{
 		// If the current user is a super admin, who can do everything, just return true.
 		if ($currentUser->isSuperAdmin()) {

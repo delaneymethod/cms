@@ -25,7 +25,7 @@
 					<div class="row">
 						<div class="col">
 							<ul class="list-unstyled list-inline buttons">
-								<li class="list-inline-item"><a href="/cp/advanced/roles/create" title="Add Role" class="btn btn-outline-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Role</a></li>
+								<li class="list-inline-item"><a href="/cp/advanced/roles/create" title="Add Role" class="btn btn-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Role</a></li>
 							</ul>
 						</div>
 					</div>

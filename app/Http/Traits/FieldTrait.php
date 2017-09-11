@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Field;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait FieldTrait
 {
@@ -12,7 +13,7 @@ trait FieldTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getField(int $id)
+	public function getField(int $id) : Field
 	{
 		return Field::findOrFail($id);
 	}
@@ -22,7 +23,7 @@ trait FieldTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getFields()
+	public function getFields() : CollectionResponse
 	{
 		return Field::all();
 	}

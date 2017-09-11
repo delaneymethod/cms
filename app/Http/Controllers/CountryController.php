@@ -30,7 +30,7 @@ class CountryController extends Controller
 	 */
 	public function flushCountriesCache() 
 	{
-		$this->flushCache('countries');	
+		$this->flushCache('countries');
 	}
 	
 	/**

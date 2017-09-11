@@ -129,7 +129,7 @@
 							@if ($currentUser->hasPermission('view_articles'))
 								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
+							<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
 						</div>
 					</form>
 					<div class="modal fade add-assets-modal-lg" tabindex="-1" role="dialog" aria-labelledby="addAssetsModalLabel" aria-hidden="true">
@@ -147,7 +147,7 @@
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="float-right btn btn-outline-secondary" data-dismiss="modal">Close</button>
-									<button type="button" class="float-right btn btn-outline-primary">Insert Assets</button>
+									<button type="button" class="float-right btn btn-primary">Insert Assets</button>
 								</div>
 							</div>
 						</div>

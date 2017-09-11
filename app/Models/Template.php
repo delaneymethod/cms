@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Page;
-use App\Models\Field;
-use App\Models\Article;
+use App\Models\{Page, Field, Article};
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsToMany};
 
 class Template extends Model
 {
@@ -22,7 +21,7 @@ class Template extends Model
 	/**
 	 * Get the pages records associated with the template.
 	 */
-	public function pages()
+	public function pages() : HasMany
 	{
 		return $this->hasMany(Page::class);
 	}
@@ -30,7 +29,7 @@ class Template extends Model
 	/**
 	 * Get the articles records associated with the template.
 	 */
-	public function articles()
+	public function articles() : HasMany
 	{
 		return $this->hasMany(Article::class);
 	}
@@ -38,7 +37,7 @@ class Template extends Model
 	/**
 	 * Get the field records associated with the template.
 	 */
-	public function fields()
+	public function fields() : BelongsToMany
 	{
 		return $this->belongsToMany(Field::class, 'template_field')->withPivot('order')->orderBy('order');
 	}

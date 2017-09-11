@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Status;
-use App\Models\Article;
-
+use App\Models\{Status, Article};
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Category extends Model
 {
@@ -23,7 +22,7 @@ class Category extends Model
 	/**
 	 * Get the status record associated with the location.
 	 */
-	public function status()
+	public function status() : BelongsTo
 	{
 		return $this->belongsTo(Status::class);
 	}
@@ -31,7 +30,7 @@ class Category extends Model
 	/**
 	 * Get the article records associated with the category.
 	 */
-	public function articles()
+	public function articles() : BelongsToMany
 	{
 		return $this->belongsToMany(Article::class, 'article_category');
 	}
@@ -51,7 +50,7 @@ class Category extends Model
 	 *
 	 * @return bool
 	 */
-	public function isRetired()
+	public function isRetired() : bool
 	{
 		return $this->status_id == 2;
 	}
@@ -61,7 +60,7 @@ class Category extends Model
 	 *
 	 * @return bool
 	 */
-	public function isPending()
+	public function isPending() : bool
 	{
 		return $this->status_id == 3;
 	}

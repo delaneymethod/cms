@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Status;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait StatusTrait
 {
@@ -12,7 +13,7 @@ trait StatusTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getStatus(int $id)
+	public function getStatus(int $id) : Status
 	{
 		return Status::findOrFail($id);
 	}
@@ -23,7 +24,7 @@ trait StatusTrait
 	 * @param 	string 		$title
 	 * @return 	Object
 	 */
-	public function getStatusByTitle(string $title)
+	public function getStatusByTitle(string $title) : Status
 	{
 		return Status::where('title', $title)->firstOrFail();
 	}
@@ -33,7 +34,7 @@ trait StatusTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getStatuses()
+	public function getStatuses() : CollectionResponse
 	{
 		return Status::all();
 	}

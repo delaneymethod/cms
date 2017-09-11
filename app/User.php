@@ -2,16 +2,12 @@
 
 namespace App;
 
-use App\Models\Role;
-use App\Models\Order;
-use App\Models\Status;
-use App\Models\Company;
-use App\Models\Article;
-use App\Models\Location;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Notifications\SetPassword as SetPasswordNotification;
+use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo};
+use App\Models\{Role, Order, Status, Company, Article, Location};
 
 class User extends Authenticatable
 {
@@ -49,7 +45,7 @@ class User extends Authenticatable
 	/**
 	 * Get the role record associated with the user.
 	 */
-	public function role()
+	public function role() : BelongsTo
 	{
 		return $this->belongsTo(Role::class);
 	}
@@ -57,7 +53,7 @@ class User extends Authenticatable
 	/**
 	 * Get the status record associated with the user.
 	 */
-	public function status()
+	public function status() : BelongsTo
 	{
 		return $this->belongsTo(Status::class);
 	}
@@ -65,7 +61,7 @@ class User extends Authenticatable
 	/**
 	 * Get the company record associated with the user.
 	 */
-	public function company()
+	public function company() : BelongsTo
 	{
 		return $this->belongsTo(Company::class);
 	}
@@ -73,7 +69,7 @@ class User extends Authenticatable
 	/**
 	 * Get the location record associated with the user.
 	 */
-	public function location()
+	public function location() : BelongsTo
 	{
 		return $this->belongsTo(Location::class);
 	}
@@ -81,7 +77,7 @@ class User extends Authenticatable
 	/**
 	 * Get the orders records associated with the user.
 	 */
-	public function orders()
+	public function orders() : HasMany
 	{
 		return $this->hasMany(Order::class);
 	}
@@ -89,7 +85,7 @@ class User extends Authenticatable
 	/**
 	 * Get the articles records associated with the user.
 	 */
-	public function articles()
+	public function articles() : HasMany
 	{
 		return $this->hasMany(Article::class);
 	}
@@ -100,7 +96,7 @@ class User extends Authenticatable
 	 * $param 	string 		$permission
 	 * $return 	boolean
 	 */
-	public function hasPermission(string $permission)
+	public function hasPermission(string $permission) : bool
 	{
 		return in_array($permission, $this->role->permissions->pluck('title')->toArray());
 	}
@@ -110,7 +106,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function isSuperAdmin()
+	public function isSuperAdmin() : bool
 	{
 		return $this->role_id == 1;
 	}
@@ -120,7 +116,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function isAdmin()
+	public function isAdmin() : bool
 	{
 		return $this->role_id == 2;
 	}
@@ -130,7 +126,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function isEndUser()
+	public function isEndUser() : bool
 	{
 		return $this->role_id == 3;
 	}
@@ -140,7 +136,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function isRetired()
+	public function isRetired() : bool
 	{
 		return $this->status_id == 3;
 	}
@@ -150,7 +146,7 @@ class User extends Authenticatable
 	 *
 	 * @return bool
 	 */
-	public function isPending()
+	public function isPending() : bool
 	{
 		return $this->status_id == 2;
 	}
@@ -170,7 +166,7 @@ class User extends Authenticatable
 	 *
 	 * @return string
 	 */
-	public function routeNotificationForMail()
+	public function routeNotificationForMail() : string
 	{
 		return $this->email;
 	}

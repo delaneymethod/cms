@@ -2,17 +2,9 @@
 
 namespace App\Http\Traits;
 
-use App\Models\Page;
-use App\Models\Template;
-use App\Templates\CartTemplate;
-use App\Templates\PageTemplate;
-use App\Templates\ContactTemplate;
-use App\Templates\ProductTemplate;
-use App\Templates\ArticleTemplate;
-use App\Templates\CheckoutTemplate;
-use App\Templates\ProductsTemplate;
-use App\Templates\ArticlesTemplate;
-use App\Templates\HomepageTemplate;
+use App\Models\{Page, Template};
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
+use App\Templates\{CartTemplate, PageTemplate, ContactTemplate, ProductTemplate, ArticleTemplate, CheckoutTemplate, ProductsTemplate, ArticlesTemplate, HomepageTemplate};
 
 trait TemplateTrait
 {
@@ -22,7 +14,7 @@ trait TemplateTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getTemplate(int $id)
+	public function getTemplate(int $id) : Template
 	{
 		return Template::findOrFail($id);
 	}
@@ -33,7 +25,7 @@ trait TemplateTrait
 	 * @param 	string 		$filename
 	 * @return 	Object
 	 */
-	public function getTemplateByFilename(string $filename)
+	public function getTemplateByFilename(string $filename) : Template
 	{
 		return Template::where('filename', $filename)->firstOrFail();
 	}
@@ -43,7 +35,7 @@ trait TemplateTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getTemplates()
+	public function getTemplates() : CollectionResponse
 	{
 		return Template::all();
 	}
@@ -51,7 +43,7 @@ trait TemplateTrait
 	/**
 	 * Get a pages template and injects data based on said template.
 	 *
-	 * @return 	object
+	 * @return 	void
 	 */
 	protected function preparePageTemplate(Page $page, array $parameters)
 	{

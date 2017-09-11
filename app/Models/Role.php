@@ -5,6 +5,7 @@ namespace App\Models;
 use App\User;
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsToMany};
 
 class Role extends Model
 {
@@ -20,7 +21,7 @@ class Role extends Model
 	/**
 	 * Get the user records associated with the role.
 	 */
-	public function users()
+	public function users() : HasMany
 	{
 		return $this->hasMany(User::class);
 	}
@@ -28,7 +29,7 @@ class Role extends Model
 	/**
 	 * Get the permissions records associated with the role.
 	 */
-	public function permissions()
+	public function permissions() : BelongsToMany
 	{
 		return $this->belongsToMany(Permission::class, 'role_permission');
 	}

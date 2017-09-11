@@ -5,6 +5,7 @@ namespace App\Models;
 use App\User;
 use App\Models\Location;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Company extends Model
 {
@@ -21,7 +22,7 @@ class Company extends Model
 	/**
 	 * Get the user records associated with the company.
 	 */
-	public function users()
+	public function users() : HasMany
 	{
 		return $this->hasMany(User::class);
 	}
@@ -29,7 +30,7 @@ class Company extends Model
 	/**
 	 * Get the location records associated with the company.
 	 */
-	public function locations()
+	public function locations() : HasMany
 	{
 		return $this->hasMany(Location::class);
 	}

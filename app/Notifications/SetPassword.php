@@ -45,7 +45,7 @@ class SetPassword extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
+    public function via($notifiable) : array
     {
         return ['mail'];
     }
@@ -73,7 +73,7 @@ class SetPassword extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable) : array
     {
         return [];
     }

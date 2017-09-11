@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Template;
-use App\Models\FieldType;
+use App\Models\{Template, FieldType};
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Field extends Model
 {
@@ -25,7 +25,7 @@ class Field extends Model
 	/**
 	 * Get the field type record associated with the field.
 	 */
-	public function field_type()
+	public function field_type() : BelongsTo
 	{
 		return $this->belongsTo(FieldType::class);
 	}
@@ -33,7 +33,7 @@ class Field extends Model
 	/**
 	 * Get the template records associated with the field.
 	 */
-	public function templates()
+	public function templates() : BelongsToMany
 	{
 		return $this->belongsToMany(Template::class, 'template_field')->withPivot('order')->orderBy('order');
 	}

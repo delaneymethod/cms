@@ -25,7 +25,7 @@
 					<div class="row">
 						<div class="col">
 							<ul class="list-unstyled list-inline buttons">
-								<li class="list-inline-item"><a href="/cp/pages/create/1" title="Add Page" class="btn btn-outline-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Page</a></li>
+								<li class="list-inline-item"><a href="/cp/pages/create/1" title="Add Page" class="btn btn-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Page</a></li>
 							</ul>
 						</div>
 					</div>
@@ -43,7 +43,9 @@
 							{{ csrf_field() }}
 							{{ method_field('PUT') }}
 							<input type="hidden" name="tree" id="tree" value="">
-							<button type="submit" name="submit" id="submit" class="btn btn-outline-primary" title="Save Changes">Save Changes</button>
+							<div class="form-buttons">
+								<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+							</div>
 						</form>
 			    	</div>
 			    @endif

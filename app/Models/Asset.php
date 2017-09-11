@@ -24,7 +24,7 @@ class Asset extends Model
      *
      * @return bool
      */
-    public function isAudio()
+    public function isAudio() : bool
     {
         return $this->extensionIsOneOf(['aac', 'flac', 'm4a', 'mp3', 'ogg', 'wav']);
     }
@@ -35,7 +35,7 @@ class Asset extends Model
      *
      * @return bool
      */
-    public function isPreviewable()
+    public function isPreviewable() : bool
     {
         return $this->extensionIsOneOf([
             'doc', 'docx', 'pages', 'txt',
@@ -56,7 +56,7 @@ class Asset extends Model
      *
      * @return bool
      */
-    public function isImage()
+    public function isImage() : bool
     {
         return $this->extensionIsOneOf(['jpg', 'jpeg', 'png', 'gif']);
     }
@@ -66,7 +66,7 @@ class Asset extends Model
      *
      * @return bool
      */
-    public function isVideo()
+    public function isVideo() : bool
     {
         return $this->extensionIsOneOf(['h264', 'mp4', 'm4v', 'ogv', 'webm']);
     }
@@ -76,7 +76,7 @@ class Asset extends Model
      *
      * @return bool
      */
-    public function extensionIsOneOf($filetypes = [])
+    public function extensionIsOneOf($filetypes = []) : bool
     {
         return (in_array(strtolower($this->extension()), $filetypes));
     }

@@ -11384,10 +11384,69 @@ body {
   overflow-x: hidden;
 }
 
+canvas {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+::-webkit-input-placeholder {
+  color: #b4b4b4 !important;
+}
+
+:-moz-placeholder {
+  color: #b4b4b4 !important;
+}
+
+::-moz-placeholder {
+  color: #b4b4b4 !important;
+}
+
+:-ms-input-placeholder {
+  color: #b4b4b4 !important;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'],
+input[type='tel'],
+input[type='radio'],
+input[type='checkbox'],
+select,
+textarea,
+button,
+.btn,
+.btn:focus,
+.btn:active,
+* {
+  outline: 0 !important;
+}
+
 a,
 .btn {
   font-family: inherit;
   cursor: pointer;
+}
+
+.btn {
+  border-radius: 17px;
+  padding: 0.5rem 1.25rem;
+}
+
+.text-gf-red {
+  color: #C0392B;
+}
+
+.text-gf-red:hover {
+  color: #C0392B;
+}
+
+.text-muted-lighter {
+  color: #c1c1c1;
+}
+
+.bg-white {
+  background-color: #ffffff;
 }
 
 .hidden {
@@ -11399,43 +11458,56 @@ a,
   white-space: normal;
 }
 
-.btn,
-.btn:focus,
-.btn:active,
-* {
-  outline: 0 !important;
-}
-
 .icon {
   width: 20px;
 }
 
+@media (min-width: 768px) {
+  .table-responsive {
+    display: table;
+  }
+}
+
 .btn-outline-gf-red {
-  color: #d30e07;
+  color: #C0392B;
   font-family: inherit;
   background-image: none;
   background-color: transparent;
-  border-color: #d30e07;
+  border-color: #C0392B;
 }
 
 .btn-outline-gf-red:hover {
   color: #ffffff;
-  background-color: #d30e07;
-  border-color: #d30e07;
+  background-color: #C0392B;
+  border-color: #C0392B;
 }
 
 .btn-outline-primary {
-  color: #3aa3e3;
+  color: #3498DB;
   font-family: inherit;
   background-image: none;
   background-color: transparent;
-  border-color: #3aa3e3;
+  border-color: #3498DB;
 }
 
 .btn-outline-primary:hover {
   color: #ffffff;
-  background-color: #3aa3e3;
-  border-color: #3aa3e3;
+  background-color: #3498DB;
+  border-color: #3498DB;
+}
+
+.btn-outline-success {
+  color: #27AE60;
+  font-family: inherit;
+  background-image: none;
+  background-color: transparent;
+  border-color: #27AE60;
+}
+
+.btn-outline-success:hover {
+  color: #ffffff;
+  background-color: #27AE60;
+  border-color: #27AE60;
 }
 
 .btn-outline-secondary {
@@ -11467,7 +11539,7 @@ a,
   margin-left: -15px;
   margin-bottom: 0;
   padding: 20px 30px;
-  background-color: #d30e07;
+  background-color: #C0392B;
   color: #ffffff;
   font-weight: 600;
   font-size: 16px;
@@ -11487,15 +11559,15 @@ a,
 
 .message.info {
   display: block;
-  background-color: #5bc0de;
+  background-color: #2980B9;
 }
 
 .message.warning {
   display: block;
-  background-color: #f0ad4e;
+  background-color: #F1C40F;
 }
 
 .message.danger {
   display: block;
-  background-color: #d30e07;
+  background-color: #C0392B;
 }

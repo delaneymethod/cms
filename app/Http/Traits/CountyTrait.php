@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\County;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait CountyTrait
 {
@@ -12,7 +13,7 @@ trait CountyTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getCounty(int $id)
+	public function getCounty(int $id) : County
 	{
 		return County::findOrFail($id);
 	}
@@ -25,7 +26,7 @@ trait CountyTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getCountiesWhere(array $params)
+	public function getCountiesWhere(array $params) : County
 	{
 		return County::where($params)->get()->first();
 	}
@@ -35,10 +36,8 @@ trait CountyTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getCounties()
+	public function getCounties() : CollectionResponse
 	{
-		$limit = $this->getLimit();
-
-		return $this->paginateCollection(County::all(), $limit);
+		return County::all();
 	}
 }

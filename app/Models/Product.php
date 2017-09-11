@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model implements Buyable
 {
@@ -65,9 +66,9 @@ class Product extends Model implements Buyable
 	 *
 	 * @return int|string
 	 */
-	public function getBuyableIdentifier($options = null)
+	public function getBuyableIdentifier($options = null) : string
 	{
-		return $this->id;
+		return (string) $this->id;
 	}
 	
 	/**
@@ -75,7 +76,7 @@ class Product extends Model implements Buyable
 	 *
 	 * @return string
 	 */
-	public function getBuyableDescription($options = null)
+	public function getBuyableDescription($options = null) : string
 	{
 		return $this->name;
 	}
@@ -85,7 +86,7 @@ class Product extends Model implements Buyable
 	 *
 	 * @return float
 	 */
-	public function getBuyablePrice($options = null)
+	public function getBuyablePrice($options = null) : float
 	{
 		return $this->price;
 	}
@@ -95,7 +96,7 @@ class Product extends Model implements Buyable
 	 *
 	 * @return string
 	 */
-	public function getCurrencyAttribute()
+	public function getCurrencyAttribute() : string
 	{
 		return '&pound;';
 	}
@@ -103,7 +104,7 @@ class Product extends Model implements Buyable
 	/**
 	 * Gets the total formatted with 2 decimal places.
 	 */
-    public function getPriceAttribute($value)
+    public function getPriceAttribute($value) : float
     {
         return $this->format2decimals($value);
     }
@@ -111,7 +112,7 @@ class Product extends Model implements Buyable
 	/**
 	 * Get the order records associated with the product.
 	 */
-	public function orders()
+	public function orders() : BelongsToMany
 	{
 		return $this->belongsToMany(Order::class, 'order_product')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');
 	}
@@ -129,7 +130,7 @@ class Product extends Model implements Buyable
 	/**
 	 * Formats value to 2 decimal places.
 	 */
-	protected function format2decimals(float $value)
+	protected function format2decimals(float $value) : float
 	{
 		return number_format($value, 2, '.', ',');
 	}

@@ -6,9 +6,8 @@ use DB;
 use Log;
 use App\Models\Company;
 use Illuminate\Http\Request;
-use App\Http\Traits\CompanyTrait;
-use App\Http\Traits\LocationTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{CompanyTrait, LocationTrait};
 
 class CompanyController extends Controller
 {

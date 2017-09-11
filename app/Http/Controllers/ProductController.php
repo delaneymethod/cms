@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use App\Models\Product;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-use App\Http\Traits\CartTrait;
-use App\Http\Traits\PageTrait;
-use App\Http\Traits\ProductTrait;
-use App\Http\Traits\TemplateTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{CartTrait, PageTrait, ProductTrait, TemplateTrait};
 
 class ProductController extends Controller
 {
@@ -71,7 +69,7 @@ class ProductController extends Controller
 	 * @params	string 		$slug
 	 * @return 	Response
 	 */
-   	public function show(Request $request, string $slug)
+   	public function show(Request $request, string $slug) : View
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		

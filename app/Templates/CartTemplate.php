@@ -2,8 +2,7 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\CartTrait;
-use App\Http\Traits\ContentTrait;
+use App\Http\Traits\{CartTrait, ContentTrait};
 
 class CartTemplate extends Template
 {

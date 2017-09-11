@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use App\User;
-use App\Models\Status;
-use App\Models\Content;
-use App\Models\Category;
-use App\Models\Template;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{Status, Content, Category, Template};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Article extends Model
 {
@@ -38,7 +36,7 @@ class Article extends Model
 	/**
 	 * Get the template record associated with the article.
 	 */
-	public function template()
+	public function template() : BelongsTo
 	{
 		return $this->belongsTo(Template::class);
 	}
@@ -46,7 +44,7 @@ class Article extends Model
 	/**
 	 * Get the user record associated with the article.
 	 */
-	public function user()
+	public function user() : BelongsTo
 	{
 		return $this->belongsTo(User::class);
 	}
@@ -54,7 +52,7 @@ class Article extends Model
 	/**
 	 * Get the status record associated with the article.
 	 */
-	public function status()
+	public function status() : BelongsTo
 	{
 		return $this->belongsTo(Status::class);
 	}
@@ -62,7 +60,7 @@ class Article extends Model
 	/**
 	 * Get the content records associated with the article.
 	 */
-	public function contents()
+	public function contents() : BelongsToMany
 	{
 		return $this->belongsToMany(Content::class, 'article_content');
 	}
@@ -80,7 +78,7 @@ class Article extends Model
 	/**
 	 * Get the category records associated with the article.
 	 */
-	public function categories()
+	public function categories() : BelongsToMany
 	{
 		return $this->belongsToMany(Category::class, 'article_category');
 	}
@@ -100,7 +98,7 @@ class Article extends Model
 	 *
 	 * @return string
 	 */
-	public function getUrlAttribute()
+	public function getUrlAttribute() : string
 	{
 		return '/articles/'.$this->slug;
 	}
@@ -110,7 +108,7 @@ class Article extends Model
 	 *
 	 * @return bool
 	 */
-	public function isPublished()
+	public function isPublished() : bool
 	{
 		return $this->status_id == 4;
 	}
@@ -120,7 +118,7 @@ class Article extends Model
 	 *
 	 * @return bool
 	 */
-	public function isPrivate()
+	public function isPrivate() : bool
 	{
 		return $this->status_id == 5;
 	}
@@ -130,7 +128,7 @@ class Article extends Model
 	 *
 	 * @return bool
 	 */
-	public function isDraft()
+	public function isDraft() : bool
 	{
 		return $this->status_id == 6;
 	}

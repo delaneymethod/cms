@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Location;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait LocationTrait
 {
@@ -12,7 +13,7 @@ trait LocationTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getLocation(int $id)
+	public function getLocation(int $id) : Location
 	{
 		$location = Location::findOrFail($id);
 		
@@ -24,12 +25,8 @@ trait LocationTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getLocations()
+	public function getLocations() : CollectionResponse
 	{
-		$locations = $this->filterLocations(Location::all());
-		
-		$limit = $this->getLimit();
-
-		return $this->paginateCollection($locations, $limit);
+		return Location::all();
 	}
 }

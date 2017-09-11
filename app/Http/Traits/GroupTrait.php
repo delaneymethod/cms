@@ -3,6 +3,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Group;
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait GroupTrait
 {
@@ -12,7 +13,7 @@ trait GroupTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getGroup(int $id)
+	public function getGroup(int $id) : Group
 	{
 		return Group::findOrFail($id);
 	}
@@ -22,7 +23,7 @@ trait GroupTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getGroups()
+	public function getGroups() : CollectionResponse
 	{
 		return Group::all();
 	}

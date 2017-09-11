@@ -3,12 +3,9 @@
 namespace App\Providers;
 
 use App\User;
-use App\Models\Company;
-use App\Models\Location;
-use App\Policies\UserPolicy;
-use App\Policies\CompanyPolicy;
-use App\Policies\LocationPolicy;
+use App\Models\{Company, Location};
 use Illuminate\Support\Facades\Gate;
+use App\Policies\{UserPolicy, CompanyPolicy, LocationPolicy};
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

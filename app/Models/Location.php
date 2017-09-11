@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Status;
-use App\Models\County;
-use App\Models\Country;
-use App\Models\Company;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{Status, County, Country, Company};
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Location extends Model
 {
@@ -45,9 +43,9 @@ class Location extends Model
 	 * Get the locations postal address
 	 *
 	 * @param  	int  	$value
-	 * @return 	void
+	 * @return 	string
 	 */
-	public function getPostalAddressAttribute()
+	public function getPostalAddressAttribute() : string
 	{
 		$address = [
 			$this->unit,
@@ -74,7 +72,7 @@ class Location extends Model
 	/**
 	 * Get the county record associated with the location.
 	 */
-	public function county()
+	public function county() : BelongsTo
 	{
 		return $this->belongsTo(County::class);
 	}
@@ -82,7 +80,7 @@ class Location extends Model
 	/**
 	 * Get the country record associated with the location.
 	 */
-	public function country()
+	public function country() : BelongsTo
 	{
 		return $this->belongsTo(Country::class);
 	}
@@ -90,7 +88,7 @@ class Location extends Model
 	/**
 	 * Get the company record associated with the location.
 	 */
-	public function company()
+	public function company() : BelongsTo
 	{
 		return $this->belongsTo(Company::class);
 	}
@@ -98,7 +96,7 @@ class Location extends Model
 	/**
 	 * Get the status record associated with the location.
 	 */
-	public function status()
+	public function status() : BelongsTo
 	{
 		return $this->belongsTo(Status::class);
 	}
@@ -108,7 +106,7 @@ class Location extends Model
 	 *
 	 * @return bool
 	 */
-	public function isPending()
+	public function isPending() : bool
 	{
 		return $this->status_id == 2;
 	}
@@ -118,7 +116,7 @@ class Location extends Model
 	 *
 	 * @return bool
 	 */
-	public function isRetired()
+	public function isRetired() : bool
 	{
 		return $this->status_id == 3;
 	}
@@ -128,7 +126,7 @@ class Location extends Model
 	 *
 	 * @return bool
 	 */
-	public function isSuspended()
+	public function isSuspended() : bool
 	{
 		return $this->status_id == 7;
 	}

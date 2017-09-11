@@ -705,7 +705,7 @@ class AssetController extends Controller
 	 * @params	String 		$directory
 	 * @return 	String
 	 */
-	protected function cleanDirectory(string $directory)
+	protected function cleanDirectory(string $directory) : string
 	{
 		$directory = str_replace(['//', $this->assetsDisk], [DIRECTORY_SEPARATOR, ''], $directory);
 		
@@ -717,7 +717,7 @@ class AssetController extends Controller
 	/**
 	 * Does what it says on the tin!
 	 */
-	private function convertToJson($assets, $type = null) 
+	private function convertToJson($assets, $type = null) : string
 	{
 		$json = [];
 		
@@ -746,7 +746,7 @@ class AssetController extends Controller
 	 * @params	Array 		$uris
 	 * @return 	String
 	 */
-	private function buildPath(array $uris)
+	private function buildPath(array $uris) : string
 	{
 		return implode(DIRECTORY_SEPARATOR, $uris);
 	}
@@ -754,7 +754,7 @@ class AssetController extends Controller
 	/**
 	 * Does what it says on the tin!
 	 */
-	private function filterByImage($assets)
+	private function filterByImage($assets) : array
 	{
 		$images = [];
 		

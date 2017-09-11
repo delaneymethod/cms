@@ -7,12 +7,8 @@ use Log;
 use App;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use App\Http\Traits\CartTrait;
-use App\Http\Traits\OrderTrait;
-use App\Http\Traits\StatusTrait;
-use App\Http\Traits\OrderTypeTrait;
-use App\Http\Traits\ShippingMethodTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{CartTrait, OrderTrait, StatusTrait, OrderTypeTrait, ShippingMethodTrait};
 
 class OrderController extends Controller
 {

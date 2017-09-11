@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use App\User;
-use App\Models\Order;
-use App\Models\Article;
-use App\Models\Location;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\{Order, Article, Location};
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Status extends Model
 {
@@ -23,7 +22,7 @@ class Status extends Model
 	/**
 	 * Get the user records associated with the status.
 	 */
-	public function users()
+	public function users() : HasMany
 	{
 		return $this->hasMany(User::class);
 	}
@@ -31,7 +30,7 @@ class Status extends Model
 	/**
 	 * Get the order records associated with the status.
 	 */
-	public function orders()
+	public function orders() : HasMany
 	{
 		return $this->hasMany(Order::class);
 	}
@@ -39,7 +38,7 @@ class Status extends Model
 	/**
 	 * Get the article records associated with the status.
 	 */
-	public function articles()
+	public function articles() : HasMany
 	{
 		return $this->hasMany(Article::class);
 	}
@@ -47,7 +46,7 @@ class Status extends Model
 	/**
 	 * Get the location records associated with the status.
 	 */
-	public function locations()
+	public function locations() : HasMany
 	{
 		return $this->hasMany(Location::class);
 	}

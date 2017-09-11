@@ -3,8 +3,9 @@
 namespace App\Http\Traits;
 
 use Cart;
-use App\Models\Product;
-use App\Models\Cart as Kart;
+use Gloudemans\Shoppingcart\CartItem;
+use App\Models\{Product, Cart as Kart};
+use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait CartTrait
 {
@@ -14,7 +15,7 @@ trait CartTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getCart(string $identifier)
+	public function getCart(string $identifier) : Kart
 	{
 		return Kart::where('identifier', $identifier)->firstOrFail();
 	}
@@ -25,7 +26,7 @@ trait CartTrait
 	 * @param 	string 		$identifier
 	 * @return 	Object
 	 */
-	public function getCartByIdentifier(string $identifier)
+	public function getCartByIdentifier(string $identifier) : Kart
 	{
 		return Kart::where('identifier', 'like', $identifier)->first();
 	}
@@ -37,7 +38,7 @@ trait CartTrait
 	 * @param 	string 		$instance
 	 * @return 	Object
 	 */
-	public function getCartsByIdentifierInstance(string $identifier, string $instance)
+	public function getCartsByIdentifierInstance(string $identifier, string $instance) : CollectionResponse
 	{
 		return Kart::where('identifier', 'like', '%'.$identifier.'%')->where('instance', $instance)->get();
 	}
@@ -47,7 +48,7 @@ trait CartTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getCarts()
+	public function getCarts() : CollectionResponse
 	{
 		return Kart::all();
 	}
@@ -58,7 +59,7 @@ trait CartTrait
 	 * @param 	string			$rowId
 	 * @return 	Object
 	 */
-	public function getCartProduct(string $rowId)
+	public function getCartProduct(string $rowId) : Kart
 	{
 		return Cart::get($rowId);
 	}
@@ -68,7 +69,7 @@ trait CartTrait
 	 *
 	 * @return 	int
 	 */
-	public function getCartCount()
+	public function getCartCount() : int
 	{
 		return Cart::count();
 	}
@@ -98,7 +99,7 @@ trait CartTrait
 	 * @param 	int			$userId
 	 * @return 	collection
 	 */
-	public function getSavedCarts(int $userId) 
+	public function getSavedCarts(int $userId) : CollectionResponse
 	{
 		$carts = $this->getCartsByIdentifierInstance('_'.$userId, 'cart');
 		
@@ -118,7 +119,7 @@ trait CartTrait
 	 * @param 	float 		$price
 	 * @return 	Object
 	 */
-	public function addCartProduct(int $id, string $title, float $price)
+	public function addCartProduct(int $id, string $title, float $price) : CartItem
 	{
 		return Cart::add($id, $title, 1, $price);
 	}
@@ -130,7 +131,7 @@ trait CartTrait
 	 * @param 	int 		$quantity
 	 * @return 	void
 	 */
-	public function updateCartProductQuantity(string $rowId, int $quantity)
+	public function updateCartProductQuantity(string $rowId, int $quantity) : CartItem
 	{
 		Cart::update($rowId, $quantity);
 	}
@@ -174,7 +175,7 @@ trait CartTrait
 	 * @param 	int			$id
 	 * @return 	collection
 	 */
-	public function searchCart(int $id)
+	public function searchCart(int $id) : CollectionResponse
 	{
 		return Cart::search(function ($product, $rowId) use ($id) {
 			return $product->id === $id;

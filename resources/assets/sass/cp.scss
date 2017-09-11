@@ -16,110 +16,18 @@
 
 @import '../plugins/redactor/plugins/alignment/alignment';
 
-@mixin placeholder {
-	::-webkit-input-placeholder {@content}
-	:-moz-placeholder {@content}
-	::-moz-placeholder {@content}
-	:-ms-input-placeholder {@content}  
-}
+@import 'common';
 	
 html, body {
-	height: 100%;
-	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-weight: 400;
-	font-size: 14px;
-	line-height: 1.42857143;
 	color: $gf-default;
-	background-color: #ffffff;
-}
-
-html {
-	position: relative;
-	min-height: 100%;
-}
-
-body {
-	min-height: 100%;
-	overflow-x: hidden;
-}
-
-canvas {
-	-moz-user-select: none;
-	-webkit-user-select: none;
-	-ms-user-select: none;
-}
-
-form,
-input[type='text'],
-input[type='email'],
-input[type='password'],
-input[type='tel'],
-input[type='radio'],
-input[type='checkbox'],
-select,
-textarea,
-button {
-}
-
-input[type='text']:disabled,
-input[type='email']:disabled,
-input[type='password']:disabled,
-input[type='tel']:disabled,
-input[type='radio']:disabled,
-input[type='checkbox']:disabled,
-select:disabled,
-textarea:disabled {
-}
-
-input[type='text'],
-input[type='email'],
-input[type='password'],
-input[type='tel'],
-input[type='radio'],
-input[type='checkbox'],
-select,
-textarea,
-button,
-.btn,
-.btn:focus,
-.btn:active,
-* {
-	outline: 0 !important;
-}
-
-a,
-.btn {
-	font-family: inherit;
-	cursor: pointer;
 }
 
 .badge {
 	margin-top: -2px;
 }
 
-.hidden {
-	display: none;
-}
-
-.text-gf-red {
-	color: $gf-red;
-	
-	&:hover {
-		color: $gf-red;
-	}
-}
-
-.text-wrap {
-	overflow: wrap;
-	white-space: normal;
-}
-
 .extra-breathing-space {
 	letter-spacing: 0.0625em;
-}
-
-@include placeholder {
-	color: #b4b4b4 !important;
 }
 
 .datetimepicker {
@@ -184,67 +92,6 @@ a,
 	}
 }
 
-.btn-outline-gf-red {
-	color: $gf-red;
-	font-family: inherit;
-	background-image: none;
-	background-color: transparent;
-	border-color: $gf-red;
-	
-	&:hover {
-		color: #ffffff;
-		background-color: $gf-red;
-		border-color: $gf-red;
-	}
-}
-
-.btn-outline-primary {
-	color: $gf-blue;
-	font-family: inherit;
-	background-image: none;
-	background-color: transparent;
-	border-color: $gf-blue;
-	
-	&:hover {
-		color: #ffffff;
-		background-color: $gf-blue;
-		border-color: $gf-blue;
-	}
-}
-
-.btn-outline-secondary {
-	color: #636c72;
-	font-family: inherit;
-	background-image: none;
-	background-color: transparent;
-	border-color: #636c72;
-	
-	&:hover {
-		color: #ffffff;
-		background-color: #636c72;
-		border-color: #636c72;
-	} 
-}
- 
-.form-control {
-	font-family: inherit !important;
-	font-size: 14px !important;
-	
-	&:focus {
-		border-color: rgba(151, 151, 151, 1);
-	}
-}
-
-.table-responsive {
-	@include media-breakpoint-up(md) {
-		display: table;
-	}
-}
-
-.icon {
-	width: 20px;
-}
-
 .status_id-1,
 .status_id-4 {
 	color: #5cb85c;
@@ -298,10 +145,6 @@ a,
 	cursor: not-allowed;
 }
 
-.bg-white {
-	background-color: #ffffff;
-}
-
 .badge-retired {
 	color: white !important;
 	background-color: #9b9b9b !important;
@@ -314,10 +157,6 @@ a,
 
 .dataTables_paginate {
 	padding-top: 0.4em;
-}
-
-.text-muted-lighter {
-	color: #c1c1c1;	
 }
 
 .breadcrumbs {
@@ -465,45 +304,6 @@ a,
 .main {
 	color: $sidebar-a-hover-bg-color;
 	background-color: $main-bg-color;
-	
-	.message {
-		display: none;
-		margin-right: -15px;
-		margin-left: -15px;
-		margin-bottom: 0;
-		padding: 20px 30px;
-		background-color: $main-message-bg-color;
-		color: #ffffff;
-		font-weight: 600;
-		font-size: 16px;
-		
-		a,
-		a:hover {
-			color: #ffffff;
-			background-color: transparent;
-			text-decoration: none;
-		}
-	}
-	
-	.message.success {
-		display: block;
-		background-color: green;
-	}
-	
-	.message.info {
-		display: block;
-		background-color: $gf-info;
-	}
-	
-	.message.warning {
-		display: block;
-		background-color: $gf-warning;
-	}
-	
-	.message.danger {
-		display: block;
-		background-color: $main-message-bg-color;	
-	}
 	
 	.buttons {
 		border-radius: 0.25rem;
@@ -859,16 +659,3 @@ a,
 		}
 	}
 }
-
-/*
-// Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
-	body,
-	.container-fluid,
-	.wrapper,
-	.sidebar,
-	.main {
-		height: 100%;
-	}
-}
-*/

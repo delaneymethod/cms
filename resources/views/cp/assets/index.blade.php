@@ -39,7 +39,7 @@
 					<div class="row">
 						<div class="col">
 							<ul class="list-unstyled list-inline buttons">
-								<li class="list-inline-item"><a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-outline-success"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
+								<li class="list-inline-item"><a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-success"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
 								@if ($zipEnabled && count($assets) > 0)
 									<li class="list-inline-item"><a href="/cp/assets?zip={{ $zipDownloadPath }}" title="Download Assets" class="btn btn-outline-secondary"><i class="icon fa fa-download" aria-hidden="true"></i>Download Assets</a></li>
 								@endif

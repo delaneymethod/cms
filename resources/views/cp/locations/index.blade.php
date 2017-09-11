@@ -25,7 +25,7 @@
 					<div class="row">
 						<div class="col">
 							<ul class="list-unstyled list-inline buttons">
-								<li class="list-inline-item"><a href="/cp/locations/create" title="Add Location" class="btn btn-outline-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Location</a></li>
+								<li class="list-inline-item"><a href="/cp/locations/create" title="Add Location" class="btn btn-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Location</a></li>
 							</ul>
 						</div>
 					</div>

@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\User;
-use App\Models\Role;
-use App\Models\Group;
+use App\Models\{Role, Group};
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Permission extends Model
 {
@@ -22,7 +22,7 @@ class Permission extends Model
 	/**
 	 * Get the group record associated with the permission.
 	 */
-	public function group()
+	public function group() : BelongsTo
 	{
 		return $this->belongsTo(Group::class);
 	}
@@ -30,7 +30,7 @@ class Permission extends Model
 	/**
 	 * Get the role records associated with the permission.
 	 */
-	public function roles()
+	public function roles() : BelongsToMany
 	{
 		return $this->belongsToMany(Role::class, 'role_permission');
 	}

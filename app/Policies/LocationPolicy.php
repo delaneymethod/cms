@@ -17,7 +17,7 @@ class LocationPolicy
 	 * @param	Location	$location
 	 * @return mixed
 	 */
-	public function userOwnsThis(User $currentUser, Location $location)
+	public function userOwnsThis(User $currentUser, Location $location) : bool
 	{
 		// If the current user is a super admin, who can do everything, just return true.
 		if ($currentUser->isSuperAdmin()) {

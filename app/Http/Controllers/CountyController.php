@@ -30,7 +30,7 @@ class CountyController extends Controller
 	 */
 	public function flushCountiesCache() 
 	{
-		$this->flushCache('counties');	
+		$this->flushCache('counties');
 	}
 	
 	/**
