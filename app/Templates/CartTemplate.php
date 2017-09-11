@@ -6,8 +6,7 @@ use App\Http\Traits\{CartTrait, ContentTrait};
 
 class CartTemplate extends Template
 {
-	use CartTrait;
-	use ContentTrait;
+	use CartTrait, ContentTrait;
 	
 	protected $view = 'cart';
 	

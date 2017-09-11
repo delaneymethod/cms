@@ -12,14 +12,7 @@ use App\Http\Traits\{CartTrait, UserTrait, PageTrait, StatusTrait, ContentTrait,
 
 class ArticleController extends Controller
 {
-	use CartTrait;
-	use UserTrait;
-	use PageTrait;
-	use StatusTrait;
-	use ArticleTrait;
-	use ContentTrait;
-	use CategoryTrait;
-	use TemplateTrait;
+	use CartTrait, UserTrait, PageTrait, StatusTrait, ArticleTrait, ContentTrait, CategoryTrait, TemplateTrait;
 	
 	/**
 	 * Create a new controller instance.

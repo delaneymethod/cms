@@ -11,19 +11,7 @@ use App\Http\Traits\{CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, Ass
 
 class DashboardController extends Controller
 {
-	use CartTrait;
-	use PageTrait;
-	use UserTrait;
-	use RoleTrait;
-	use OrderTrait;
-	use AssetTrait;
-	use StatusTrait;
-	use ProductTrait;
-	use CompanyTrait;
-	use ArticleTrait;
-	use LocationTrait;
-	use CategoryTrait;
-	use TemplateTrait;
+	use CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, ProductTrait, CompanyTrait, ArticleTrait, LocationTrait, CategoryTrait, TemplateTrait;
 	
 	/**
 	 * Create a new controller instance.

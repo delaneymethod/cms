@@ -10,8 +10,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
-	use PasswordResetTrait;
-	use AuthenticatesUsers;
+	use PasswordResetTrait, AuthenticatesUsers;
 
 	protected $redirectTo = '/';
 

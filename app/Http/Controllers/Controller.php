@@ -20,11 +20,7 @@ use Illuminate\Support\Facades\{File, Auth, Cache, Validator};
 
 class Controller extends BaseController
 {
-	use UserTrait;
-	use FieldTrait;
-	use DispatchesJobs;
-	use AuthorizesRequests;
-	use ValidatesRequests;
+	use UserTrait, FieldTrait, DispatchesJobs, AuthorizesRequests, ValidatesRequests;
 	
 	protected $env;
 	

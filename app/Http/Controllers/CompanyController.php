@@ -11,8 +11,7 @@ use App\Http\Traits\{CompanyTrait, LocationTrait};
 
 class CompanyController extends Controller
 {
-	use CompanyTrait;
-	use LocationTrait;
+	use CompanyTrait, LocationTrait;
 		
 	/**
 	 * Create a new controller instance.

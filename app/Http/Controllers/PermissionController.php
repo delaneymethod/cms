@@ -11,8 +11,7 @@ use App\Http\Traits\{RoleTrait, PermissionTrait};
 
 class PermissionController extends Controller
 {
-	use RoleTrait;
-	use PermissionTrait;
+	use RoleTrait, PermissionTrait;
 
 	/**
 	 * Create a new controller instance.

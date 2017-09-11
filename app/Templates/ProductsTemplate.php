@@ -6,8 +6,7 @@ use App\Http\Traits\{ProductTrait, ContentTrait};
 
 class ProductsTemplate extends Template
 {
-	use ProductTrait;
-	use ContentTrait;
+	use ProductTrait, ContentTrait;
 	
 	protected $view = 'products';
 	

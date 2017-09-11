@@ -7,8 +7,7 @@ use App\Http\Traits\{ArticleTrait, ContentTrait};
 
 class ArticlesTemplate extends Template
 {
-	use ArticleTrait;
-	use ContentTrait;
+	use ArticleTrait, ContentTrait;
 	
 	protected $view = 'articles';
 	

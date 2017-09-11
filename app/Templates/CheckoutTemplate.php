@@ -6,9 +6,7 @@ use App\Http\Traits\{CartTrait, ContentTrait, ShippingMethodTrait};
 
 class CheckoutTemplate extends Template
 {
-	use CartTrait;
-	use ContentTrait;
-	use ShippingMethodTrait;
+	use CartTrait, ContentTrait, ShippingMethodTrait;
 	
 	protected $view = 'checkout';
 	

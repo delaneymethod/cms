@@ -11,11 +11,7 @@ use App\Http\Traits\{CartTrait, PageTrait, StatusTrait, ContentTrait, TemplateTr
 
 class PageController extends Controller
 {
-	use CartTrait;
-	use PageTrait;
-	use StatusTrait;
-	use ContentTrait;
-	use TemplateTrait;
+	use CartTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait;
 	
 	/**
 	 * Create a new controller instance.

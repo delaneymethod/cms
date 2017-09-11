@@ -11,11 +11,7 @@ use App\Http\Traits\{StatusTrait, CountyTrait, CountryTrait, CompanyTrait, Locat
 
 class LocationController extends Controller
 {
-	use StatusTrait;
-	use CountyTrait;
-	use CountryTrait;
-	use CompanyTrait;
-	use LocationTrait;
+	use StatusTrait, CountyTrait, CountryTrait, CompanyTrait, LocationTrait;
 
 	/**
 	 * Create a new controller instance.

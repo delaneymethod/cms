@@ -11,8 +11,7 @@ use App\Http\Traits\{StatusTrait, CategoryTrait};
 
 class CategoryController extends Controller
 {
-	use StatusTrait;
-	use CategoryTrait;
+	use StatusTrait, CategoryTrait;
 
 	/**
 	 * Create a new controller instance.

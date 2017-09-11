@@ -12,10 +12,7 @@ use App\Http\Traits\{CartTrait, PageTrait, ProductTrait, TemplateTrait};
 
 class ProductController extends Controller
 {
-	use CartTrait;
-	use PageTrait;
-	use ProductTrait;
-	use TemplateTrait;
+	use CartTrait, PageTrait, ProductTrait, TemplateTrait;
 
 	/**
 	 * Create a new controller instance.

@@ -12,11 +12,7 @@ use App\Http\Traits\{RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTr
 
 class UserController extends Controller
 {
-	use RoleTrait;
-	use UserTrait;
-	use StatusTrait;
-	use CompanyTrait;
-	use LocationTrait;
+	use RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait;
 	
 	/**
 	 * Create a new controller instance.
