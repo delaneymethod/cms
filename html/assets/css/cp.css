@@ -13894,12 +13894,12 @@ html, body {
 
 .status_id-1,
 .status_id-4 {
-  color: #5cb85c;
+  color: #27AE60;
   background-color: transparent;
 }
 
 .status_id-2 {
-  color: #f0ad4e;
+  color: #F1C40F;
   background-color: transparent;
 }
 
@@ -13939,6 +13939,11 @@ html, body {
 
 .page-item.disabled {
   cursor: not-allowed;
+}
+
+.badge-warning {
+  color: white !important;
+  background-color: #F1C40F !important;
 }
 
 .badge-retired {

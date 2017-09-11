@@ -3,7 +3,7 @@
 namespace App\Http\Traits;
 
 use App\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\{Auth, Cache};
 use Illuminate\Database\Eloquent\Collection as CollectionResponse;
 
 trait UserTrait
@@ -35,7 +35,9 @@ trait UserTrait
 	 */
 	public function getUsers() : CollectionResponse
 	{
-		return User::all();
+		//return Cache::remember('users', 5, function () {
+			return User::all();
+		//});
 	}
 	
 	/**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Ping;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\{Request, JsonResponse};
 
@@ -31,6 +32,22 @@ class ApiController extends Controller
    	public function index(Request $request) : JsonResponse
 	{	
 		return response()->json(['message' => 'Welcome to our API.'], 200, $this->headers);
+	}
+	
+	/**
+	 * Pings a URL
+	 *
+	 * @params	Request 	$request
+	 * @return 	Response
+	 */
+	public function ping(Request $request) : JsonResponse
+	{
+		$statusCode = Ping::check('https://www.delaneymethod.com');
+		
+		return response()->json([
+			'message' => 'Request completed.',
+			'status_code' => $statusCode
+		], 200, $this->headers);
 	}
 
 	/**

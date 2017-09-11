@@ -12,7 +12,7 @@ trait PasswordResetTrait
 	 * @param 	string 		$email
 	 * @return 	Object
 	 */
-	public function getPasswordReset(string $email) : PasswordReset
+	public function getPasswordReset(string $email)
 	{
 		return PasswordReset::where('email', $email)->first();
 	}
@@ -23,7 +23,7 @@ trait PasswordResetTrait
 	 * @param 	string 		$email
 	 * @return 	Object
 	 */
-	public function deletePasswordReset(string $email) : PasswordReset
+	public function deletePasswordReset(string $email)
 	{
 		return PasswordReset::where('email', $email)->delete();
 	}

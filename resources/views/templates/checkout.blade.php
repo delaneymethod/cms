@@ -76,7 +76,7 @@
 									<div class="col-sm-12 col-md-12 col-lg-12">
 										<div class="form-group">
 											<label for="location_id" class="control-label font-weight-bold">Shipping Location</label>
-											<select name="location_id" id="location_id" class="form-control">
+											<select name="location_id" id="location_id" class="form-control" aria-describedby="helpBlockLocationId">
 												@foreach ($locations as $location)
 													@if (optional($currentUser)->location_id) 
 														@if ($location->id == $currentUser->location->id) 
@@ -94,6 +94,7 @@
 													<option value="{{ $location->id }}"{{ $selected }}>{{ $location->title }} - {{ $location->postal_address }}</option>
 												@endforeach
 											</select>
+											<span id="helpBlockLocationId" class="form-control-feedback form-text text-muted"></span>
 										</div>
 									</div>
 								</div>
@@ -104,10 +105,20 @@
 											@foreach ($shippingMethods as $shippingMethod)
 												<div class="form-check">
 													<label for="shipping_method_id-{{ str_slug($shippingMethod->title) }}" class="form-check-label">
-														<input type="radio" name="shipping_method_id" id="shipping_method_id-{{ str_slug($shippingMethod->title) }}" class="form-check-input" value="{{ $shippingMethod->id }}" {{ $loop->first ? 'checked' : '' }}>{{ $shippingMethod->title }}
+														<input type="radio" name="shipping_method_id" id="shipping_method_id-{{ str_slug($shippingMethod->title) }}" class="form-check-input" value="{{ $shippingMethod->id }}" aria-describedby="helpBlockShippingMethodId" {{ $loop->first ? 'checked' : '' }}>{{ $shippingMethod->title }}
 													</label>
 												</div>
 											@endforeach
+											<span id="helpBlockShippingMethodId" class="form-control-feedback form-text text-muted"></span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-12 col-lg-12">
+										<div class="form-group">
+											<label for="notes" class="control-label font-weight-bold">Notes</label>
+											<textarea name="notes" id="notes" class="form-control" autocomplete="off" placeholder="" rows="5" cols="50" aria-describedby="helpBlockNotes"></textarea>
+											<span id="helpBlockNotes" class="form-control-feedback form-text text-muted"></span>
 										</div>
 									</div>
 								</div>
@@ -118,56 +129,74 @@
 								<h5><a class="collapsed" data-toggle="collapse" href="#reviewCart" aria-expanded="false" aria-controls="collapseThree">Review your Cart</a></h5>
 							</div>
 							<div id="reviewCart" class="collapse" role="tabpanel" aria-labelledby="reviewYourCart" data-parent="#accordion">
-								<h2>Review your Cart</h2>
-								<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
-									<thead>
-										<tr>
-											<th>Product</th>
-											<th>Qty</th>
-											<th>Price</th>
-											<th>Subtotal</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach ($cart->products as $product)
-											<tr>
-												<td>
-													<span class="productInfo">
-														<a href="/products/{{ $product->model->slug }}" title="{{ $product->name }}">{{ $product->name }}</a>
-														@if ($product->options->has('size'))
-															<span class="productInfoSize">Size: {{ $product->options->size }}</span>
-														@endif
-													</span>
-												</td>
-												<td>
-													<span class="productQuantity">{{ $product->qty }}</span>
-												</td>
-												<td>{{ $product->price() }}</td>
-												<td>{{ $product->total() }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-									<tfoot>
-										<tr>
-											<td colspan="2">&nbsp;</td>
-											<td>Subtotal</td>
-											<td>{{ $cart->subtotal }}</td>
-										</tr>
-										<tr>
-											<td colspan="2">&nbsp;</td>
-											<td>Tax</td>
-											<td>{{ $cart->tax }}</td>
-										</tr>
-										<tr>
-											<td colspan="2">&nbsp;</td>
-											<td>Total</td>
-											<td>{{ $cart->total }}</td>
-										</tr>
-									</tfoot>
-								</table>
-								@if (!optional($currentUser)->isLocationSuspended())
-									<button type="submit" name="submit" id="submit" title="Place Order" class="btn btn-outline-secondary">Place Order</button>
-								@endif
+								<h3>Review your Cart</h3>
+								<div class="row">
+									<div class="col-sm-12 col-md-12 col-lg-12">
+										<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+											<thead>
+												<tr>
+													<th>Product</th>
+													<th>Qty</th>
+													<th>Price</th>
+													<th>Subtotal</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach ($cart->products as $product)
+													<tr>
+														<td>
+															<span class="productInfo">
+																<a href="/products/{{ $product->model->slug }}" title="{{ $product->name }}">{{ $product->name }}</a>
+																@if ($product->options->has('size'))
+																	<span class="productInfoSize">Size: {{ $product->options->size }}</span>
+																@endif
+															</span>
+														</td>
+														<td>
+															<span class="productQuantity">{{ $product->qty }}</span>
+														</td>
+														<td>{{ $product->price() }}</td>
+														<td>{{ $product->total() }}</td>
+													</tr>
+												@endforeach
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="2">&nbsp;</td>
+													<td>Subtotal</td>
+													<td>{{ $cart->subtotal }}</td>
+												</tr>
+												<tr>
+													<td colspan="2">&nbsp;</td>
+													<td>Tax</td>
+													<td>{{ $cart->tax }}</td>
+												</tr>
+												<tr>
+													<td colspan="2">&nbsp;</td>
+													<td>Total</td>
+													<td>{{ $cart->total }}</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12 col-md-6 col-lg-6">
+										<div class="form-group">
+											<label for="po_number" class="control-label font-weight-bold">PO Number <span class="text-danger">&#42;</span></label>
+											<input type="text" name="po_number" id="po_number" class="form-control" value="{{ old('po_number') }}" placeholder="e.g 123456789" autocomplete="off" aria-describedby="helpBlockPoNumber" required>
+											@if ($errors->has('po_number'))
+												<span id="helpBlockPoNumber" class="form-control-feedback form-text gf-red">- {{ $errors->first('po_number') }}</span>
+											@endif
+											<span id="helpBlockPoNumber" class="form-control-feedback form-text text-muted"></span>
+										</div>
+									</div>
+								</div>
+								<div class="form-buttons">
+									@if (!optional($currentUser)->isLocationSuspended())
+										<button type="submit" name="submit" id="submit" title="Place Order" class="btn btn-outline-secondary">Place Order</button>
+									@endif
+								</div>
 							</div>
 						</div>
 					</div>

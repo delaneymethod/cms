@@ -181,8 +181,8 @@ return [
 		Barryvdh\Cors\ServiceProvider::class,
 		Barryvdh\Snappy\ServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
+		Karlmonson\Ping\PingServiceProvider::class,
 		App\Providers\ComposerServiceProvider::class,
-        Orangehill\Iseed\IseedServiceProvider::class,
 		Propaganistas\LaravelIntl\IntlServiceProvider::class,
 		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 		Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
@@ -237,6 +237,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         
 		// Added by Sean
+		'Ping' => Karlmonson\Ping\Facades\Ping::class,
 		'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
 		'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
 		'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,

@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use App;
+use Carbon\Carbon;
 use App\Models\Order;
+use App\Mail\OrderPlaced;
+use App\Jobs\ProcessOrder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Traits\{CartTrait, OrderTrait, StatusTrait, OrderTypeTrait, ShippingMethodTrait};
 
 class OrderController extends Controller
 {
-	use CartTrait;
-	use OrderTrait;
-	use StatusTrait;
-	use OrderTypeTrait;
-	use ShippingMethodTrait;
+	use CartTrait, OrderTrait, StatusTrait, OrderTypeTrait, ShippingMethodTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -117,9 +117,6 @@ class OrderController extends Controller
 			
 			// Set some dynamic rules to valid our order
 			$rules = [];
-			$rules['delivery_id'] = 'required|integer';
-			$rules['user_id'] = 'required|integer';
-			$rules['notes'] = 'nullable|string';
 			
 			foreach (range(0, $products) as $index) {
 				$rules['products.'.$index.'.product_id'] = 'required|integer';
@@ -138,21 +135,11 @@ class OrderController extends Controller
 			$validator = $this->validatorInput($cleanedOrder, $rules);
 
 			if ($validator->fails()) {
-				$message = '';
-				
-				$errors = [];
-				
-				foreach ($validator->errors()->messages() as $error) {
-					array_push($errors, $error[0]);
-				}
-				
-				$message = implode(' ', $errors);
-				
-				abort(500, $message);
+				return back()->withErrors($validator)->withInput();
 			}
-
+			
 			DB::beginTransaction();
-
+			
 			try {
 				// Create new model
 				$order = new Order;
@@ -161,13 +148,13 @@ class OrderController extends Controller
 				
 				$status = $this->getStatusByTitle('Pending');
 				
-				// FIXME - move GF prefix to config file
-				
 				// Set our field data
-				$order->order_number = 'GF-'.time();
+				$order->order_number = time();
 				$order->order_type_id = $orderType->id;
-				$order->delivery_id = $cleanedOrder['delivery_id'];
+				$order->po_number = $cleanedOrder['po_number'];
+				$order->shipping_method_id = $cleanedOrder['shipping_method_id'];
 				$order->user_id = $cleanedOrder['user_id'];
+				$order->location_id = $cleanedOrder['location_id'];
 				$order->status_id = $status->id;
 				$order->notes = $cleanedOrder['notes'];
 				$order->count = $cleanedOrder['count'];
@@ -181,6 +168,20 @@ class OrderController extends Controller
 				
 				// finally empty the cart instance
 				$this->destroyCart();
+				
+				// Send an order placed email to the user. Stick the email in the "emails" queue to run in 5 minutes.
+				$time = Carbon::now()->addMinutes(5);
+				
+				$message = (new OrderPlaced($currentUser, $order))->onQueue('emails');
+				
+				$to = $currentUser->email;
+				
+				Mail::to($to)->later($time, $message);
+				
+				$time = Carbon::now()->addMinutes(10);
+				
+				// Dispatches a new job to process the order. Sticks the job in the "orders" queue to run in 10 minutes.
+				ProcessOrder::dispatch($currentUser, $order)->delay($time)->onQueue('orders');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -197,7 +198,7 @@ class OrderController extends Controller
 
 			DB::commit();
 
-			return redirect('/cart/checkout/success');
+			return redirect('/cart/checkout/confirmation');
 		}
 
 		abort(403, 'Unauthorised action');

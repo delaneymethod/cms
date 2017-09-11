@@ -15,4 +15,7 @@ Route::get('/', 'ApiController@index');
 
 Route::prefix('v1')->group(function () {
 	Route::get('/', 'ApiController@index');
+	
+	// Ping routes
+	Route::get('/ping', 'ApiController@ping');
 });

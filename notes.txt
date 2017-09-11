@@ -1,8 +1,12 @@
-
-
-
 <div class="col-sm-12 col-md-6 col-lg-6">
 	<canvas id="allStats" data-total-categories="{{ $categories->count() }}" data-total-users="{{ $users->count() }}" data-total-pages="{{ $pages->count() }}" data-total-orders="{{ $orders->count() }}" data-total-assets="{{ $assets->count() }}" data-total-companies="{{ $companies->count() }}" data-total-articles="{{ $articles->count() }}" data-total-locations="{{ $locations->count() }}"></canvas>
 </div>
 
-look into queues / jobs etc
+
+Route::get('/mailable', function () {
+	$user = App\User::find(1);
+
+	$order = App\Models\Order::find(4);
+
+	Mail::to('hello@delaneymethod.com')->send(new App\Mail\OrderPlaced($user, $order));
+});
