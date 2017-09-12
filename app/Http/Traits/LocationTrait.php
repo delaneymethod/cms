@@ -27,6 +27,6 @@ trait LocationTrait
 	 */
 	public function getLocations() : CollectionResponse
 	{
-		return Location::all();
+		return Location::orderBy('title')->get();
 	}
 }

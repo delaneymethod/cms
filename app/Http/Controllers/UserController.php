@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Password;
 use App\Http\Traits\{RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait};
 
 class UserController extends Controller
-{
+{	
 	use RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait;
 	
 	/**
@@ -39,9 +39,15 @@ class UserController extends Controller
 			$title = 'Users';
 		
 			$subTitle = $currentUser->company->title;
-		
-			$users = $this->getUsers();
-		
+			
+			$users = $this->getCache($this->usersCacheKey);
+			
+			if (is_null($users)) {
+				$users = $this->getUsers();
+				
+				$this->setCache($this->usersCacheKey, $users);
+			}
+			
 			return view('cp.users.index', compact('currentUser', 'title', 'subTitle', 'users'));
 		}
 
@@ -142,6 +148,8 @@ class UserController extends Controller
 				$user->save();
 				
 				Password::sendResetLink(['email' => $user->email]);
+				
+				$this->refreshUsersCache();
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -240,6 +248,8 @@ class UserController extends Controller
 			
 			$this->authorize('userOwnsThis', $user);
 			
+			$this->flushUserCache($user);
+			
 			return view('cp.users.edit.password', compact('currentUser', 'title', 'subTitle', 'user'));
 		}
 
@@ -319,6 +329,10 @@ class UserController extends Controller
 				$user->updated_at = $this->datetime;
 				
 				$user->save();
+				
+				$this->flushUserCache($user);
+				
+				$this->refreshUsersCache();
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -374,6 +388,10 @@ class UserController extends Controller
 				$user->updated_at = $this->datetime;
 				
 				$user->save();
+				
+				$this->flushUserCache($user);
+				
+				$this->refreshUsersCache();
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -455,7 +473,11 @@ class UserController extends Controller
 			DB::beginTransaction();
 
 			try {
+				$this->flushUserCache($user);
+				
 				$user->delete();
+				
+				$this->refreshUsersCache();
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -483,9 +505,19 @@ class UserController extends Controller
 	/**
 	 * Does what it says on the tin!
 	 */
+	public function refreshUsersCache()
+	{
+		$users = $this->getUsers();
+		
+		$this->setCache($this->usersCacheKey, $users);
+	}
+	
+	/**
+	 * Does what it says on the tin!
+	 */
 	public function flushUsersCache()
 	{
-		$this->flushCache('users');	
+		$this->flushCache($this->usersCacheKey);
 	}
 	
 	/**
@@ -493,10 +525,6 @@ class UserController extends Controller
 	 */
 	public function flushUserCache($user)
 	{
-		$this->flushCache('users:id:'.$user->id);
-		
-		$this->flushCache('users:email:'.$user->email);
-		
-		$this->flushCache('users:role:id:'.$user->role_id);
+		$this->flushCache($this->usersCacheKey.':id:'.$user->id);
 	}
 }

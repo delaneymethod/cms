@@ -181,9 +181,11 @@ return [
 		Barryvdh\Cors\ServiceProvider::class,
 		Barryvdh\Snappy\ServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
+		Spatie\Backup\BackupServiceProvider::class,
 		Karlmonson\Ping\PingServiceProvider::class,
 		App\Providers\ComposerServiceProvider::class,
 		Propaganistas\LaravelIntl\IntlServiceProvider::class,
+		Spatie\UptimeMonitor\UptimeMonitorServiceProvider::class,
 		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
 		Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
 		

@@ -25,6 +25,6 @@ trait CategoryTrait
 	 */
 	public function getCategories() : CollectionResponse
 	{
-		return Category::all();
+		return Category::orderBy('title')->get();
 	}
 }

@@ -32,11 +32,17 @@ class Controller extends BaseController
 	
 	protected $maxLimit;
 	
+	protected $cacheKey;
+	
 	protected $assetsDisk;
+	
+	protected $usersCacheKey;
 	
 	protected $cachingEnabled;
 
 	protected $httpStatusCode;
+	
+	protected $articlesCacheKey;
 	
 	/**
 	 * Create a new controller instance.
@@ -47,7 +53,10 @@ class Controller extends BaseController
 	{
 		$this->limit = 100;
 		
+		// Cache expiry
 		$this->minutes = 60;
+		
+		$this->cacheKey = '';
 		
 		$this->maxLimit = 100;
 		
@@ -57,6 +66,10 @@ class Controller extends BaseController
 		
 		$this->assetsDisk = 'uploads';
 		
+		$this->usersCacheKey = 'users';
+	
+		$this->articlesCacheKey = 'articles';
+	
 		$this->cachingEnabled = config('cache.enabled');
 
 		$this->datetime = Carbon::now()->format('Y-m-d H:i:s');
@@ -250,7 +263,7 @@ class Controller extends BaseController
 	 *
 	 * @return Object
 	 */
-	protected function getAuthenticatedUserId() : User
+	protected function getAuthenticatedUserId()
 	{
 		return Auth::id();
 	}
@@ -260,7 +273,7 @@ class Controller extends BaseController
 	 *
 	 * @return Object
 	 */
-	protected function getAuthenticatedUser() : User
+	protected function getAuthenticatedUser()
 	{
 		return Auth::user();
 	}
@@ -555,7 +568,7 @@ class Controller extends BaseController
 	public function setCache(string $key, $data) 
 	{
 		if ($this->cachingEnabled) {
-			return Cache::put($key, $data, 60);
+			return Cache::put($key, $data, $this->minutes);
 		}
 	}
 	

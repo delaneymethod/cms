@@ -30,7 +30,7 @@ trait OrderTrait
 	 */
 	public function getOrders() : EloquentCollectionResponse
 	{
-		return Order::all();
+		return Order::orderBy('created_at', 'desc')->get();
 	}
 	
 	/**

@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model implements Buyable
 {
+	protected $characterSet = 'UTF-8';
+	
+	protected $flags = ENT_QUOTES;
+
 	/**
 	 * The attributes that are mass assignable.
 	 *

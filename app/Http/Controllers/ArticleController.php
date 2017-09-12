@@ -44,7 +44,13 @@ class ArticleController extends Controller
 		
 		$subTitle = '';
 		
-		$articles = $this->getArticles();
+		$articles = $this->getCache($this->articlesCacheKey);
+			
+		if (is_null($articles)) {
+			$articles = $this->getArticles();
+			
+			$this->setCache($this->articlesCacheKey, $articles);
+		}
 		
 		return view('cp.articles.index', compact('currentUser', 'title', 'subTitle', 'articles'));
 	}
@@ -483,9 +489,19 @@ class ArticleController extends Controller
 	/**
 	 * Does what it says on the tin!
 	 */
+	public function refreshArticlesCache()
+	{
+		$articles = $this->getArticles();
+		
+		$this->setCache($this->articlesCacheKey, $articles);
+	}
+	
+	/**
+	 * Does what it says on the tin!
+	 */
 	public function flushArticlesCache() 
 	{
-		$this->flushCache('articles');	
+		$this->flushCache($this->articlesCacheKey);	
 	}
 	
 	/**
@@ -493,6 +509,6 @@ class ArticleController extends Controller
 	 */
 	public function flushArticleCache($article) 
 	{
-		$this->flushCache('articles:id:'.$article->id);
+		$this->flushCache($this->articlesCacheKey.':id:'.$article->id);
 	}
 }

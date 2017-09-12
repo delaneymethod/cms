@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
 {
+	protected $characterSet = 'UTF-8';
+	
+	protected $flags = ENT_QUOTES;
+
 	/**
 	 * The attributes that are mass assignable.
 	 *

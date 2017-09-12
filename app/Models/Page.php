@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Page extends Node
 {
+	protected $characterSet = 'UTF-8';
+	
+	protected $flags = ENT_QUOTES;
+
 	private $segments = [];
 	
 	/**

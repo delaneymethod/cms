@@ -27,7 +27,7 @@ trait CompanyTrait
 	 */
 	public function getCompanies() : CollectionResponse
 	{
-		return Company::all();
+		return Company::orderBy('title')->get();
 	}
 	
 	/**

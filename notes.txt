@@ -10,3 +10,10 @@ Route::get('/mailable', function () {
 
 	Mail::to('hello@delaneymethod.com')->send(new App\Mail\OrderPlaced($user, $order));
 });
+
+
+
+make sure articles are shows based on published date
+
+
+https://github.com/spatie/laravel-activitylog
