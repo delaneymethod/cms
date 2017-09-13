@@ -23,6 +23,8 @@ class TemplateController extends Controller
 		parent::__construct();
 		
 		$this->middleware('auth');
+		
+		$this->cacheKey = 'templates';
 	}
 	
 	/**
@@ -40,27 +42,17 @@ class TemplateController extends Controller
 			
 			$subTitle = '';
 			
-			$templates = $this->getTemplates();
+			$templates = $this->getCache($this->cacheKey);
+			
+			if (is_null($templates)) {
+				$templates = $this->getTemplates();
+				
+				$this->setCache($this->cacheKey, $templates);
+			}
 			
 			return view('cp.templates.index', compact('currentUser', 'title', 'subTitle', 'templates'));
 		}
 		
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushTemplatesCache()
-	{
-		$this->flushCache('templates');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushTemplateCache($template)
-	{
-		$this->flushCache('templates:id:'.$template->id);
 	}
 }

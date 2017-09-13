@@ -63,7 +63,7 @@
 			"Illuminate\\Foundation\\ComposerScripts::postUpdate",
 			"php artisan optimize"
 		],
-		 "post-autoload-dump": [
+		"post-autoload-dump": [
 			"Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
 			"@php artisan package:discover"
 		]

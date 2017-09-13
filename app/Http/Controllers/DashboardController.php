@@ -53,15 +53,15 @@ class DashboardController extends Controller
 		$roles = [];
 		
 		if ($currentUser->hasPermission('view_roles')) {
-			$roles = $this->getRoles();
+			$roles = $this->getData('getRoles', 'roles');
 		}
 		
-		$statuses = $this->getStatuses();
+		$statuses = $this->getData('getStatuses', 'statuses');
 		
 		$statCards = [];
 		
 		if ($currentUser->hasPermission('view_companies')) {
-			$companies = $this->getCompanies();
+			$companies = $this->getData('getCompanies', 'companies');
 			
 			array_push($statCards, [
 				'label' => 'Companies',
@@ -71,7 +71,7 @@ class DashboardController extends Controller
 		}
 		
 		if ($currentUser->hasPermission('view_users')) {
-			$users = $this->getUsers();
+			$users = $this->getData('getUsers', 'users');
 			
 			array_push($statCards, [
 				'label' => 'Users',
@@ -81,7 +81,7 @@ class DashboardController extends Controller
 		}
 				
 		if ($currentUser->hasPermission('view_locations')) {
-			$locations = $this->getLocations();
+			$locations = $this->getData('getLocations', 'locations');
 			
 			array_push($statCards, [
 				'label' => 'Locations',
@@ -121,7 +121,7 @@ class DashboardController extends Controller
 		}
 				
 		if ($currentUser->hasPermission('view_categories')) {
-			$categories = $this->getCategories();
+			$categories = $this->getData('getCategories', 'categories');
 			
 			array_push($statCards, [
 				'label' => 'Categories',
@@ -131,7 +131,7 @@ class DashboardController extends Controller
 		}
 				
 		if ($currentUser->hasPermission('view_articles')) {
-			$articles = $this->getArticles();
+			$articles = $this->getData('getArticles', 'articles');
 			
 			array_push($statCards, [
 				'label' => 'Articles',
@@ -151,7 +151,7 @@ class DashboardController extends Controller
 		}
 				
 		if ($currentUser->hasPermission('view_templates')) {
-			$templates = $this->getTemplates();
+			$templates = $this->getData('getTemplates', 'templates');
 			
 			array_push($statCards, [
 				'label' => 'Templates',
@@ -161,7 +161,7 @@ class DashboardController extends Controller
 		}
 				
 		if ($currentUser->hasPermission('view_pages')) {
-			$pages = $this->getPages();
+			$pages = $this->getData('getPages', 'pages');
 			
 			array_push($statCards, [
 				'label' => 'Pages',

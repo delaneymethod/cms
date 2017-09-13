@@ -169,8 +169,12 @@ class OrderController extends Controller
 				// finally empty the cart instance
 				$this->destroyCart();
 				
+				$jobsDelaysEmails = config('cms.jobs.delays.emails');
+				
+				$jobsDelaysOrders = config('cms.jobs.delays.orders');
+				
 				// Send an order placed email to the user. Stick the email in the "emails" queue to run in 5 minutes.
-				$time = Carbon::now()->addMinutes(5);
+				$time = Carbon::now()->addMinutes($jobsDelaysEmails);
 				
 				$message = (new OrderPlaced($currentUser, $order))->onQueue('emails');
 				
@@ -178,7 +182,7 @@ class OrderController extends Controller
 				
 				Mail::to($to)->later($time, $message);
 				
-				$time = Carbon::now()->addMinutes(10);
+				$time = Carbon::now()->addMinutes($jobsDelaysOrders);
 				
 				// Dispatches a new job to process the order. Sticks the job in the "orders" queue to run in 10 minutes.
 				ProcessOrder::dispatch($currentUser, $order)->delay($time)->onQueue('orders');
@@ -225,7 +229,6 @@ class OrderController extends Controller
 			$template .= '<head>';
 			$template .= '	<meta charset="utf-8">';
 			$template .= '	<title>'.$order->order_number.' Order Details</title>';
-			$template .= '	<meta name="author" content="delaneymethod.com">';
 			$template .= '</head>';
 			$template .= '<body>';
 			$template .= '	<p><strong>Order Type</strong></p>';
@@ -282,21 +285,5 @@ class OrderController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushOrdersCache() 
-	{
-		$this->flushCache('orders');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushOrderCache($order) 
-	{
-		$this->flushCache('orders:id:'.$order->id);
 	}
 }

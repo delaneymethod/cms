@@ -2,7 +2,9 @@
 	
 namespace App\Templates;
 
+use Carbon\Carbon;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Traits\{ArticleTrait, ContentTrait};
 
 class ArticlesTemplate extends Template
@@ -21,7 +23,26 @@ class ArticlesTemplate extends Template
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
-		$articles = $this->getArticles();
+		$cachingEnabled = config('cache.enabled');
+		
+		if ($cachingEnabled) {
+			$articles = Cache::get('articles');
+			
+			if (is_null($articles)) {
+				$articles = $this->getArticles();
+				
+				$minutes = config('cache.expiry_in_minutes');
+				
+				Cache::put('articles', $articles, $minutes);
+			}
+		} else {
+			$articles = $this->getArticles();
+		}
+		
+		// Filter out any articles with publish date in the future
+		$articles = $articles->filter(function ($article) {
+			return $article->published_at <= Carbon::now();
+		});
 		
 		$page->description = '';
 		

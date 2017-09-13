@@ -61,15 +61,15 @@
 							<span id="helpBlockKeywords" class="form-control-feedback form-text text-muted">- Separate your keywords by commas.</span>
 						</div>
 						<div class="form-group">
-							<label for="published_at" class="control-label font-weight-bold">Published Date <span class="text-danger">&#42;</span></label>
+							<label for="published_at" class="control-label font-weight-bold">Publish Date</label>
 							<div class="input-group date">
 								<span class="input-group-addon" id="helpBlockPublishedAt"><i class="fa fa-calendar" aria-hidden="true"></i></span>
-								<input type="text" name="published_at" id="published_at" class="form-control" value="{{ old('published_at', optional($article)->published_at) }}" placeholder="e.g yyyy-mm-dd h:i:s" tabindex="5" autocomplete="off" aria-describedby="helpBlockPublishedAt" required>
+								<input type="text" name="published_at" id="published_at" class="form-control" value="{{ old('published_at', optional($article)->published_at) }}" placeholder="e.g yyyy-mm-dd h:i:s" tabindex="5" autocomplete="off" aria-describedby="helpBlockPublishedAt">
 							</div>
 							@if ($errors->has('published_at'))
 								<span id="helpBlockPublishedAt" class="form-control-feedback form-text gf-red">- {{ $errors->first('published_at') }}</span>
 							@endif
-							<span id="helpBlockPublishedAt" class="form-control-feedback form-text text-muted"></span>
+							<span id="helpBlockPublishedAt" class="form-control-feedback form-text text-muted">- Articles will only appear on/after this date.</span>
 						</div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>

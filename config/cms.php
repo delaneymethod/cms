@@ -17,7 +17,16 @@ return [
 		'email' => env('SITE_EMAIL', 'hello@delaneymethod.com'),
     
     ],
+    
+	'jobs' => [
 	
+		'delays' => [
+			'orders' => 10,
+			'emails' => 5,
+		],
+	
+	],
+    
 	/*
 	|--------------------------------------------------------------------------
 	| Model Validation Rules Configuration
@@ -72,7 +81,7 @@ return [
 			'template_id' => 'required|integer',
 			'user_id' => 'required|integer',
 			'status_id' => 'required|integer',
-			'published_at' => 'required|date',
+			'published_at' => 'nullable|date',
 		],
 		'location' => [
 			'title' => 'required|string|max:255',

@@ -26,7 +26,7 @@ class ArticlesTableSeeder extends Seeder
                 'description' => NULL,
                 'template_id' => 9,
                 'user_id' => 1,
-                'status_id' => 1,
+                'status_id' => 4,
                 'published_at' => '2017-09-06 12:13:10',
                 'created_at' => '2017-08-11 10:00:00',
                 'updated_at' => '2017-09-06 12:13:10',

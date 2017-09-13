@@ -48,7 +48,7 @@
 									<td>{{ $article->title }}</td>
 									<td>{{ $article->slug }}</td>
 									<td>{{ $article->user->first_name }} {{ $article->user->last_name }}</td>
-									<td>{{ $article->published_at }}</td>
+									<td>{!! ($article->published_at > date('Y-m-d H:i:s')) ? '<span class="text-info">Due to be published on '.$article->published_at.'</span>' : $article->published_at !!}</td>
 									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $article->status->id }}" title="{{ $article->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_articles') || $currentUser->hasPermission('delete_articles'))
 										<td class="actions dropdown text-center" id="submenu">

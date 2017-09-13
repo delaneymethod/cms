@@ -23,6 +23,8 @@ class LocationController extends Controller
 		parent::__construct();
 		
 		$this->middleware('auth');
+		
+		$this->cacheKey = 'locations';
 	}
 	
 	/**
@@ -39,8 +41,14 @@ class LocationController extends Controller
 			$title = 'Locations';
 		
 			$subTitle = $currentUser->company->title;
-		
-			$locations = $this->getLocations();
+			
+			$locations = $this->getCache($this->cacheKey);
+			
+			if (is_null($locations)) {
+				$locations = $this->getLocations();
+				
+				$this->setCache($this->cacheKey, $locations);
+			}
 			
 			$defaultLocationIds = $this->getDefaultLocationIds();
 			
@@ -66,16 +74,16 @@ class LocationController extends Controller
 			$subTitle = $currentUser->company->title;
 			
 			// Used to set county_id
-			$counties = $this->getCounties();
+			$counties = $this->getData('getCounties', 'counties');
 			
 			// Used to set country_id
-			$countries = $this->getCountries();
+			$countries = $this->getData('getCountries', 'countries');
 			
 			// Used to set company_id
-			$companies = $this->getCompanies();
+			$companies = $this->getData('getCompanies', 'companies');
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Pubished, Private and Draft keys
 			$statuses->forget([3, 4, 5]);
@@ -132,6 +140,8 @@ class LocationController extends Controller
 				$location->status_id = $cleanedLocation['status_id'];
 				
 				$location->save();
+				
+				$this->setCache($this->cacheKey, $this->getLocations());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -177,16 +187,16 @@ class LocationController extends Controller
 			$this->authorize('userOwnsThis', $location);
 			
 			// Used to set county_id
-			$counties = $this->getCounties();
+			$counties = $this->getData('getCounties', 'counties');
 			
 			// Used to set country_id
-			$countries = $this->getCountries();
+			$countries = $this->getData('getCountries', 'countries');
 			
 			// Used to set company_id
-			$companies = $this->getCompanies();
-		
+			$companies = $this->getData('getCompanies', 'companies');
+			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Pubished, Private and Draft keys
 			$statuses->forget([3, 4, 5]);
@@ -250,6 +260,8 @@ class LocationController extends Controller
 				$location->updated_at = $this->datetime;
 				
 				$location->save();
+				
+				$this->setCache($this->cacheKey, $this->getLocations());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -307,6 +319,8 @@ class LocationController extends Controller
 				$location->updated_at = $this->datetime;
 				
 				$location->save();
+				
+				$this->setCache($this->cacheKey, $this->getLocations());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -356,6 +370,8 @@ class LocationController extends Controller
 				$location->updated_at = $this->datetime;
 				
 				$location->save();
+				
+				$this->setCache($this->cacheKey, $this->getLocations());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -442,6 +458,8 @@ class LocationController extends Controller
 
 			try {
 				$location->delete();
+				
+				$this->setCache($this->cacheKey, $this->getLocations());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -464,21 +482,5 @@ class LocationController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushLocationsCache()
-	{
-		$this->flushCache('locations');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushLocationCache($location)
-	{
-		$this->flushCache('locations:id:'.$location->id);
 	}
 }

@@ -778,20 +778,4 @@ class AssetController extends Controller
 		
 		return $images;
 	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushAssetsCache() 
-	{
-		$this->flushCache('assets');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushAssetCache($asset) 
-	{
-		$this->flushCache('assets:id:'.$asset->id);
-	}
 }

@@ -23,6 +23,8 @@ class CompanyController extends Controller
 		parent::__construct();
 		
 		$this->middleware('auth');
+		
+		$this->cacheKey = 'companies';
 	}
 
 	/**
@@ -40,7 +42,13 @@ class CompanyController extends Controller
 		
 			$subTitle = '';
 			
-			$companies = $this->getCompanies();
+			$companies = $this->getCache($this->cacheKey);
+			
+			if (is_null($companies)) {
+				$companies = $this->getCompanies();
+				
+				$this->setCache($this->cacheKey, $companies);
+			}
 			
 			return view('cp.companies.index', compact('currentUser', 'title', 'subTitle', 'companies'));
 		}
@@ -64,7 +72,7 @@ class CompanyController extends Controller
 			$subTitle = 'Companies';
 			
 			// Used to set location_id
-			$locations = $this->getLocations();
+			$locations = $this->getData('getLocations', 'locations');
 			
 			return view('cp.companies.create', compact('currentUser', 'title', 'subTitle', 'locations'));
 		}
@@ -106,6 +114,8 @@ class CompanyController extends Controller
 				$company->default_location_id = $cleanedCompany['default_location_id'];
 				
 				$company->save();
+				
+				$this->setCache($this->cacheKey, $this->getCompanies());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -197,6 +207,8 @@ class CompanyController extends Controller
 				$company->updated_at = $this->datetime;
 				
 				$company->save();
+				
+				$this->setCache($this->cacheKey, $this->getCompanies());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -281,6 +293,8 @@ class CompanyController extends Controller
 
 			try {
 				$company->delete();
+				
+				$this->setCache($this->cacheKey, $this->getCompanies());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -303,21 +317,5 @@ class CompanyController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushCompaniesCache() 
-	{
-		$this->flushCache('companies');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushCompanyCache($company) 
-	{
-		$this->flushCache('companies:id:'.$company->id);
 	}
 }

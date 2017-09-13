@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use Carbon\Carbon;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Models\{Article, Content};
@@ -28,6 +29,8 @@ class ArticleController extends Controller
 				'show'
 			]
 		]);
+		
+		$this->cacheKey = 'articles';
 	}
 
 	/**
@@ -44,12 +47,12 @@ class ArticleController extends Controller
 		
 		$subTitle = '';
 		
-		$articles = $this->getCache($this->articlesCacheKey);
+		$articles = $this->getCache($this->cacheKey);
 			
 		if (is_null($articles)) {
 			$articles = $this->getArticles();
 			
-			$this->setCache($this->articlesCacheKey, $articles);
+			$this->setCache($this->cacheKey, $articles);
 		}
 		
 		return view('cp.articles.index', compact('currentUser', 'title', 'subTitle', 'articles'));
@@ -68,6 +71,11 @@ class ArticleController extends Controller
 		
 		// Get the requested article based on slug - if it doesnt exist, a 404 is thrown!
 		$article = $this->getArticleBySlug($slug);
+		
+		// Throw a 404 if the articles publish date is in the future
+		if ($article->published_at > Carbon::now()) {
+			abort(404);
+		}
 		
 		// We're going to use the articles page as our page - it is the articles parent after all...
 		$page = $this->getPageBySlug('articles');
@@ -114,16 +122,16 @@ class ArticleController extends Controller
 			$subTitle = 'Articles';
 			
 			// Used to set user_id
-			$users = $this->getUsers();
+			$users = $this->getData('getUsers', 'users');
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Active, Pending, Retired, Suspended keys
 			$statuses->forget([0, 1, 2, 6]);
 			
 			// Used to set categories_ids
-			$categories = $this->getCategories();
+			$categories = $this->getData('getCategories', 'categories');
 			
 			// 9 = Article
 			$articleTemplate = $this->getTemplate(9);
@@ -218,6 +226,8 @@ class ArticleController extends Controller
 				}
 				
 				$article->setContents($contents);
+				
+				$this->setCache($this->cacheKey, $this->getArticles());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -261,16 +271,16 @@ class ArticleController extends Controller
 			$article = $this->getArticle($id);
 			
 			// Used to set user_id
-			$users = $this->getUsers();
+			$users = $this->getData('getUsers', 'users');
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Active, Pending, Retired, Suspended keys
 			$statuses->forget([0, 1, 2, 6]);
 			
 			// Used to set categories_ids
-			$categories = $this->getCategories();
+			$categories = $this->getData('getCategories', 'categories');
 			
 			// 9 = Article but we still use whats stored in the model
 			$articleTemplate = $this->getTemplate($article->template_id);
@@ -385,6 +395,8 @@ class ArticleController extends Controller
 				}
 				
 				$article->setContents($contents);
+				
+				$this->setCache($this->cacheKey, $this->getArticles());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -462,6 +474,8 @@ class ArticleController extends Controller
 				}
 				
 				$article->delete();
+				
+				$this->setCache($this->cacheKey, $this->getArticles());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -484,31 +498,5 @@ class ArticleController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function refreshArticlesCache()
-	{
-		$articles = $this->getArticles();
-		
-		$this->setCache($this->articlesCacheKey, $articles);
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushArticlesCache() 
-	{
-		$this->flushCache($this->articlesCacheKey);	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushArticleCache($article) 
-	{
-		$this->flushCache($this->articlesCacheKey.':id:'.$article->id);
-	}
+	}	
 }

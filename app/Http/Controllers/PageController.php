@@ -27,6 +27,8 @@ class PageController extends Controller
 				'show'
 			]
 		]);
+		
+		$this->cacheKey = 'pages';
 	}
 	
 	/**
@@ -45,6 +47,8 @@ class PageController extends Controller
 			$subTitle = '';
 			
 			$this->rebuildPages();
+			
+			// Note: we dont call getPages and pass the data to the view. This is because pages is available to all views. See ComposerServiceProvider
 		
 			return view('cp.pages.index', compact('currentUser', 'title', 'subTitle'));
 		}
@@ -148,13 +152,13 @@ class PageController extends Controller
 			$subTitle = 'Pages';
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Active, Pending, Retired and Suspended keys
 			$statuses->forget([0, 1, 2, 6]);
 			
 			// Used to set template_id
-			$templates = $this->getTemplates();
+			$templates = $this->getData('getTemplates', 'templates');
 			
 			return view('cp.pages.create', compact('currentUser', 'title', 'subTitle', 'statuses', 'templates'));
 		}
@@ -238,6 +242,8 @@ class PageController extends Controller
 				}
 				
 				$page->setContents($contents);
+				
+				$this->setCache($this->cacheKey, $this->getPages());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -282,13 +288,13 @@ class PageController extends Controller
 			$page = $this->getPage($id);
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Active, Pending, Retired and Suspended keys
 			$statuses->forget([0, 1, 2, 6]);
 			
 			// Used to set template_id
-			$templates = $this->getTemplates();
+			$templates = $this->getData('getTemplates', 'templates');
 			
 			$pageTemplate = $templates->first(function ($template) use ($templateId) {
 				return $template->id == $templateId;
@@ -401,6 +407,8 @@ class PageController extends Controller
 				}
 				
 				$page->setContents($contents);
+				
+				$this->setCache($this->cacheKey, $this->getPages());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -499,6 +507,8 @@ class PageController extends Controller
 				}
 				
 				$page->save();
+				
+				$this->setCache($this->cacheKey, $this->getPages());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -572,6 +582,8 @@ class PageController extends Controller
 				}
 				
 				$this->rebuildPages();
+				
+				$this->setCache($this->cacheKey, $this->getPages());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -671,6 +683,8 @@ class PageController extends Controller
 				}
 				
 				$page->delete();
+				
+				$this->setCache($this->cacheKey, $this->getPages());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -693,21 +707,5 @@ class PageController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushPagesCache() 
-	{
-		$this->flushCache('pages');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushPageCache($page) 
-	{
-		$this->flushCache('pages:id:'.$page->id);
 	}
 }

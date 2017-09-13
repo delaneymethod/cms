@@ -24,6 +24,8 @@ class UserController extends Controller
 		parent::__construct();
 		
 		$this->middleware('auth');
+		
+		$this->cacheKey = 'users';
 	}
 
 	/**
@@ -40,12 +42,12 @@ class UserController extends Controller
 		
 			$subTitle = $currentUser->company->title;
 			
-			$users = $this->getCache($this->usersCacheKey);
+			$users = $this->getCache($this->cacheKey);
 			
 			if (is_null($users)) {
 				$users = $this->getUsers();
 				
-				$this->setCache($this->usersCacheKey, $users);
+				$this->setCache($this->cacheKey, $users);
 			}
 			
 			return view('cp.users.index', compact('currentUser', 'title', 'subTitle', 'users'));
@@ -70,10 +72,10 @@ class UserController extends Controller
 			$subTitle = $currentUser->company->title;
 			
 			// Used to set company_id
-			$companies = $this->getCompanies();
+			$companies = $this->getData('getCompanies', 'companies');
 			
 			// Used to set role_id
-			$roles = $this->getRoles();
+			$roles = $this->getData('getRoles', 'roles');
 			
 			// If current user is not a super admin, hide super admin role
 			if (!$currentUser->isSuperAdmin()) {
@@ -81,7 +83,7 @@ class UserController extends Controller
 			}
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Pubished, Private, Draft and Suspended keys
 			$statuses->forget([3, 4, 5, 6]);
@@ -147,9 +149,10 @@ class UserController extends Controller
 				
 				$user->save();
 				
+				// Allows user to set a password
 				Password::sendResetLink(['email' => $user->email]);
 				
-				$this->refreshUsersCache();
+				$this->setCache($this->cacheKey, $this->getUsers());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -195,10 +198,10 @@ class UserController extends Controller
 			$this->authorize('userOwnsThis', $user);
 			
 			// Used to set company_id
-			$companies = $this->getCompanies();
+			$companies = $this->getData('getCompanies', 'companies');
 		
 			// Used to set role_id
-			$roles = $this->getRoles();
+			$roles = $this->getData('getRoles', 'roles');
 			
 			// If current user is not a super admin, hide super admin role
 			if (!$currentUser->isSuperAdmin()) {
@@ -206,7 +209,7 @@ class UserController extends Controller
 			}
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Pubished, Private, Draft and Suspended keys
 			$statuses->forget([3, 4, 5, 6]);
@@ -247,8 +250,6 @@ class UserController extends Controller
 			$user = $this->getUser($id);
 			
 			$this->authorize('userOwnsThis', $user);
-			
-			$this->flushUserCache($user);
 			
 			return view('cp.users.edit.password', compact('currentUser', 'title', 'subTitle', 'user'));
 		}
@@ -330,9 +331,7 @@ class UserController extends Controller
 				
 				$user->save();
 				
-				$this->flushUserCache($user);
-				
-				$this->refreshUsersCache();
+				$this->setCache($this->cacheKey, $this->getUsers());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -389,9 +388,7 @@ class UserController extends Controller
 				
 				$user->save();
 				
-				$this->flushUserCache($user);
-				
-				$this->refreshUsersCache();
+				$this->setCache($this->cacheKey, $this->getUsers());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -473,11 +470,9 @@ class UserController extends Controller
 			DB::beginTransaction();
 
 			try {
-				$this->flushUserCache($user);
-				
 				$user->delete();
 				
-				$this->refreshUsersCache();
+				$this->setCache($this->cacheKey, $this->getUsers());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -500,31 +495,5 @@ class UserController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function refreshUsersCache()
-	{
-		$users = $this->getUsers();
-		
-		$this->setCache($this->usersCacheKey, $users);
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushUsersCache()
-	{
-		$this->flushCache($this->usersCacheKey);
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushUserCache($user)
-	{
-		$this->flushCache($this->usersCacheKey.':id:'.$user->id);
 	}
 }

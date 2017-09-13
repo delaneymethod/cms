@@ -23,6 +23,8 @@ class RoleController extends Controller
 		parent::__construct();
 		
 		$this->middleware('auth');
+		
+		$this->cacheKey = 'roles';
 	}
 	
 	/**
@@ -40,7 +42,13 @@ class RoleController extends Controller
 			
 			$subTitle = '';
 			
-			$roles = $this->getRoles();
+			$roles = $this->getCache($this->cacheKey);
+			
+			if (is_null($roles)) {
+				$roles = $this->getRoles();
+				
+				$this->setCache($this->cacheKey, $roles);
+			}
 			
 			return view('cp.advanced.roles.index', compact('currentUser', 'title', 'subTitle', 'roles'));
 		}
@@ -102,6 +110,8 @@ class RoleController extends Controller
 				$role->title = $cleanedRole['title'];
 				
 				$role->save();
+				
+				$this->setCache($this->cacheKey, $this->getRoles());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -175,13 +185,21 @@ class RoleController extends Controller
 			DB::beginTransaction();
 			
 			try {
-				$roles = $this->getRoles();
+				$roles = $this->getData('getRoles', 'roles');
 				
 				foreach($roles as $role) {
 					if (!empty($cleanedRolesPermissions[$role->id])) {
 						$role->setPermissions($cleanedRolesPermissions[$role->id]);
 					}
-				}	
+				}
+				
+				$this->cacheKey = 'permissions';
+				
+				$this->setCache($this->cacheKey, $this->getPermissions());
+					
+				$this->cacheKey = 'roles';
+				
+				$this->setCache($this->cacheKey, $this->getRoles());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -265,6 +283,8 @@ class RoleController extends Controller
 				$role->updated_at = $this->datetime;
 				
 				$role->save();
+				
+				$this->setCache($this->cacheKey, $this->getRoles());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -331,6 +351,8 @@ class RoleController extends Controller
 
 			try {
 				$role->delete();
+				
+				$this->setCache($this->cacheKey, $this->getRoles());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -353,21 +375,5 @@ class RoleController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushRolesCache()
-	{
-		$this->flushCache('roles');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushRoleCache($role)
-	{
-		$this->flushCache('roles:id:'.$role->id);
 	}
 }

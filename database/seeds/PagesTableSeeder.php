@@ -115,7 +115,7 @@ class PagesTableSeeder extends Seeder
                 'lft' => 12,
                 'rgt' => 15,
                 'depth' => 1,
-                'hide_from_nav' => 0,
+                'hide_from_nav' => 1,
                 'created_at' => '2017-08-01 11:51:58',
                 'updated_at' => '2017-09-06 15:35:12',
             ),

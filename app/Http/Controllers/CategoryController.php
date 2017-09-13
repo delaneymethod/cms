@@ -23,6 +23,8 @@ class CategoryController extends Controller
 		parent::__construct();
 		
 		$this->middleware('auth');
+		
+		$this->cacheKey = 'categories';
 	}
 	
 	/**
@@ -40,9 +42,25 @@ class CategoryController extends Controller
 		
 			$subTitle = '';
 		
-			$categories = $this->getCategories();
+			$this->cacheKey = 'statuses';
 			
-			$statuses = $this->getStatuses();
+			$statuses = $this->getCache($this->cacheKey);
+			
+			if (is_null($statuses)) {
+				$statuses = $this->getStatuses();
+				
+				$this->setCache($this->cacheKey, $statuses);
+			}
+			
+			$this->cacheKey = 'categories';
+			
+			$categories = $this->getCache($this->cacheKey);
+			
+			if (is_null($categories)) {
+				$categories = $this->getCategories();
+				
+				$this->setCache($this->cacheKey, $categories);
+			}
 			
 			return view('cp.articles.categories.index', compact('currentUser', 'title', 'subTitle', 'categories', 'statues'));
 		}
@@ -66,7 +84,7 @@ class CategoryController extends Controller
 			$subTitle = 'Categories';
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Pubished, Private, Draft and Suspended keys
 			$statuses->forget([3, 4, 5, 6]);
@@ -112,6 +130,8 @@ class CategoryController extends Controller
 				$category->status_id = $cleanedCategory['status_id'];
 				
 				$category->save();
+				
+				$this->setCache($this->cacheKey, $this->getCategories());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -155,7 +175,7 @@ class CategoryController extends Controller
 			$category = $this->getCategory($id);
 			
 			// Used to set status_id
-			$statuses = $this->getStatuses();
+			$statuses = $this->getData('getStatuses', 'statuses');
 			
 			// Remove Pubished, Private, Draft and Suspended keys
 			$statuses->forget([3, 4, 5, 6]);
@@ -205,6 +225,8 @@ class CategoryController extends Controller
 				$category->updated_at = $this->datetime;
 				
 				$category->save();
+				
+				$this->setCache($this->cacheKey, $this->getCategories());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -283,6 +305,8 @@ class CategoryController extends Controller
 
 			try {
 				$category->delete();
+				
+				$this->setCache($this->cacheKey, $this->getCategories());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -305,21 +329,5 @@ class CategoryController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushCategoriesCache()
-	{
-		$this->flushCache('categories');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushCategoryCache($category)
-	{
-		$this->flushCache('categories:id:'.$category->id);
 	}
 }

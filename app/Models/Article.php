@@ -26,6 +26,7 @@ class Article extends Model
 		'template_id',
 		'user_id',
 		'status_id',
+		'published_at',
 	];
 	
 	/**

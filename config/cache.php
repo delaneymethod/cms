@@ -18,7 +18,9 @@ return [
 	'enabled' => env('CACHE_ENABLED', false),
 	
     'default' => env('CACHE_DRIVER', 'file'),
-
+	
+	'expiry_in_minutes' => env('CACHE_EXPIRY_IN_MINUTES', 60),
+	
     /*
     |--------------------------------------------------------------------------
     | Cache Stores

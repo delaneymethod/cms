@@ -24,20 +24,4 @@ class CountyController extends Controller
 		
 		$this->middleware('auth');
 	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushCountiesCache() 
-	{
-		$this->flushCache('counties');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushCountyCache($county) 
-	{
-		$this->flushCache('counties:id:'.$county->id);
-	}
 }

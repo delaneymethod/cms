@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Http\Traits\PageTrait;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\{View, Cache};
 
 class ComposerServiceProvider extends ServiceProvider
 {
@@ -17,8 +17,24 @@ class ComposerServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		View::composer('*', function ($view) {
-			$view->with('pages', $this->getPages());
+		$cachingEnabled = config('cache.enabled');
+		
+		if ($cachingEnabled) {
+			$pages = Cache::get('pages');
+			
+			if (is_null($pages)) {
+				$pages = $this->getPages();
+				
+				$minutes = config('cache.expiry_in_minutes');
+				
+				Cache::put('pages', $pages, $minutes);
+			}
+		} else {
+			$pages = $this->getPages();
+		}
+		
+		View::composer('*', function ($view) use ($pages) {
+			$view->with('pages', $pages);
 		});
 	}
 

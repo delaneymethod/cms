@@ -13,10 +13,11 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Support\Collection as CollectionResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Validator as ValidatorResponse;
 use Illuminate\Support\Facades\{File, Auth, Cache, Validator};
+use Illuminate\Support\Collection as SupportCollectionResponse;
+use Illuminate\Database\Eloquent\Collection as EloquentCollectionResponse;
 
 class Controller extends BaseController
 {
@@ -36,13 +37,9 @@ class Controller extends BaseController
 	
 	protected $assetsDisk;
 	
-	protected $usersCacheKey;
-	
 	protected $cachingEnabled;
 
 	protected $httpStatusCode;
-	
-	protected $articlesCacheKey;
 	
 	/**
 	 * Create a new controller instance.
@@ -54,7 +51,7 @@ class Controller extends BaseController
 		$this->limit = 100;
 		
 		// Cache expiry
-		$this->minutes = 60;
+		$this->minutes = config('cache.expiry_in_minutes');
 		
 		$this->cacheKey = '';
 		
@@ -66,13 +63,29 @@ class Controller extends BaseController
 		
 		$this->assetsDisk = 'uploads';
 		
-		$this->usersCacheKey = 'users';
-	
-		$this->articlesCacheKey = 'articles';
-	
 		$this->cachingEnabled = config('cache.enabled');
 
 		$this->datetime = Carbon::now()->format('Y-m-d H:i:s');
+	}
+	
+	/**
+	 * Gets data for the specified model
+	 *
+	 * @params	string			$model
+	 * @param	string			$cacheKey
+	 * @return 	Collection
+	 */
+	protected function getData(string $model, string $cacheKey) : EloquentCollectionResponse
+	{
+		$data = $this->getCache($cacheKey);
+		
+		if (is_null($data)) {
+			$data = ($this->{$model}());
+			
+			$this->setCache($cacheKey, $data);
+		}
+		
+		return $data;
 	}
 	
 	/**
@@ -415,7 +428,7 @@ class Controller extends BaseController
 	 * @param  Collection 	$companies
 	 * @return Collection
 	 */
-	protected function filterCompanies($companies) : CollectionResponse
+	protected function filterCompanies($companies) : SupportCollectionResponse
 	{
 		if (count($companies) == 0) {
 			return collect($companies);
@@ -445,7 +458,7 @@ class Controller extends BaseController
 	 * @param  Collection 	$users
 	 * @return Collection
 	 */
-	protected function filterUsers($users) : CollectionResponse
+	protected function filterUsers($users) : SupportCollectionResponse
 	{
 		if (count($users) == 0) {
 			return collect($users);
@@ -475,7 +488,7 @@ class Controller extends BaseController
 	 * @param  Collection 	$locations
 	 * @return Collection
 	 */
-	protected function filterLocations($locations) : CollectionResponse
+	protected function filterLocations($locations) : SupportCollectionResponse
 	{
 		if (count($locations) == 0) {		
 			return collect($locations);
@@ -509,7 +522,7 @@ class Controller extends BaseController
 	 * @param  Collection 	$orders
 	 * @return Collection
 	 */
-	protected function filterOrders($orders) : CollectionResponse
+	protected function filterOrders($orders) : SupportCollectionResponse
 	{
 		if (count($orders) == 0) {		
 			return collect($orders);
@@ -543,7 +556,7 @@ class Controller extends BaseController
 	}
 	
 	/**
-	 * Simple get cache
+	 * Simple gets the cache
 	 *
 	 * @param  String 		$key
 	 * @return Collection
@@ -558,30 +571,33 @@ class Controller extends BaseController
 	}
 	
 	/**
-	 * Simple set cache
+	 * Simple sets the cache
 	 *
 	 * @param  String 		$key
 	 * @param  Mixed 		$data
-	 * @param  int 			$expiry
 	 * @return Collection
 	 */
 	public function setCache(string $key, $data) 
 	{
 		if ($this->cachingEnabled) {
-			return Cache::put($key, $data, $this->minutes);
+			Cache::put($key, $data, $this->minutes);
 		}
+		
+		return $this;
 	}
 	
 	/**
-	 * Simple flush cache
+	 * Simple forgets the cache
 	 *
 	 * @param  String 		$key
 	 */
-	public function flushCache(string $key) 
+	public function forgetCache(string $key) 
 	{
 		if ($this->cachingEnabled) {
-			return Cache::forget($key);
+			Cache::forget($key);
 		}
+		
+		return $this;
 	}
 	
 	/**
@@ -619,7 +635,7 @@ class Controller extends BaseController
 		return $paginator;
 	}
 	
-	protected function recursiveCollect(array $array) : CollectionResponse
+	protected function recursiveCollect(array $array) : SupportCollectionResponse
 	{
 		foreach ($array as $key => $value) {
 			if (is_array($value)) {

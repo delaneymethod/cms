@@ -23,6 +23,8 @@ class StatusController extends Controller
 		parent::__construct();
 		
 		$this->middleware('auth');
+		
+		$this->cacheKey = 'statuses';
 	}
 	
 	/**
@@ -40,7 +42,13 @@ class StatusController extends Controller
 			
 			$subTitle = '';
 			
-			$statuses = $this->getStatuses();
+			$statuses = $this->getCache($this->cacheKey);
+			
+			if (is_null($statuses)) {
+				$statuses = $this->getStatuses();
+				
+				$this->setCache($this->cacheKey, $statuses);
+			}
 			
 			return view('cp.advanced.statuses.index', compact('currentUser', 'title', 'subTitle', 'statuses'));
 		}
@@ -103,6 +111,8 @@ class StatusController extends Controller
 				$status->description = $cleanedStatus['description'];
 				
 				$status->save();
+				
+				$this->setCache($this->cacheKey, $this->getStatuses());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -187,6 +197,8 @@ class StatusController extends Controller
 				$status->updated_at = $this->datetime;
 				
 				$status->save();
+				
+				$this->setCache($this->cacheKey, $this->getStatuses());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -253,6 +265,8 @@ class StatusController extends Controller
 
 			try {
 				$status->delete();
+				
+				$this->setCache($this->cacheKey, $this->getStatuses());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -275,21 +289,5 @@ class StatusController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushStatusesCache()
-	{
-		$this->flushCache('statuses');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushStatusCache($status)
-	{
-		$this->flushCache('statuses:id:'.$status->id);
 	}
 }

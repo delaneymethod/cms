@@ -24,20 +24,4 @@ class CountryController extends Controller
 		
 		$this->middleware('auth');
 	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushCountriesCache() 
-	{
-		$this->flushCache('countries');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushCountryCache($country) 
-	{
-		$this->flushCache('countries:id:'.$country->id);
-	}
 }

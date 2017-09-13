@@ -47,6 +47,6 @@ trait ArticleTrait
 	 */
 	public function getArticles() : CollectionResponse
 	{
-		return Article::latest('published_at')->get();
+		return Article::latest()->get();
 	}
 }

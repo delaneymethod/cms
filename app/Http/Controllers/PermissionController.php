@@ -40,29 +40,13 @@ class PermissionController extends Controller
 			
 			$subTitle = '';
 			
-			$roles = $this->getRoles();
+			$roles = $this->getData('getRoles', 'roles');
+				
+			$permissions = $this->getData('getPermissions', 'permissions');
 			
-			$permissions = $this->getPermissions();
-			
-		    return view('cp.advanced.permissions.index', compact('currentUser', 'title', 'subTitle', 'permissions', 'roles'));
+			return view('cp.advanced.permissions.index', compact('currentUser', 'title', 'subTitle', 'permissions', 'roles'));
 		}
 		
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushPermissionsCache()
-	{
-		$this->flushCache('permissions');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushPermissionCache($permission)
-	{
-		$this->flushCache('permissions:id:'.$permission->id);
 	}
 }

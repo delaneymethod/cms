@@ -102,20 +102,4 @@ class ProductController extends Controller
 		
 		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
 	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushProductsCache()
-	{
-		$this->flushCache('products');	
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	public function flushProductCache($product)
-	{
-		$this->flushCache('products:id:'.$product->id);
-	}
 }
