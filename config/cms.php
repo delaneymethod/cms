@@ -26,6 +26,18 @@ return [
 		],
 	
 	],
+	
+	// Used to POST order data too
+	'api' => [
+		
+		'url' => env('API_URL', ''),
+		'endpoints' => [
+			'orders' => [
+				'process' => env('API_ENDPOINT_ORDERS_PROCESS', ''),
+			],
+		],
+		
+    ],
     
 	/*
 	|--------------------------------------------------------------------------

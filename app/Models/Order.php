@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{Status, Product, OrderType, ShippingMethod};
+use App\Models\{Status, Product, Location, OrderType, ShippingMethod};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Order extends Model
@@ -116,6 +116,14 @@ class Order extends Model
 	public function user() : BelongsTo
 	{
 		return $this->belongsTo(User::class);
+	}
+	
+	/**
+	 * Get the location record associated with the order.
+	 */
+	public function location() : BelongsTo
+	{
+		return $this->belongsTo(Location::class);
 	}
 	
 	/**

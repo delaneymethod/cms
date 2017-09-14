@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Order;
 use App\Mail\OrderPlaced;
 use App\Jobs\ProcessOrder;
+use App\Events\OrderUpdated;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
@@ -27,7 +28,11 @@ class OrderController extends Controller
 	{
 		parent::__construct();
 		
-		$this->middleware('auth');
+		$this->middleware('auth', [
+			'except' => [
+				'event'
+			]
+		]);
 	}
 
 	/**
@@ -52,7 +57,6 @@ class OrderController extends Controller
 		
 		abort(403, 'Unauthorised action');
 	}
-	
 	
 	/**
 	 * Shows an order.
@@ -285,5 +289,36 @@ class OrderController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+     * Receives a webhook notification from 3rd party applications/services
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+    public function event(Request $request) 
+    {
+	    $cleanedEvent = $this->sanitizerInput($request->all());
+	    
+	    if (!empty($cleanedEvent['event_id'])) {
+			switch ($cleanedEvent['event_type']) {
+				case 'order.updated':
+					// Grab the order and update it
+					$order = Order::find($cleanedEvent['data']['id']);
+					
+					if (!is_null($order)) {
+						// Mass assignment
+						$order->fill($cleanedEvent['data']);
+					
+						$order->save();
+					
+						// Broadcast an OrderUpdated event
+						broadcast(new OrderUpdated($order));
+					}
+					
+					break;
+			}
+		}
 	}
 }

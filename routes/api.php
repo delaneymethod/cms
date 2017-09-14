@@ -18,4 +18,13 @@ Route::prefix('v1')->group(function () {
 	
 	// Ping routes
 	Route::get('/ping', 'ApiController@ping');
+	
+	// Event routes
+	Route::group(['prefix' => 'events'], function () {
+		Route::post('/order', 'OrderController@event');
+		
+		Route::post('/location', 'LocationController@event');
+		
+		Route::post('/user', 'UserController@event');
+	});
 });

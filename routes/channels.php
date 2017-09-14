@@ -11,6 +11,9 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+use App\User;
+use App\Models\Order;
+
+Broadcast::channel('orders.{id}', function (User $user, int $id) {
+	return $user->id === Order::find($id)->user_id;
 });

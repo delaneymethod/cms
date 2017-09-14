@@ -22,7 +22,11 @@ class LocationController extends Controller
 	{
 		parent::__construct();
 		
-		$this->middleware('auth');
+		$this->middleware('auth', [
+			'except' => [
+				'event'
+			]
+		]);
 		
 		$this->cacheKey = 'locations';
 	}
@@ -85,8 +89,8 @@ class LocationController extends Controller
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
-			// Remove Pubished, Private and Draft keys
-			$statuses->forget([3, 4, 5]);
+			// Remove Pubished, Private, Draft, Shipped and Delivered keys
+			$statuses->forget([3, 4, 5, 7, 8]);
 			
 			return view('cp.locations.create', compact('currentUser', 'title', 'subTitle', 'counties', 'countries', 'companies', 'statuses'));
 		}
@@ -198,8 +202,8 @@ class LocationController extends Controller
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
-			// Remove Pubished, Private and Draft keys
-			$statuses->forget([3, 4, 5]);
+			// Remove Pubished, Private, Draft, Shipped and Delivered keys
+			$statuses->forget([3, 4, 5, 7, 8]);
 			
 			$defaultLocationIds = $this->getDefaultLocationIds();
 		
@@ -482,5 +486,22 @@ class LocationController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+     * Receives a webhook notification from 3rd party applications/services
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+    public function event(Request $request) 
+    {
+	    $cleanedEvent = $this->sanitizerInput($request->all());
+	    
+		if (!empty($cleanedEvent['id'])) {
+			switch ($cleanedEvent['type']) {
+				// TODO
+			}
+		}
 	}
 }

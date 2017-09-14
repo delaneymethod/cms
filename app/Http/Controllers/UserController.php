@@ -23,7 +23,11 @@ class UserController extends Controller
 	{
 		parent::__construct();
 		
-		$this->middleware('auth');
+		$this->middleware('auth', [
+			'except' => [
+				'event'
+			]
+		]);
 		
 		$this->cacheKey = 'users';
 	}
@@ -85,8 +89,8 @@ class UserController extends Controller
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
-			// Remove Pubished, Private, Draft and Suspended keys
-			$statuses->forget([3, 4, 5, 6]);
+			// Remove Published, Private, Draft, Suspended, Shipped and Delivered keys
+			$statuses->forget([3, 4, 5, 6, 7, 8]);
 			
 			// Used to set location_id
 			if ($companies->count() > 1) {
@@ -211,8 +215,8 @@ class UserController extends Controller
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
-			// Remove Pubished, Private, Draft and Suspended keys
-			$statuses->forget([3, 4, 5, 6]);
+			// Remove Published, Private, Draft, Suspended, Shipped and Delivered keys
+			$statuses->forget([3, 4, 5, 6, 7, 8]);
 			
 			// Used to set location_id
 			if ($companies->count() > 1) {
@@ -495,5 +499,22 @@ class UserController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+     * Receives a webhook notification from 3rd party applications/services
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+    public function event(Request $request) 
+    {
+	    $cleanedEvent = $this->sanitizerInput($request->all());
+	    
+		if (!empty($cleanedEvent['id'])) {
+			switch ($cleanedEvent['type']) {
+				// TODO
+			}
+		}
 	}
 }

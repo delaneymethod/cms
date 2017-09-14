@@ -1,14 +1,23 @@
 ;($ => {
 	$.delaneyMethodCMSControlPanel = options => {
+		// Support multiple elements
+		if (this.length > 1){
+			this.each(() => { 
+				$(this).delaneyMethodCMSControlPanel(options);
+			});
+			
+			return this;
+		}
+		
 		this.name = 'DelaneyMethod CMS - Control Panel';
 		
 		this.version = '1.0.0';
 		
 		this.settings = {};
 
-		let defaults = {};
+		this.defaults = {};
 		
-		let colours = [
+		this.colours = [
 			'#222D32', // gray
 			'#5DA5DA', // blue
 			'#FAA43A', // orange
@@ -20,71 +29,13 @@
 			'#F15854', // red
 		];
 		
-		/*
-		let loadAllStats = () => {
-			if ($('#allStats').length) {
-				const allStats = $('#allStats');
+		this.loadOrderStats = () => {
+			if ($('#orderTotals').length) {
+				const orderTotals = $('#orderTotals');
 				
-				const totalCategories = allStats.data('total-categories');
-				
-				const totalUsers = allStats.data('total-users');
-				
-				const totalPages = allStats.data('total-pages');
-				
-				const totalOrders = allStats.data('total-orders');
-				
-				const totalAssets = allStats.data('total-assets');
-				
-				const totalCompanies = allStats.data('total-companies');
-				
-				const totalArticles = allStats.data('total-articles');
-				
-				const totalLocations = allStats.data('total-locations');
-				
-				const data = {
-					'datasets': [{
-						'data': [totalCategories, totalUsers, totalPages, totalOrders, totalAssets, totalCompanies, totalArticles, totalLocations],
-						'label': 'All Stats',
-						'backgroundColor': [colours[0], colours[1], colours[2], colours[3], colours[4], colours[5], colours[6], colours[7]]
-					}],
-					'labels': ['Categories', 'Users', 'Pages', 'Orders', 'Assets', 'Companies', 'Articles', 'Locations']
-				};
-				
-				const options = {
-					'responsive': true,
-					'legend': {
-						'position': 'top',
-					},
-					'title': {
-						'display': true,
-						'text': 'All Stats'
-					},
-					'animation': {
-						'animateScale': true,
-						'nimateRotate': true
-					}
-				};
-				
-				new Chart(allStats, {
-					'type': 'pie',
-					'data': data,
-					'options': options
-				});
-			}
-		};
-		*/
-		
-		let loadOrderStats = () => {
-			if ($('#orderStats').length) {
-				const orderStats = $('#orderStats');
-				
-				const orders = orderStats.data('orders');
+				const orderStats = orderTotals.data('order-stats');
 				
 				let labels = [];
-				
-				_.each(orders['months'].reverse(), month => {
-					labels.push(month['textual']);
-				});
 				
 				let datasets = [];
 				
@@ -92,46 +43,30 @@
 				
 				let max = 0;
 				
-				_.each(orders['pending'].reverse(), pending => {
-					if (max < pending.orders.length) {
-	            		max = pending.orders.length;
+				_.each(orderStats.reverse(), orderStat => {
+					if (max < orderStat.total) {
+	            		max = orderStat.total;
 	            	}
 	            	
-	            	data.push(pending.orders.length);
+	            	labels.push(orderStat.month);
+	            	
+	            	data.push(orderStat.total);
 				});
 				
 				datasets.push({
-					'label': 'Pending Orders',
-					'backgroundColor': colours[0],
-					'borderColor': colours[0],
+					'label': 'Total Orders',
+					'backgroundColor': this.colours[0],
+					'borderColor': this.colours[0],
 					'data': data,
 					'fill': false,
             	});
             	
-            	data = [];
-            	
-            	_.each(orders['active'].reverse(), active => {
-	            	if (max < active.orders.length) {
-	            		max = active.orders.length;
-	            	}
-	            	
-					data.push(active.orders.length);
-				});
+            	max = max + 2;
 				
-				max = max + 2;
-				
-				datasets.push({
-					'label': 'Active Orders',
-					'backgroundColor': colours[1],
-					'borderColor': colours[1],
-					'data': data,
-					'fill': false,
-            	});
-            	
-            	const options = {
+				const options = {
 					'responsive': true,
 					'title': {
-						'display': true,
+						'display': false,
 						'text': 'Recent Orders'
 					},
 					'tooltips': {
@@ -154,18 +89,20 @@
 							'display': true,
 							'scaleLabel': {
 								'display': true,
-								'labelStrin': 'Orders'
+								'labelString': 'Total'
 							},
 							'ticks': {
 								'suggestedMin': 0,
 								'suggestedMax': max,
-								'stepSize': Math.ceil(max % 5)
+								'stepSize': Math.ceil(max % 3)
 							}
 						}]
 					}
 				};
+				
+				Chart.defaults.global.legend.display = false;
 					
-				new Chart(orderStats, {
+				new Chart(orderTotals, {
 					'type': 'line',
 					'data': {
 						'labels': labels,
@@ -176,7 +113,7 @@
 			}
 		};
 		
-		let loadRoleUsersStats = () => {
+		this.loadRoleUsersStats = () => {
 			if ($('#roleUsersStats').length) {
 				const roleUsersStats = $('#roleUsersStats');
 				
@@ -190,7 +127,7 @@
 					'datasets': [{
 						'label': 'Users per Role',
 						'data': [totalSuperAdmins, totalAdmins, totalEndUsers],
-						'backgroundColor': [colours[0], colours[1], colours[2]]
+						'backgroundColor': [this.colours[0], this.colours[1], this.colours[2]]
 					}],
 					'labels': [
 						'Super Admins',
@@ -222,7 +159,7 @@
 			}
 		};
 		
-		let loadAnimations = () => {
+		this.loadAnimations = () => {
 			if ($('.sidebar #submenu').length) {
 				$('.sidebar #submenu').on('click', event => {
 					event.preventDefault();
@@ -270,7 +207,18 @@
 			}
 		};
 		
-		let attachDatePicker = element => {
+		this.loadListeners = () => {
+			window.Pusher.logToConsole = false;
+			
+			window.Echo = new Echo({
+				broadcaster: 'pusher',
+				key: '7659ca498a8f30edbbc3',
+				cluster: 'eu',
+				encrypted: false
+			});
+		};
+		
+		this.attachDatePicker = element => {
 			if ($(element).length) {
 				$(element).datetimepicker({
 					'weekStart': 1,
@@ -284,7 +232,7 @@
 			}
 		};
 		
-		let attachRedactor = element => {
+		this.attachRedactor = element => {
 			if ($(element).length) {
 				const token = window.Laravel.csrfToken;
 				
@@ -333,7 +281,7 @@
 			}
 		};
 		
-		let attachDataTable = element => {
+		this.attachDataTable = element => {
 			if ($(element).length) {
 				$(element).dataTable({
 					'order': [],
@@ -357,7 +305,7 @@
 			}
 		};
 		
-		let attachNestedSortable = element => {
+		this.attachNestedSortable = element => {
 			if ($(element).length) {
 				$(element).nestedSortable({
 					'forcePlaceholderSize': true,
@@ -372,7 +320,7 @@
 			}
 		};
 		
-		let attachClipboard = () => {
+		this.attachClipboard = () => {
 			let clipboard = new Clipboard('[data-clipboard]');	
 			
 			clipboard.on('success', event => {
@@ -392,7 +340,7 @@
 			});
 		};
 		
-		let convertTitleToSlug = (element, targetElement) => {
+		this.convertTitleToSlug = (element, targetElement) => {
 			if ($(element).length) {
 				$(element).on('keyup change', event => {
 					let slug = $(event.target).val().toString()
@@ -418,7 +366,7 @@
 			}
 		};
 		
-		let convertTitleToKeywords = (element, targetElement) => {
+		this.convertTitleToKeywords = (element, targetElement) => {
 			if ($(element).length) {
 				$(element).on('keyup change', event => {
 					let keywords = $(event.target).val().toString()
@@ -432,7 +380,7 @@
 			}
 		};
 		
-		let convertFolderToSlug = (element) => {
+		this.convertFolderToSlug = (element) => {
 			if ($(element).length) {
 				$(element).on('keyup change', event => {
 					let slug = $(event.target).val().toString()
@@ -448,7 +396,7 @@
 			}
 		};
 		
-		let logout = () => {
+		this.logout = () => {
 			if ($('#logout').length) {
 				$('#logout').on('click', event => {
 					event.preventDefault();
@@ -458,7 +406,7 @@
 			}
 		};
 		
-		let savePageChangesAndLoadTemplate = element => {
+		this.savePageChangesAndLoadTemplate = element => {
 			if ($(element).length) {
 				$(element).change(event => {
 					event.preventDefault();
@@ -477,7 +425,7 @@
 			}
 		};
 		
-		let saveMenuChanges = element => {
+		this.saveMenuChanges = element => {
 			if ($('form#menu').length) {
 				$('form#menu').submit(() => {
 					const tree = $(element).nestedSortable('toArray');
@@ -489,76 +437,106 @@
 			}
 		};
 		
-		let init = () => {
+		this.orderUpdated = order => {
+			// In this particular case, we're only updatig the orer status column but we have the full order details so anything could be updated in the UI.
+			const element = $('#order-' + order.id + '-status');
+			
+			element.fadeOut(() => {
+				element.attr('class', 'text-center status_id-' + order.status.id).html(order.status.title);
+			}).fadeIn();
+			
+			// This is for the Orders view, where an icon is used to show the status
+			const elementIcon = $('#order-' + order.id + '-status-icon');
+			
+			elementIcon.fadeOut(() => {
+				elementIcon.attr({
+					'class': 'fa fa-circle fa-1 text-center status_id-' + order.status.id,
+					'title': order.status.title,
+					'data-original-title': order.status.title
+				});
+				
+				// If the status is no longer pending, hide the badge
+				if (order.status.id != 2) {
+					// This is for the Orders view, where an icon is used to show the status
+					$('#order-' + order.id + '-status-badge').fadeOut();
+				} else {
+					$('#order-' + order.id + '-status-badge').fadeIn();
+				}
+			}).fadeIn();
+		};
+		
+		this.init = () => {
 			console.info(this.name + ' v' + this.version + ' is up and running!');
 			
-			this.settings = $.extend({}, defaults, options);
+			this.settings = $.extend({}, this.defaults, options);
 			
 			$('[data-toggle="tooltip"]').tooltip();
 			
-			logout();
+			this.logout();
 			
-			//loadAllStats();
+			this.loadOrderStats();
 			
-			loadOrderStats();
+			this.loadRoleUsersStats();
 			
-			loadRoleUsersStats();
+			this.loadAnimations();
 			
-			loadAnimations();
+			this.loadListeners();
 			
-			attachDatePicker('.input-group.date');
+			this.attachDatePicker('.input-group.date');
 			
-			attachRedactor('.redactor');
+			this.attachRedactor('.redactor');
 			
-			attachDataTable('#datatable');
+			this.attachDataTable('#datatable');
 			
-			attachNestedSortable('#nestedSortable');
+			this.attachNestedSortable('#nestedSortable');
 			
-			attachClipboard();
+			this.attachClipboard();
 			
-			convertTitleToSlug('#createPage #title', '#createPage #slug');
+			this.convertTitleToSlug('#createPage #title', '#createPage #slug');
 			
-			convertTitleToSlug('#createPage #slug', '#createPage #slug');
+			this.convertTitleToSlug('#createPage #slug', '#createPage #slug');
 			
-			convertTitleToSlug('#editPage #title', '#editPage #slug');
+			this.convertTitleToSlug('#editPage #title', '#editPage #slug');
 			
-			convertTitleToSlug('#editPage #slug', '#editPage #slug');
+			this.convertTitleToSlug('#editPage #slug', '#editPage #slug');
 			
-			convertTitleToSlug('#createArticle #title', '#createArticle #slug');
+			this.convertTitleToSlug('#createArticle #title', '#createArticle #slug');
 			
-			convertTitleToSlug('#createArticle #slug', '#createArticle #slug');
+			this.convertTitleToSlug('#createArticle #slug', '#createArticle #slug');
 			
-			convertTitleToSlug('#editArticle #title', '#editArticle #slug');
+			this.convertTitleToSlug('#editArticle #title', '#editArticle #slug');
 			
-			convertTitleToSlug('#editArticle #slug', '#editArticle #slug');
+			this.convertTitleToSlug('#editArticle #slug', '#editArticle #slug');
 			
-			convertTitleToSlug('#createCategory #title', '#createCategory #slug');
+			this.convertTitleToSlug('#createCategory #title', '#createCategory #slug');
 			
-			convertTitleToSlug('#createCategory #slug', '#createCategory #slug');
+			this.convertTitleToSlug('#createCategory #slug', '#createCategory #slug');
 			
-			convertTitleToSlug('#editCategory #title', '#editCategory #slug');
+			this.convertTitleToSlug('#editCategory #title', '#editCategory #slug');
 			
-			convertTitleToSlug('#editCategory #slug', '#editCategory #slug');
+			this.convertTitleToSlug('#editCategory #slug', '#editCategory #slug');
 			
-			convertTitleToKeywords('#createPage #title', '#createPage #keywords');
+			this.convertTitleToKeywords('#createPage #title', '#createPage #keywords');
 			
-			convertTitleToKeywords('#editPage #title', '#editPage #keywords');
+			this.convertTitleToKeywords('#editPage #title', '#editPage #keywords');
 			
-			convertTitleToKeywords('#createArticle #title', '#createArticle #keywords');
+			this.convertTitleToKeywords('#createArticle #title', '#createArticle #keywords');
 			
-			convertTitleToKeywords('#editArticle #title', '#editArticle #keywords');
+			this.convertTitleToKeywords('#editArticle #title', '#editArticle #keywords');
 			
-			convertFolderToSlug('#createFolderAsset #folder');
+			this.convertFolderToSlug('#createFolderAsset #folder');
 			
-			savePageChangesAndLoadTemplate('#createPage #template_id');
+			this.savePageChangesAndLoadTemplate('#createPage #template_id');
 			
-			savePageChangesAndLoadTemplate('#editPage #template_id');
+			this.savePageChangesAndLoadTemplate('#editPage #template_id');
 			
-			saveMenuChanges('#nestedSortable');
+			this.saveMenuChanges('#nestedSortable');
+			
+			return this;
 		};
-
-		init();
+		
+		return this.init();
 	};
 })(jQuery);
 
-$.delaneyMethodCMSControlPanel();
+window.CMS.ControlPanel = $.delaneyMethodCMSControlPanel();

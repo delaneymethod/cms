@@ -162,6 +162,7 @@ class Controller extends BaseController
 			'size',
 			'hide_from_nav',
 			'order',
+			'event_id',
 		];
 
 		$floats = [
@@ -173,6 +174,7 @@ class Controller extends BaseController
 		];
 
 		$strings = [
+			'event_type',
 			'action',
 			'identifier',
 			'content',

@@ -11,11 +11,13 @@
 		"baum/baum": "^1.1",
 		"fideloper/proxy": "~3.3",
 		"gloudemans/shoppingcart": "^2.3",
+		"guzzlehttp/guzzle": "^6.3",
 		"karlmonson/laravel-ping": "^1.0",
 		"laravel/framework": "5.5.*",
 		"laravel/tinker": "~1.0",
 		"propaganistas/laravel-intl": "^1.2",
 		"propaganistas/laravel-phone": "^2.8",
+		"pusher/pusher-php-server": "^3.0",
 		"spatie/laravel-backup": "^5.0",
 		"spatie/laravel-uptime-monitor": "^3.0"
 	},

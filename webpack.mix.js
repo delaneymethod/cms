@@ -12,7 +12,7 @@ if (mix.inProduction) {
 if (!mix.inProduction) {
 	mix.sourceMaps();
 }
-
+	
 mix.options({
 	processCssUrls: false
 });

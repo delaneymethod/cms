@@ -127,8 +127,8 @@ class ArticleController extends Controller
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
-			// Remove Active, Pending, Retired, Suspended keys
-			$statuses->forget([0, 1, 2, 6]);
+			// Remove Active, Pending, Retired, Suspended, Shipped and Delivered keys
+			$statuses->forget([0, 1, 2, 6, 7, 8]);
 			
 			// Used to set categories_ids
 			$categories = $this->getData('getCategories', 'categories');
@@ -276,8 +276,8 @@ class ArticleController extends Controller
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
-			// Remove Active, Pending, Retired, Suspended keys
-			$statuses->forget([0, 1, 2, 6]);
+			// Remove Active, Pending, Retired, Suspended, Shipped and Delivered keys
+			$statuses->forget([0, 1, 2, 6, 7, 8]);
 			
 			// Used to set categories_ids
 			$categories = $this->getData('getCategories', 'categories');

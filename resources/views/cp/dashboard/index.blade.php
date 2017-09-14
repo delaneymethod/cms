@@ -13,6 +13,7 @@
 
 @push('bodyScripts')
 	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
+	@include('cp._partials.listeners')
 @endpush
 
 @section('content')
@@ -24,8 +25,33 @@
 				@if (count($orders) > 0)
 					<div class="content padding bg-white">
 						<div class="row">
-							<div class="col-sm-12 col-md-12 col-lg-12">
-								<canvas id="orderStats" data-orders="{{ $orders }}"></canvas>
+							<div class="col-sm-12 col-md-12 col-lg-12 text-center">
+								<h4>Recent Orders</h4>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6">
+								<canvas id="orderTotals" data-order-stats="{{ $orderStats }}"></canvas>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6">
+								<table class="table table-striped table-bordered table-hover" style="margin-top: 5px;">
+									<thead>
+										<tr>
+											<th>Order Number</th>
+											<th>Date</th>
+											<th class="text-center">Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										@php($chunk = $orders->take(5))
+										
+										@foreach ($chunk->all() as $order)
+											<tr>
+												<td>{{ $order->order_number }}</td>
+												<td>{{ $order->created_at }}</td>
+												<td id="order-{{ $order->id }}-status" class="text-center status_id-{{ $order->status->id }}">{{ $order->status->title }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>

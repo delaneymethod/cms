@@ -13893,7 +13893,8 @@ html, body {
 }
 
 .status_id-1,
-.status_id-4 {
+.status_id-4,
+.status_id-9 {
   color: #27AE60;
   background-color: transparent;
 }
@@ -13909,7 +13910,8 @@ html, body {
   background-color: transparent;
 }
 
-.status_id-3 {
+.status_id-3,
+.status_id-8 {
   color: #9b9b9b;
   background-color: transparent;
 }

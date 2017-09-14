@@ -122,8 +122,8 @@ class PagesTableSeeder extends Seeder
             6 => 
             array (
                 'id' => 7,
-                'title' => 'Success',
-                'slug' => 'success',
+                'title' => 'Confirmation',
+                'slug' => 'confirmation',
                 'keywords' => NULL,
                 'description' => NULL,
                 'template_id' => 2,

@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Log;
-use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\{RoleTrait, PermissionTrait};

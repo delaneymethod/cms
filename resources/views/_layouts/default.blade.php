@@ -24,6 +24,10 @@
 	<script async>
 	'use strict';
 	
+	@auth
+	window.CMS = {};
+	@endauth
+	
 	window.User = {!! Auth::check() ? Auth::user() : 'null' !!};
 	
 	window.Laravel = {'csrfToken': '{{ csrf_token() }}'};

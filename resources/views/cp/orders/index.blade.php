@@ -13,6 +13,7 @@
 
 @push('bodyScripts')
 	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
+	@include('cp._partials.listeners')
 @endpush
 
 @section('content')
@@ -38,11 +39,11 @@
 							@foreach ($orders as $order)
 								<tr>
 									<td data-search="{{ $order->user->company->title }}">{{ $order->order_type->title }}</td>
-									<td>{{ $order->order_number }}{!! ($order->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
+									<td>{{ $order->order_number }}{!! ($order->isPending()) ? '&nbsp;<span id="order-'.$order->id.'-status-badge" class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
 									<td>{{ $order->po_number }}</td>
 									<td>{{ str_replace('<br>', ', ', $order->postal_address) }}</td>
 									<td data-search="{{ $order->created_at->format('d F Y H:i:s A') }}">{{ $order->created_at }}</td>
-									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $order->status->id }}" title="{{ $order->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
+									<td class="status text-center"><i id="order-{{ $order->id }}-status-icon" class="fa fa-circle fa-1 status_id-{{ $order->status->id }}" title="{{ $order->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('view_orders'))
 										<td class="actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Order Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>

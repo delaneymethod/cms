@@ -103,11 +103,27 @@ class DashboardController extends Controller
 		if ($currentUser->hasPermission('view_orders')) {
 			$orders = $this->getOrders();
 			
+			// Now pull in the orders status data since we'll be using this broadcast to update some UI's
+			foreach ($orders as $order) {
+				$order->load('status');
+			}
+			
 			array_push($statCards, [
 				'label' => 'Orders',
 				'url' => '/cp/orders',
 				'count' => $orders->count()
 			]);
+			
+			$orderStats = [];
+		
+			foreach ($months as $month) {
+				array_push($orderStats, [
+					'month' => $month->textual,
+					'total' => $this->getOrdersByMonth($month->numeric)->count(),
+				]);
+			}
+			
+			$orderStats= $this->recursiveCollect($orderStats);
 		}
 				
 		if ($currentUser->hasPermission('view_carts')) {
@@ -174,28 +190,6 @@ class DashboardController extends Controller
 			$statCards = $this->recursiveObject($statCards);
 		}
 		
-		$orders = [];
-		
-		if ($currentUser->hasPermission('view_orders')) {
-			// Remove Retired, Published, Private, Draft and Suspended
-			$statuses->forget([2, 3, 4, 5, 6]);
-			
-			$orders = [];
-			
-			$orders['months'] = collect($months)->toArray();
-			
-			foreach ($months as $month) {
-				foreach ($statuses as $status) {
-					$orders[str_slug($status->title)][] = [
-						'month' => $month->textual,
-						'orders' => $this->getOrdersByMonthStatus($month->numeric, $status->id)
-					];
-				}
-			}
-			
-			$orders = $this->recursiveCollect($orders);
-		}
-		
-		return view('cp.dashboard.index', compact('currentUser', 'title', 'subTitle', 'orders', 'months', 'roles', 'statCards'));
+		return view('cp.dashboard.index', compact('currentUser', 'title', 'subTitle', 'orders', 'orderStats', 'months', 'roles', 'statCards'));
 	}
 }

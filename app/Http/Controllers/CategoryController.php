@@ -86,8 +86,8 @@ class CategoryController extends Controller
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
-			// Remove Pubished, Private, Draft and Suspended keys
-			$statuses->forget([3, 4, 5, 6]);
+			// Remove Pubished, Private, Draft, Suspended, Shipped and Delivered keys
+			$statuses->forget([3, 4, 5, 6, 7, 8]);
 			
 			return view('cp.articles.categories.create', compact('currentUser', 'title', 'subTitle', 'statuses'));
 		}
@@ -177,8 +177,8 @@ class CategoryController extends Controller
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
-			// Remove Pubished, Private, Draft and Suspended keys
-			$statuses->forget([3, 4, 5, 6]);
+			// Remove Pubished, Private, Draft, Suspended, Shipped and Delivered keys
+			$statuses->forget([3, 4, 5, 6, 7, 8]);
 			
 			return view('cp.articles.categories.edit', compact('currentUser', 'title', 'subTitle', 'category', 'statuses'));
 		}

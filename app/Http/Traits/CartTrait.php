@@ -5,7 +5,8 @@ namespace App\Http\Traits;
 use Cart;
 use Gloudemans\Shoppingcart\CartItem;
 use App\Models\{Product, Cart as Kart};
-use Illuminate\Database\Eloquent\Collection as CollectionResponse;
+use Illuminate\Support\Collection as SupportCollectionResponse;
+use Illuminate\Database\Eloquent\Collection as EloquentCollectionResponse;
 
 trait CartTrait
 {
@@ -38,7 +39,7 @@ trait CartTrait
 	 * @param 	string 		$instance
 	 * @return 	Object
 	 */
-	public function getCartsByIdentifierInstance(string $identifier, string $instance) : CollectionResponse
+	public function getCartsByIdentifierInstance(string $identifier, string $instance) : EloquentCollectionResponse
 	{
 		return Kart::where('identifier', 'like', '%'.$identifier.'%')->where('instance', $instance)->get();
 	}
@@ -48,7 +49,7 @@ trait CartTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getCarts() : CollectionResponse
+	public function getCarts() : EloquentCollectionResponse
 	{
 		return Kart::all();
 	}
@@ -59,7 +60,7 @@ trait CartTrait
 	 * @param 	string			$rowId
 	 * @return 	Object
 	 */
-	public function getCartProduct(string $rowId) : Kart
+	public function getCartProduct(string $rowId) : CartItem
 	{
 		return Cart::get($rowId);
 	}
@@ -99,7 +100,7 @@ trait CartTrait
 	 * @param 	int			$userId
 	 * @return 	collection
 	 */
-	public function getSavedCarts(int $userId) : CollectionResponse
+	public function getSavedCarts(int $userId) : EloquentCollectionResponse
 	{
 		$carts = $this->getCartsByIdentifierInstance('_'.$userId, 'cart');
 		
@@ -131,7 +132,7 @@ trait CartTrait
 	 * @param 	int 		$quantity
 	 * @return 	void
 	 */
-	public function updateCartProductQuantity(string $rowId, int $quantity) : CartItem
+	public function updateCartProductQuantity(string $rowId, int $quantity)
 	{
 		Cart::update($rowId, $quantity);
 	}
@@ -175,7 +176,7 @@ trait CartTrait
 	 * @param 	int			$id
 	 * @return 	collection
 	 */
-	public function searchCart(int $id) : CollectionResponse
+	public function searchCart(int $id) : SupportCollectionResponse
 	{
 		return Cart::search(function ($product, $rowId) use ($id) {
 			return $product->id === $id;

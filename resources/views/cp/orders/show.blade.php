@@ -13,6 +13,7 @@
 
 @push('bodyScripts')
 	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
+	@include('cp._partials.listeners')
 @endpush
 
 @section('content')
@@ -37,7 +38,7 @@
 						</div>
 						<div class="col-sm-12 col-md-4 col-lg-4">
 							<h5>Order Status</h5>
-							<p class="status_id-{{ $order->status->id }}">{{ $order->status->title }}</p>
+							<p id="order-{{ $order->id }}-status" class="status_id-{{ $order->status->id }}">{{ $order->status->title }}</p>
 						</div>
 						<div class="col-sm-12 col-md-4 col-lg-4">
 							<h5>Order Date</h5>
