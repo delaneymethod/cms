@@ -465,6 +465,10 @@
 			}).fadeIn();
 		};
 		
+		this.showNotification = notification => {
+			console.log(notification.order);
+		};
+		
 		this.init = () => {
 			console.info(this.name + ' v' + this.version + ' is up and running!');
 			

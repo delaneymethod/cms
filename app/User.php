@@ -2,10 +2,10 @@
 
 namespace App;
 
+use App\Notifications\SetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Notifications\SetPassword as SetPasswordNotification;
 use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo};
 use App\Models\{Role, Order, Status, Company, Article, Location};
 
@@ -172,6 +172,16 @@ class User extends Authenticatable
 	}
 	
 	/**
+	 * The channels the user receives notification broadcasts on.
+	 *
+	 * @return string
+	 */
+	public function receivesBroadcastNotificationsOn()
+	{
+		return 'users.'.$this->id;
+	}
+	
+	/**
 	 * Send the password reset notification.
 	 *
 	 * @param  string  $token
@@ -179,6 +189,6 @@ class User extends Authenticatable
 	 */
 	public function sendPasswordResetNotification($token)
 	{
-		$this->notify(new SetPasswordNotification($token, $this->first_name));
+		$this->notify(new SetPassword($token, $this->first_name));
 	}
 }

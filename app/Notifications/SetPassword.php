@@ -11,14 +11,39 @@ class SetPassword extends Notification implements ShouldQueue
 {
     use Queueable;
 	
+	/**
+	 * Information about the app name.
+	 *
+	 * @var string
+	 */
 	protected $appName;
 	
+	/**
+	 * Information about the app url.
+	 *
+	 * @var string
+	 */
 	protected $appUrl;
 	
+	/**
+	 * Information about the users first name.
+	 *
+	 * @var string
+	 */
 	protected $firstName;
 	
+	/**
+	 * Information about the token.
+	 *
+	 * @var string
+	 */
 	protected $token;
 	
+	/**
+	 * Information about the subject.
+	 *
+	 * @var string
+	 */
 	protected $subject;
 	
     /**
@@ -58,11 +83,12 @@ class SetPassword extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-		$data = array(
+	    // Notice how this one is a bit different than the order placed notification. All that is different is we are setting the mailiable in the user model instead.
+		$data = [
 			'appName' => $this->appName,
 			'firstName' => $this->firstName, 
 			'setPasswordUrl' => url('/password/reset', $this->token)
-		);
+		];
             
 		return (new MailMessage)->view('emails.passwords.create', $data)->subject($this->subject);
 	}

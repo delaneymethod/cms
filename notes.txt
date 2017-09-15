@@ -2,6 +2,8 @@
 	<canvas id="allStats" data-total-categories="{{ $categories->count() }}" data-total-users="{{ $users->count() }}" data-total-pages="{{ $pages->count() }}" data-total-orders="{{ $orders->count() }}" data-total-assets="{{ $assets->count() }}" data-total-companies="{{ $companies->count() }}" data-total-articles="{{ $articles->count() }}" data-total-locations="{{ $locations->count() }}"></canvas>
 </div>
 
+
+
 echo "" > storage/logs/laravel.log
 
 
@@ -9,12 +11,8 @@ echo "" > storage/logs/laravel.log
 https://github.com/spatie/laravel-activitylog
 
 
-send new notification to supplier when a job is processed
 
-update order placed job from mail to a notification, that then sends an email to customer
-
-
-
+Setup notifications CRUD
 
 
 

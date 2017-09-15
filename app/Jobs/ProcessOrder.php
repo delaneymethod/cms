@@ -4,10 +4,13 @@ namespace App\Jobs;
 
 use Log;
 use App\User;
+use Notification;
+use Carbon\Carbon;
 use GuzzleHttp\Psr7;
 use App\Models\Order;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
+use App\Notifications\OrderPlaced;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -16,9 +19,19 @@ use Illuminate\Queue\{SerializesModels, InteractsWithQueue};
 class ProcessOrder implements ShouldQueue
 {
 	use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+	
+	/**
+	 * Information about the user.
+	 *
+	 * @var string
+	 */
 	protected $user;
 	
+	/**
+	 * Information about the order.
+	 *
+	 * @var string
+	 */
 	protected $order;
 	
 	/**
@@ -35,7 +48,35 @@ class ProcessOrder implements ShouldQueue
      */
     public $timeout = 30;
     
+    /**
+     * The number of minutes the job is delayed.
+     *
+     * @var int
+     */
+    protected $minutes;
+    
+    /**
+	 * Information about the supplier.
+	 *
+	 * @var string
+	 */
+    protected $supplierEmail;
+    
+    /**
+	 * Information about the api url.
+	 *
+	 * @var string
+	 */
+    protected $apiUrl;
+    
 	/**
+	 * Information about the endpoint.
+	 *
+	 * @var string
+	 */
+    protected $endpoint;
+    
+    /**
 	 * Create a new job instance.
 	 *
 	 * @return void
@@ -44,7 +85,15 @@ class ProcessOrder implements ShouldQueue
 	{
 		$this->user = $user;
 		
-		$this->order = $order;
+		$this->order = $order->load('status', 'location', 'order_type', 'shipping_method');
+		
+		$this->minutes = config('cms.delays.notifications');
+		
+		$this->supplierEmail = config('cms.site.email');
+		
+		$this->apiUrl = config('cms.api.url');
+	
+		$this->endpoint = config('cms.api.endpoints.orders.process');
 	}
 
 	/**
@@ -54,10 +103,6 @@ class ProcessOrder implements ShouldQueue
 	 */
 	public function handle()
 	{
-		$apiUrl = config('cms.api.url');
-	
-		$endpoint = config('cms.api.endpoints.orders.process');
-		
 		Log::info('');
 		Log::info('---- Processing Order ----');
 		Log::info('');
@@ -69,13 +114,14 @@ class ProcessOrder implements ShouldQueue
 		Log::info('');
 		
 		try {
+			// Send new order details to 3rd party API for processing.
 			$client = new Client([
-				'base_uri' => $apiUrl,
+				'base_uri' => $this->apiUrl,
 				'timeout' => 5, // Timeout if a server does not return a response 
 				'connect_timeout' => 10, // Timeout if the client fails to connect to the server
 			]);
 			
-			$response = $client->request('POST', $endpoint, [
+			$response = $client->request('POST', $this->endpoint, [
 				'user' => $this->user,
 				'order' => $this->order,
 			]);
@@ -86,8 +132,14 @@ class ProcessOrder implements ShouldQueue
 			Log::info('Body:');
 			Log::info($response->getBody());
 			
-			// TODO - send new notification to supplier
+			// Now that the order has been sent to the API, send out new notifications to the supplier and the user.
+			$time = Carbon::now()->addMinutes($this->minutes);
 			
+			// User - Sends an order placed notification to the user. Stick the notification in the "orders" queue to run in 5 minutes.
+			$this->user->notify((new OrderPlaced($this->user, $this->order))->delay($time));
+			
+			// Supplier - Sends an order placed notification to the supplier. Stick the notification in the "orders" queue to run in 5 minutes.
+			Notification::route('mail', $this->supplierEmail)->notify((new OrderPlaced($this->user, $this->order))->delay($time));
 		} catch (RequestException $exception) {
 			Log::info('');
 			Log::critical('RequestException:');

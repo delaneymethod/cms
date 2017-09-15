@@ -7,12 +7,10 @@ use Log;
 use App;
 use Carbon\Carbon;
 use App\Models\Order;
-use App\Mail\OrderPlaced;
 use App\Jobs\ProcessOrder;
 use App\Events\OrderUpdated;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
 use App\Http\Traits\{CartTrait, OrderTrait, StatusTrait, OrderTypeTrait, ShippingMethodTrait};
 
 class OrderController extends Controller
@@ -173,20 +171,9 @@ class OrderController extends Controller
 				// finally empty the cart instance
 				$this->destroyCart();
 				
-				$jobsDelaysEmails = config('cms.jobs.delays.emails');
+				$minutes = config('cms.delays.jobs');
 				
-				$jobsDelaysOrders = config('cms.jobs.delays.orders');
-				
-				// Send an order placed email to the user. Stick the email in the "emails" queue to run in 5 minutes.
-				$time = Carbon::now()->addMinutes($jobsDelaysEmails);
-				
-				$message = (new OrderPlaced($currentUser, $order))->onQueue('emails');
-				
-				$to = $currentUser->email;
-				
-				Mail::to($to)->later($time, $message);
-				
-				$time = Carbon::now()->addMinutes($jobsDelaysOrders);
+				$time = Carbon::now()->addMinutes($minutes);
 				
 				// Dispatches a new job to process the order. Sticks the job in the "orders" queue to run in 10 minutes.
 				ProcessOrder::dispatch($currentUser, $order)->delay($time)->onQueue('orders');

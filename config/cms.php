@@ -15,15 +15,16 @@ return [
 		'name' => env('SITE_NAME', 'Test Site'),
 		'url' => env('SITE_URL', 'http://www.delaneymethod.com'),
 		'email' => env('SITE_EMAIL', 'hello@delaneymethod.com'),
+		'phone' => env('SITE_TELEPHONE', ''),
+		'mobile' => env('SITE_MOBILE', ''),
     
     ],
     
-	'jobs' => [
+	'delays' => [
 	
-		'delays' => [
-			'orders' => 10,
-			'emails' => 5,
-		],
+		'jobs' => 10,
+		'emails' => 5,
+		'notifications' => 5,
 	
 	],
 	

@@ -13,12 +13,32 @@ class OrderPlaced extends Mailable implements ShouldQueue
 {
 	use Queueable, SerializesModels;
 	
+	/**
+	 * Information about the user.
+	 *
+	 * @var string
+	 */
 	public $user;
 	
+	/**
+	 * Information about the order.
+	 *
+	 * @var string
+	 */
 	public $order;
 	
+	/**
+	 * Information about the app name.
+	 *
+	 * @var string
+	 */
 	public $appName;
 	
+	/**
+	 * Information about the app url.
+	 *
+	 * @var string
+	 */
 	public $appUrl;
 	
 	/**

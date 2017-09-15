@@ -88723,6 +88723,10 @@ var _this = this;
 			}).fadeIn();
 		};
 
+		_this.showNotification = function (notification) {
+			console.log(notification.order);
+		};
+
 		_this.init = function () {
 			console.info(_this.name + ' v' + _this.version + ' is up and running!');
 

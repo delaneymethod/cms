@@ -45,7 +45,7 @@ class OrderUpdated implements ShouldBroadcast
 	 *
 	 * @return string
 	 */
-	public function broadcastAs()
+	public function broadcastAs() : string
 	{
 		return 'order.updated';
 	}
@@ -55,7 +55,7 @@ class OrderUpdated implements ShouldBroadcast
 	 *
 	 * @return array
 	 */
-	public function broadcastWith()
+	public function broadcastWith() : array
 	{
 		// Now pull in the orders related data since we'll be using this broadcast to update the UI's across the board
 		return [

@@ -1,23 +1,19 @@
-@if (!empty($orders) && $orders->count() > 0)
-	<script async>
-	'use strict';
+<script async>
+'use strict';
 	
-	window.onload = () => {
-		const orders = JSON.parse('{!! json_encode($orders) !!}');
-		
-		orders.map(order => window.Echo.private(`orders.${order.id}`).listen('.order.updated', event => window.CMS.ControlPanel.orderUpdated(event.order)));
-	};
-	</script>
-@endif
+window.onload = () => {
+	window.Echo.private(`users.${window.User.id}`).notification(notification => window.CMS.ControlPanel.showNotification(notification));
 
-@if (!empty($order))
-	<script async>
-	'use strict';
+	@if (!empty($orders) && $orders->count() > 0)
+	const orderIds = JSON.parse('{!! json_encode($orders->pluck('id')) !!}');
 	
-	window.onload = () => {
-		const order = JSON.parse('{!! json_encode($order) !!}');
+	orderIds.map(orderId => window.Echo.private(`orders.${orderId}`).listen('.order.updated', event => window.CMS.ControlPanel.orderUpdated(event.order)));
+	@endif
+
+	@if (!empty($order))
+	const order = JSON.parse('{!! json_encode($order) !!}');
 		
-		window.Echo.private(`orders.${order.id}`).listen('.order.updated', event => window.CMS.ControlPanel.orderUpdated(event.order));
-	};
-	</script>
-@endif
+	window.Echo.private(`orders.${order.id}`).listen('.order.updated', event => window.CMS.ControlPanel.orderUpdated(event.order));
+	@endif
+};
+</script>	
