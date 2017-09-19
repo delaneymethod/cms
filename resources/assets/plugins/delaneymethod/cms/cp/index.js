@@ -438,7 +438,7 @@
 		};
 		
 		this.orderUpdated = order => {
-			// In this particular case, we're only updatig the orer status column but we have the full order details so anything could be updated in the UI.
+			// In this particular case, we're only updatig the order status column but we have the full order details so anything could be updated in the UI.
 			const element = $('#order-' + order.id + '-status');
 			
 			element.fadeOut(() => {
@@ -466,7 +466,67 @@
 		};
 		
 		this.showNotification = notification => {
-			console.log(notification.order);
+			// Updates the Notifications view
+			let subject = _.replace(notification.type, 'OrderUpdated', 'Order Updated');
+			
+			subject = _.replace(subject, 'App', '');
+			subject = _.replace(subject, 'Notifications', '');
+			subject = _.replace(subject, '\\', '');
+			subject = _.replace(subject, '\\', '');
+			
+			const date = new Date();
+			
+			const createdAt = date.getDate() + this.getNthSuffix(date) + ' ' + this.getMonthName(date.getMonth()).substring(0, 3) + ' ' + date.getFullYear(); + ' ' + date.getHours() + ':' + date.getMinutes();
+			
+			const element = $('#all-notifications');
+	
+			let newNotification = $('<tr class="highlight"><td>' + subject + ' &nbsp;<span class="badge badge-pill badge-suspended align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Unread</span></td><td class="text-center">' + createdAt + '</td><td class="text-center"><a href="/cp/users/' + notification.order.user.id + '/notifications/' + notification.id + '" title="View Notification"><i class="icon fa fa-envelope" aria-hidden="true"></i></a></td></tr>');
+			
+			const table = $('#datatable').DataTable();
+			
+			table.destroy();
+			
+			element.prepend(newNotification);
+			
+			// Updates counter in the sidebar
+			const elementIcon = $('#notifications-unread');
+			
+			elementIcon.fadeOut(() => {
+				let unread = parseInt(elementIcon.html());
+				
+				unread++;
+				
+				elementIcon.html(unread);
+			}).fadeIn();
+			
+			// Reloads the table data again
+			this.attachDataTable('#datatable');
+		};
+		
+		this.getMonthName = month => {
+			let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+		
+			return months[month];
+		};
+		
+		this.getNthSuffix = date => {
+			switch (date) {
+				case 1:
+				case 21:
+				case 31:
+					return 'st';
+				
+				case 2:
+				case 22:
+					return 'nd';
+				
+				case 3:
+				case 23:
+					return 'rd';
+				
+				default:
+					return 'th';
+			}
 		};
 		
 		this.init = () => {

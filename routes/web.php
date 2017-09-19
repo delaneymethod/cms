@@ -44,6 +44,8 @@ Route::group(['prefix' => 'cp'], function () {
 	// CP > Users routes
 	Route::get('/users', 'UserController@index');
 	Route::get('/users/create', 'UserController@create');
+	Route::get('/users/{id}/notifications', 'UserController@notifications');
+	Route::get('/users/{id}/notifications/{uuid}', 'UserController@notification');
 	Route::get('/users/{id}/edit', 'UserController@edit');
 	Route::get('/users/{id}/edit/password', 'UserController@editPassword');
 	Route::get('/users/{id}/retire', 'UserController@retire');

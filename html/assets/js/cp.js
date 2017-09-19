@@ -88696,7 +88696,7 @@ var _this = this;
 		};
 
 		_this.orderUpdated = function (order) {
-			// In this particular case, we're only updatig the orer status column but we have the full order details so anything could be updated in the UI.
+			// In this particular case, we're only updatig the order status column but we have the full order details so anything could be updated in the UI.
 			var element = $('#order-' + order.id + '-status');
 
 			element.fadeOut(function () {
@@ -88724,7 +88724,67 @@ var _this = this;
 		};
 
 		_this.showNotification = function (notification) {
-			console.log(notification.order);
+			// Updates the Notifications view
+			var subject = _.replace(notification.type, 'OrderUpdated', 'Order Updated');
+
+			subject = _.replace(subject, 'App', '');
+			subject = _.replace(subject, 'Notifications', '');
+			subject = _.replace(subject, '\\', '');
+			subject = _.replace(subject, '\\', '');
+
+			var date = new Date();
+
+			var createdAt = date.getDate() + _this.getNthSuffix(date) + ' ' + _this.getMonthName(date.getMonth()).substring(0, 3) + ' ' + date.getFullYear();+' ' + date.getHours() + ':' + date.getMinutes();
+
+			var element = $('#all-notifications');
+
+			var newNotification = $('<tr class="highlight"><td>' + subject + ' &nbsp;<span class="badge badge-pill badge-suspended align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Unread</span></td><td class="text-center">' + createdAt + '</td><td class="text-center"><a href="/cp/users/' + notification.order.user.id + '/notifications/' + notification.id + '" title="View Notification"><i class="icon fa fa-envelope" aria-hidden="true"></i></a></td></tr>');
+
+			var table = $('#datatable').DataTable();
+
+			table.destroy();
+
+			element.prepend(newNotification);
+
+			// Updates counter in the sidebar
+			var elementIcon = $('#notifications-unread');
+
+			elementIcon.fadeOut(function () {
+				var unread = parseInt(elementIcon.html());
+
+				unread++;
+
+				elementIcon.html(unread);
+			}).fadeIn();
+
+			// Reloads the table data again
+			_this.attachDataTable('#datatable');
+		};
+
+		_this.getMonthName = function (month) {
+			var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+			return months[month];
+		};
+
+		_this.getNthSuffix = function (date) {
+			switch (date) {
+				case 1:
+				case 21:
+				case 31:
+					return 'st';
+
+				case 2:
+				case 22:
+					return 'nd';
+
+				case 3:
+				case 23:
+					return 'rd';
+
+				default:
+					return 'th';
+			}
 		};
 
 		_this.init = function () {

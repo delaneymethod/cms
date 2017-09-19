@@ -13,6 +13,7 @@
 
 @push('bodyScripts')
 	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
+	@include('cp._partials.listeners')
 @endpush
 
 @section('content')

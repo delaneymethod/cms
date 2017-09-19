@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Password;
-use App\Http\Traits\{RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait};
+use App\Http\Traits\{RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait, NotificationTrait};
 
 class UserController extends Controller
 {	
-	use RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait;
+	use RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait, NotificationTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -256,6 +257,70 @@ class UserController extends Controller
 			$this->authorize('userOwnsThis', $user);
 			
 			return view('cp.users.edit.password', compact('currentUser', 'title', 'subTitle', 'user'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Gets notifications view for current user.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function notifications(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('view_users') && $currentUser->id == $id) {
+			$title = 'Messages';
+			
+			$subTitle = $currentUser->company->title;
+			
+			$notifications = $currentUser->notifications;
+			
+			foreach ($notifications as $notification) {
+				$notification->subject = str_replace('App\Notifications\OrderUpdated', 'Order Updated', $notification->type);
+			}
+			
+			return view('cp.users.notifications.index', compact('currentUser', 'title', 'subTitle', 'notifications'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Gets specified notification view for current user.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function notification(Request $request, int $id, string $uuid)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('view_users') && $currentUser->id == $id) {
+			$notification = $this->getNotification($uuid);
+			
+			// Set a subject
+			$notification->subject = str_replace('App\Notifications\OrderUpdated', 'Order Updated', $notification->type);
+			
+			$title = $notification->subject;
+			
+			$subTitle = 'Messages';
+			
+			// Mark it as read...
+			$currentUser->notifications->each(function ($note, $key) use ($uuid) {
+				if ($note->id === $uuid) {
+					$note->markAsRead();
+				}
+			});
+			
+			$notification->read_at = Carbon::parse($notification->read_at)->format('jS M Y H:i');
+				
+			return view('cp.users.notifications.show', compact('currentUser', 'title', 'subTitle', 'notification'));
 		}
 
 		abort(403, 'Unauthorised action');

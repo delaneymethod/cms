@@ -66,6 +66,7 @@
 			</ul>
 			<h4 class="text-uppercase">User</h4>
 			<ul class="list-unstyled">
+				<li class="{{ setActive('cp/users/'.$currentUser->id.'/notifications') }}"><a href="/cp/users/{{ $currentUser->id }}/notifications" title=""><i class="text-center icon fa fa-commenting" aria-hidden="true"></i>Messages&nbsp;<span id="notifications-unread" class="float-right badge badge-pill badge-suspended{{ ($currentUser->unreadNotifications->count() == 0) ? ' hidden' : '' }}" style="margin-top: 3px;padding-left: 8px;padding-right: 8px;">{{ $currentUser->unreadNotifications->count() }}</span></a></li>
 				<li class="{{ setActive('cp/users/'.$currentUser->id.'/edit/password') }}"><a href="/cp/users/{{ $currentUser->id }}/edit/password" title="Change Password"><i class="text-center icon fa fa-key" aria-hidden="true"></i>Change Password</a></li>
 				<li><a href="javascript:void(0);" title="Logout" id="logout"><i class="text-center icon fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
 			</ul>
