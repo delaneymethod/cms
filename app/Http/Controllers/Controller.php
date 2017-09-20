@@ -132,7 +132,7 @@ class Controller extends BaseController
 		$integers = [
 			'id',
 			'article_id',
-			'category_id',
+			'article_category_id',
 			'field_id',
 			'page_id',
 			'content_id',

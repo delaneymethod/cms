@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Content extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'contents';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

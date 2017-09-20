@@ -1,45 +1,39 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class RolesTableSeeder extends Seeder
 {
-
-    /**
-     * Auto generated seed file
-     *
-     * @return void
-     */
-    public function run()
-    {
-        
-
-        \DB::table('roles')->delete();
-        
-        \DB::table('roles')->insert(array (
-            0 => 
-            array (
-                'id' => 1,
-                'title' => 'Super Administrator',
-                'created_at' => '2017-08-01 09:19:39',
-                'updated_at' => '2017-08-01 09:19:39',
-            ),
-            1 => 
-            array (
-                'id' => 2,
-                'title' => 'Administrator',
-                'created_at' => '2017-08-01 09:19:39',
-                'updated_at' => '2017-08-01 09:19:39',
-            ),
-            2 => 
-            array (
-                'id' => 3,
-                'title' => 'End User',
-                'created_at' => '2017-08-01 09:19:39',
-                'updated_at' => '2017-08-01 09:19:39',
-            ),
-        ));
-        
-        
-    }
+	/**
+	 * Auto generated seed file
+	 *
+	 * @return void
+	 */
+	public function run()
+	{
+		$now = Carbon::now()->format('Y-m-d H:i:s');
+		
+		$roles = [
+			[
+				'title' => 'Super Administrator',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'Administrator',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'End User',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+		];
+		
+		DB::table('roles')->delete();
+		
+		DB::table('roles')->insert($roles);
+	}
 }

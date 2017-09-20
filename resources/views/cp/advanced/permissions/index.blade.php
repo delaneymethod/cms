@@ -37,7 +37,13 @@
 							<tbody>
 								@foreach ($permissions as $group)
 									@php($titleParts = explode('_', $group[0]->title))
+									
 									@php($groupTitle = ucfirst($titleParts[1]))
+									
+									@if (count($titleParts) > 2)
+										@php($groupTitle = $groupTitle.' '.ucfirst($titleParts[2]))
+									@endif
+									
 									@if (!$loop->first)
 										<tr class="table-light">
 											<td colspan="4">&nbsp;</td>

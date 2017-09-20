@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
-use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\ArticleCategory;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\{StatusTrait, CategoryTrait};
+use App\Http\Traits\{StatusTrait, ArticleCategoryTrait};
 
-class CategoryController extends Controller
+class ArticleCategoryController extends Controller
 {
-	use StatusTrait, CategoryTrait;
+	use StatusTrait, ArticleCategoryTrait;
 
 	/**
 	 * Create a new controller instance.
@@ -24,11 +24,11 @@ class CategoryController extends Controller
 		
 		$this->middleware('auth');
 		
-		$this->cacheKey = 'categories';
+		$this->cacheKey = 'article_categories';
 	}
 	
 	/**
-	 * Get categories view.
+	 * Get article categories view.
 	 *
 	 * @params	Request 	$request
 	 * @return 	Response
@@ -37,8 +37,8 @@ class CategoryController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($currentUser->hasPermission('view_categories')) {
-			$title = 'Categories';
+		if ($currentUser->hasPermission('view_article_categories')) {
+			$title = 'Article Categories';
 		
 			$subTitle = '';
 		
@@ -52,24 +52,24 @@ class CategoryController extends Controller
 				$this->setCache($this->cacheKey, $statuses);
 			}
 			
-			$this->cacheKey = 'categories';
+			$this->cacheKey = 'article_categories';
 			
-			$categories = $this->getCache($this->cacheKey);
+			$articleCategories = $this->getCache($this->cacheKey);
 			
-			if (is_null($categories)) {
-				$categories = $this->getCategories();
+			if (is_null($articleCategories)) {
+				$articleCategories = $this->getArticleCategories();
 				
-				$this->setCache($this->cacheKey, $categories);
+				$this->setCache($this->cacheKey, $articleCategories);
 			}
 			
-			return view('cp.articles.categories.index', compact('currentUser', 'title', 'subTitle', 'categories', 'statues'));
+			return view('cp.articles.categories.index', compact('currentUser', 'title', 'subTitle', 'articleCategories', 'statues'));
 		}
 		
 		abort(403, 'Unauthorised action');
 	}
 	
 	/**
-	 * Shows a form for creating a new category.
+	 * Shows a form for creating a new article category.
 	 *
 	 * @params	Request 	$request
 	 * @return 	Response
@@ -78,10 +78,10 @@ class CategoryController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 
-		if ($currentUser->hasPermission('create_categories')) {
-			$title = 'Create Category';
+		if ($currentUser->hasPermission('create_article_categories')) {
+			$title = 'Create Article Category';
 			
-			$subTitle = 'Categories';
+			$subTitle = 'Article Categories';
 			
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
@@ -96,7 +96,7 @@ class CategoryController extends Controller
 	}
 	
 	/**
-     * Creates a new category.
+     * Creates a new article category.
      *
 	 * @params Request 	$request
      * @return Response
@@ -105,14 +105,14 @@ class CategoryController extends Controller
     {
 	    $currentUser = $this->getAuthenticatedUser();
 
-		if ($currentUser->hasPermission('create_categories')) {
+		if ($currentUser->hasPermission('create_article_categories')) {
 			// Remove any Cross-site scripting (XSS)
-			$cleanedCategory = $this->sanitizerInput($request->all());
+			$cleanedArticleCategory = $this->sanitizerInput($request->all());
 
-			$rules = $this->getRules('category');
+			$rules = $this->getRules('article_category');
 			
 			// Make sure all the input data is what we actually save
-			$validator = $this->validatorInput($cleanedCategory, $rules);
+			$validator = $this->validatorInput($cleanedArticleCategory, $rules);
 
 			if ($validator->fails()) {
 				return back()->withErrors($validator)->withInput();
@@ -122,16 +122,16 @@ class CategoryController extends Controller
 
 			try {
 				// Create new model
-				$category = new Category;
+				$articleCategory = new ArticleCategory;
 	
 				// Set our field data
-				$category->title = $cleanedCategory['title'];
-				$category->slug = $cleanedCategory['slug'];
-				$category->status_id = $cleanedCategory['status_id'];
+				$articleCategory->title = $cleanedArticleCategory['title'];
+				$articleCategory->slug = $cleanedArticleCategory['slug'];
+				$articleCategory->status_id = $cleanedArticleCategory['status_id'];
 				
-				$category->save();
+				$articleCategory->save();
 				
-				$this->setCache($this->cacheKey, $this->getCategories());
+				$this->setCache($this->cacheKey, $this->getArticleCategories());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -148,7 +148,7 @@ class CategoryController extends Controller
 
 			DB::commit();
 
-			flash('Category created successfully.', $level = 'success');
+			flash('Article Category created successfully.', $level = 'success');
 
 			return redirect('/cp/articles/categories');
 		}
@@ -157,7 +157,7 @@ class CategoryController extends Controller
     }
     
     /**
-	 * Shows a form for editing a category.
+	 * Shows a form for editing a article category.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
@@ -167,12 +167,12 @@ class CategoryController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($currentUser->hasPermission('edit_categories')) {
-			$title = 'Edit Category';
+		if ($currentUser->hasPermission('edit_article_categories')) {
+			$title = 'Edit Article Category';
 		
-			$subTitle = 'Categories';
+			$subTitle = 'Article Categories';
 			
-			$category = $this->getCategory($id);
+			$articleCategory = $this->getArticleCategory($id);
 			
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
@@ -180,14 +180,14 @@ class CategoryController extends Controller
 			// Remove Pubished, Private, Draft, Suspended, Shipped and Delivered keys
 			$statuses->forget([3, 4, 5, 6, 7, 8]);
 			
-			return view('cp.articles.categories.edit', compact('currentUser', 'title', 'subTitle', 'category', 'statuses'));
+			return view('cp.articles.categories.edit', compact('currentUser', 'title', 'subTitle', 'articleCategory', 'statuses'));
 		}
 
 		abort(403, 'Unauthorised action');
 	}
 	
 	/**
-	 * Updates a specific category.
+	 * Updates a specific article category.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
@@ -197,16 +197,16 @@ class CategoryController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 
-		if ($currentUser->hasPermission('edit_categories')) {
+		if ($currentUser->hasPermission('edit_article_categories')) {
 			// Remove any Cross-site scripting (XSS)
-			$cleanedCategory = $this->sanitizerInput($request->all());
+			$cleanedArticleCategory = $this->sanitizerInput($request->all());
 
-			$rules = $this->getRules('category');
+			$rules = $this->getRules('article_category');
 			
-			$rules['slug'] = 'required|string|unique:categories,slug,'.$id.'|max:255';
+			$rules['slug'] = 'required|string|unique:article_categories,slug,'.$id.'|max:255';
 			
 			// Make sure all the input data is what we actually save
-			$validator = $this->validatorInput($cleanedCategory, $rules);
+			$validator = $this->validatorInput($cleanedArticleCategory, $rules);
 
 			if ($validator->fails()) {
 				return back()->withErrors($validator)->withInput();
@@ -216,17 +216,17 @@ class CategoryController extends Controller
 
 			try {
 				// Create new model
-				$category = $this->getCategory($id);
+				$articleCategory = $this->getArticleCategory($id);
 				
 				// Set our field data
-				$category->title = $cleanedCategory['title'];
-				$category->slug = $cleanedCategory['slug'];
-				$category->status_id = $cleanedCategory['status_id'];
-				$category->updated_at = $this->datetime;
+				$articleCategory->title = $cleanedArticleCategory['title'];
+				$articleCategory->slug = $cleanedArticleCategory['slug'];
+				$articleCategory->status_id = $cleanedArticleCategory['status_id'];
+				$articleCategory->updated_at = $this->datetime;
 				
-				$category->save();
+				$articleCategory->save();
 				
-				$this->setCache($this->cacheKey, $this->getCategories());
+				$this->setCache($this->cacheKey, $this->getArticleCategories());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -243,7 +243,7 @@ class CategoryController extends Controller
 
 			DB::commit();
 
-			flash('Category updated successfully.', $level = 'success');
+			flash('Article Category updated successfully.', $level = 'success');
 
 			return redirect('/cp/articles/categories');
 		}
@@ -252,7 +252,7 @@ class CategoryController extends Controller
 	}
 	
 	/**
-	 * Shows a form for deleting a category.
+	 * Shows a form for deleting a article category.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
@@ -262,27 +262,27 @@ class CategoryController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($currentUser->hasPermission('delete_categories')) {
-			$category = $this->getCategory($id);
+		if ($currentUser->hasPermission('delete_article_categories')) {
+			$articleCategory = $this->getArticleCategory($id);
 			
-			if ($category->id == $id && $id == 1) {
-				flash('You cannot delete the '.$category->title.' category.', $level = 'warning');
+			if ($articleCategory->id == $id && $id == 1) {
+				flash('You cannot delete the '.$articleCategory->title.' article category.', $level = 'warning');
 	
 				return redirect('/cp/articles/categories');
 			}
 			
-			$title = 'Delete Category';
+			$title = 'Delete Article Category';
 			
-			$subTitle = 'Categories';
+			$subTitle = 'Article Categories';
 			
-			return view('cp.articles.categories.delete', compact('currentUser', 'title', 'subTitle', 'category'));
+			return view('cp.articles.categories.delete', compact('currentUser', 'title', 'subTitle', 'articleCategory'));
 		}
 
 		abort(403, 'Unauthorised action');
 	}
 	
 	/**
-	 * Deletes a specific category.
+	 * Deletes a specific article category.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
@@ -292,11 +292,11 @@ class CategoryController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($currentUser->hasPermission('delete_categories')) {
-			$category = $this->getCategory($id);
+		if ($currentUser->hasPermission('delete_article_categories')) {
+			$articleCategory = $this->getArticleCategory($id);
 			
-			if ($category->id == $id && $id == 1) {
-				flash('You cannot delete the '.$category->title.' category.', $level = 'warning');
+			if ($articleCategory->id == $id && $id == 1) {
+				flash('You cannot delete the '.$articleCategory->title.' article category.', $level = 'warning');
 	
 				return redirect('/cp/articles/categories');
 			}
@@ -304,9 +304,9 @@ class CategoryController extends Controller
 			DB::beginTransaction();
 
 			try {
-				$category->delete();
+				$articleCategory->delete();
 				
-				$this->setCache($this->cacheKey, $this->getCategories());
+				$this->setCache($this->cacheKey, $this->getArticleCategories());
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -323,7 +323,7 @@ class CategoryController extends Controller
 
 			DB::commit();
 
-			flash('Category deleted successfully.', $level = 'info');
+			flash('Article Category deleted successfully.', $level = 'info');
 
 			return redirect('/cp/articles/categories');
 		}

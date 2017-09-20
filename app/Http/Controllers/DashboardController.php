@@ -7,11 +7,11 @@ use Log;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\{CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, ProductTrait, CompanyTrait, ArticleTrait, LocationTrait, CategoryTrait, TemplateTrait};
+use App\Http\Traits\{CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, ProductTrait, CompanyTrait, ArticleTrait, LocationTrait, TemplateTrait, ArticleCategoryTrait};
 
 class DashboardController extends Controller
 {
-	use CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, ProductTrait, CompanyTrait, ArticleTrait, LocationTrait, CategoryTrait, TemplateTrait;
+	use CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, ProductTrait, CompanyTrait, ArticleTrait, LocationTrait, TemplateTrait, ArticleCategoryTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -142,16 +142,6 @@ class DashboardController extends Controller
 			]);	
 		}
 				
-		if ($currentUser->hasPermission('view_categories')) {
-			$categories = $this->getData('getCategories', 'categories');
-			
-			array_push($statCards, [
-				'label' => 'Categories',
-				'url' => '/cp/articles/categories',
-				'count' => $categories->count()
-			]);
-		}
-				
 		if ($currentUser->hasPermission('view_articles')) {
 			$articles = $this->getData('getArticles', 'articles');
 			
@@ -159,6 +149,16 @@ class DashboardController extends Controller
 				'label' => 'Articles',
 				'url' => '/cp/articles',
 				'count' => $articles->count()
+			]);
+		}
+		
+		if ($currentUser->hasPermission('view_article_categories')) {
+			$articleCategories = $this->getData('getArticleCategories', 'article_categories');
+			
+			array_push($statCards, [
+				'label' => 'Article Categories',
+				'url' => '/cp/articles/categories',
+				'count' => $articleCategories->count()
 			]);
 		}
 				

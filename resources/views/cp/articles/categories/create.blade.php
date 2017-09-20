@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Create Category - Categories - Articles - '.config('app.name'))
-@section('description', 'Create Category - Categories - Articles - '.config('app.name'))
-@section('keywords', 'Create, Category, Categories, Articles, '.config('app.name'))
+@section('title', 'Create Article Category - Article Categories - Articles - '.config('app.name'))
+@section('description', 'Create Article Category - Article Categories - Articles - '.config('app.name'))
+@section('keywords', 'Create, Article, Category, Categories, Articles, '.config('app.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
@@ -24,7 +24,7 @@
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
 					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
-					<form name="createCategory" id="createCategory" class="createCategory" role="form" method="POST" action="/cp/articles/categories">
+					<form name="createArticleCategory" id="createArticleCategory" class="createArticleCategory" role="form" method="POST" action="/cp/articles/categories">
 						{{ csrf_field() }}
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
@@ -57,7 +57,7 @@
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-buttons">
-							@if ($currentUser->hasPermission('view_categories'))
+							@if ($currentUser->hasPermission('view_article_categories'))
 								<a href="/cp/articles/categories" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="5" title="Cancel">Cancel</a>
 							@endif
 							<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="4" title="Save Changes">Save Changes</button>

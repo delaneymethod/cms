@@ -22,6 +22,8 @@ class CreateShippingMethodsTable extends Migration
 
 			$table->string('title')->index();
 			
+			$table->float('free_threshold', 8, 2);
+			
 			$table->timestamps();
 		});
 		

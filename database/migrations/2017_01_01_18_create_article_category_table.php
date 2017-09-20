@@ -19,12 +19,12 @@ class CreateArticleCategoryTable extends Migration
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->unsignedInteger('article_id')->comment('Foreign key to the articles table');
-			$table->unsignedInteger('category_id')->comment('Foreign key to the categories table');
+			$table->unsignedInteger('article_category_id')->comment('Foreign key to the article categories table');
 		});
 		
 		Schema::table('article_category', function (Blueprint $table) {
 			$table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
-			$table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+			$table->foreign('article_category_id')->references('id')->on('article_categories')->onDelete('cascade');
 		});
 	}
 

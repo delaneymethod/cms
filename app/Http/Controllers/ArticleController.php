@@ -9,11 +9,11 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Models\{Article, Content};
 use App\Http\Controllers\Controller;
-use App\Http\Traits\{CartTrait, UserTrait, PageTrait, StatusTrait, ContentTrait, ArticleTrait, CategoryTrait, TemplateTrait};
+use App\Http\Traits\{CartTrait, UserTrait, PageTrait, StatusTrait, ContentTrait, ArticleTrait, TemplateTrait, ArticleCategoryTrait};
 
 class ArticleController extends Controller
 {
-	use CartTrait, UserTrait, PageTrait, StatusTrait, ArticleTrait, ContentTrait, CategoryTrait, TemplateTrait;
+	use CartTrait, UserTrait, PageTrait, StatusTrait, ArticleTrait, ContentTrait, TemplateTrait, ArticleCategoryTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -131,14 +131,14 @@ class ArticleController extends Controller
 			$statuses->forget([0, 1, 2, 6, 7, 8]);
 			
 			// Used to set categories_ids
-			$categories = $this->getData('getCategories', 'categories');
+			$articleCategories = $this->getData('getArticleCategories', 'article_categories');
 			
 			// 9 = Article
 			$articleTemplate = $this->getTemplate(9);
 			
 			$articleTemplate = $this->mapFieldsToFieldTypes($articleTemplate);
 			
-			return view('cp.articles.create', compact('currentUser', 'title', 'subTitle', 'users', 'statuses', 'categories', 'articleTemplate'));
+			return view('cp.articles.create', compact('currentUser', 'title', 'subTitle', 'users', 'statuses', 'articleCategories', 'articleTemplate'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -160,11 +160,11 @@ class ArticleController extends Controller
 			
 			$rules = $this->getRules('article');
 			
-			if (!empty($cleanedArticle['category_ids'])) {
-				$categoryIds = count($cleanedArticle['category_ids']) - 1;
+			if (!empty($cleanedArticle['article_category_ids'])) {
+				$articleCategoryIds = count($cleanedArticle['article_category_ids']) - 1;
 			
-				foreach (range(0, $categoryIds) as $index) {
-					$rules['category_ids.'.$index] = 'integer';
+				foreach (range(0, $articleCategoryIds) as $index) {
+					$rules['article_category_ids.'.$index] = 'integer';
 				}
 			}
 			
@@ -196,7 +196,7 @@ class ArticleController extends Controller
 				
 				$article->save();
 				
-				$article->setCategories($cleanedArticle['category_ids']);
+				$article->setArticleCategories($cleanedArticle['article_category_ids']);
 				
 				$articleContents = [];
 				
@@ -280,7 +280,7 @@ class ArticleController extends Controller
 			$statuses->forget([0, 1, 2, 6, 7, 8]);
 			
 			// Used to set categories_ids
-			$categories = $this->getData('getCategories', 'categories');
+			$articleCategories = $this->getData('getArticleCategories', 'article_categories');
 			
 			// 9 = Article but we still use whats stored in the model
 			$articleTemplate = $this->getTemplate($article->template_id);
@@ -292,7 +292,7 @@ class ArticleController extends Controller
 				$articleTemplate = $this->mapContentsToFields($articleTemplate, $article->contents);
 			}
 			
-			return view('cp.articles.edit', compact('currentUser', 'title', 'subTitle', 'article', 'users', 'statuses', 'categories', 'articleTemplate'));
+			return view('cp.articles.edit', compact('currentUser', 'title', 'subTitle', 'article', 'users', 'statuses', 'articleCategories', 'articleTemplate'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -315,11 +315,11 @@ class ArticleController extends Controller
 			
 			$rules = $this->getRules('article');
 			
-			if (!empty($cleanedArticle['category_ids'])) {
-				$categoryIds = count($cleanedArticle['category_ids']) - 1;
+			if (!empty($cleanedArticle['article_category_ids'])) {
+				$articleCategoryIds = count($cleanedArticle['article_category_ids']) - 1;
 			
-				foreach (range(0, $categoryIds) as $index) {
-					$rules['category_ids.'.$index] = 'integer';
+				foreach (range(0, $articleCategoryIds) as $index) {
+					$rules['article_category_ids.'.$index] = 'integer';
 				}
 			}
 			
@@ -354,7 +354,7 @@ class ArticleController extends Controller
 				
 				$article->save();
 				
-				$article->setCategories($cleanedArticle['category_ids']);
+				$article->setArticleCategories($cleanedArticle['article_category_ids']);
 				
 				// Loop over all current content entries and delete
 				$articleContentIds = $article->contents->pluck('id');

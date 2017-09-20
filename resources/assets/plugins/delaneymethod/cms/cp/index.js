@@ -572,13 +572,13 @@
 			
 			this.convertTitleToSlug('#editArticle #slug', '#editArticle #slug');
 			
-			this.convertTitleToSlug('#createCategory #title', '#createCategory #slug');
+			this.convertTitleToSlug('#createArticleCategory #title', '#createArticleCategory #slug');
 			
-			this.convertTitleToSlug('#createCategory #slug', '#createCategory #slug');
+			this.convertTitleToSlug('#createArticleCategory #slug', '#createArticleCategory #slug');
 			
-			this.convertTitleToSlug('#editCategory #title', '#editCategory #slug');
+			this.convertTitleToSlug('#editArticleCategory #title', '#editArticleCategory #slug');
 			
-			this.convertTitleToSlug('#editCategory #slug', '#editCategory #slug');
+			this.convertTitleToSlug('#editArticleCategory #slug', '#editArticleCategory #slug');
 			
 			this.convertTitleToKeywords('#createPage #title', '#createPage #keywords');
 			

@@ -3,6 +3,7 @@
 /vendor
 /html/assets
 /storage
+/migrations/data
 .idea
 .vagrant
 .DS_Store

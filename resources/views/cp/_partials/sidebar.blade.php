@@ -21,7 +21,7 @@
 				@if ($currentUser->hasPermission('view_carts'))
 					<li class="{{ setActive('cp/carts') }}"><a href="/cp/carts" title="Carts"><i class="text-center icon fa fa-cart-plus" aria-hidden="true"></i>Carts</a></li>
 				@endif
-				@if ($currentUser->hasPermission('view_articles') || $currentUser->hasPermission('view_categories'))	
+				@if ($currentUser->hasPermission('view_articles') || $currentUser->hasPermission('view_article_categories'))	
 					<li>
 						<a href="javascript:void(0);" title="Articles" id="submenu" class="{{ setClass('cp/articles', 'highlight') }}"><i class="text-center icon fa fa-newspaper-o" aria-hidden="true"></i>Articles<span class="pull-right"><i class="fa fa-angle-left {{ setClass('cp/articles', 'fa-rotate') }}" aria-hidden="true"></i></span></a>
 						<ul class="list-unstyled {{ setClass('cp/articles', 'open') }}">
@@ -29,8 +29,8 @@
 							@if ($currentUser->hasPermission('view_articles'))	
 								<li class="{{ setActive(['cp/articles/all', 'cp/articles/create', 'cp/articles/'.$id.'/edit', 'cp/articles/'.$id.'/delete']) }}"><a href="/cp/articles" title="Articles"><i class="text-center icon fa fa-circle-o" aria-hidden="true"></i>Articles</a></li>
 							@endif
-							@if ($currentUser->hasPermission('view_categories'))	
-								<li class="{{ setActive('cp/articles/categories') }}"><a href="/cp/articles/categories" title="Categories"><i class="text-center icon fa fa-circle-o" aria-hidden="true"></i>Categories</a></li>
+							@if ($currentUser->hasPermission('view_article_categories'))	
+								<li class="{{ setActive('cp/articles/categories') }}"><a href="/cp/articles/categories" title="Article Categories"><i class="text-center icon fa fa-circle-o" aria-hidden="true"></i>Article Categories</a></li>
 							@endif
 						</ul>
 					</li>

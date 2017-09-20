@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Page extends Node
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'pages';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

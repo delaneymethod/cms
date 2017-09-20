@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class OrderType extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'order_types';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

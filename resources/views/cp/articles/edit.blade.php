@@ -28,7 +28,7 @@
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
 						<input type="hidden" name="template_id" value="{{ $article->template_id }}">
-						<input type="hidden" name="category_ids[]" value="1">
+						<input type="hidden" name="article_category_ids[]" value="1">
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
 							<input type="text" name="title" id="title" class="form-control" value="{{ old('title', optional($article)->title) }}" placeholder="e.g Blog Post Title" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
@@ -87,29 +87,29 @@
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
-							<label class="control-label font-weight-bold">Categories</label>
-							@if (old('category_ids'))
-								@php ($categoryIds = old('category_ids'))
+							<label class="control-label font-weight-bold">Article Categories</label>
+							@if (old('article_category_ids'))
+								@php ($articleCategoryIds = old('article_category_ids'))
 							@else
-								@php ($categoryIds = $article->categories->pluck('id')->toArray())
+								@php ($articleCategoryIds = $article->article_categories->pluck('id')->toArray())
 							@endif
-							@foreach ($categories->chunk(3) as $chunk)
+							@foreach ($articleCategories->chunk(3) as $chunk)
 								<div class="row">
-									@foreach ($chunk as $category)
+									@foreach ($chunk as $articleCategory)
 										<div class="col-sm-12 col-md-4 col-lg-4">
 											<div class="form-check">
-												<label for="category_id-{{ $category->slug }}" class="form-check-label">
-													<input type="checkbox" name="category_ids[]" id="category_id-{{ $category->slug }}" class="form-check-input" value="{{ $category->id }}" tabindex="7" aria-describedby="helpBlockCategoryIds" {{ (in_array($category->id, $categoryIds)) ? 'checked' : '' }} {{ ($category->id == 1) ? 'disabled checked' : '' }}>{{ $category->title }}
+												<label for="article_category_id-{{ $articleCategory->slug }}" class="form-check-label">
+													<input type="checkbox" name="article_category_ids[]" id="article_category_id-{{ $articleCategory->slug }}" class="form-check-input" value="{{ $articleCategory->id }}" tabindex="7" aria-describedby="helpBlockArticleCategoryIds" {{ (in_array($articleCategory->id, $articleCategoryIds)) ? 'checked' : '' }} {{ ($articleCategory->id == 1) ? 'disabled checked' : '' }}>{{ $articleCategory->title }}
 												</label>
 											</div>
 										</div>
 									@endforeach
 								</div>
 							@endforeach
-							@if ($errors->has('category_ids'))
-								<span id="helpBlockCategoryIds" class="form-control-feedback form-text gf-red">- {{ $errors->first('category_ids') }}</span>
+							@if ($errors->has('article_category_ids'))
+								<span id="helpBlockArticleCategoryIds" class="form-control-feedback form-text gf-red">- {{ $errors->first('article_category_ids') }}</span>
 							@endif
-							<span id="helpBlockCategoryIds" class="form-control-feedback form-text text-muted"></span>
+							<span id="helpBlockArticleCategoryIds" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						<div class="form-group">
 							<label for="user_id" class="control-label font-weight-bold">Author</label>

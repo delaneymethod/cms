@@ -2,13 +2,20 @@
 
 namespace App\Models;
 
-use App\Models\Order;
+use App\Models\{Order, Standard};
 use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model implements Buyable
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'products';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;
@@ -20,8 +27,6 @@ class Product extends Model implements Buyable
 	 */
 	protected $fillable = [
 		'title',
-		'slug',
-		'price',
 	];
 	
 	/**
@@ -129,6 +134,24 @@ class Product extends Model implements Buyable
 	public function setOrders(array $orders)
 	{
 		return $this->orders()->sync($orders);
+	}
+	
+	/**
+	 * Get the standard records associated with the product.
+	 */
+	public function standards() : BelongsToMany
+	{
+		return $this->belongsToMany(Standard::class, 'product_standard');
+	}
+	
+	/**
+	 * Set standards for the product.
+	 *
+	 * $param 	array 	$standards
+	 */
+	public function setStandard(array $standards)
+	{
+		return $this->standards()->sync($standards);
 	}
 	
 	/**

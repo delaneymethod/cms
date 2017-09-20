@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PasswordReset extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'password_resets';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

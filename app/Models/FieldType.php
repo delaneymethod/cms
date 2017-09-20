@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class FieldType extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'field_types';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

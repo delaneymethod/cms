@@ -88830,13 +88830,13 @@ var _this = this;
 
 			_this.convertTitleToSlug('#editArticle #slug', '#editArticle #slug');
 
-			_this.convertTitleToSlug('#createCategory #title', '#createCategory #slug');
+			_this.convertTitleToSlug('#createArticleCategory #title', '#createArticleCategory #slug');
 
-			_this.convertTitleToSlug('#createCategory #slug', '#createCategory #slug');
+			_this.convertTitleToSlug('#createArticleCategory #slug', '#createArticleCategory #slug');
 
-			_this.convertTitleToSlug('#editCategory #title', '#editCategory #slug');
+			_this.convertTitleToSlug('#editArticleCategory #title', '#editArticleCategory #slug');
 
-			_this.convertTitleToSlug('#editCategory #slug', '#editCategory #slug');
+			_this.convertTitleToSlug('#editArticleCategory #slug', '#editArticleCategory #slug');
 
 			_this.convertTitleToKeywords('#createPage #title', '#createPage #keywords');
 

@@ -1,39 +1,36 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ArticleCategoryTableSeeder extends Seeder
 {
-
-    /**
-     * Auto generated seed file
-     *
-     * @return void
-     */
-    public function run()
-    {
-        
-
-        \DB::table('article_category')->delete();
-        
-        \DB::table('article_category')->insert(array (
-            0 => 
-            array (
-                'article_id' => 1,
-                'category_id' => 1,
-            ),
-            1 => 
-            array (
-                'article_id' => 1,
-                'category_id' => 5,
-            ),
-            2 => 
-            array (
-                'article_id' => 1,
-                'category_id' => 2,
-            ),
-        ));
-        
-        
-    }
+	/**
+	 * Auto generated seed file
+	 *
+	 * @return void
+	 */
+	public function run()
+	{
+		$now = Carbon::now()->format('Y-m-d H:i:s');
+		
+		$articleCategories = [
+			[
+				'article_id' => 1,
+				'article_category_id' => 1,
+			],
+			[
+				'article_id' => 1,
+				'article_category_id' => 5,
+			],
+			[
+				'article_id' => 1,
+				'article_category_id' => 2,
+			],
+		];	
+		
+		DB::table('article_category')->delete();
+		
+		DB::table('article_category')->insert($articleCategories);
+	}
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductsTable extends Migration
+class CreateProductVatRatesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,20 +15,22 @@ class CreateProductsTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 
-		Schema::create('products', function (Blueprint $table) {
+		Schema::create('product_vat_rates', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
-			$table->increments('id');
+			$table->unsignedInteger('id')->primary();
 			
-			$table->string('title')->index();
-			$table->string('slug');
+			$table->string('code')->nullable()->index();
+			$table->string('description')->nullable();
 			
-			$table->float('price', 8, 2);
+			$table->float('rate', 8, 2);
+			
+			$table->string('rate_display')->nullable();
 			
 			$table->timestamps();
 		});
 
-		Schema::table('products', function (Blueprint $table) {
+		Schema::table('product_vat_rates', function (Blueprint $table) {
 		});
 	}
 
@@ -39,6 +41,6 @@ class CreateProductsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('products');
+		Schema::dropIfExists('product_vat_rates');
 	}
 }

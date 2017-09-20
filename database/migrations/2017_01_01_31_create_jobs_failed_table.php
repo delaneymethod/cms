@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFailedJobsTable extends Migration
+class CreateJobsFailedTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,7 +15,7 @@ class CreateFailedJobsTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 		 
-		Schema::create('failed_jobs', function (Blueprint $table) {
+		Schema::create('jobs_failed', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->bigIncrements('id');
@@ -29,7 +29,7 @@ class CreateFailedJobsTable extends Migration
 			$table->timestamp('failed_at')->useCurrent();
 		});
 		
-		Schema::table('failed_jobs', function (Blueprint $table) {
+		Schema::table('jobs_failed', function (Blueprint $table) {
 		});
 	}
 
@@ -40,6 +40,6 @@ class CreateFailedJobsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('failed_jobs');
+		Schema::dropIfExists('jobs_failed');
 	}
 }

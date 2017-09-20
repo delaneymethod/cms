@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Order extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'orders';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

@@ -25,6 +25,6 @@ trait PermissionTrait
 	 */
 	public function getPermissions() : CollectionResponse
 	{
-		return Permission::all()->groupBy('group_id');
+		return Permission::all();
 	}
 }

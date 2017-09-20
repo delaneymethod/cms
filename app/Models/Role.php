@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsToMany};
 
 class Role extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'roles';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

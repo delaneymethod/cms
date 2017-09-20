@@ -41,6 +41,8 @@ class PermissionController extends Controller
 				
 			$permissions = $this->getData('getPermissions', 'permissions');
 			
+			$permissions = $permissions->groupBy('group_id');
+			
 			return view('cp.advanced.permissions.index', compact('currentUser', 'title', 'subTitle', 'permissions', 'roles'));
 		}
 		

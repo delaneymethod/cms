@@ -12,9 +12,48 @@ https://github.com/spatie/laravel-activitylog
 
 
 
-Setup notifications CRUD
+
+
+
+
+
+
+
+
+Update products fillable
+
+
+
+Setup Models, Traits and Controller for :
+
+Product Vat Rates
+Product Categories
+Product Manufacturers
+Standards
+Product Standard
+Standard Organisations
+
+
+
+
+
+
 
 
 
 setup daemon's for jobs
 setup cron for scheduled tasks
+
+
+
+Fix caching issue with random records
+
+
+
+Is standard markup per company or per user?
+
+
+
+
+
+http://d1g9f3g06ezg82.cloudfront.net/catimg/categories/2/SSteel.png

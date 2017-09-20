@@ -96,14 +96,14 @@ Route::group(['prefix' => 'cp'], function () {
 		Route::delete('/{id}', 'ArticleController@delete');
 		
 		// CP > Categories routes
-		Route::get('/categories', 'CategoryController@index');
-		Route::get('/categories/create', 'CategoryController@create');
-		Route::get('/categories/{id}/edit', 'CategoryController@edit');
-		Route::get('/categories/{id}/delete', 'CategoryController@confirm');
-		Route::post('/categories', 'CategoryController@store');
-		Route::put('/categories/{id}', 'CategoryController@update');
-		Route::patch('/categories/{id}', 'CategoryController@update');
-		Route::delete('/categories/{id}', 'CategoryController@delete');
+		Route::get('/categories', 'ArticleCategoryController@index');
+		Route::get('/categories/create', 'ArticleCategoryController@create');
+		Route::get('/categories/{id}/edit', 'ArticleCategoryController@edit');
+		Route::get('/categories/{id}/delete', 'ArticleCategoryController@confirm');
+		Route::post('/categories', 'ArticleCategoryController@store');
+		Route::put('/categories/{id}', 'ArticleCategoryController@update');
+		Route::patch('/categories/{id}', 'ArticleCategoryController@update');
+		Route::delete('/categories/{id}', 'ArticleCategoryController@delete');
 	});
 	
 	// CP > Products routes

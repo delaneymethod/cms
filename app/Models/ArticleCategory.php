@@ -6,8 +6,15 @@ use App\Models\{Status, Article};
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
-class Category extends Model
+class ArticleCategory extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'article_categories';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

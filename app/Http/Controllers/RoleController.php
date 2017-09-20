@@ -6,12 +6,12 @@ use DB;
 use Log;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use App\Http\Traits\RoleTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\{RoleTrait, PermissionTrait};
 
 class RoleController extends Controller
 {
-	use RoleTrait;
+	use RoleTrait, PermissionTrait;
 
 	/**
 	 * Create a new controller instance.
@@ -181,7 +181,7 @@ class RoleController extends Controller
 			if ($validator->fails()) {
 				return back()->withErrors($validator)->withInput();
 			}
-
+			
 			DB::beginTransaction();
 			
 			try {
@@ -190,6 +190,8 @@ class RoleController extends Controller
 				foreach($roles as $role) {
 					if (!empty($cleanedRolesPermissions[$role->id])) {
 						$role->setPermissions($cleanedRolesPermissions[$role->id]);
+					} else {
+						$role->setPermissions([]);
 					}
 				}
 				

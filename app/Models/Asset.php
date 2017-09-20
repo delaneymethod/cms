@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'assets';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;

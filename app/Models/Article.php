@@ -4,11 +4,18 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{Status, Content, Category, Template};
+use App\Models\{Status, Content, Template, ArticleCategory};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Article extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'articles';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;
@@ -81,21 +88,21 @@ class Article extends Model
 	}
 	
 	/**
-	 * Get the category records associated with the article.
+	 * Get the article category records associated with the article.
 	 */
-	public function categories() : BelongsToMany
+	public function article_categories() : BelongsToMany
 	{
-		return $this->belongsToMany(Category::class, 'article_category');
+		return $this->belongsToMany(ArticleCategory::class, 'article_category');
 	}
 	
 	/**
-	 * Set categories for the article.
+	 * Set article categories for the article.
 	 *
 	 * $param 	array 	$categories
 	 */
-	public function setCategories(array $categories)
+	public function setArticleCategories(array $articleCategories)
 	{
-		return $this->categories()->sync($categories);
+		return $this->article_categories()->sync($articleCategories);
 	}
 	
 	/**

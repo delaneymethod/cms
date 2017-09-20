@@ -18,10 +18,12 @@ class CreateOrderProductTable extends Migration
 		Schema::create('order_product', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
-			$table->unsignedInteger('order_id')->comment('Foreign key to the orders table');
-			$table->unsignedInteger('product_id')->comment('Foreign key to the products table');
-			$table->unsignedInteger('quantity');
-			$table->unsignedInteger('tax_rate');
+			$table->unsignedInteger('order_id')->nullable()->index()->comment('Foreign key to the orders table');
+			
+			$table->unsignedBigInteger('product_id')->nullable()->index()->comment('Foreign key to the products table');
+			
+			$table->unsignedInteger('quantity')->nullable();
+			$table->unsignedInteger('tax_rate')->nullable();
 			
 			$table->float('price', 8, 2);
 			$table->float('price_tax', 8, 2);

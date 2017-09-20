@@ -54,9 +54,9 @@ return [
 		'cart' => [
 			'instance' => 'required|string|in:cart,wishlist',
 		],
-		'category' => [
+		'article_category' => [
 			'title' => 'required|string|max:255',
-			'slug' => 'required|string|unique:categories,slug|max:255',
+			'slug' => 'required|string|unique:article_categories,slug|max:255',
 			'status_id' => 'required|integer',
 		],
 		'page' => [

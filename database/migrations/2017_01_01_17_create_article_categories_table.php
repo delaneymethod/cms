@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateArticleCategoriesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,7 +15,7 @@ class CreateCategoriesTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 		 
-		Schema::create('categories', function (Blueprint $table) {
+		Schema::create('article_categories', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->increments('id');
@@ -28,7 +28,7 @@ class CreateCategoriesTable extends Migration
 			$table->timestamps();
 		});
 		
-		Schema::table('categories', function (Blueprint $table) {
+		Schema::table('article_categories', function (Blueprint $table) {
 			$table->foreign('status_id')->references('id')->on('statuses')->onDelete('set null');
 		});
 	}
@@ -40,6 +40,6 @@ class CreateCategoriesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('categories');
+		Schema::dropIfExists('article_categories');
 	}
 }

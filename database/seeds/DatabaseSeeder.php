@@ -4,13 +4,13 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+	/**
+	 * Run the database seeds.
+	 *
+	 * @return void
+	 */
+	public function run()
+	{
 		$this->call(GroupsTableSeeder::class);
 		$this->call(PermissionsTableSeeder::class);
 		$this->call(CountriesTableSeeder::class);
@@ -28,11 +28,21 @@ class DatabaseSeeder extends Seeder
 		$this->call(ArticlesTableSeeder::class);
 		$this->call(AssetsTableSeeder::class);
 		$this->call(RolePermissionTableSeeder::class);
-		$this->call(CategoriesTableSeeder::class);
+		$this->call(ArticleCategoriesTableSeeder::class);
 		$this->call(ArticleCategoryTableSeeder::class);
 		$this->call(CartsTableSeeder::class);
+		
+		$this->call(StandardOrganisationsTableSeeder::class);
+		$this->call(StandardsTableSeeder::class);
+		
+		$this->call(ProductCategoriesTableSeeder::class);
+		$this->call(ProductManufacturersTableSeeder::class);
+		$this->call(ProductVatRatesTableSeeder::class);
 		$this->call(ProductsTableSeeder::class);
+		
 		$this->call(OrderProductTableSeeder::class);
+		$this->call(ProductStandardTableSeeder::class);
+		
 		$this->call(FieldTypesTableSeeder::class);
 		$this->call(FieldsTableSeeder::class);
 		$this->call(TemplateFieldTableSeeder::class);

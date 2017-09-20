@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsToMany};
 
 class Template extends Model
 {
+	/**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'templates';
+    
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;
