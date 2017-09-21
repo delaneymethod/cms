@@ -1,10 +1,15 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 namespace App\Http\Traits;
 
 use App\Models\{Page, Template};
 use Illuminate\Database\Eloquent\Collection as CollectionResponse;
-use App\Templates\{CartTemplate, PageTemplate, ContactTemplate, ProductTemplate, ArticleTemplate, CheckoutTemplate, ProductsTemplate, ArticlesTemplate, HomepageTemplate};
+use App\Templates\{CartTemplate, PageTemplate, ContactTemplate, BrowseTemplate, ProductTemplate, ArticleTemplate, CheckoutTemplate, ArticlesTemplate, HomepageTemplate, ProductCategoryTemplate};
 
 trait TemplateTrait
 {
@@ -47,11 +52,16 @@ trait TemplateTrait
 	 */
 	protected function preparePageTemplate(Page $page, array $parameters)
 	{
-		// Since individual products or articles do not have pages as such we need to use their parent page.
-		if ($page->slug == 'products' && !empty($parameters['product'])) {
+		// Since individual products or product categories do not have pages as such we need to use their parent page.
+		if ($page->slug == 'browse' && !empty($parameters['product'])) {
 			$page->template->filename = 'product';
 		}
 		
+		if ($page->slug == 'browse' && !empty($parameters['productCategory'])) {
+			$page->template->filename = 'productCategory';
+		}
+		
+		// Since individual articles do not have pages as such we need to use their parent page.
 		if ($page->slug == 'articles' && !empty($parameters['article'])) {
 			$page->template->filename = 'article';
 		}
@@ -60,13 +70,14 @@ trait TemplateTrait
 		$templates = [
 			'cart' => CartTemplate::class,
 			'page' => PageTemplate::class,
-			'contact' => ContactTemplate::class,
+			'browse' => BrowseTemplate::class,
 			'product' => ProductTemplate::class,
+			'contact' => ContactTemplate::class,
 			'article' => ArticleTemplate::class,
 			'checkout' => CheckoutTemplate::class,
-			'products' => ProductsTemplate::class,
 			'articles' => ArticlesTemplate::class,
 			'homepage' => HomepageTemplate::class,
+			'productCategory' => ProductCategoryTemplate::class,
 		];
 		
 		// If no template setup, fall back to default template.

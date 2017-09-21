@@ -20,12 +20,12 @@ class CreateProductStandardTable extends Migration
 
 			$table->unsignedBigInteger('product_id')->nullable()->index()->comment('Foreign key to the products table');
 			
-			$table->unsignedInteger('standard_id')->nullable()->index()->comment('Foreign key to the standards table');
+			$table->unsignedInteger('product_standard_id')->nullable()->index()->comment('Foreign key to the product standards table');
 		});
 
 		Schema::table('product_standard', function (Blueprint $table) {
 			$table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-			$table->foreign('standard_id')->references('id')->on('standards')->onDelete('cascade');
+			$table->foreign('product_standard_id')->references('id')->on('product_standards')->onDelete('cascade');
 		});
 	}
 

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 /*
 |--------------------------------------------------------------------------
@@ -252,5 +257,35 @@ if (!function_exists('showField')) {
 		if (!empty($arguments['instructions'])) {
 			printf('<span id="helpBlock_%2$s" class="form-control-feedback form-text text-muted">- %1$s</span>', $arguments['instructions'], $arguments['id']);
 		}
+	}
+}
+
+if (!function_exists('recursiveCollect')) {
+	function recursiveCollect(array $array)
+	{
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$value = recursiveCollect($value);
+				
+				$array[$key] = $value;
+			}
+		}
+	
+		return collect($array);
+	}
+}
+
+if (!function_exists('recursiveObject')) {	
+	function recursiveObject(array $array)
+	{
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$value = recursiveObject($value);
+				
+				$array[$key] = $value;
+			}
+		}
+	
+		return (object) $array;
 	}
 }

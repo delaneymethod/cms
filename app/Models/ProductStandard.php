@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 namespace App\Models;
 
@@ -6,14 +11,14 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Standard extends Model
+class ProductStandard extends Model
 {
 	/**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'standards';
+    protected $table = 'product_standards';
     
 	protected $characterSet = 'UTF-8';
 	
@@ -26,10 +31,13 @@ class Standard extends Model
 	 */
 	protected $fillable = [
 		'title',
+		'code',
+		'further_details',
+		'product_standard_organisation_id',
 	];
 	
 	/**
-	 * Get the product records associated with the standard.
+	 * Get the product records associated with the product standard.
 	 */
 	public function products() : BelongsToMany
 	{
@@ -37,7 +45,7 @@ class Standard extends Model
 	}
 	
 	/**
-	 * Set products for the standard.
+	 * Set products for the product standard.
 	 *
 	 * $param 	array 	$products
 	 */

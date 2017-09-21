@@ -1,11 +1,16 @@
 <?php
-
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+ 
 namespace App\Models;
 
-use App\Models\{Order, Standard};
 use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
+use App\Models\{Order, ProductVatRate, ProductStandard, ProductCategory, ProductManufacturer};
 
 class Product extends Model implements Buyable
 {
@@ -19,7 +24,11 @@ class Product extends Model implements Buyable
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;
-
+	
+	protected $cloudfrontUrl = 'http://d1g9f3g06ezg82.cloudfront.net/catimg/products/';
+	
+	private $segments = [];
+	
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -27,6 +36,23 @@ class Product extends Model implements Buyable
 	 */
 	protected $fillable = [
 		'title',
+		'slug',
+		'sort_order',
+		'product_category_id',
+		'product_manufacturer_id',
+		'harmonised_code_id',
+		'supplier_id',
+		'product_vat_rate_id',
+		'limited_life',
+		'test_certificates_required',
+		'commodity_name_protocol',
+		'commodity_code_protocol',
+		'commodity_short_description_protocol',
+		'retire_date',
+		'retire_employee_id',
+		'description',
+		'short_name',
+		'image_uri',
 	];
 	
 	/**
@@ -35,7 +61,9 @@ class Product extends Model implements Buyable
      * @var array
      */
 	protected $appends = [
+		'url',
 		'currency',
+		'image_url',
 	];
 	
 	/**
@@ -101,6 +129,58 @@ class Product extends Model implements Buyable
 	}
 	
 	/**
+	 * Get the product record associated with the product.
+	 */
+	public function parent() : BelongsTo
+	{
+		return $this->belongsTo(Product::class, 'parent_id', 'id');
+	}
+	
+	/**
+	 * Gets product url.
+	 *
+	 * @return string
+	 */
+	public function getUrlAttribute() : string
+	{
+		$this->getProductSlug($this);
+		
+		// Add a blank segment to create first /
+		array_push($this->segments, 'product');
+		array_push($this->segments, 'browse');
+		array_push($this->segments, '');
+		
+		$this->segments = array_reverse($this->segments);
+		
+		return implode('/', $this->segments);
+	}
+	
+	/**
+	 * Sets a product parents slug in the segments array, to build up a product url.
+	 *
+	 * @return void
+	 */
+	private function getProductSlug($product)
+	{
+		array_push($this->segments, $product->slug);
+		
+		// If product has a parent, then get the parent
+		if (!empty($product->parent_id)) {
+			$this->getProductSlug($product->parent);
+		}
+	}
+	
+	/**
+	 * Gets full image url.
+	 *
+	 * @return string
+	 */
+	public function getImageUrlAttribute() : string
+	{
+		return $this->cloudfrontUrl.$this->image_uri;
+	}
+	
+	/**
 	 * Gets orders currency.
 	 *
 	 * @return string
@@ -115,8 +195,12 @@ class Product extends Model implements Buyable
 	 */
     public function getPriceAttribute($value) : float
     {
-        return $this->format2decimals($value);
-    }
+		if (!empty($value)) {
+			return $this->format2decimals($value);
+		} else {
+			return 0.0;
+		}
+	}
 	
 	/**
 	 * Get the order records associated with the product.
@@ -124,6 +208,30 @@ class Product extends Model implements Buyable
 	public function orders() : BelongsToMany
 	{
 		return $this->belongsToMany(Order::class, 'order_product')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');
+	}
+	
+	/**
+	 * Get the product category record associated with the product.
+	 */
+	public function product_category() : BelongsTo
+	{
+		return $this->hasMany(ProductCategory::class);
+	}
+	
+	/**
+	 * Get the product manufacturer record associated with the product.
+	 */
+	public function product_manufacturer() : BelongsTo
+	{
+		return $this->hasMany(ProductManufacturer::class);
+	}
+	
+	/**
+	 * Get the product var rate record associated with the product.
+	 */
+	public function product_vat_rate() : BelongsTo
+	{
+		return $this->hasMany(ProductVatRate::class);
 	}
 	
 	/**
@@ -137,21 +245,21 @@ class Product extends Model implements Buyable
 	}
 	
 	/**
-	 * Get the standard records associated with the product.
+	 * Get the product standard records associated with the product.
 	 */
-	public function standards() : BelongsToMany
+	public function product_standards() : BelongsToMany
 	{
-		return $this->belongsToMany(Standard::class, 'product_standard');
+		return $this->belongsToMany(ProductStandard::class, 'product_standard');
 	}
 	
 	/**
-	 * Set standards for the product.
+	 * Set product standards for the product.
 	 *
-	 * $param 	array 	$standards
+	 * $param 	array 	$productStandards
 	 */
-	public function setStandard(array $standards)
+	public function setProductStandards(array $productStandards)
 	{
-		return $this->standards()->sync($standards);
+		return $this->product_standards()->sync($productStandards);
 	}
 	
 	/**

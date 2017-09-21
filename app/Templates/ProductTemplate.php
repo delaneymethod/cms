@@ -1,4 +1,10 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+	
 namespace App\Templates;
 
 use Illuminate\View\View;
@@ -21,6 +27,8 @@ class ProductTemplate extends Template
 		$wishlistCart = $parameters['wishlistCart'];
 		
 		$product = $parameters['product'];
+		
+		dd($product);
 		
 		$page->title = $product->title.' - '.$page->title;
 		

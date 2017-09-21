@@ -28,20 +28,14 @@ class TemplatesTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
-				'title' => 'Products',
-				'filename' => 'products',
-				'created_at' => $now,
-				'updated_at' => $now,
-			],
-			[
 				'title' => 'Contact',
 				'filename' => 'contact',
 				'created_at' => $now,
 				'updated_at' => $now,
 			],
 			[
-				'title' => 'Product',
-				'filename' => 'product',
+				'title' => 'Browse',
+				'filename' => 'browse',
 				'created_at' => $now,
 				'updated_at' => $now,
 			],
@@ -66,6 +60,18 @@ class TemplatesTableSeeder extends Seeder
 			[
 				'title' => 'Article',
 				'filename' => 'article',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'Product',
+				'filename' => 'product',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'Product Category',
+				'filename' => 'productCategory',
 				'created_at' => $now,
 				'updated_at' => $now,
 			],

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 namespace App\Http\Controllers;
 
@@ -129,7 +134,7 @@ class DashboardController extends Controller
 				]);
 			}
 			
-			$orderStats= $this->recursiveCollect($orderStats);
+			$orderStats = recursiveCollect($orderStats);
 		}
 				
 		if ($currentUser->hasPermission('view_carts')) {

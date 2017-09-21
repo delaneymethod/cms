@@ -20,11 +20,12 @@ class CreateProductCategoriesTable extends Migration
 
 			$table->unsignedBigInteger('id')->primary();
 			
-			$table->unsignedBigInteger('parent_id')->nullable()->index();
-			
 			$table->string('title')->index();
+			$table->string('slug')->index();
 			
 			$table->longText('description')->nullable();
+			
+			$table->unsignedBigInteger('parent_id')->nullable()->index();
 			
 			$table->unsignedInteger('sort_order')->nullable();
 			$table->unsignedInteger('import_id')->nullable();

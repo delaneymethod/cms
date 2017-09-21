@@ -21,9 +21,10 @@ class ProductCategoriesTableSeeder extends Seeder
 		foreach ($categories as $category) {
 			DB::table('product_categories')->insert([
 				'id' => $category['Id'],
-				'parent_id' => $category['ParentId'],
 				'title' => $category['Name'],
+				'slug' => str_slug($category['Name']),
 				'description' => $category['Description'],
+				'parent_id' => $category['ParentId'],
 				'sort_order' => $category['SortOrder'],
 				'import_id' => $category['ImportID'],
 				'image_uri' => $category['ImageURI'],

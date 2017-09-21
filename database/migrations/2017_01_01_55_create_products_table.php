@@ -20,7 +20,8 @@ class CreateProductsTable extends Migration
 
 			$table->unsignedBigInteger('id')->primary();
 			
-			$table->string('title')->nullable()->index();
+			$table->string('title')->index();
+			$table->string('slug')->index();
 			
 			$table->unsignedInteger('sort_order')->nullable();
 			

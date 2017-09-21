@@ -4,4 +4,7 @@
 					'currentUser' => $currentUser,
 					'cart' => $cart
 				])
+				@include('_partials.breadcrumbs', [
+					'breadcrumbs' => $page->breadcrumbs
+				])
 			</header>

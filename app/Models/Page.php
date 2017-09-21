@@ -1,5 +1,10 @@
 <?php
-	
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+
 namespace App\Models;
 
 use Baum\Node;

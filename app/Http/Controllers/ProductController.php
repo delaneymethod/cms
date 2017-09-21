@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 namespace App\Http\Controllers;
 
@@ -8,11 +13,11 @@ use App\Models\Product;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\{CartTrait, PageTrait, ProductTrait, TemplateTrait};
+use App\Http\Traits\{CartTrait, PageTrait, ProductTrait, TemplateTrait, ProductCategoryTrait};
 
 class ProductController extends Controller
 {
-	use CartTrait, PageTrait, ProductTrait, TemplateTrait;
+	use CartTrait, PageTrait, ProductTrait, TemplateTrait, ProductCategoryTrait;
 
 	/**
 	 * Create a new controller instance.
@@ -25,13 +30,15 @@ class ProductController extends Controller
 		
 		$this->middleware('auth', [
 			'except' => [
-				'show'
+				'showProduct',
+				'showProductCategory',
 			]
 		]);
 		
 		$this->middleware('guest', [
 			'only' => [
-				'show'
+				'showProduct',
+				'showProductCategory',
 			]
 		]);
 	}
@@ -63,18 +70,24 @@ class ProductController extends Controller
 	 * Gets a product view (Front-end use only).
 	 *
 	 * @params	Request 	$request
-	 * @params	string 		$slug
+	 * @params	string 		$stug
 	 * @return 	Response
 	 */
-   	public function show(Request $request, string $slug) : View
+   	public function showProduct(Request $request, string $slug) : View
 	{
 		$currentUser = $this->getAuthenticatedUser();
+		
+		// Get the URL segments
+		$segments = collect(explode('/', $slug));
+		
+		// Set slug based on the last segment
+		$slug = $segments->last();
 		
 		// Get the requested product based on slug - if it doesnt exist, a 404 is thrown!
 		$product = $this->getProductBySlug($slug);
 		
-		// We're going to use the products page as our page - it is the products parent after all...
-		$page = $this->getPageBySlug('products');
+		// We're going to use the browse page as our page - it is the products parent after all...
+		$page = $this->getPageBySlug('browse');
 		
 		// Grab a cart instance	- available across all pages
 		$cart = $this->getCartInstance('cart');
@@ -96,6 +109,56 @@ class ProductController extends Controller
 		$parameters['wishlistCart'] = $wishlistCart;
 		
 		$parameters['product'] = $product;
+		
+		// Selects the page template and injects any data required
+		$this->preparePageTemplate($page, $parameters);
+		
+		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
+	}
+	
+	/**
+	 * Gets a product category view (Front-end use only).
+	 *
+	 * @params	Request 	$request
+	 * @params	string 		$stug
+	 * @return 	Response
+	 */
+   	public function showProductCategory(Request $request, string $slug) : View
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		// Get the URL segments
+		$segments = collect(explode('/', $slug));
+		
+		// Set slug based on the last segment
+		$slug = $segments->last();
+		
+		// Get the requested product category based on slug - if it doesnt exist, a 404 is thrown!
+		$productCategory = $this->getProductCategoryBySlug($slug);
+		
+		// We're going to use the browse page as our page - it is the products parent after all...
+		$page = $this->getPageBySlug('browse');
+		
+		// Grab a cart instance	- available across all pages
+		$cart = $this->getCartInstance('cart');
+		
+		// Grab any wishlist instances since user can add to cart and wishlist on products page
+		$wishlistCart = $this->getCartInstance('wishlist');
+		
+		// Grab parameters
+		$parameters = $request->route()->parameters();
+		
+		// Pass any global required data to the page template
+		$parameters['currentUser'] = $currentUser;
+		
+		// Add the page to the parameters array - we want to pass the page model data to the template.
+		$parameters['page'] = $page;
+		
+		$parameters['cart'] = $cart;
+		
+		$parameters['wishlistCart'] = $wishlistCart;
+		
+		$parameters['productCategory'] = $productCategory;
 		
 		// Selects the page template and injects any data required
 		$this->preparePageTemplate($page, $parameters);

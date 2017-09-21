@@ -3,7 +3,7 @@
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
-class GroupsTableSeeder extends Seeder
+class PermissionGroupsTableSeeder extends Seeder
 {
 	/**
 	 * Auto generated seed file
@@ -14,7 +14,7 @@ class GroupsTableSeeder extends Seeder
 	{
 		$now = Carbon::now()->format('Y-m-d H:i:s');
 		
-		$groups = [
+		$permissionGroups = [
 			[	
 				'title' => 'Users',
 				'created_at' => $now,
@@ -87,8 +87,8 @@ class GroupsTableSeeder extends Seeder
 			]
 		];
 		
-		DB::table('groups')->delete();
+		DB::table('permission_groups')->delete();
 		
-		DB::table('groups')->insert($groups);
+		DB::table('permission_groups')->insert($permissionGroups);
 	}
 }

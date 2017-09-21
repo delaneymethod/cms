@@ -20,24 +20,6 @@ https://github.com/spatie/laravel-activitylog
 
 
 
-Update products fillable
-
-
-
-Setup Models, Traits and Controller for :
-
-Product Vat Rates
-Product Categories
-Product Manufacturers
-Standards
-Product Standard
-Standard Organisations
-
-
-
-
-
-
 
 
 
@@ -56,4 +38,120 @@ Is standard markup per company or per user?
 
 
 
-http://d1g9f3g06ezg82.cloudfront.net/catimg/categories/2/SSteel.png
+
+
+{{--
+			@foreach ($products->chunk(4) as $items)
+				<div class="row">
+					@foreach ($items as $product)
+						<div class="col-sm-12 col-md-3 col-lg-3">
+							<ul>
+								<li>
+									<a href="/products/{{ $product->slug }}" title="{{ $product->title }}">{{ $product->title }}</a>
+									@if (optional($currentUser)->hasPermission('create_orders'))
+										@component('_components.cart.addProduct', [
+											'product' => $product, 
+											'instance' => 'cart', 
+											'action' => 'secret'
+										])
+										@endcomponent
+										
+										@if (!$wishlistCart->products->pluck('id')->contains($product->id))
+											@component('_components.cart.addProduct', [
+												'product' => $product, 
+												'instance' => 'wishlist', 
+												'action' => 'secret'
+											])
+											@endcomponent
+										@endif
+									@endif
+								</li>
+							</ul>
+						</div>
+					@endforeach
+				</div>
+			@endforeach
+			--}}
+
+
+
+
+
+
+
+
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			@if (optional($currentUser)->hasPermission('create_orders'))
+				@component('_components.cart.addProduct', [
+					'product' => $product, 
+					'instance' => 'cart', 
+					'action' => 'secret'
+				])
+				@endcomponent
+				
+				@if (!$wishlistCart->products->pluck('id')->contains($product->id))
+					@component('_components.cart.addProduct', [
+						'product' => $product, 
+						'instance' => 'wishlist', 
+						'action' => 'secret'
+					])
+					@endcomponent
+				@endif
+			@endif
+			
+			
+			
+			
+			
+			/**
+	 * Gets a product category view (Front-end use only).
+	 *
+	 * @params	Request 	$request
+	 * @params	string 		$stug
+	 * @return 	Response
+	 */
+   	public function show(Request $request, string $slug) : View
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		// Get the requested product based on slug - if it doesnt exist, a 404 is thrown!
+		$productCategory = $this->getProductCategoryBySlug($slug);
+		
+		// We're going to use the products page as our page - it is the products parent after all...
+		$page = $this->getPageBySlug('products');
+		
+		// Grab a cart instance	- available across all pages
+		$cart = $this->getCartInstance('cart');
+		
+		// Grab any wishlist instances since user can add to cart and wishlist on products page
+		$wishlistCart = $this->getCartInstance('wishlist');
+		
+		// Grab parameters
+		$parameters = $request->route()->parameters();
+		
+		// Pass any global required data to the page template
+		$parameters['currentUser'] = $currentUser;
+		
+		// Add the page to the parameters array - we want to pass the page model data to the template.
+		$parameters['page'] = $page;
+		
+		$parameters['cart'] = $cart;
+		
+		$parameters['wishlistCart'] = $wishlistCart;
+		
+		$parameters['productCategory'] = $productCategory;
+		
+		// Selects the page template and injects any data required
+		$this->preparePageTemplate($page, $parameters);
+		
+		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
+	}

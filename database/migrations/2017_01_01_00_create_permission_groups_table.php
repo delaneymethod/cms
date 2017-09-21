@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupsTable extends Migration
+class CreatePermissionGroupsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,7 +15,7 @@ class CreateGroupsTable extends Migration
 	{
 		 Schema::enableForeignKeyConstraints();
 		 
-		Schema::create('groups', function (Blueprint $table) {
+		Schema::create('permission_groups', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
 			$table->increments('id');
@@ -25,7 +25,7 @@ class CreateGroupsTable extends Migration
 			$table->timestamps();
 		});
 		
-		Schema::table('groups', function (Blueprint $table) {
+		Schema::table('permission_groups', function (Blueprint $table) {
 		});
 	}
 
@@ -36,6 +36,6 @@ class CreateGroupsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('groups');
+		Schema::dropIfExists('permission_groups');
 	}
 }

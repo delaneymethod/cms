@@ -1,3 +1,9 @@
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+
 ;($ => {
 	$.delaneyMethodCMS = options => {
 		this.name = 'DelaneyMethod CMS';

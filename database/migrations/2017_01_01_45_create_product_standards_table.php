@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStandardsTable extends Migration
+class CreateProductStandardsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,7 +15,7 @@ class CreateStandardsTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 
-		Schema::create('standards', function (Blueprint $table) {
+		Schema::create('product_standards', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
 			$table->unsignedInteger('id')->primary();
@@ -25,13 +25,13 @@ class CreateStandardsTable extends Migration
 			
 			$table->longText('further_details')->nullable();
 			
-			$table->unsignedInteger('standard_organisation_id')->nullable()->index()->comment('Foreign key to the standard organisations table');
+			$table->unsignedInteger('product_standard_organisation_id')->nullable()->index()->comment('Foreign key to the product standard organisations table');
 			
 			$table->timestamps();
 		});
 
-		Schema::table('standards', function (Blueprint $table) {
-			$table->foreign('standard_organisation_id')->references('id')->on('standard_organisations')->onDelete('set null');
+		Schema::table('product_standards', function (Blueprint $table) {
+			$table->foreign('product_standard_organisation_id')->references('id')->on('product_standard_organisations')->onDelete('set null');
 		});
 	}
 
@@ -42,6 +42,6 @@ class CreateStandardsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('standards');
+		Schema::dropIfExists('product_standards');
 	}
 }

@@ -1,9 +1,14 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 namespace App\Models;
 
 use App\User;
-use App\Models\{Role, Group};
+use App\Models\{Role, PermissionGroup};
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
@@ -27,13 +32,13 @@ class Permission extends Model
 	 */
 	protected $fillable = [
 		'title',
-		'group_id',
+		'permission_group_id',
 	];
 	
 	/**
-	 * Get the group record associated with the permission.
+	 * Get the permission group record associated with the permission.
 	 */
-	public function group() : BelongsTo
+	public function permission_group() : BelongsTo
 	{
 		return $this->belongsTo(Group::class);
 	}

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 namespace App\Http\Controllers;
 
@@ -41,7 +46,7 @@ class PermissionController extends Controller
 				
 			$permissions = $this->getData('getPermissions', 'permissions');
 			
-			$permissions = $permissions->groupBy('group_id');
+			$permissions = $permissions->groupBy('permission_group_id');
 			
 			return view('cp.advanced.permissions.index', compact('currentUser', 'title', 'subTitle', 'permissions', 'roles'));
 		}

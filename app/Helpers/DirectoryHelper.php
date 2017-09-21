@@ -1,4 +1,8 @@
 <?php 
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 /**
  * A simple PHP based directory lister that lists the contents

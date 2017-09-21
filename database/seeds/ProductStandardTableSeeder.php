@@ -21,7 +21,7 @@ class ProductStandardTableSeeder extends Seeder
 		foreach ($productStandards as $productStandard) {
 			DB::table('product_standard')->insert([
 				'product_id' => $productStandard['ProductId'],
-				'standard_id' => $productStandard['StandardId'],
+				'product_standard_id' => $productStandard['StandardId'],
 			]);
 		}
 	}

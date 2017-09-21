@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStandardOrganisationsTable extends Migration
+class CreateProductStandardOrganisationsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,7 +15,7 @@ class CreateStandardOrganisationsTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 
-		Schema::create('standard_organisations', function (Blueprint $table) {
+		Schema::create('product_standard_organisations', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
 			$table->unsignedInteger('id')->primary();
@@ -30,7 +30,7 @@ class CreateStandardOrganisationsTable extends Migration
 			$table->timestamps();
 		});
 
-		Schema::table('standard_organisations', function (Blueprint $table) {
+		Schema::table('product_standard_organisations', function (Blueprint $table) {
 		});
 	}
 
@@ -41,6 +41,6 @@ class CreateStandardOrganisationsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('standard_organisations');
+		Schema::dropIfExists('product_standard_organisations');
 	}
 }

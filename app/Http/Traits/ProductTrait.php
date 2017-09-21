@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 namespace App\Http\Traits;
 
@@ -28,7 +33,18 @@ trait ProductTrait
 	{
 		return Product::where('slug', $slug)->firstOrFail();
 	}
-
+	
+	/**
+	 * Get all products based on product category id.
+	 *
+	 * @param 	int 		$productCategoryId
+	 * @return 	Object
+	 */
+	public function getProductsByProductCategory(int $productCategoryId) : CollectionResponse
+	{
+		return Product::where('product_category_id', $productCategoryId)->get();
+	}
+	
 	/**
 	 * Get all the products.
 	 *

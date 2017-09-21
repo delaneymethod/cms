@@ -22,6 +22,7 @@ class ProductsTableSeeder extends Seeder
 			DB::table('products')->insert([
 				'id' => $product['Id'],
 				'title' => $product['Name'],
+				'slug' => str_slug($product['Name']),
 				'sort_order' => $product['SortOrder'],
 				'product_category_id' => $product['CategoryId'],
 				'product_manufacturer_id' => $product['ManufacturerId'],

@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 namespace App\Http\Controllers;
 
@@ -635,32 +640,6 @@ class Controller extends BaseController
 		]);
 
 		return $paginator;
-	}
-	
-	protected function recursiveCollect(array $array) : SupportCollectionResponse
-	{
-		foreach ($array as $key => $value) {
-			if (is_array($value)) {
-				$value = $this->recursiveCollect($value);
-				
-				$array[$key] = $value;
-			}
-		}
-	
-		return collect($array);
-	}
-	
-	protected function recursiveObject(array $array)
-	{
-		foreach ($array as $key => $value) {
-			if (is_array($value)) {
-				$value = $this->recursiveObject($value);
-				
-				$array[$key] = $value;
-			}
-		}
-	
-		return (object) $array;
 	}
 	
 	protected function mapFieldsToFieldTypes(Template $template) : Template
