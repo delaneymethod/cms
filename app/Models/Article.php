@@ -8,12 +8,15 @@
 namespace App\Models;
 
 use App\User;
+use App\Http\Traits\PageTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\{Status, Content, Template, ArticleCategory};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class Article extends Model
 {
+	use PageTrait;
+	
 	/**
      * The table associated with the model.
      *
@@ -117,7 +120,10 @@ class Article extends Model
 	 */
 	public function getUrlAttribute() : string
 	{
-		return '/articles/'.$this->slug;
+		// Grab articles page
+		$page = $this->getPage(9);
+		
+		return $page->url.DIRECTORY_SEPARATOR.$this->slug;
 	}
 	
 	/**

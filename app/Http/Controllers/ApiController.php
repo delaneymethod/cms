@@ -71,7 +71,7 @@ class ApiController extends Controller
 		// If an array / collection, return as an envelope, keeping all responses consistent.
 		if (is_a($data, 'Illuminate\Support\Collection') || is_array($data)) {
 			// Add a few extra attributes to help.
-			$url = '/'.request()->path();
+			$url = DIRECTORY_SEPARATOR.request()->path();
 			
 			$object = 'list';
 			

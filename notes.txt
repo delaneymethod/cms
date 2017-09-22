@@ -14,8 +14,17 @@ https://github.com/spatie/laravel-activitylog
 
 
 
+event to update 
 
-
+product
+product category
+Product commodity
+product characteristic
+product manufacturer
+product standard
+product standard organisation
+product attribute
+product vat rate
 
 
 
@@ -111,47 +120,4 @@ Is standard markup per company or per user?
 			
 			
 			
-			
-			/**
-	 * Gets a product category view (Front-end use only).
-	 *
-	 * @params	Request 	$request
-	 * @params	string 		$stug
-	 * @return 	Response
-	 */
-   	public function show(Request $request, string $slug) : View
-	{
-		$currentUser = $this->getAuthenticatedUser();
 		
-		// Get the requested product based on slug - if it doesnt exist, a 404 is thrown!
-		$productCategory = $this->getProductCategoryBySlug($slug);
-		
-		// We're going to use the products page as our page - it is the products parent after all...
-		$page = $this->getPageBySlug('products');
-		
-		// Grab a cart instance	- available across all pages
-		$cart = $this->getCartInstance('cart');
-		
-		// Grab any wishlist instances since user can add to cart and wishlist on products page
-		$wishlistCart = $this->getCartInstance('wishlist');
-		
-		// Grab parameters
-		$parameters = $request->route()->parameters();
-		
-		// Pass any global required data to the page template
-		$parameters['currentUser'] = $currentUser;
-		
-		// Add the page to the parameters array - we want to pass the page model data to the template.
-		$parameters['page'] = $page;
-		
-		$parameters['cart'] = $cart;
-		
-		$parameters['wishlistCart'] = $wishlistCart;
-		
-		$parameters['productCategory'] = $productCategory;
-		
-		// Selects the page template and injects any data required
-		$this->preparePageTemplate($page, $parameters);
-		
-		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
-	}

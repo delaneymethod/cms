@@ -10,11 +10,11 @@ namespace App\Templates;
 use Illuminate\View\View;
 use App\Http\Traits\{ContentTrait, ProductCategoryTrait};
 
-class BrowseTemplate extends Template
+class ProductsTemplate extends Template
 {
 	use ContentTrait, ProductCategoryTrait;
 	
-	protected $view = 'browse';
+	protected $view = 'products';
 	
 	public function prepare(View $view, array $parameters)
 	{

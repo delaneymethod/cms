@@ -168,6 +168,20 @@ class Controller extends BaseController
 			'hide_from_nav',
 			'order',
 			'event_id',
+			'sort_order',
+			'import_id',
+			'publish_to_web',
+			'product_standard_id',
+			'product_id',
+			'product_standard_organisation_id',
+			'product_vat_rate_id',
+			'product_category_id',
+			'product_manufacturer_id',
+			'harmonised_code_id',
+			'supplier_id',
+			'limited_life',
+			'test_certificates_required',
+			'retire_employee_id',
 		];
 
 		$floats = [
@@ -179,6 +193,19 @@ class Controller extends BaseController
 		];
 
 		$strings = [
+			'short_name',
+			'commodity_name_protocol',
+			'commodity_code_protocol',
+			'commodity_short_description_protocol',
+			'image_uri',
+			'website',
+			'code',
+			'logo_image',
+			'cms_page_name',
+			'timecheck',
+			'futher_details',
+			'rate',
+			'rate_display',
 			'event_type',
 			'action',
 			'identifier',
@@ -803,7 +830,7 @@ class Controller extends BaseController
 	
 	protected function mapContentsToFields(Template $template, Collection $contents) : Template
 	{
-		$template->fields = $this->recursiveObject($template->fields);
+		$template->fields = recursiveObject($template->fields);
 		
 		foreach ($template->fields as &$field) {
 			foreach ($contents as $content) {

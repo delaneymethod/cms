@@ -74035,6 +74035,12 @@ module.exports = function(module) {
 /***/ "./resources/assets/js/cp.js":
 /***/ (function(module, exports, __webpack_require__) {
 
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+
 window._ = __webpack_require__("./node_modules/lodash/lodash.js");
 
 window.$ = window.jQuery = __webpack_require__("./node_modules/jquery/dist/jquery.js");
@@ -88271,6 +88277,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = ty
 /***/ (function(module, exports) {
 
 var _this = this;
+
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 ;(function ($) {
 	$.delaneyMethodCMSControlPanel = function (options) {

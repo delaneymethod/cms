@@ -14,15 +14,10 @@ class PageContentTableSeeder extends Seeder
 	{
 		$now = Carbon::now()->format('Y-m-d H:i:s');
 
-		$pageContents = [
-			[
-				'page_id' => 1,
-				'content_id' => 1,
-			],
-		];
+		$pageContents = [];
 		
 		DB::table('page_content')->delete();
 		
-		DB::table('page_content')->insert($pageContents);
+		//DB::table('page_content')->insert($pageContents);
 	}
 }

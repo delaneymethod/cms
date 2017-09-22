@@ -11,6 +11,10 @@ class DatabaseSeeder extends Seeder
 	 */
 	public function run()
 	{
+		ini_set('memory_limit', '1048M');
+		
+		DB::disableQueryLog();
+		
 		$this->call(PermissionGroupsTableSeeder::class);
 		$this->call(PermissionsTableSeeder::class);
 		$this->call(CountriesTableSeeder::class);
@@ -31,23 +35,25 @@ class DatabaseSeeder extends Seeder
 		$this->call(ArticleCategoriesTableSeeder::class);
 		$this->call(ArticleCategoryTableSeeder::class);
 		$this->call(CartsTableSeeder::class);
-		
+		$this->call(ProductAttributesTableSeeder::class);
 		$this->call(ProductStandardOrganisationsTableSeeder::class);
 		$this->call(ProductStandardsTableSeeder::class);
-		
 		$this->call(ProductCategoriesTableSeeder::class);
 		$this->call(ProductManufacturersTableSeeder::class);
 		$this->call(ProductVatRatesTableSeeder::class);
 		$this->call(ProductsTableSeeder::class);
-		
 		$this->call(OrderProductTableSeeder::class);
 		$this->call(ProductStandardTableSeeder::class);
-		
+		$this->call(ProductAttributeTableSeeder::class);
+		$this->call(ProductCommoditiesTableSeeder::class);
+		$this->call(ProductCharacteristicsTableSeeder::class);
 		$this->call(FieldTypesTableSeeder::class);
 		$this->call(FieldsTableSeeder::class);
 		$this->call(TemplateFieldTableSeeder::class);
 		$this->call(ContentsTableSeeder::class);
 		$this->call(PageContentTableSeeder::class);
 		$this->call(ArticleContentTableSeeder::class);
+		
+		DB::enableQueryLog();
 	}
 }

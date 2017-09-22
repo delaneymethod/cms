@@ -72,13 +72,12 @@ class ProductCategory extends Model
 		$this->getProductCategorySlug($this);
 		
 		// Add a blank segment to create first /
-		array_push($this->segments, 'category');
-		array_push($this->segments, 'browse');
+		array_push($this->segments, 'products');
 		array_push($this->segments, '');
 		
 		$this->segments = array_reverse($this->segments);
 		
-		return implode('/', $this->segments);
+		return implode(DIRECTORY_SEPARATOR, $this->segments);
 	}
 	
 	/**

@@ -110,7 +110,7 @@ class Page extends Node
 		
 		$this->segments = array_reverse($this->segments);
 		
-		return implode('/', $this->segments);
+		return implode(DIRECTORY_SEPARATOR, $this->segments);
 	}
 	
 	/**

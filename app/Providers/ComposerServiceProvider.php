@@ -42,6 +42,25 @@ class ComposerServiceProvider extends ServiceProvider
 			
 			View::composer('*', function ($view) use ($pages) {
 				$view->with('pages', $pages);
+				
+				$authViews = [
+					'auth.login',
+					'auth.register',
+					'auth.passwords.email',
+					'auth.passwords.reset',
+					'errors::403',
+					'errors::404',
+					'errors::429',
+					'errors::500',
+					'errors::503',
+				];
+				
+				if (in_array($view->getName(), $authViews)) {
+					// Grab any page really, just so we can pass it to the view header > breadcrumbs include
+					$page = $this->getPage(1);
+					
+					$view->with('page', $page);
+				}
 			});
 		}
 	}

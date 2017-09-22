@@ -25,6 +25,8 @@ return [
     
     ],
     
+    'public_path' => env('PUBLIC_PATH', 'public'),
+    
 	'delays' => [
 	
 		'jobs' => 10,

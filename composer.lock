@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "0eb517063d8c1ba466aaf4b2e5f012c3",
+    "content-hash": "69e5ad31e32e34404359ce96f33dc1f7",
     "packages": [
         {
             "name": "barryvdh/laravel-cors",
@@ -1005,6 +1005,112 @@
             "time": "2017-03-20T17:10:46+00:00"
         },
         {
+            "name": "intervention/image",
+            "version": "2.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Intervention/image.git",
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Intervention/image/zipball/3603dbcc9a17d307533473246a6c58c31cf17919",
+                "reference": "3603dbcc9a17d307533473246a6c58c31cf17919",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "guzzlehttp/psr7": "~1.1",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9.2",
+                "phpunit/phpunit": "^4.8 || ^5.7"
+            },
+            "suggest": {
+                "ext-gd": "to use GD library based image processing.",
+                "ext-imagick": "to use Imagick based image processing.",
+                "intervention/imagecache": "Caching extension for the Intervention Image library"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Intervention\\Image\\ImageServiceProvider"
+                    ],
+                    "aliases": {
+                        "Image": "Intervention\\Image\\Facades\\Image"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Intervention\\Image\\": "src/Intervention/Image"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Vogel",
+                    "email": "oliver@olivervogel.com",
+                    "homepage": "http://olivervogel.com/"
+                }
+            ],
+            "description": "Image handling and manipulation library with support for Laravel integration",
+            "homepage": "http://image.intervention.io/",
+            "keywords": [
+                "gd",
+                "image",
+                "imagick",
+                "laravel",
+                "thumbnail",
+                "watermark"
+            ],
+            "time": "2017-09-21T16:29:17+00:00"
+        },
+        {
+            "name": "jailtonsc/laravel-response-xml",
+            "version": "v2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jailtonsc/laravel-response-xml.git",
+                "reference": "571aad65e0f35abbc31372e2d091be6aa2eae685"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jailtonsc/laravel-response-xml/zipball/571aad65e0f35abbc31372e2d091be6aa2eae685",
+                "reference": "571aad65e0f35abbc31372e2d091be6aa2eae685",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "XmlResponse\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Add the method xml integrating the laravel's response, converting eloquent return to XML.",
+            "keywords": [
+                "eloquent",
+                "laravel",
+                "response",
+                "xml"
+            ],
+            "time": "2017-06-02T13:32:33+00:00"
+        },
+        {
             "name": "jakub-onderka/php-console-color",
             "version": "0.1",
             "source": {
@@ -1230,16 +1336,16 @@
         },
         {
             "name": "knplabs/knp-snappy",
-            "version": "v1.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/snappy.git",
-                "reference": "4f913a4e4afabe715e9fd035cdfcf03e8b490bb5"
+                "reference": "f294d1c50d49fb116a5ecb78ecd53fc727a2ba30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/4f913a4e4afabe715e9fd035cdfcf03e8b490bb5",
-                "reference": "4f913a4e4afabe715e9fd035cdfcf03e8b490bb5",
+                "url": "https://api.github.com/repos/KnpLabs/snappy/zipball/f294d1c50d49fb116a5ecb78ecd53fc727a2ba30",
+                "reference": "f294d1c50d49fb116a5ecb78ecd53fc727a2ba30",
                 "shasum": ""
             },
             "require": {
@@ -1292,20 +1398,20 @@
                 "thumbnail",
                 "wkhtmltopdf"
             ],
-            "time": "2017-09-20T16:56:28+00:00"
+            "time": "2017-09-21T11:34:49+00:00"
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.9",
+            "version": "v5.5.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "a0fdfd2c90318c107b6a8d69189ec9a6607379e3"
+                "reference": "56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/a0fdfd2c90318c107b6a8d69189ec9a6607379e3",
-                "reference": "a0fdfd2c90318c107b6a8d69189ec9a6607379e3",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a",
+                "reference": "56f1ffd0880255e9ebbf0dbf47024cc5c2941c7a",
                 "shasum": ""
             },
             "require": {
@@ -1424,7 +1530,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-09-20T13:45:36+00:00"
+            "time": "2017-09-21T18:59:13+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1571,6 +1677,67 @@
                 "storage"
             ],
             "time": "2017-08-06T17:41:04+00:00"
+        },
+        {
+            "name": "league/glide",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/glide.git",
+                "reference": "8077f529a07ded3eed6c5dcf7f688249b626ddf3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/glide/zipball/8077f529a07ded3eed6c5dcf7f688249b626ddf3",
+                "reference": "8077f529a07ded3eed6c5dcf7f688249b626ddf3",
+                "shasum": ""
+            },
+            "require": {
+                "intervention/image": "^2.1",
+                "league/flysystem": "^1.0",
+                "php": "^5.4 | ^7.0",
+                "psr/http-message": "^1.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "~0.9",
+                "phpunit/php-token-stream": "^1.4",
+                "phpunit/phpunit": "~4.4"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Glide\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jonathan Reinink",
+                    "email": "jonathan@reinink.ca",
+                    "homepage": "http://reinink.ca"
+                }
+            ],
+            "description": "Wonderfully easy on-demand image manipulation library with an HTTP based API.",
+            "homepage": "http://glide.thephpleague.com",
+            "keywords": [
+                "ImageMagick",
+                "editing",
+                "gd",
+                "image",
+                "imagick",
+                "league",
+                "manipulation",
+                "processing"
+            ],
+            "time": "2017-05-09T17:41:49+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3669,6 +3836,118 @@
             "time": "2016-10-03T07:35:21+00:00"
         },
         {
+            "name": "spatie/browsershot",
+            "version": "2.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/browsershot.git",
+                "reference": "ec9a95a64b1e35230d8e7bee8d01aba367e36d30"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/browsershot/zipball/ec9a95a64b1e35230d8e7bee8d01aba367e36d30",
+                "reference": "ec9a95a64b1e35230d8e7bee8d01aba367e36d30",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "spatie/image": "~1.3.0",
+                "spatie/phpunit-snapshot-assertions": "^1.0",
+                "spatie/temporary-directory": "^1.1",
+                "symfony/process": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Browsershot\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://github.com/freekmurze",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Convert a webpage to an image or pdf using headless Chrome",
+            "homepage": "https://github.com/spatie/browsershot",
+            "keywords": [
+                "browser",
+                "chrome",
+                "convert",
+                "headless",
+                "image",
+                "pdf",
+                "screenshot",
+                "webpage"
+            ],
+            "time": "2017-09-21T19:23:39+00:00"
+        },
+        {
+            "name": "spatie/crawler",
+            "version": "2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/crawler.git",
+                "reference": "957c9f35d223f0c8e57e90d6f4dbb357abae617f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/crawler/zipball/957c9f35d223f0c8e57e90d6f4dbb357abae617f",
+                "reference": "957c9f35d223f0c8e57e90d6f4dbb357abae617f",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^6.3",
+                "php": "^7.0",
+                "spatie/browsershot": "^2.4",
+                "symfony/dom-crawler": "^3.0",
+                "tightenco/collect": "^5.3"
+            },
+            "require-dev": {
+                "larapack/dd": "^1.1",
+                "phpunit/phpunit": "^5.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Crawler\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be"
+                }
+            ],
+            "description": "Crawl all internal links found on a website",
+            "homepage": "https://github.com/spatie/crawler",
+            "keywords": [
+                "crawler",
+                "link",
+                "spatie",
+                "website"
+            ],
+            "time": "2017-09-21T21:09:30+00:00"
+        },
+        {
             "name": "spatie/db-dumper",
             "version": "2.7.3",
             "source": {
@@ -3717,6 +3996,106 @@
                 "spatie"
             ],
             "time": "2017-09-09T12:56:45+00:00"
+        },
+        {
+            "name": "spatie/image",
+            "version": "1.3.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/image.git",
+                "reference": "61a43bd5a85257b30b58b6c5b9f0000fc1487bf8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/image/zipball/61a43bd5a85257b30b58b6c5b9f0000fc1487bf8",
+                "reference": "61a43bd5a85257b30b58b6c5b9f0000fc1487bf8",
+                "shasum": ""
+            },
+            "require": {
+                "league/glide": "^1.2",
+                "php": "^7.0",
+                "spatie/image-optimizer": "^1.0",
+                "spatie/temporary-directory": "^1.0.0",
+                "symfony/process": "^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0",
+                "symfony/var-dumper": "^3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Image\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Manipulate images with an expressive API",
+            "homepage": "https://github.com/spatie/image",
+            "keywords": [
+                "image",
+                "spatie"
+            ],
+            "time": "2017-07-25T18:32:37+00:00"
+        },
+        {
+            "name": "spatie/image-optimizer",
+            "version": "1.0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/image-optimizer.git",
+                "reference": "87e493ca4743447349f393ce2e55fdf46e5b3b41"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/87e493ca4743447349f393ce2e55fdf46e5b3b41",
+                "reference": "87e493ca4743447349f393ce2e55fdf46e5b3b41",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0",
+                "psr/log": "^1.0",
+                "symfony/process": "^2.8|^3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.2",
+                "symfony/var-dumper": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\ImageOptimizer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily optimize images using PHP",
+            "homepage": "https://github.com/spatie/image-optimizer",
+            "keywords": [
+                "image-optimizer",
+                "spatie"
+            ],
+            "time": "2017-09-14T16:09:00+00:00"
         },
         {
             "name": "spatie/laravel-backup",
@@ -3790,6 +4169,66 @@
                 "spatie"
             ],
             "time": "2017-08-30T12:17:01+00:00"
+        },
+        {
+            "name": "spatie/laravel-sitemap",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-sitemap.git",
+                "reference": "c7f55406f73bfac8a8e29400efc203129dcfbbf8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-sitemap/zipball/c7f55406f73bfac8a8e29400efc203129dcfbbf8",
+                "reference": "c7f55406f73bfac8a8e29400efc203129dcfbbf8",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.5.0",
+                "nesbot/carbon": "^1.21",
+                "php": "^7.0",
+                "spatie/crawler": "^2.0.2",
+                "spatie/temporary-directory": "^1.1"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.5.0",
+                "phpunit/phpunit": "^6.3",
+                "spatie/phpunit-snapshot-assertions": "^1.0.0",
+                "spatie/temporary-directory": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Sitemap\\SitemapServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Sitemap\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Create and generate sitemaps with ease",
+            "homepage": "https://github.com/spatie/laravel-sitemap",
+            "keywords": [
+                "laravel-sitemap",
+                "spatie"
+            ],
+            "time": "2017-08-31T11:13:19+00:00"
         },
         {
             "name": "spatie/laravel-uptime-monitor",
@@ -4327,6 +4766,62 @@
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
             "time": "2017-09-01T13:23:39+00:00"
+        },
+        {
+            "name": "symfony/dom-crawler",
+            "version": "v3.3.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dom-crawler.git",
+                "reference": "6b511d7329b203a620f09a2288818d27dcc915ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/6b511d7329b203a620f09a2288818d27dcc915ae",
+                "reference": "6b511d7329b203a620f09a2288818d27dcc915ae",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9|>=7.0.8",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "require-dev": {
+                "symfony/css-selector": "~2.8|~3.0"
+            },
+            "suggest": {
+                "symfony/css-selector": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DomCrawler\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DomCrawler Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-09-11T15:55:22+00:00"
         },
         {
             "name": "symfony/event-dispatcher",

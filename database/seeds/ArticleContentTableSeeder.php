@@ -14,19 +14,10 @@ class ArticleContentTableSeeder extends Seeder
 	{
 		$now = Carbon::now()->format('Y-m-d H:i:s');
 
-		$articleContents = [
-			[
-				'article_id' => 1,
-				'content_id' => 4,
-			],
-			[
-				'article_id' => 1,
-				'content_id' => 5,
-			],
-		];
+		$articleContents = [];
 		
 		DB::table('article_content')->delete();
 		
-		DB::table('article_content')->insert($articleContents);
+		// DB::table('article_content')->insert($articleContents);
 	}
 }

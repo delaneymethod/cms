@@ -53,7 +53,7 @@ class DashboardController extends Controller
 			]);
 		}
 		
-		$months = $this->recursiveObject($months);
+		$months = recursiveObject($months);
 		
 		$roles = [];
 		
@@ -198,7 +198,7 @@ class DashboardController extends Controller
 		}
 		
 		if (count($statCards) > 0) {
-			$statCards = $this->recursiveObject($statCards);
+			$statCards = recursiveObject($statCards);
 		}
 		
 		return view('cp.dashboard.index', compact('currentUser', 'title', 'subTitle', 'orders', 'orderStats', 'months', 'roles', 'statCards'));

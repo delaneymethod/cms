@@ -29,14 +29,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-	    $schedule->command('backup:clean')->daily()->at('01:00');
-		$schedule->command('backup:run')->daily()->at('02:00');
+	    $schedule->command('monitor:check-uptime')->everyMinute();
 		
-		$schedule->command('monitor:check-uptime')->everyMinute();
+		$schedule->command('backup:clean')->daily()->at('00:05');
+	    
+		$schedule->command('backup:run')->daily()->at('00:10');
 		
-        // $schedule->command('inspire')
-        //          ->hourly();
-    }
+		$schedule->command('sitemap:generate')->daily()->at('00:15');
+	}
 
     /**
      * Register the commands for the application.

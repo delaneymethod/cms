@@ -31,18 +31,12 @@ Route::delete('/cart', 'CartController@delete');
 // Articles routes
 Route::get('/articles/{slug}', 'ArticleController@show');
 
-// Browse routes
-Route::redirect('/browse/category', '/browse', 301);
-Route::redirect('/browse/product', '/browse', 301);
-
 // Order routes
 Route::get('/orders/{id}/pdf', 'OrderController@pdf');
 Route::post('/orders', 'OrderController@store');
 
-// CATCH ALL ROUTE
-Route::get('/browse/category/{catchAll}', 'ProductController@showProductCategory')->where('catchAll', '(.*)');
-Route::get('/browse/product/{catchAll}', 'ProductController@showProduct')->where('catchAll', '(.*)');
-Route::get('{catchAll}', 'PageController@show')->where('catchAll', '(.*)');
+// Products routes
+Route::get('/products/{catchAll}', 'ProductController@show')->where('catchAll', '(.*)');
 
 // BACK END ROUTES
 Route::group(['prefix' => 'cp'], function () {
@@ -194,3 +188,6 @@ Route::group(['prefix' => 'cp'], function () {
 	Route::delete('/assets/folder', 'AssetController@folderDelete');
 	Route::delete('/assets/{id}', 'AssetController@delete');
 });
+
+// CATCH ALL ROUTE
+Route::get('{catchAll}', 'PageController@show')->where('catchAll', '(.*)');

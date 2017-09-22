@@ -21,27 +21,39 @@
 			
 			@if ($products->count())
 				<div class="row">
-					@foreach ($products as $product)
-						@php ($productUrl = $product->url)
-						<div class="col-sm-12 col-md-12 col-lg-12">
-							<div class="row">
-								<div class="col-sm-12 col-md-3 col-lg-1">
-									<a href="{{ $productUrl }}" title="{{ $product->title }}"><img src="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->title }}"></a>
-								</div>
-								<div class="col-sm-12 col-md-5 col-lg-5">
-									<a href="{{ $productUrl }}" title="{{ $product->title }}">{{ $product->description }}</a>
-								</div>
-								<div class="col-sm-12 col-md-3 col-lg-2">
-									Thread
-								</div>
-								<div class="col-sm-12 col-md-3 col-lg-2">
-									Material Grade
-								</div>
-								<div class="col-sm-12 col-md-3 col-lg-2">
-									Finish
-								</div>
-							</div>
-						</div>
-					@endforeach
+					<div class="col-sm-12 col-md-12 col-lg-12">
+						<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+							<thead>
+								<tr>
+									<th>Image</th>
+									<th>Description</th>
+									@foreach ($productAttributeHeadings as $productAttributeHeading)
+										<th>{{ $productAttributeHeading }}</th>
+									@endforeach
+								</tr>
+							</thead>
+							<tbody>
+								@foreach ($products as $product)
+									@php ($productUrl = $product->url)
+									<tr>
+										<td>
+											<a href="{{ $productUrl }}" title="{{ $product->title }}"><img src="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->title }}"></a>
+										</td>	
+										<td>
+											<a href="{{ $productUrl }}" title="{{ $product->title }}">{{ $product->description }}</a>
+										</td>
+										@foreach ($productAttributeHeadings as $productAttributeHeading)
+											@php ($productAttribute = $product->product_attributes->where('title', $productAttributeHeading)->first())
+											@if (!empty($productAttribute))
+												<td>{{ $productAttribute->title }}</td>
+											@else
+												<td>&nbsp;</td>	
+											@endif
+										@endforeach
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+					</div>
 				</div>
 			@endif

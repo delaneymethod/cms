@@ -34,8 +34,8 @@ class TemplatesTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
-				'title' => 'Browse',
-				'filename' => 'browse',
+				'title' => 'Products',
+				'filename' => 'products',
 				'created_at' => $now,
 				'updated_at' => $now,
 			],

@@ -1,4 +1,19 @@
 @import url(//fonts.googleapis.com/css?family=Source+Sans+Pro);@charset "UTF-8";
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 /*!
  * Bootstrap v4.0.0-beta (https://getbootstrap.com)
  * Copyright 2011-2017 The Bootstrap Authors
@@ -13611,6 +13626,11 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
   text-align: justify;
 }
 
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 html, body {
   height: 100%;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

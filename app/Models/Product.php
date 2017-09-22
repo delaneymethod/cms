@@ -8,12 +8,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Traits\ProductCategoryTrait;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
-use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
-use App\Models\{Order, ProductVatRate, ProductStandard, ProductCategory, ProductManufacturer};
+use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo, BelongsToMany};
+use App\Models\{Order, ProductVatRate, ProductStandard, ProductCategory, ProductCommodity, ProductAttribute, ProductManufacturer};
 
 class Product extends Model implements Buyable
 {
+	use ProductCategoryTrait;
+	
 	/**
      * The table associated with the model.
      *
@@ -145,14 +148,16 @@ class Product extends Model implements Buyable
 	{
 		$this->getProductSlug($this);
 		
-		// Add a blank segment to create first /
-		array_push($this->segments, 'product');
-		array_push($this->segments, 'browse');
-		array_push($this->segments, '');
+		// Incase the product is loaded directly
+		if (empty($this->product_category_id)) {
+			// Add a blank segment to create first /
+			array_push($this->segments, 'products');
+			array_push($this->segments, '');
+		}
 		
 		$this->segments = array_reverse($this->segments);
 		
-		return implode('/', $this->segments);
+		return implode(DIRECTORY_SEPARATOR, $this->segments);
 	}
 	
 	/**
@@ -162,7 +167,14 @@ class Product extends Model implements Buyable
 	 */
 	private function getProductSlug($product)
 	{
-		array_push($this->segments, $product->slug);
+		if (!empty($product->product_category_id)) {
+			// First grab the product category url (which will include all parents, child etc etc - right back up to the root level)
+			$productCatgeory = $this->getProductCategory($product->product_category_id);
+			
+			array_push($this->segments, $productCatgeory->url.DIRECTORY_SEPARATOR.$product->slug);
+		} else {
+			array_push($this->segments, $product->slug);
+		}
 		
 		// If product has a parent, then get the parent
 		if (!empty($product->parent_id)) {
@@ -203,35 +215,19 @@ class Product extends Model implements Buyable
 	}
 	
 	/**
+	 * Formats value to 2 decimal places.
+	 */
+	protected function format2decimals(float $value) : float
+	{
+		return number_format($value, 2, '.', ',');
+	}
+	
+	/**
 	 * Get the order records associated with the product.
 	 */
 	public function orders() : BelongsToMany
 	{
 		return $this->belongsToMany(Order::class, 'order_product')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');
-	}
-	
-	/**
-	 * Get the product category record associated with the product.
-	 */
-	public function product_category() : BelongsTo
-	{
-		return $this->hasMany(ProductCategory::class);
-	}
-	
-	/**
-	 * Get the product manufacturer record associated with the product.
-	 */
-	public function product_manufacturer() : BelongsTo
-	{
-		return $this->hasMany(ProductManufacturer::class);
-	}
-	
-	/**
-	 * Get the product var rate record associated with the product.
-	 */
-	public function product_vat_rate() : BelongsTo
-	{
-		return $this->hasMany(ProductVatRate::class);
 	}
 	
 	/**
@@ -245,11 +241,27 @@ class Product extends Model implements Buyable
 	}
 	
 	/**
-	 * Get the product standard records associated with the product.
+	 * Get the product category record associated with the product.
 	 */
-	public function product_standards() : BelongsToMany
+	public function product_category() : BelongsTo
 	{
-		return $this->belongsToMany(ProductStandard::class, 'product_standard');
+		return $this->belongsTo(ProductCategory::class);
+	}
+	
+	/**
+	 * Get the product manufacturer record associated with the product.
+	 */
+	public function product_manufacturer() : BelongsTo
+	{
+		return $this->belongsTo(ProductManufacturer::class);
+	}
+	
+	/**
+	 * Get the product var rate record associated with the product.
+	 */
+	public function product_vat_rate() : BelongsTo
+	{
+		return $this->belongsTo(ProductVatRate::class);
 	}
 	
 	/**
@@ -263,10 +275,36 @@ class Product extends Model implements Buyable
 	}
 	
 	/**
-	 * Formats value to 2 decimal places.
+	 * Get the product standard records associated with the product.
 	 */
-	protected function format2decimals(float $value) : float
+	public function product_standards() : BelongsToMany
 	{
-		return number_format($value, 2, '.', ',');
+		return $this->belongsToMany(ProductStandard::class, 'product_standard');
+	}
+	
+	/**
+	 * Get the product attribute records associated with the product.
+	 */
+	public function product_attributes() : BelongsToMany
+	{
+		return $this->belongsToMany(ProductAttribute::class, 'product_attribute')->withPivot('fixed_characteristic_id', 'display_position')->orderBy('display_position');
+	}
+	
+	/**
+	 * Set product attributes for the product.
+	 *
+	 * $param 	array 	$productAttributes
+	 */
+	public function setProductAttributes(array $productAttributes)
+	{
+		return $this->product_attributes()->sync($productAttributes);
+	}
+	
+	/**
+	 * Get the product commodity records associated with the product.
+	 */
+	public function product_commodities() : HasMany
+	{
+		return $this->hasMany(ProductCommodity::class);
 	}
 }

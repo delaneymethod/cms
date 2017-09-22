@@ -61,8 +61,8 @@ class PagesTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
-				'title' => 'Browse',
-				'slug' => 'browse',
+				'title' => 'Products',
+				'slug' => 'products',
 				'keywords' => '',
 				'description' => NULL,
 				'template_id' => 4,

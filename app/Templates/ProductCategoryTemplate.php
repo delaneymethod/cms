@@ -36,6 +36,21 @@ class ProductCategoryTemplate extends Template
 		// Grab all products - if any - based on business rules, only product categories at the bottom of the chain have products
 		$products = $this->getProductsByProductCategory($productCategory->id);
 		
+		$productAttributeHeadings = null;
+		
+		if ($products->count() > 0) {
+			// Work out all the product attribuet headings
+			$productAttributeHeadings = collect([]);
+		
+			$products->each(function ($product) use ($productAttributeHeadings) {
+				$product->product_attributes->each(function ($productAttribute) use ($productAttributeHeadings) {
+					$productAttributeHeadings->push($productAttribute->title);
+				});
+			});
+		
+			$productAttributeHeadings = $productAttributeHeadings->unique();
+		}
+		
 		$page->breadcrumbs = collect([]);
 		
 		$page->breadcrumbs->push([
@@ -44,10 +59,10 @@ class ProductCategoryTemplate extends Template
 		]);
 		
 		// Try to get all product categories based on current product category url.
-		$slugs = explode('/', $productCategory->url);
+		$slugs = explode(DIRECTORY_SEPARATOR, $productCategory->url);
 		
-		// Remove "", "browse" and "category"
-		unset($slugs[0], $slugs[1], $slugs[2]);
+		// Remove "" and "browse"
+		unset($slugs[0], $slugs[1]);
 		
 		$slugs = collect($slugs);
 		
@@ -66,12 +81,12 @@ class ProductCategoryTemplate extends Template
 			return (object) $row;
 		});
 		
-		$page->title = $productCategory->title.' - '.$page->title;
+		$page->title = $productCategory->title;
 		
 		$page->description = '';
 		
 		$page->keywords = '';
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategory', 'productCategories', 'products'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategory', 'productCategories', 'products', 'productAttributeHeadings'));
 	}
 }

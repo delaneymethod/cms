@@ -68,7 +68,7 @@ class PageController extends Controller
 	 * @params	string 		$slug
 	 * @return 	Response
 	 */
-	public function show(Request $request, $slug = '/')
+	public function show(Request $request, $slug = DIRECTORY_SEPARATOR)
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
@@ -78,10 +78,10 @@ class PageController extends Controller
 		}
 		
 		// Get the URL segments
-		if ($slug == '/') {
+		if ($slug == DIRECTORY_SEPARATOR) {
 			$segments = collect([0 => '']);
 		} else {
-			$segments = collect(explode('/', $slug));
+			$segments = collect(explode(DIRECTORY_SEPARATOR, $slug));
 		}
 		
 		// Set slug based on the last segment

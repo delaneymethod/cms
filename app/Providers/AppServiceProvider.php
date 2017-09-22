@@ -44,6 +44,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-	    //
-    }
+	    // Added by Sean - Sets the public path to this directory
+		$publicPath = config('cms.public_path');
+		
+		$this->app['path.public'] = base_path().DIRECTORY_SEPARATOR.$publicPath;
+	}
 }
