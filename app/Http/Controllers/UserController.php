@@ -10,9 +10,12 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use App\User;
+use Exception;
 use Carbon\Carbon;
+use App\Events\UserUpdated;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Password;
 use App\Http\Traits\{RoleTrait, UserTrait, StatusTrait, CompanyTrait, LocationTrait, NotificationTrait};
 
@@ -31,7 +34,7 @@ class UserController extends Controller
 		
 		$this->middleware('auth', [
 			'except' => [
-				'event'
+				'webhook'
 			]
 		]);
 		
@@ -577,13 +580,33 @@ class UserController extends Controller
 	 * @params Request 	$request
      * @return Response
      */
-    public function event(Request $request) 
+    public function webhook(Request $request) 
     {
 	    $cleanedEvent = $this->sanitizerInput($request->all());
 	    
-		if (!empty($cleanedEvent['id'])) {
-			switch ($cleanedEvent['type']) {
-				// TODO
+		if (!empty($cleanedEvent['event_id'])) {
+			switch ($cleanedEvent['event_type']) {
+				case 'users.updated':
+					$users = $cleanedEvent['data'];
+				
+					// TODO - Add in error checking and validation	
+							
+					collect($users)->each(function ($data) {
+						// Grab and update it
+						$user = User::find($data['id']);
+					
+						if ($user) {
+							// Mass assignment
+							$user->fill($data);
+						
+							$user->save();
+						
+							// Broadcast an UserUpdated event
+							broadcast(new UserUpdated($user));
+						}
+					});
+					
+					break;
 			}
 		}
 	}

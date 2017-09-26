@@ -1,7 +1,7 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use App\Http\Transformers\ProductTransformer;
 
 class ProductStandardTableSeeder extends Seeder
 {
@@ -14,15 +14,12 @@ class ProductStandardTableSeeder extends Seeder
 	{
 		DB::table('product_standard')->delete();
 		
-		$now = Carbon::now()->format('Y-m-d H:i:s');
-		
 		$productStandards = json_decode(file_get_contents('database/data/product_standards.json'), true);
 		
-		foreach ($productStandards as $productStandard) {
-			DB::table('product_standard')->insert([
-				'product_id' => $productStandard['ProductId'],
-				'product_standard_id' => $productStandard['StandardId'],
-			]);
-		}
+		$productStandards = ProductTransformer::transformProductStandard($productStandards);
+		
+		collect($productStandards)->each(function ($productStandard) {
+			DB::table('product_standard')->insert($productStandard);
+		});
 	}
 }

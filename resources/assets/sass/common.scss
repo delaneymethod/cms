@@ -98,6 +98,22 @@ a,
 	}
 }
 
+.text-gf-blue {
+	color: $gf-blue;
+	
+	&:hover {
+		color: $gf-blue;
+	}
+}
+
+.text-gf-info {
+	color: $gf-info;
+	
+	&:hover {
+		color: $gf-info;
+	}
+}
+
 .text-muted-lighter {
 	color: #c1c1c1;	
 }

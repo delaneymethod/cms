@@ -7,9 +7,9 @@
  
 namespace App\Models;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{Product, ProductCharacteristic};
-use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsToMany};
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ProductAttribute extends Model
 {
@@ -38,24 +38,16 @@ class ProductAttribute extends Model
 	 */
 	public function products() : BelongsToMany
 	{
-		return $this->belongsToMany(Product::class, 'product_attribute');
+		return $this->belongsToMany(Product::class, 'product_attribute')->withPivot('product_attribute_id', 'product_characteristic_id', 'display_position')->orderBy('display_position');
 	}
 	
 	/**
-	 * Set products for the product standard.
+	 * Set products for the product attribute.
 	 *
 	 * $param 	array 	$products
 	 */
 	public function setProducts(array $products)
 	{
 		return $this->products()->sync($products);
-	}
-	
-	/**
-	 * Get the product characteristics associated with the product attribute.
-	 */
-	public function product_characteristics() : HasMany
-	{
-		return $this->hasMany(ProductCharacteristic::class);
 	}
 }

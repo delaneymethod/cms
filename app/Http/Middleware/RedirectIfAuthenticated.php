@@ -1,8 +1,8 @@
 <?php
 /**
- * @link      https://www.delaneymethod.com/cms
+ * @link	  https://www.delaneymethod.com/cms
  * @copyright Copyright (c) DelaneyMethod
- * @license   https://www.delaneymethod.com/cms/license
+ * @license	  https://www.delaneymethod.com/cms/license
  */
 
 namespace App\Http\Middleware;
@@ -13,20 +13,20 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Request  		$request
-     * @param  Closure  		$next
-     * @param  string|null  	$guard
-     * @return mixed
-     */
-    public function handle($request, Closure $next, $guard = null)
-    {
-	    if (Auth::guard($guard)->check() && in_array(Route::current()->uri(), ['register', 'login'])) {
-            return redirect('/cp/dashboard');
-        }
-        
-        return $next($request);
-    }
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  Request			$request
+	 * @param  Closure			$next
+	 * @param  string|null		$guard
+	 * @return mixed
+	 */
+	public function handle($request, Closure $next, $guard = null)
+	{
+		if (Auth::guard($guard)->check() && in_array(Route::current()->uri(), ['register', 'login'])) {
+			return redirect('/cp/dashboard');
+		}
+		
+		return $next($request);
+	}
 }

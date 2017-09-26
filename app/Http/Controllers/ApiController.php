@@ -34,7 +34,7 @@ class ApiController extends Controller
 	 *
 	 * @return 	Response
 	 */
-   	public function index(Request $request) : JsonResponse
+   	public function index(Request $request)
 	{	
 		return response()->json(['message' => 'Welcome to our API.'], 200, $this->headers);
 	}

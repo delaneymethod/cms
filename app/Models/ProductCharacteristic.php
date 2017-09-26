@@ -7,9 +7,9 @@
  
 namespace App\Models;
 
-use App\Models\ProductAttribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\{Product, ProductAttribute};
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class ProductCharacteristic extends Model
 {
@@ -34,6 +34,24 @@ class ProductCharacteristic extends Model
 		'value',
 		'commodity_code_representation',
 	];
+	
+	/**
+	 * Get the product records associated with the product characteristic.
+	 */
+	public function products() : BelongsToMany
+	{
+		return $this->belongsToMany(Product::class, 'product_attribute')->withPivot('product_attribute_id', 'product_characteristic_id', 'display_position')->orderBy('display_position');
+	}
+	
+	/**
+	 * Set products for the product characteristic.
+	 *
+	 * $param 	array 	$products
+	 */
+	public function setProducts(array $products)
+	{
+		return $this->products()->sync($products);
+	}
 	
 	/**
 	 * Get the product attribute records associated with the product characteristic.

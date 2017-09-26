@@ -8,11 +8,15 @@
 namespace App\Models;
 
 use App\Models\Product;
+use App\Http\Traits\CartTrait;
 use Illuminate\Database\Eloquent\Model;
+use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ProductCommodity extends Model
+class ProductCommodity extends Model implements Buyable
 {
+	use CartTrait;
+	
 	/**
      * The table associated with the model.
      *
@@ -23,6 +27,23 @@ class ProductCommodity extends Model
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;
+	
+	private $defaultPrice = 0.01;
+	
+	/**
+     * @var int|string
+     */
+    private $id;
+    
+    /**
+     * @var string
+     */
+    private $name;
+    
+    /**
+     * @var float
+     */
+    private $price;
 	
 	/**
 	 * The attributes that are mass assignable.
@@ -51,6 +72,92 @@ class ProductCommodity extends Model
 		'pack_quantity',
 		'country_of_origin_id',
 	];
+	
+	/**
+     * Attributes that get appended on serialization
+     *
+     * @var array
+     */
+	protected $appends = [
+		'currency',
+	];
+	
+	/**
+     * BuyableProduct constructor.
+     *
+     * @param int|string 	$id
+     * @param string     	$title
+     * @param string     	$slug
+     * @param float      	$price
+     */
+    public function __construct($id = 1, $name = 'Product Commodity', $price = 0.01)
+    {
+        $this->id = $id;
+        
+        $this->name = $name;
+        
+        $this->price = $price;
+    }
+	
+	/**
+	 * Get the identifier of the Buyable item.
+	 *
+	 * @return int|string
+	 */
+	public function getBuyableIdentifier($options = null) : int
+	{
+		return $this->id;
+	}
+	
+	/**
+	 * Get the description or title of the Buyable item.
+	 *
+	 * @return string
+	 */
+	public function getBuyableDescription($options = null) : string
+	{
+		return $this->name;
+	}
+	
+	/**
+	 * Get the price of the Buyable item.
+	 *
+	 * @return float
+	 */
+	public function getBuyablePrice($options = null) : float
+	{
+		return $this->price;
+	}
+	
+	/**
+	 * Gets orders currency.
+	 *
+	 * @return string
+	 */
+	public function getCurrencyAttribute() : string
+	{
+		return '&pound;';
+	}
+	
+	/**
+	 * Gets the total formatted with 2 decimal places.
+	 */
+    public function getPriceAttribute($value) : float
+    {
+		if (!empty($value)) {
+			return $this->format2decimals($value);
+		} else {
+			return $this->price;
+		}
+	}
+	
+	/**
+	 * Formats value to 2 decimal places.
+	 */
+	protected function format2decimals(float $value) : float
+	{
+		return number_format($value, 2, '.', ',');
+	}
 	
 	/**
 	 * Get the product record associated with the product commodity.

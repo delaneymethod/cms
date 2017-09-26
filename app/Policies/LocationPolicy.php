@@ -40,10 +40,6 @@ class LocationPolicy
 		 * Otherwise, the location does not belong to any to the current users companies locations and the current
 		 * user cannot manage the location in question and a 403 forbiddon is thrown.
 		 */
-		if ($currentUser->company->locations->pluck('id')->contains($location->id)) {
-			return true;
-		}
-		
-		return false;
+		return $currentUser->company->locations->pluck('id')->contains($location->id);
 	}
 }

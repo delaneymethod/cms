@@ -32,9 +32,9 @@ class LoginController extends Controller
 	/**
 	 * Override register method in \Illuminate\Foundation\Auth\AuthenticatesUsers.php
 	 *
-	 * @param	\Illuminate\Http\Request  $request
-	 * @param  mixed  $user
-	 * @return mixed
+	 * @param	Request 	$request
+	 * @param 	mixed 		$user
+	 * @return 	mixed
 	 */
 	protected function authenticated(Request $request, $user) : RedirectResponse
 	{
@@ -64,6 +64,13 @@ class LoginController extends Controller
 		}
 		
 		// https://github.com/tutsplus/build-a-cms-with-laravel/blob/master/app/Listeners/UpdateLastLoginOnLogin.php
+		
+		// If we are redirecting user back to previous page, then we set the new route here
+		$redirectTo = $request->get('redirectTo');
+		
+		if (!empty($redirectTo)) {
+			$this->redirectTo = $redirectTo;	
+		}
 		
 		return redirect($this->redirectTo);
 	}

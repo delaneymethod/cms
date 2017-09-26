@@ -23,8 +23,8 @@ class CreateCartsTable extends Migration
 			
 			$table->longText('content');
 			
-			$table->timestamps();
-
+			$table->timestamps()->default('CURRENT_TIMESTAMP');
+			
 			$table->primary(['identifier', 'instance']);
 		});
 	

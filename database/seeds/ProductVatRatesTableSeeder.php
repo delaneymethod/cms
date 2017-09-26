@@ -1,7 +1,7 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use App\Http\Transformers\ProductTransformer;
 
 class ProductVatRatesTableSeeder extends Seeder
 {
@@ -14,20 +14,12 @@ class ProductVatRatesTableSeeder extends Seeder
 	{
 		DB::table('product_vat_rates')->delete();
 		
-		$now = Carbon::now()->format('Y-m-d H:i:s');
+		$productVatRates = json_decode(file_get_contents('database/data/vat_rates.json'), true);
 		
-		$vatRates = json_decode(file_get_contents('database/data/vat_rates.json'), true);
+		$productVatRates = ProductTransformer::transformProductVatRates($productVatRates);
 		
-		foreach ($vatRates as $vatRate) {
-			DB::table('product_vat_rates')->insert([
-				'id' => $vatRate['Id'],
-				'code' => $vatRate['Code'],
-				'description' => $vatRate['Description'],
-				'rate' => $vatRate['Rate'],
-				'rate_display' => $vatRate['RateDisplay'],
-    			'created_at' => $now,
-				'updated_at' => $now,
-			]);
-		}
+		collect($productVatRates)->each(function ($productVatRate) {
+			DB::table('product_vat_rates')->insert($productVatRate);
+		});
 	}
 }

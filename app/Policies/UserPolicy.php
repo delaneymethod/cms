@@ -44,10 +44,6 @@ class UserPolicy
 		 * Otherwise, the user does not belong to any to the current users companies users and the current
 		 * user cannot manage the user in question and a 403 forbiddon is thrown.
 		 */
-		if ($currentUser->company->users->pluck('id')->contains($user->id)) {
-			return true;
-		}
-		
-		return false;
+		return $currentUser->company->users->pluck('id')->contains($user->id);
 	}
 }

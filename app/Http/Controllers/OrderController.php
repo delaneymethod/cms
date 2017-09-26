@@ -10,12 +10,14 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use App;
+use Exception;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Jobs\ProcessOrder;
 use App\Events\OrderUpdated;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use App\Http\Traits\{CartTrait, OrderTrait, StatusTrait, OrderTypeTrait, ShippingMethodTrait};
 
 class OrderController extends Controller
@@ -33,7 +35,7 @@ class OrderController extends Controller
 		
 		$this->middleware('auth', [
 			'except' => [
-				'event'
+				'webhook'
 			]
 		]);
 	}
@@ -103,15 +105,15 @@ class OrderController extends Controller
 			$cart = $this->getCartInstance('cart');
 			
 			// Create our order based on cart content
-			$cleanedOrder['products'] = [];
+			$cleanedOrder['product_commodities'] = [];
 			
-			foreach ($cart->products as $product) {
-				array_push($cleanedOrder['products'], [
-					'product_id' => $product->id,
-					'quantity' => $product->qty,
-					'price' => $product->price,
-					'price_tax' => $product->priceTax,
-					'tax_rate' => $product->taxRate,
+			foreach ($cart->product_commodities as $productCommodity) {
+				array_push($cleanedOrder['product_commodities'], [
+					'product_commodity_id' => $productCommodity->id,
+					'quantity' => $productCommodity->qty,
+					'price' => $productCommodity->price,
+					'price_tax' => $productCommodity->priceTax,
+					'tax_rate' => $productCommodity->taxRate,
 				]);
 			}
 			
@@ -120,17 +122,17 @@ class OrderController extends Controller
 			$cleanedOrder['subtotal'] = $cart->subtotal;
 			$cleanedOrder['total'] = $cart->total;
 			
-			$products = count($cart->products) - 1;
+			$productCommodities = count($cart->productCommodities) - 1;
 			
 			// Set some dynamic rules to valid our order
 			$rules = [];
 			
 			foreach (range(0, $products) as $index) {
-				$rules['products.'.$index.'.product_id'] = 'required|integer';
-				$rules['products.'.$index.'.quantity'] = 'required|integer';
-				$rules['products.'.$index.'.price'] = 'required|numeric';
-				$rules['products.'.$index.'.price_tax'] = 'required|numeric';
-				$rules['products.'.$index.'.tax_rate'] = 'required|numeric';
+				$rules['product_commodities.'.$index.'.product_commodity_id'] = 'required|integer';
+				$rules['product_commodities.'.$index.'.quantity'] = 'required|integer';
+				$rules['product_commodities.'.$index.'.price'] = 'required|numeric';
+				$rules['product_commodities.'.$index.'.price_tax'] = 'required|numeric';
+				$rules['product_commodities.'.$index.'.tax_rate'] = 'required|numeric';
 			}
 			
 			$rules['count'] = 'required|integer';
@@ -171,7 +173,7 @@ class OrderController extends Controller
 				
 				$order->save();
 				
-				$order->setProducts($cleanedOrder['products']);
+				$order->setProductCommodities($cleanedOrder['product_commodities']);
 				
 				// finally empty the cart instance
 				$this->destroyCart();
@@ -289,25 +291,31 @@ class OrderController extends Controller
 	 * @params Request 	$request
      * @return Response
      */
-    public function event(Request $request) 
+    public function webhook(Request $request) 
     {
 	    $cleanedEvent = $this->sanitizerInput($request->all());
 	    
 	    if (!empty($cleanedEvent['event_id'])) {
 			switch ($cleanedEvent['event_type']) {
-				case 'order.updated':
-					// Grab the order and update it
-					$order = Order::find($cleanedEvent['data']['id']);
+				case 'orders.updated':
+					$orders = $cleanedEvent['data'];
+				
+					// TODO - Add in error checking and validation	
+							
+					collect($orders)->each(function ($data) {
+						// Grab and update it
+						$order = Order::find($data['id']);
 					
-					if (!is_null($order)) {
-						// Mass assignment
-						$order->fill($cleanedEvent['data']);
-					
-						$order->save();
-					
-						// Broadcast an OrderUpdated event
-						broadcast(new OrderUpdated($order));
-					}
+						if ($order) {
+							// Mass assignment
+							$order->fill($data);
+						
+							$order->save();
+						
+							// Broadcast an OrderUpdated event
+							broadcast(new OrderUpdated($order));
+						}
+					});
 					
 					break;
 			}

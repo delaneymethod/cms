@@ -9,11 +9,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\{CartTrait, PageTrait, ProductTrait};
+use App\Http\Traits\{UserTrait, CartTrait, PageTrait, ProductCommodityTrait};
 
 class CartController extends Controller
 {
-	use CartTrait, PageTrait, ProductTrait;
+	use UserTrait, CartTrait, PageTrait, ProductCommodityTrait;
 
 	/**
 	 * Create a new controller instance.
@@ -44,6 +44,62 @@ class CartController extends Controller
 			
 			$carts = $this->getCarts();
 			
+			foreach ($carts as &$cart) {
+				$user = explode('_', $cart->identifier);
+				
+				$cart->user = $this->getUser($user[1]);
+				
+				// Convert cart items into usable format.
+				$cartItems = unserialize($cart->content);
+				
+				$cart->cartTotalItems = $cartItems->count();
+				
+				// Create an array with both product and product commodity info so we can group by product
+				$productCommodities = [];
+				
+				foreach ($cartItems as $cartItem) {
+					array_push($productCommodities, [
+						'id' => $cartItem->id,
+						'title' => $cartItem->name,
+						'quantity' => $cartItem->qty,
+						'product_id' => $cartItem->model->product->id,
+						'product_title' => $cartItem->model->product->title,
+						'product_url' => $cartItem->model->product->url,
+						'product_image_url' => $cartItem->model->product->image_url,
+					]);
+				}
+				
+				// Create new array grouped by product title
+				$tmp = array();
+				
+				foreach ($productCommodities as $productCommodity) {
+					$tmp[$productCommodity['product_title']][] = [
+						'id' => $productCommodity['id'],
+						'title' => $productCommodity['title'],
+						'quantity' => $productCommodity['quantity'],
+						'product_id' => $productCommodity['product_id'],
+						'product_title' => $productCommodity['product_title'],
+						'product_url' => $productCommodity['product_url'],
+						'product_image_url' => $productCommodity['product_image_url'],
+					];
+				}
+				
+				// Now add back in product info
+				$cartItems = [];
+				
+				foreach ($tmp as $productTitle => $productCommodities) {
+					$cartItems[] = [
+						'product_id' => $productCommodities[0]['product_id'],
+						'product_title' => $productTitle,
+						'product_url' => $productCommodities[0]['product_url'],
+						'product_image_url' => $productCommodities[0]['product_image_url'],
+						'product_commodities' => $productCommodities,
+					];
+				}
+				
+				$cart->cartItems = $cartItems;
+			}
+			
 			return view('cp.carts.index', compact('currentUser', 'title', 'subTitle', 'carts'));
 		}
 		
@@ -51,7 +107,7 @@ class CartController extends Controller
 	}
 	
 	/**
-     * Stores a specific product in the cart.
+     * Stores a specific product commodity in the cart.
      *
 	 * @params Request 	$request
      * @return Response
@@ -62,7 +118,7 @@ class CartController extends Controller
 
 		if ($currentUser->hasPermission('create_orders')) {
 			// Remove any Cross-site scripting (XSS)
-			$cleanedProduct = $this->sanitizerInput($request->all());
+			$cleanedProductCommodity = $this->sanitizerInput($request->all());
 			
 			$rules = $this->getRules('cart');
 			
@@ -71,7 +127,7 @@ class CartController extends Controller
 			$rules['action'] = 'required|string';
 			
 			// Make sure all the input data is what we actually save
-			$validator = $this->validatorInput($cleanedProduct, $rules);
+			$validator = $this->validatorInput($cleanedProductCommodity, $rules);
 
 			if ($validator->fails()) {
 				$message = '';
@@ -87,47 +143,47 @@ class CartController extends Controller
 				abort(500, $message);
 			}
 			
-			// Grab product model
-			$product = $this->getProduct($cleanedProduct['id']);
+			// Grab product commodity model
+			$productCommodity = $this->getProductCommodity($cleanedProductCommodity['id']);
 			
-			// Pick the correct cart to store the product in
-			$this->setCartInstance($cleanedProduct['instance']);
+			// Pick the correct cart to store the product commodity in
+			$this->setCartInstance($cleanedProductCommodity['instance']);
 			
 			// Restore wishlist instances
-			if ($cleanedProduct['instance'] == 'wishlist') {
+			if ($cleanedProductCommodity['instance'] == 'wishlist') {
 				// User can only ever have 1 wishlist instance so no need for random strings
 				$this->restoreCartInstance('wishlist_'.$currentUser->id);
 			}
 			
 			// Note - You can pass a 3rd option with extra info ['size' => 'large']
-			$cartProduct = $this->addCartProduct($product->id, $product->title, $product->price);
+			$cartProductCommodity = $this->addCartProductCommodity($productCommodity->id, $productCommodity->title, $productCommodity->price);
 			
-			// Link it to the Product model
-			$this->associateCartProductWithModel($cartProduct->rowId);
+			// Link it to the Product Commodity model
+			$this->associateCartProductCommodityWithModel($cartProductCommodity->rowId);
 			
 			// Store wishlist instances
-			if ($cleanedProduct['instance'] == 'wishlist') {	
+			if ($cleanedProductCommodity['instance'] == 'wishlist') {	
 				$this->storeCartInstance('wishlist_'.$currentUser->id);
 			}
 			
-			// If the product was added to the cart from the wishlist, an action "remove_wishlist" will have been passed
-			if ($cleanedProduct['instance'] == 'cart' && $cleanedProduct['action'] == 'remove_wishlist') {
+			// If the product commodity was added to the cart from the wishlist, an action "remove_wishlist" will have been passed
+			if ($cleanedProductCommodity['instance'] == 'cart' && $cleanedProductCommodity['action'] == 'remove_wishlist') {
 				// Quickly switch cart instances
 				$this->setCartInstance('wishlist');
 				
-				// Grab any new wishlist products from the database incase of another user session
+				// Grab any new wishlist product commodities from the database incase of another user session
 				$this->restoreCartInstance('wishlist_'.$currentUser->id);
 				
-				// Grab the product from the wishlist
-				$wishlistProduct = $this->searchCart($cleanedProduct['id']);
+				// Grab the product commodity from the wishlist
+				$wishlistProductCommodity = $this->searchCart($cleanedProductCommodity['id']);
 				
 				// Make sure we actually have a product before trying to remove it
-				if ($wishlistProduct->count() > 0) {
-					// There should only be 1 product returned in the search...so grab the first item from the collection.
-					$wishlistProduct = $wishlistProduct->first();
+				if ($wishlistProductCommodity->count() > 0) {
+					// There should only be 1 product commodity returned in the search...so grab the first item from the collection.
+					$wishlistProductCommodity = $wishlistProductCommodity->first();
 					
-					// remove product from the cart
-					$this->removeCartProduct($wishlistProduct->rowId);
+					// remove product commodity from the cart
+					$this->removeCartProductCommodity($wishlistProductCommodity->rowId);
 				}
 				
 				// Store wishlist instances again if wishlist still have products
@@ -139,7 +195,14 @@ class CartController extends Controller
 				$this->setCartInstance('cart');
 			}
 			
-			flash('Product was added to your '.$cleanedProduct['instance'].'!', $level = 'success');
+			flash('Item was added to your '.$cleanedProductCommodity['instance'].'!', $level = 'success');
+			
+			// If we are redirecting user back to previous page, then we set the new route here
+			$redirectTo = $request->get('redirectTo');
+			
+			if (!empty($redirectTo)) {
+				return redirect($redirectTo);	
+			}
 			
 			return redirect('/cart');
 		}
@@ -148,7 +211,7 @@ class CartController extends Controller
 	}
     
     /**
-	 * Updates a specific product in the cart.
+	 * Updates a specific product commodity in the cart.
 	 *
 	 * @params	Request 	$request
 	 * @param	string			$rowId
@@ -160,7 +223,7 @@ class CartController extends Controller
 
 		if ($currentUser->hasPermission('create_orders')) {
 			// Remove any Cross-site scripting (XSS)
-			$cleanedProduct = $this->sanitizerInput($request->all());
+			$cleanedProductCommodity = $this->sanitizerInput($request->all());
 			
 			$rules = $this->getRules('cart');
 			
@@ -168,7 +231,7 @@ class CartController extends Controller
 			$rules['quantity'] = 'required|integer';
 				
 			// Make sure all the input data is what we actually save
-			$validator = $this->validatorInput($cleanedProduct, $rules);
+			$validator = $this->validatorInput($cleanedProductCommodity, $rules);
 	
 			if ($validator->fails()) {
 				$message = '';
@@ -184,22 +247,22 @@ class CartController extends Controller
 				abort(500, $message);
 			}
 			
-			// Grab product model - makes sure product actually exists as this call with fail if not!
-			$product = $this->getProduct($cleanedProduct['id']);
+			// Grab product commodity model - makes sure product commodity actually exists as this call with fail if not!
+			$productCommodity = $this->getProductCommodity($cleanedProductCommodity['id']);
 			
 			// Pick the correct cart to update the product in
-			$this->setCartInstance($cleanedProduct['instance']);
+			$this->setCartInstance($cleanedProductCommodity['instance']);
 			
-			// Make sure the product actually exists in the cart too!
-			$cartProduct = $this->getCartProduct($rowId);
+			// Make sure the product commodity actually exists in the cart too!
+			$cartProductCommodity = $this->getCartProductCommodity($rowId);
 			
-			if ($cleanedProduct['quantity'] == 0) {
-				$this->removeCartProduct($cartProduct->rowId);
+			if ($cleanedProductCommodity['quantity'] == 0) {
+				$this->removeCartProductCommodity($cartProductCommodity->rowId);
 				
-				flash('Product was removed from your '.$cleanedProduct['instance'].'!', $level = 'info');
+				flash('Item was removed from your '.$cleanedProductCommodity['instance'].'!', $level = 'info');
 			} else {
 				// Pass in row id and quantity
-				$this->updateCartProductQuantity($cartProduct->rowId, $cleanedProduct['quantity']);
+				$this->updateCartProductCommodityQuantity($cartProductCommodity->rowId, $cleanedProductCommodity['quantity']);
 			}
 			
 			return back();
@@ -209,7 +272,7 @@ class CartController extends Controller
 	}
 	
 	/**
-	 * Deletes a specific product in the cart or destroys the cart.
+	 * Deletes a specific product commodity in the cart or destroys the cart.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
@@ -221,19 +284,19 @@ class CartController extends Controller
 
 		if ($currentUser->hasPermission('create_orders')) {
 			// Remove any Cross-site scripting (XSS)
-			$cleanedProduct = $this->sanitizerInput($request->all());
+			$cleanedProductCommodity = $this->sanitizerInput($request->all());
 			
 			// Check the action
-			if ($cleanedProduct['action'] == 'delete_cart') {
+			if ($cleanedProductCommodity['action'] == 'delete_cart') {
 				// Pick the correct cart to destory
-				$this->setCartInstance($cleanedProduct['instance']);
+				$this->setCartInstance($cleanedProductCommodity['instance']);
 				
 				$this->destroyCart();
 		
-				flash('Your '.$cleanedProduct['instance'].' was deleted!', $level = 'info');
+				flash('Your '.$cleanedProductCommodity['instance'].' was deleted!', $level = 'info');
 				
 				return back();
-			} else if ($cleanedProduct['action'] == 'delete_product') {
+			} else if ($cleanedProductCommodity['action'] == 'delete_product_commodity') {
 				$rules = $this->getRules('cart');
 			
 				// Add some dynamic rules
@@ -241,7 +304,7 @@ class CartController extends Controller
 				$rules['row_id'] = 'required|alpha_num';
 				
 				// Make sure all the input data is what we actually save
-				$validator = $this->validatorInput($cleanedProduct, $rules);
+				$validator = $this->validatorInput($cleanedProductCommodity, $rules);
 	
 				if ($validator->fails()) {
 					$message = '';
@@ -257,26 +320,26 @@ class CartController extends Controller
 					abort(500, $message);
 				}
 				
-				// Grab product model
-				$product = $this->getProduct($cleanedProduct['id']);
+				// Grab product commodity model
+				$productCommodity = $this->getProductCommodity($cleanedProductCommodity['id']);
 				
-				// Pick the correct cart to delete product from
-				$this->setCartInstance($cleanedProduct['instance']);
+				// Pick the correct cart to delete product commodity from
+				$this->setCartInstance($cleanedProductCommodity['instance']);
 				
 				// Restore wishlist instances
-				if ($cleanedProduct['instance'] == 'wishlist') {
+				if ($cleanedProductCommodity['instance'] == 'wishlist') {
 					// User can only ever have 1 wishlist instance so no need for random strings
 					$this->restoreCartInstance('wishlist_'.$currentUser->id);
 				}
 				
-				$this->removeCartProduct($cleanedProduct['row_id']);
+				$this->removeCartProductCommodity($cleanedProductCommodity['row_id']);
 				
-				// Store wishlist instances again if wishlist still have products
-				if ($cleanedProduct['instance'] == 'wishlist' && $this->getCartCount() > 0) {	
+				// Store wishlist instances again if wishlist still have product commodities
+				if ($cleanedProductCommodity['instance'] == 'wishlist' && $this->getCartCount() > 0) {	
 					$this->storeCartInstance('wishlist_'.$currentUser->id);
 				}
 				
-				flash('Product was removed from your '.$cleanedProduct['instance'].'!', $level = 'info');
+				flash('Item was removed from your '.$cleanedProductCommodity['instance'].'!', $level = 'info');
 				
 				return back();
 			} else {

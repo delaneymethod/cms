@@ -69,6 +69,8 @@ class ProductCategory extends Model
 	 */
 	public function getUrlAttribute() : string
 	{
+		$this->segments = [];
+		
 		$this->getProductCategorySlug($this);
 		
 		// Add a blank segment to create first /

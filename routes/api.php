@@ -24,12 +24,14 @@ Route::prefix('v1')->group(function () {
 	// Ping routes
 	Route::get('/ping', 'ApiController@ping');
 	
-	// Event routes
-	Route::group(['prefix' => 'events'], function () {
-		Route::post('/order', 'OrderController@event');
+	// Webhooks routes
+	Route::group(['prefix' => 'webhooks'], function () {
+		Route::post('/products', 'ProductController@webhook');
 		
-		Route::post('/location', 'LocationController@event');
+		Route::post('/orders', 'OrderController@webhook');
 		
-		Route::post('/user', 'UserController@event');
+		Route::post('/locations', 'LocationController@webhook');
+		
+		Route::post('/users', 'UserController@webhook');
 	});
 });

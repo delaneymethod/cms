@@ -35,7 +35,11 @@
 	])
 	<section class="content">
 		<h2>Login</h2>
-		<form name="" id="" class="" role="form" method="POST" action="{{ route('login') }}">
+		@php ($redirectTo = request()->get('redirectTo'))
+		@if (!empty($redirectTo))
+			@php ($redirectTo = '?redirectTo='.$redirectTo)
+		@endif
+		<form name="" id="" class="" role="form" method="POST" action="{{ route('login') }}{{ $redirectTo }}">
 			{{ csrf_field() }}
 			<label for="email">Email Address</label>
 			<input type="email" name="email" id="email" class="" placeholder="" value="{{ old('email') }}" title="" required autofocus>

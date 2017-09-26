@@ -9,9 +9,11 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use Exception;
 use Illuminate\Http\Request;
 use App\Models\{Page, Content};
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use App\Http\Traits\{CartTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait};
 
 class PageController extends Controller

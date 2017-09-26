@@ -21,13 +21,14 @@ class CreateProductAttributeTable extends Migration
 			$table->unsignedBigInteger('product_id')->nullable()->index()->comment('Foreign key to the products table');
 			
 			$table->unsignedInteger('product_attribute_id')->nullable()->index()->comment('Foreign key to the product attributes table');
-			$table->unsignedInteger('fixed_characteristic_id')->nullable();
+			$table->unsignedInteger('product_characteristic_id')->nullable()->index()->comment('Foreign key to the product characteristics table');
 			$table->unsignedInteger('display_position')->nullable();
 		});
 
 		Schema::table('product_attribute', function (Blueprint $table) {
 			$table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
 			$table->foreign('product_attribute_id')->references('id')->on('product_attributes')->onDelete('cascade');
+			$table->foreign('product_characteristic_id')->references('id')->on('product_characteristics')->onDelete('cascade');
 		});
 	}
 

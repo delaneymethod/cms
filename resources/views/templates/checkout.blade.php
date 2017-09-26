@@ -136,45 +136,38 @@
 											<thead>
 												<tr>
 													<th>Product</th>
-													<th>Qty</th>
-													<th>Price</th>
-													<th>Subtotal</th>
+													<th>Product Commodity</th>
+													<th class="text-center">Qty</th>
+													<th class="text-center">Price</th>
+													<th class="text-right">Subtotal</th>
 												</tr>
 											</thead>
 											<tbody>
-												@foreach ($cart->products as $product)
+												@foreach ($cart->product_commodities as $productCommodity)
 													<tr>
-														<td>
-															<span class="productInfo">
-																<a href="/products/{{ $product->model->slug }}" title="{{ $product->name }}">{{ $product->name }}</a>
-																@if ($product->options->has('size'))
-																	<span class="productInfoSize">Size: {{ $product->options->size }}</span>
-																@endif
-															</span>
-														</td>
-														<td>
-															<span class="productQuantity">{{ $product->qty }}</span>
-														</td>
-														<td>{{ $product->price() }}</td>
-														<td>{{ $product->total() }}</td>
+														<td><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}">{{ $productCommodity->model->product->title }}</a></td>
+														<td>{{ $productCommodity->name }}</td>
+														<td class="text-center">{{ $productCommodity->qty }}</td>
+														<td class="text-right">{{ $productCommodity->price() }}</td>
+														<td class="text-right">{{ $productCommodity->total() }}</td>
 													</tr>
 												@endforeach
 											</tbody>
 											<tfoot>
 												<tr>
-													<td colspan="2">&nbsp;</td>
-													<td>Subtotal</td>
-													<td>{{ $cart->subtotal }}</td>
+													<td colspan="3">&nbsp;</td>
+													<td class="text-right">Subtotal</td>
+													<td class="text-right">{{ $cart->subtotal }}</td>
 												</tr>
 												<tr>
-													<td colspan="2">&nbsp;</td>
-													<td>Tax</td>
-													<td>{{ $cart->tax }}</td>
+													<td colspan="3">&nbsp;</td>
+													<td class="text-right">Tax</td>
+													<td class="text-right">{{ $cart->tax }}</td>
 												</tr>
 												<tr>
-													<td colspan="2">&nbsp;</td>
-													<td>Total</td>
-													<td>{{ $cart->total }}</td>
+													<td colspan="3">&nbsp;</td>
+													<td class="text-right">Total</td>
+													<td class="text-right">{{ $cart->total }}</td>
 												</tr>
 											</tfoot>
 										</table>

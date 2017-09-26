@@ -12,11 +12,11 @@ use Log;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\{CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, ProductTrait, CompanyTrait, ArticleTrait, LocationTrait, TemplateTrait, ArticleCategoryTrait};
+use App\Http\Traits\{CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, CompanyTrait, ArticleTrait, LocationTrait, TemplateTrait, ArticleCategoryTrait};
 
 class DashboardController extends Controller
 {
-	use CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, ProductTrait, CompanyTrait, ArticleTrait, LocationTrait, TemplateTrait, ArticleCategoryTrait;
+	use CartTrait, PageTrait, UserTrait, RoleTrait, OrderTrait, AssetTrait, StatusTrait, CompanyTrait, ArticleTrait, LocationTrait, TemplateTrait, ArticleCategoryTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -98,16 +98,6 @@ class DashboardController extends Controller
 				'label' => 'Locations',
 				'url' => '/cp/locations',
 				'count' => $locations->count()
-			]);
-		}
-				
-		if ($currentUser->hasPermission('view_products')) {
-			$products = $this->getProducts();
-			
-			array_push($statCards, [
-				'label' => 'Products',
-				'url' => '/cp/products',
-				'count' => $products->count()
 			]);
 		}
 				

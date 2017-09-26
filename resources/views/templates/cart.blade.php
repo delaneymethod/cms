@@ -8,17 +8,17 @@
 				<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 					<thead>
 						<tr>
-							<th>Identifier</th>
-							<th>Products</th>
+							<th class="align-middle">Identifier</th>
+							<th class="align-middle text-center">Items</th>
 							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
 						@foreach ($savedCarts as $savedCart)
 							<tr>
-								<td>{{ str_replace('_'.$currentUser->id, '', $savedCart->identifier) }}</td>
-								<td>{{ $savedCart->content->count() }}</td>
-								<td><a href="/cart/restore/{{ $savedCart->identifier }}" title="Restore Cart">Restore Cart</a></td>
+								<td class="align-middle">{{ str_replace('_'.$currentUser->id, '', $savedCart->identifier) }}</td>
+								<td class="align-middle text-center">{{ $savedCart->content->count() }}</td>
+								<td class="align-middle text-center"><a href="/cart/restore/{{ $savedCart->identifier }}" title="Restore Cart" class="btn btn-link text-gf-info">Restore Cart</a></td>
 							</tr>
 						@endforeach
 					</tbody>
@@ -28,17 +28,18 @@
 			<h2>Your Cart</h2>
 			@if ($cart->count > 0)
 			
-				<ul>
-					<li><a href="/cart/save" title="Save Cart for Later">Save Cart for Later</a></li>
-					<li>
-						@component('_components.cart.removeProduct', [
-							'product' => (object) [
+				<ul class="list-unstyled list-inline">
+					<li class="list-inline-item"><a href="/cart/save" title="Save Cart for Later" class="btn btn-outline-secondary">Save Cart for Later</a></li>
+					<li class="list-inline-item">
+						@component('_components.cart.removeProductCommodity', [
+							'productCommodity' => (object) [
 								'id' => 0,
 								'rowId' => ''
 							],
 							'instance' => 'cart',
 							'action' => 'delete_cart',
-							'buttonLabel' => 'Empty Cart'
+							'buttonLabel' => 'Empty Cart',
+							'extraClasses' => 'btn btn-outline-danger'
 						])
 						@endcomponent
 					</li>
@@ -47,95 +48,99 @@
 				<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 					<thead>
 						<tr>
-							<th>Product</th>
-							<th>Qty</th>
-							<th>Price</th>
-							<th>Subtotal</th>
+							<th>&nbsp;</th>
+							<th class="align-middle">Product</th>
+							<th class="align-middle">Product Commodity</th>
+							<th colspan="3" class="align-middle text-center">Qty</th>
+							<th class="align-middle text-right">Price</th>
+							<th class="align-middle text-right">Subtotal</th>
+							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($cart->products as $product)
+						@foreach ($cart->product_commodities as $productCommodity)
 							<tr>
-								<td>
-									<span class="productRemove">
-										@component('_components.cart.removeProduct', [
-											'product' => $product, 
-											'instance' => 'cart',
-											'action' => 'delete_product',
-											'buttonLabel' => 'Remove Product'
-										])
-										@endcomponent
-									</span>
-									<span class="productInfo">
-										<a href="/products/{{ $product->model->slug }}" title="{{ $product->name }}">{{ $product->name }}</a>
-										@if ($product->options->has('size'))
-											<span class="productInfoSize">Size: {{ $product->options->size }}</span>
-										@endif
-									</span>
-								</td>
-								<td>
-									@component('_components.cart.updateProduct', [
-										'product' => $product, 
+								<td class="align-middle text-center"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-info"><img src="{{ $productCommodity->model->product->image_url }}" class="img-fluid" alt="{{ $productCommodity->model->product->title }}"></a></td>
+								<td class="align-middle"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-info">{{ $productCommodity->model->product->title }}</a></td>
+								<td class="align-middle">{{ $productCommodity->name }}</td>
+								<td class="align-middle text-center">
+									@component('_components.cart.updateProductCommodity', [
+										'productCommodity' => $productCommodity, 
 										'instance' => 'cart',
-										'quantity' => ($product->qty - 1),
-										'buttonLabel' => '-'
-									])
-									@endcomponent
-									
-									<span class="productQuantity">{{ $product->qty }}</span>
-									
-									@component('_components.cart.updateProduct', [
-										'product' => $product, 
-										'instance' => 'cart',
-										'quantity' => ($product->qty + 1),
-										'buttonLabel' => '+'
+										'quantity' => ($productCommodity->qty - 1),
+										'buttonLabel' => '-',
+										'extraClasses' => 'btn btn-outline-info'
 									])
 									@endcomponent
 								</td>
-								<td>{{ $product->price() }}</td>
-								<td>{{ $product->total() }}</td>
+								<td class="align-middle text-center">{{ $productCommodity->qty }}</td>
+								<td class="align-middle text-center">
+									@component('_components.cart.updateProductCommodity', [
+										'productCommodity' => $productCommodity, 
+										'instance' => 'cart',
+										'quantity' => ($productCommodity->qty + 1),
+										'buttonLabel' => '+',
+										'extraClasses' => 'btn btn-outline-info'
+									])
+									@endcomponent
+								</td>
+								<td class="align-middle text-right">{{ $productCommodity->price() }}</td>
+								<td class="align-middle text-right">{{ $productCommodity->total() }}</td>
+								<td class="align-middle text-center">
+									@component('_components.cart.removeProductCommodity', [
+										'productCommodity' => $productCommodity, 
+										'instance' => 'cart',
+										'action' => 'delete_product_commodity',
+										'buttonLabel' => 'Remove',
+										'extraClasses' => 'btn btn-link text-gf-red'
+									])
+									@endcomponent
+								</td>
 							</tr>
 						@endforeach
 					</tbody>
 					<tfoot>
 						<tr>
-							<td colspan="2">&nbsp;</td>
-							<td>Subtotal</td>
-							<td>{{ $cart->subtotal }}</td>
+							<td colspan="6">&nbsp;</td>
+							<td class="align-middle text-right">Subtotal</td>
+							<td class="align-middle text-right">{{ $cart->subtotal }}</td>
+							<td>&nbsp;</td>
 						</tr>
 						<tr>
-							<td colspan="2">&nbsp;</td>
-							<td>Tax</td>
-							<td>{{ $cart->tax }}</td>
+							<td colspan="6">&nbsp;</td>
+							<td class="align-middle text-right">Tax</td>
+							<td class="align-middle text-right">{{ $cart->tax }}</td>
+							<td>&nbsp;</td>
 						</tr>
 						<tr>
-							<td colspan="2">&nbsp;</td>
-							<td>Total</td>
-							<td>{{ $cart->total }}</td>
+							<td colspan="6">&nbsp;</td>
+							<td class="align-middle text-right">Total</td>
+							<td class="align-middle text-right">{{ $cart->total }}</td>
+							<td>&nbsp;</td>
 						</tr>
 					</tfoot>
 				</table>
 				
-				<ul>
-					<li><a href="/cart/save" title="Save Cart for Later">Save Cart for Later</a></li>
-					<li>
-						@component('_components.cart.removeProduct', [
-							'product' => (object) [
+				
+				
+				<ul class="list-unstyled list-inline">
+					<li class="list-inline-item"><a href="/cart/save" title="Save Cart for Later" class="btn btn-outline-secondary">Save Cart for Later</a></li>
+					<li class="list-inline-item">
+						@component('_components.cart.removeProductCommodity', [
+							'productCommodity' => (object) [
 								'id' => 0,
 								'rowId' => ''
 							],
 							'instance' => 'cart',
 							'action' => 'delete_cart',
-							'buttonLabel' => 'Empty Cart'
+							'buttonLabel' => 'Empty Cart',
+							'extraClasses' => 'btn btn-outline-danger '
 						])
 						@endcomponent
 					</li>
 					
+					<li class="list-inline-item pull-right"><a href="/cart/checkout" title="Checkout" class="btn btn-primary">Checkout</a></li>
 				</ul>
-				
-				
-				<p><a href="/cart/checkout" title="Checkout">Checkout</a></p>
-				
 			@else
 				<p>There are currently no items in your cart!</p>
 			@endif
@@ -145,33 +150,36 @@
 				<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 					<thead>
 						<tr>
-							<th>Product</th>
+							<th>&nbsp;</th>
+							<th class="align-middle">Product</th>
+							<th class="align-middle">Product Commodity</th>
+							<th colspan="2">&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($wishlistCart->products as $product)
+						@foreach ($wishlistCart->product_commodities as $productCommodity)
 							<tr>
-								<td>
-									<span class="productRemove">
-										@component('_components.cart.removeProduct', [
-											'product' => $product, 
-											'instance' => 'wishlist',
-											'action' => 'delete_product',
-											'buttonLabel' => 'Remove Product'
-										])
-										@endcomponent
-									</span>
-									<span class="productInfo">
-										<a href="/products/{{ $product->model->slug }}" title="{{ $product->name }}">{{ $product->name }}</a>
-									</span>
-									<span class="productAdd">
-										@component('_components.cart.addProduct', [
-											'product' => $product, 
-											'instance' => 'cart', 
-											'action' => 'remove_wishlist'
-										])
-										@endcomponent
-									</span>
+								<td class="align-middle text-center"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-info"><img src="{{ $productCommodity->model->product->image_url }}" class="img-fluid" alt="{{ $productCommodity->model->product->title }}"></a></td>
+								<td class="align-middle text-left"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-info">{{ $productCommodity->model->product->title }}</a></td>
+								<td class="align-middle text-left">{{ $productCommodity->name }}</td>
+								<td class="align-middle text-center">	
+									@component('_components.cart.addProductCommodity', [
+										'productCommodity' => $productCommodity, 
+										'instance' => 'cart', 
+										'action' => 'remove_wishlist',
+										'extraClasses' => 'btn btn-outline-success'
+									])
+									@endcomponent
+								</td>
+								<td class="align-middle text-center">	
+									@component('_components.cart.removeProductCommodity', [
+										'productCommodity' => $productCommodity, 
+										'instance' => 'wishlist',
+										'action' => 'delete_product_commodity',
+										'buttonLabel' => 'Remove',
+										'extraClasses' => 'btn btn-link text-gf-red'
+									])
+									@endcomponent
 								</td>
 							</tr>
 						@endforeach

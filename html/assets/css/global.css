@@ -11461,6 +11461,22 @@ a,
   color: #C0392B;
 }
 
+.text-gf-blue {
+  color: #3498DB;
+}
+
+.text-gf-blue:hover {
+  color: #3498DB;
+}
+
+.text-gf-info {
+  color: #2980B9;
+}
+
+.text-gf-info:hover {
+  color: #2980B9;
+}
+
 .text-muted-lighter {
   color: #c1c1c1;
 }

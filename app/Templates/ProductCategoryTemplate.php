@@ -36,20 +36,20 @@ class ProductCategoryTemplate extends Template
 		// Grab all products - if any - based on business rules, only product categories at the bottom of the chain have products
 		$products = $this->getProductsByProductCategory($productCategory->id);
 		
-		$productAttributeHeadings = null;
+		$productAttributes = [];
 		
 		if ($products->count() > 0) {
-			// Work out all the product attribuet headings
-			$productAttributeHeadings = collect([]);
-		
-			$products->each(function ($product) use ($productAttributeHeadings) {
-				$product->product_attributes->each(function ($productAttribute) use ($productAttributeHeadings) {
-					$productAttributeHeadings->push($productAttribute->title);
-				});
-			});
-		
-			$productAttributeHeadings = $productAttributeHeadings->unique();
+			foreach ($products as $product) {
+				foreach ($product->product_attributes as $productAttribute) {
+					array_push($productAttributes, [
+						'id' => $productAttribute->id,
+						'title' => $productAttribute->title,
+					]);
+				}
+			}
 		}
+		
+		$productAttributes = collect($productAttributes)->unique()->toArray();
 		
 		$page->breadcrumbs = collect([]);
 		
@@ -87,6 +87,6 @@ class ProductCategoryTemplate extends Template
 		
 		$page->keywords = '';
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategory', 'productCategories', 'products', 'productAttributeHeadings'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategory', 'productCategories', 'products', 'productAttributes'));
 	}
 }

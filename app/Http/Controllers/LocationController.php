@@ -9,9 +9,12 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use Exception;
 use App\Models\Location;
 use Illuminate\Http\Request;
+use App\Events\LocationUpdated;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use App\Http\Traits\{StatusTrait, CountyTrait, CountryTrait, CompanyTrait, LocationTrait};
 
 class LocationController extends Controller
@@ -29,7 +32,7 @@ class LocationController extends Controller
 		
 		$this->middleware('auth', [
 			'except' => [
-				'event'
+				'webhook'
 			]
 		]);
 		
@@ -499,13 +502,33 @@ class LocationController extends Controller
 	 * @params Request 	$request
      * @return Response
      */
-    public function event(Request $request) 
+    public function webhook(Request $request) 
     {
 	    $cleanedEvent = $this->sanitizerInput($request->all());
 	    
-		if (!empty($cleanedEvent['id'])) {
-			switch ($cleanedEvent['type']) {
-				// TODO
+		if (!empty($cleanedEvent['event_id'])) {
+			switch ($cleanedEvent['event_type']) {
+				case 'locations.updated':
+					$locations = $cleanedEvent['data'];
+				
+					// TODO - Add in error checking and validation	
+							
+					collect($locations)->each(function ($data) {
+						// Grab and update it
+						$location = Location::find($data['id']);
+					
+						if ($location) {
+							// Mass assignment
+							$location->fill($data);
+						
+							$location->save();
+						
+							// Broadcast an LocationUpdated event
+							broadcast(new LocationUpdated($location));
+						}
+					});
+					
+					break;
 			}
 		}
 	}

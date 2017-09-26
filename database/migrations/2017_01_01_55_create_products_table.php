@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
 			$table->string('title')->index();
 			$table->string('slug')->index();
 			
+			$table->unsignedInteger('import_id')->nullable();
 			$table->unsignedInteger('sort_order')->nullable();
 			
 			$table->unsignedBigInteger('product_category_id')->nullable()->index()->comment('Foreign key to the product categories table');

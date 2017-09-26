@@ -9,7 +9,7 @@ namespace App\Http\Traits;
 
 use Cart;
 use Gloudemans\Shoppingcart\CartItem;
-use App\Models\{Product, Cart as Kart};
+use App\Models\{Cart as Kart, ProductCommodity};
 use Illuminate\Support\Collection as SupportCollectionResponse;
 use Illuminate\Database\Eloquent\Collection as EloquentCollectionResponse;
 
@@ -60,12 +60,12 @@ trait CartTrait
 	}
 	
 	/**
-	 * Gets specific product from cart instance based on row id.
+	 * Gets specific product commodity from cart instance based on row id.
 	 *
 	 * @param 	string			$rowId
 	 * @return 	Object
 	 */
-	public function getCartProduct(string $rowId) : CartItem
+	public function getCartProductCommodity(string $rowId) : CartItem
 	{
 		return Cart::get($rowId);
 	}
@@ -91,7 +91,7 @@ trait CartTrait
 		$this->setCartInstance($instance);
 		
 		return (object) [
-			'products' => Cart::content(),
+			'product_commodities' => Cart::content(),
 			'count' => Cart::count(),
 			'subtotal' => Cart::subtotal(),
 			'tax' => Cart::tax(),
@@ -118,26 +118,26 @@ trait CartTrait
 	}
 	
 	/**
-	 * Adds a product to the cart instance.
+	 * Adds a product commodity to the cart instance.
 	 *
 	 * @param 	int 		$id
 	 * @param 	string 		$title
 	 * @param 	float 		$price
 	 * @return 	Object
 	 */
-	public function addCartProduct(int $id, string $title, float $price) : CartItem
+	public function addCartProductCommodity(int $id, string $title, float $price) : CartItem
 	{
 		return Cart::add($id, $title, 1, $price);
 	}
 	
 	/**
-	 * Updates a products quantity in the cart instance.
+	 * Updates a product commodities quantity in the cart instance.
 	 *
 	 * @param 	string 		$rowId
 	 * @param 	int 		$quantity
 	 * @return 	void
 	 */
-	public function updateCartProductQuantity(string $rowId, int $quantity)
+	public function updateCartProductCommodityQuantity(string $rowId, int $quantity)
 	{
 		Cart::update($rowId, $quantity);
 	}
@@ -176,36 +176,36 @@ trait CartTrait
 	}
 	
 	/**
-	 * Searches cart instance for product based on product id
+	 * Searches cart instance for product commodity based on product id
 	 *
 	 * @param 	int			$id
 	 * @return 	collection
 	 */
 	public function searchCart(int $id) : SupportCollectionResponse
 	{
-		return Cart::search(function ($product, $rowId) use ($id) {
-			return $product->id === $id;
+		return Cart::search(function ($productCommodity, $rowId) use ($id) {
+			return $productCommodity->id === $id;
 		});
 	}
 	
 	/**
-	 * Links cart product to the Product model
+	 * Links cart product commodity to the Product Commodity model
 	 *
 	 * @param 	string 		$rowId
 	 * @return 	void
 	 */
-	public function associateCartProductWithModel(string $rowId)
+	public function associateCartProductCommodityWithModel(string $rowId)
 	{
-		Cart::associate($rowId, Product::class);
+		Cart::associate($rowId, ProductCommodity::class);
 	}
 	
 	/**
-	 * Remove a product from the cart instance.
+	 * Remove a product commodity from the cart instance.
 	 *
 	 * @param 	string 		$rowId
 	 * @return 	void
 	 */
-	public function removeCartProduct(string $rowId)
+	public function removeCartProductCommodity(string $rowId)
 	{
 		Cart::remove($rowId);
 	}

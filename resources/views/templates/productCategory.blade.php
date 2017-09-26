@@ -27,8 +27,8 @@
 								<tr>
 									<th>Image</th>
 									<th>Description</th>
-									@foreach ($productAttributeHeadings as $productAttributeHeading)
-										<th>{{ $productAttributeHeading }}</th>
+									@foreach ($productAttributes as $productAttribute)
+										<th>{{ $productAttribute['title'] }}</th>
 									@endforeach
 								</tr>
 							</thead>
@@ -36,18 +36,13 @@
 								@foreach ($products as $product)
 									@php ($productUrl = $product->url)
 									<tr>
-										<td>
-											<a href="{{ $productUrl }}" title="{{ $product->title }}"><img src="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->title }}"></a>
-										</td>	
-										<td>
-											<a href="{{ $productUrl }}" title="{{ $product->title }}">{{ $product->description }}</a>
-										</td>
-										@foreach ($productAttributeHeadings as $productAttributeHeading)
-											@php ($productAttribute = $product->product_attributes->where('title', $productAttributeHeading)->first())
-											@if (!empty($productAttribute))
-												<td>{{ $productAttribute->title }}</td>
+										<td><a href="{{ $productUrl }}" title="{{ $product->short_name }}"><img src="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->short_name }}"></a></td>	
+										<td><a href="{{ $productUrl }}" title="{{ $product->short_name }}">{{ $product->title }}</a></td>
+										@foreach ($productAttributes as $productAttribute)
+											@if (array_key_exists($productAttribute['id'], $product->attributes_characteristics)) 
+												<td>{{ $product->attributes_characteristics[$productAttribute['id']]['value'] }}</td>
 											@else
-												<td>&nbsp;</td>	
+												<td>&nbsp;</td>
 											@endif
 										@endforeach
 									</tr>

@@ -9,11 +9,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Traits\ProductCategoryTrait;
-use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo, BelongsToMany};
-use App\Models\{Order, ProductVatRate, ProductStandard, ProductCategory, ProductCommodity, ProductAttribute, ProductManufacturer};
+use App\Models\{Order, ProductVatRate, ProductStandard, ProductCategory, ProductCommodity, ProductAttribute, ProductManufacturer, ProductCharacteristic};
 
-class Product extends Model implements Buyable
+class Product extends Model
 {
 	use ProductCategoryTrait;
 	
@@ -40,6 +39,7 @@ class Product extends Model implements Buyable
 	protected $fillable = [
 		'title',
 		'slug',
+		'import_id',
 		'sort_order',
 		'product_category_id',
 		'product_manufacturer_id',
@@ -65,71 +65,9 @@ class Product extends Model implements Buyable
      */
 	protected $appends = [
 		'url',
-		'currency',
 		'image_url',
+		'attributes_characteristics',
 	];
-	
-	/**
-     * @var int|string
-     */
-    private $id;
-    
-    /**
-     * @var string
-     */
-    private $name;
-    
-    /**
-     * @var float
-     */
-    private $price;
-    
-    /**
-     * BuyableProduct constructor.
-     *
-     * @param int|string 	$id
-     * @param string     	$title
-     * @param string     	$slug
-     * @param float      	$price
-     */
-    public function __construct($id = 1, $name = 'Product Name', $price = 0.01)
-    {
-        $this->id = $id;
-        
-        $this->name = $name;
-        
-        $this->price = $price;
-    }
-	
-	/**
-	 * Get the identifier of the Buyable item.
-	 *
-	 * @return int|string
-	 */
-	public function getBuyableIdentifier($options = null) : string
-	{
-		return (string) $this->id;
-	}
-	
-	/**
-	 * Get the description or title of the Buyable item.
-	 *
-	 * @return string
-	 */
-	public function getBuyableDescription($options = null) : string
-	{
-		return $this->name;
-	}
-	
-	/**
-	 * Get the price of the Buyable item.
-	 *
-	 * @return float
-	 */
-	public function getBuyablePrice($options = null) : float
-	{
-		return $this->price;
-	}
 	
 	/**
 	 * Get the product record associated with the product.
@@ -140,12 +78,60 @@ class Product extends Model implements Buyable
 	}
 	
 	/**
+	 * Gets product attributes characteristics.
+	 *
+	 * @return array
+	 */
+	public function getAttributesCharacteristicsAttribute() : array
+	{
+		// Build up the product attributes and characteristics
+		$productAattributesCharacteristics = [];
+		
+		foreach ($this->product_characteristics as $productCharacteristic) {
+			$productAattributesCharacteristics[$productCharacteristic->product_attribute->id] = [
+				'title' => $productCharacteristic->product_attribute->title,
+				'value' => $productCharacteristic->value,
+			];
+		}
+		
+		return $productAattributesCharacteristics;
+	}
+	
+	/**
+	 * Gets product description but pretty.
+	 *
+	 * @return array
+	 */
+	public function getDescriptionAttribute(string $description) : string
+	{
+		// Fix up the description
+		$description = str_replace(["\r\n", "\r", "\n"], '<br>', $description);
+		
+		// Split into paragraphs
+		$descriptions = explode('<br>', $description); 
+		
+		// Remove empty or null paragraphs 
+		$descriptions = array_filter($descriptions, 'strlen');
+		
+		// Fixes keys - not needed but I have OCD
+		$descriptions = array_values($descriptions);
+		
+		foreach ($descriptions as &$description) {
+			$description = '<p>'.$description.'</p>';
+		}
+		
+		return implode('', $descriptions);
+	}
+	
+	/**
 	 * Gets product url.
 	 *
 	 * @return string
 	 */
 	public function getUrlAttribute() : string
 	{
+		$this->segments = [];
+		
 		$this->getProductSlug($this);
 		
 		// Incase the product is loaded directly
@@ -190,36 +176,6 @@ class Product extends Model implements Buyable
 	public function getImageUrlAttribute() : string
 	{
 		return $this->cloudfrontUrl.$this->image_uri;
-	}
-	
-	/**
-	 * Gets orders currency.
-	 *
-	 * @return string
-	 */
-	public function getCurrencyAttribute() : string
-	{
-		return '&pound;';
-	}
-	
-	/**
-	 * Gets the total formatted with 2 decimal places.
-	 */
-    public function getPriceAttribute($value) : float
-    {
-		if (!empty($value)) {
-			return $this->format2decimals($value);
-		} else {
-			return 0.0;
-		}
-	}
-	
-	/**
-	 * Formats value to 2 decimal places.
-	 */
-	protected function format2decimals(float $value) : float
-	{
-		return number_format($value, 2, '.', ',');
 	}
 	
 	/**
@@ -287,7 +243,7 @@ class Product extends Model implements Buyable
 	 */
 	public function product_attributes() : BelongsToMany
 	{
-		return $this->belongsToMany(ProductAttribute::class, 'product_attribute')->withPivot('fixed_characteristic_id', 'display_position')->orderBy('display_position');
+		return $this->belongsToMany(ProductAttribute::class, 'product_attribute')->withPivot('product_attribute_id', 'product_characteristic_id', 'display_position')->orderBy('display_position');
 	}
 	
 	/**
@@ -298,6 +254,24 @@ class Product extends Model implements Buyable
 	public function setProductAttributes(array $productAttributes)
 	{
 		return $this->product_attributes()->sync($productAttributes);
+	}
+	
+	/**
+	 * Get the product characteristic records associated with the product.
+	 */
+	public function product_characteristics() : BelongsToMany
+	{
+		return $this->belongsToMany(ProductCharacteristic::class, 'product_attribute')->withPivot('product_attribute_id', 'product_characteristic_id', 'display_position')->orderBy('display_position');
+	}
+	
+	/**
+	 * Set product characteristics for the product.
+	 *
+	 * $param 	array 	$productCharacteristics
+	 */
+	public function setProductCharacteristics(array $productCharacteristics)
+	{
+		return $this->product_characteristics()->sync($productCharacteristics);
 	}
 	
 	/**

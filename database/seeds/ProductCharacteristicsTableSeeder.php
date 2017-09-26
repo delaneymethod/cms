@@ -1,7 +1,7 @@
 <?php
-
-use Carbon\Carbon;
+	
 use Illuminate\Database\Seeder;
+use App\Http\Transformers\ProductTransformer;
 
 class ProductCharacteristicsTableSeeder extends Seeder
 {
@@ -14,19 +14,13 @@ class ProductCharacteristicsTableSeeder extends Seeder
 	{
 		DB::table('product_characteristics')->delete();
 		
-		$now = Carbon::now()->format('Y-m-d H:i:s');
+		$productCharacteristics = json_decode(file_get_contents('database/data/characteristics.json'), true);
 		
-		$characteristics = json_decode(file_get_contents('database/data/characteristics.json'), true);
+		$productCharacteristics = ProductTransformer::transformProductCharacteristics($productCharacteristics);
+			
+		collect($productCharacteristics)->each(function ($productCharacteristic) {
+			DB::table('product_characteristics')->insert($productCharacteristic);
+		});
 		
-		foreach ($characteristics as $characteristic) {
-			DB::table('product_characteristics')->insert([
-				'id' => $characteristic['Id'],
-				'product_attribute_id' => $characteristic['AttributeId'],
-				'value' => $characteristic['Value'],
-				'commodity_code_representation' => $characteristic['CommodityCodeRepresentation'],
-				'created_at' => $now,
-				'updated_at' => $now,
-			]);
-		}
 	}
 }
