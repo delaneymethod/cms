@@ -9,8 +9,8 @@ namespace App\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{Status, Product, Location, OrderType, ShippingMethod};
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
+use App\Models\{Status, Location, OrderType, ShippingMethod, ProductCommodity};
 
 class Order extends Model
 {
@@ -72,7 +72,7 @@ class Order extends Model
 	public function getPostalAddressAttribute() : string
 	{
 		$locationPostalAddress = explode(',', $this->user->location->postal_address);
-			
+		
 		$locationPostalAddress = array_map('trim', $locationPostalAddress);
 
 		$locationPostalAddress = array_merge([], [$this->user->location->title], $locationPostalAddress);
@@ -147,21 +147,21 @@ class Order extends Model
 	}
 	
 	/**
-	 * Get the product records associated with the order.
+	 * Get the product commodities records associated with the order.
 	 */
-	public function products() : BelongsToMany
+	public function product_commodities() : BelongsToMany
 	{
-		return $this->belongsToMany(Product::class, 'order_product')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');;
+		return $this->belongsToMany(ProductCommodity::class, 'order_product_commodity')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');;
 	}
 	
 	/**
-	 * Set products for the order.
+	 * Set product commodities for the order.
 	 *
-	 * $param 	array 	$products
+	 * $param 	array 	$productCommodities
 	 */
-	public function setProducts(array $products)
+	public function setProductCommodities(array $productCommodities)
 	{
-		return $this->products()->sync($products);
+		return $this->product_commodities()->sync($productCommodities);
 	}
 	
 	/**

@@ -27,7 +27,8 @@ class CreateProductStandardsTable extends Migration
 			
 			$table->unsignedInteger('product_standard_organisation_id')->nullable()->index()->comment('Foreign key to the product standard organisations table');
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('product_standards', function (Blueprint $table) {

@@ -26,26 +26,26 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th>Order Type</th>
-								<th>Order Number</th>
-								<th>PO Number</th>
-								<th>Location</th>
-								<th>Date</th>
-								<th class="text-center">Status</th>
-								<th class="no-sort">&nbsp;</th>
+								<th class="align-middle">Order Type</th>
+								<th class="align-middle">Order Number</th>
+								<th class="align-middle">PO Number</th>
+								<th class="align-middle">Location</th>
+								<th class="align-middle">Date</th>
+								<th class="align-middle text-center">Status</th>
+								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($orders as $order)
 								<tr>
-									<td data-search="{{ $order->user->company->title }}">{{ $order->order_type->title }}</td>
-									<td>{{ $order->order_number }}{!! ($order->isPending()) ? '&nbsp;<span id="order-'.$order->id.'-status-badge" class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
-									<td>{{ $order->po_number }}</td>
-									<td>{{ str_replace('<br>', ', ', $order->postal_address) }}</td>
-									<td data-search="{{ $order->created_at->format('d F Y H:i:s A') }}">{{ $order->created_at }}</td>
-									<td class="status text-center"><i id="order-{{ $order->id }}-status-icon" class="fa fa-circle fa-1 status_id-{{ $order->status->id }}" title="{{ $order->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
+									<td class="align-middle" data-search="{{ $order->user->company->title }}">{{ $order->order_type->title }}</td>
+									<td class="align-middle">{{ $order->order_number }}{!! ($order->isPending()) ? '&nbsp;<span id="order-'.$order->id.'-status-badge" class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$order->status->title.'</span>' : '' !!}</td>
+									<td class="align-middle">{{ $order->po_number }}</td>
+									<td class="align-middle">{{ str_replace('<br>', ', ', $order->postal_address) }}</td>
+									<td class="align-middle" data-search="{{ $order->created_at->format('d F Y H:i:s A') }}">{{ $order->created_at }}</td>
+									<td class="align-middle status text-center"><i id="order-{{ $order->id }}-status-icon" class="fa fa-circle fa-1 status_id-{{ $order->status->id }}" title="{{ $order->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('view_orders'))
-										<td class="actions dropdown text-center" id="submenu">
+										<td class="align-middle actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Order Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('view_orders'))
@@ -54,7 +54,7 @@
 											</ul>
 										</td>
 									@else
-										<td>&nbsp;</td>
+										<td class="align-middle">&nbsp;</td>
 									@endif
 								</tr>
 							@endforeach

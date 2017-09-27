@@ -26,15 +26,15 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th>Price</th>
+								<th class="align-middle">Title</th>
+								<th class="align-middle">Price</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($products as $product)
 								<tr>
-									<td>{{ $product->title }}</td>
-									<td>{{ $product->currency }}{{ $product->price }}</td>
+									<td class="align-middle">{{ $product->title }}</td>
+									<td class="align-middle">{{ $product->currency }}{{ $product->price }}</td>
 								</tr>
 							@endforeach
 						</tbody>

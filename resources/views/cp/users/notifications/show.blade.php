@@ -26,7 +26,7 @@
 					<div class="row">
 						<div class="col-sm-12 col-md-8 col-lg-8">
 							@php($order = json_decode($notification->data)->order)
-							<p>Order Number <strong>{{ $order->order_number }}</strong> has received an update.</p>
+							<p>Order <strong>#{{ $order->order_number }}</strong></p>
 							<div class="row">
 								<div class="col">
 									<p></p>

@@ -88739,6 +88739,7 @@ var _this = this;
 			// Updates the Notifications view
 			var subject = _.replace(notification.type, 'OrderUpdated', 'Order Updated');
 
+			subject = _.replace(subject, 'OrderPlaced', 'Order Placed');
 			subject = _.replace(subject, 'App', '');
 			subject = _.replace(subject, 'Notifications', '');
 			subject = _.replace(subject, '\\', '');
@@ -88761,12 +88762,27 @@ var _this = this;
 			// Updates counter in the sidebar
 			var elementIcon = $('#notifications-unread');
 
+			var unread = 0;
+
 			elementIcon.fadeOut(function () {
-				var unread = parseInt(elementIcon.html());
+				unread = parseInt(elementIcon.html());
 
 				unread++;
 
 				elementIcon.html(unread);
+			}).fadeIn();
+
+			// Updates the stats card on the dashboard
+			var elementCardCounter = $('#messages-card').find('p');
+
+			unread = 0;
+
+			elementCardCounter.fadeOut(function () {
+				unread = parseInt(elementCardCounter.html());
+
+				unread++;
+
+				elementCardCounter.html(unread);
 			}).fadeIn();
 
 			// Reloads the table data again

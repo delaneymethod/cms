@@ -1957,6 +1957,42 @@
             "time": "2017-01-16T07:55:07+00:00"
         },
         {
+            "name": "nicmart/tree",
+            "version": "v0.2.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nicmart/Tree.git",
+                "reference": "0616b54bb49938e1a816141d7943db48ebf76938"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nicmart/Tree/zipball/0616b54bb49938e1a816141d7943db48ebf76938",
+                "reference": "0616b54bb49938e1a816141d7943db48ebf76938",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tree\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolò Martini",
+                    "email": "nicmartnic@gmail.com"
+                }
+            ],
+            "description": "A basic but flexible php tree data structure and a fluent tree builder implementation.",
+            "time": "2015-08-20T20:50:35+00:00"
+        },
+        {
             "name": "nikic/php-parser",
             "version": "v3.1.1",
             "source": {
@@ -3893,20 +3929,21 @@
         },
         {
             "name": "spatie/crawler",
-            "version": "2.3.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/crawler.git",
-                "reference": "957c9f35d223f0c8e57e90d6f4dbb357abae617f"
+                "reference": "d32c36249b01172f2329727b5d40b00b25b744a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/crawler/zipball/957c9f35d223f0c8e57e90d6f4dbb357abae617f",
-                "reference": "957c9f35d223f0c8e57e90d6f4dbb357abae617f",
+                "url": "https://api.github.com/repos/spatie/crawler/zipball/d32c36249b01172f2329727b5d40b00b25b744a4",
+                "reference": "d32c36249b01172f2329727b5d40b00b25b744a4",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^6.3",
+                "nicmart/tree": "^0.2.7",
                 "php": "^7.0",
                 "spatie/browsershot": "^2.4",
                 "symfony/dom-crawler": "^3.0",
@@ -3945,7 +3982,7 @@
                 "spatie",
                 "website"
             ],
-            "time": "2017-09-21T21:09:30+00:00"
+            "time": "2017-09-26T16:51:29+00:00"
         },
         {
             "name": "spatie/db-dumper",
@@ -4099,16 +4136,16 @@
         },
         {
             "name": "spatie/laravel-backup",
-            "version": "5.0.0",
+            "version": "5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-backup.git",
-                "reference": "8b1fdf898e8be7f5d3ba6738e5a60ad95c490f0c"
+                "reference": "9fb81ccaf62a10d06dc457a886d88111b12a6f3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/8b1fdf898e8be7f5d3ba6738e5a60ad95c490f0c",
-                "reference": "8b1fdf898e8be7f5d3ba6738e5a60ad95c490f0c",
+                "url": "https://api.github.com/repos/spatie/laravel-backup/zipball/9fb81ccaf62a10d06dc457a886d88111b12a6f3c",
+                "reference": "9fb81ccaf62a10d06dc457a886d88111b12a6f3c",
                 "shasum": ""
             },
             "require": {
@@ -4168,7 +4205,7 @@
                 "laravel-backup",
                 "spatie"
             ],
-            "time": "2017-08-30T12:17:01+00:00"
+            "time": "2017-09-25T22:31:45+00:00"
         },
         {
             "name": "spatie/laravel-sitemap",

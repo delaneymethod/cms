@@ -475,6 +475,7 @@
 			// Updates the Notifications view
 			let subject = _.replace(notification.type, 'OrderUpdated', 'Order Updated');
 			
+			subject = _.replace(subject, 'OrderPlaced', 'Order Placed');
 			subject = _.replace(subject, 'App', '');
 			subject = _.replace(subject, 'Notifications', '');
 			subject = _.replace(subject, '\\', '');
@@ -497,14 +498,29 @@
 			// Updates counter in the sidebar
 			const elementIcon = $('#notifications-unread');
 			
+			let unread = 0;
+			
 			elementIcon.fadeOut(() => {
-				let unread = parseInt(elementIcon.html());
+				unread = parseInt(elementIcon.html());
 				
 				unread++;
 				
 				elementIcon.html(unread);
 			}).fadeIn();
 			
+			// Updates the stats card on the dashboard
+			const elementCardCounter = $('#messages-card').find('p');
+			
+			unread = 0;
+			
+			elementCardCounter.fadeOut(() => {
+				unread = parseInt(elementCardCounter.html());
+				
+				unread++;
+				
+				elementCardCounter.html(unread);
+			}).fadeIn();
+						
 			// Reloads the table data again
 			this.attachDataTable('#datatable');
 		};

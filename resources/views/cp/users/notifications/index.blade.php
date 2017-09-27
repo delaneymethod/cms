@@ -26,17 +26,17 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="no-sort">Subject</th>
-								<th class="no-sort text-center">Date Time</th>
-								<th class="no-sort">&nbsp;</th>
+								<th class="align-middle no-sort">Subject</th>
+								<th class="align-middle no-sort text-center">Date Time</th>
+								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody id="all-notifications">
 							@foreach ($notifications as $notification)
 								<tr>
-									<td>{{ $notification->subject }} {!! (is_null($notification->read_at)) ? '&nbsp;<span class="badge badge-pill badge-suspended align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Unread</span>' : '' !!}</td>
-									<td class="text-center">{{ $notification->created_at->format('jS M Y H:i') }}</td>
-									<td class="text-center"><a href="/cp/users/{{ $currentUser->id }}/notifications/{{ $notification->id }}" title="View Notification"><i class="icon fa fa-envelope" aria-hidden="true"></i></a></td>
+									<td class="align-middle">{{ $notification->subject }} {!! (is_null($notification->read_at)) ? '&nbsp;<span class="badge badge-pill badge-suspended align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;Unread</span>' : '' !!}</td>
+									<td class="align-middle text-center">{{ $notification->created_at->format('jS M Y H:i') }}</td>
+									<td class="align-middle text-center"><a href="/cp/users/{{ $currentUser->id }}/notifications/{{ $notification->id }}" title="View Notification"><i class="icon fa fa-envelope" aria-hidden="true"></i></a></td>
 								</tr>
 							@endforeach
 						</tbody>

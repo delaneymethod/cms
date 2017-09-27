@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderProductTable extends Migration
+class CreateOrderProductCommodityTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,12 +15,12 @@ class CreateOrderProductTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 		 
-		Schema::create('order_product', function (Blueprint $table) {
+		Schema::create('order_product_commodity', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 			
 			$table->unsignedInteger('order_id')->nullable()->index()->comment('Foreign key to the orders table');
 			
-			$table->unsignedBigInteger('product_id')->nullable()->index()->comment('Foreign key to the products table');
+			$table->unsignedBigInteger('product_commodity_id')->nullable()->index()->comment('Foreign key to the product commodities table');
 			
 			$table->unsignedInteger('quantity')->nullable();
 			$table->unsignedInteger('tax_rate')->nullable();
@@ -29,9 +29,9 @@ class CreateOrderProductTable extends Migration
 			$table->float('price_tax', 8, 2);
 		});
 		
-		Schema::table('order_product', function (Blueprint $table) {
+		Schema::table('order_product_commodity', function (Blueprint $table) {
 			$table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
-			$table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+			$table->foreign('product_commodity_id')->references('id')->on('product_commodities')->onDelete('cascade');
 		});
 	}
 
@@ -42,6 +42,6 @@ class CreateOrderProductTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('order_product');
+		Schema::dropIfExists('order_product_commodity');
 	}
 }

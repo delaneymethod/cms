@@ -11,7 +11,7 @@
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 0px solid #cccccc;border-collapse: collapse;">
 		<tr>
 			<td align="left" bgcolor="#ffffff" style="padding: 20px 0 0 0;">
-				<img src="{{ url('/assets/img/logo.png') }}" alt="{{ config('app.name') }} Logo" style="width:40%; height: auto;">
+				<img src="{{ url('/assets/img/logo.png') }}" alt="{{ config('cms.site.name') }} Logo" style="width:40%; height: auto;">
 			</td>
 		</tr>
 		<tr>

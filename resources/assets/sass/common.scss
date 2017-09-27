@@ -90,6 +90,22 @@ a,
 	padding: 0.5rem 1.25rem;
 }
 
+.btn-unstyled-gf-info {
+	background: none !important;
+	color: $gf-info;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit !important;
+	
+	&:hover {
+		background: inherit;
+		color: $gf-blue;
+	}
+}
+
 .text-gf-red {
 	color: $gf-red;
 	

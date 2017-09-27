@@ -69,6 +69,7 @@ class DashboardController extends Controller
 			$companies = $this->getData('getCompanies', 'companies');
 			
 			array_push($statCards, [
+				'id' => 'companies',
 				'label' => 'Companies',
 				'url' => '/cp/companies',
 				'count' => $companies->count()
@@ -79,12 +80,14 @@ class DashboardController extends Controller
 			$users = $this->getData('getUsers', 'users');
 			
 			array_push($statCards, [
+				'id' => 'users',
 				'label' => 'Users',
 				'url' => '/cp/users',
 				'count' => $users->count()
 			]);
 			
 			array_push($statCards, [
+				'id' => 'messages',
 				'label' => 'Messages',
 				'url' => '/cp/users/'.$currentUser->id.'/notifications',
 				'count' => $currentUser->notifications->count()
@@ -95,6 +98,7 @@ class DashboardController extends Controller
 			$locations = $this->getData('getLocations', 'locations');
 			
 			array_push($statCards, [
+				'id' => 'locations',
 				'label' => 'Locations',
 				'url' => '/cp/locations',
 				'count' => $locations->count()
@@ -110,6 +114,7 @@ class DashboardController extends Controller
 			}
 			
 			array_push($statCards, [
+				'id' => 'orders',
 				'label' => 'Orders',
 				'url' => '/cp/orders',
 				'count' => $orders->count()
@@ -131,6 +136,7 @@ class DashboardController extends Controller
 			$carts = $this->getCarts();
 			
 			array_push($statCards, [
+				'id' => 'carts',
 				'label' => 'Carts',
 				'url' => '/cp/carts',
 				'count' => $carts->count()
@@ -141,6 +147,7 @@ class DashboardController extends Controller
 			$articles = $this->getData('getArticles', 'articles');
 			
 			array_push($statCards, [
+				'id' => 'articles',
 				'label' => 'Articles',
 				'url' => '/cp/articles',
 				'count' => $articles->count()
@@ -151,6 +158,7 @@ class DashboardController extends Controller
 			$articleCategories = $this->getData('getArticleCategories', 'article_categories');
 			
 			array_push($statCards, [
+				'id' => 'article-categories',
 				'label' => 'Article Categories',
 				'url' => '/cp/articles/categories',
 				'count' => $articleCategories->count()
@@ -161,6 +169,7 @@ class DashboardController extends Controller
 			$assets = $this->getAssets();
 			
 			array_push($statCards, [
+				'id' => 'assets',
 				'label' => 'Assets',
 				'url' => '/cp/assets',
 				'count' => $assets->count()
@@ -171,6 +180,7 @@ class DashboardController extends Controller
 			$templates = $this->getData('getTemplates', 'templates');
 			
 			array_push($statCards, [
+				'id' => 'templates',
 				'label' => 'Templates',
 				'url' => '/cp/templates',
 				'count' => $templates->count()
@@ -181,6 +191,7 @@ class DashboardController extends Controller
 			$pages = $this->getData('getPages', 'pages');
 			
 			array_push($statCards, [
+				'id' => 'pages',
 				'label' => 'Pages',
 				'url' => '/cp/pages',
 				'count' => $pages->count()

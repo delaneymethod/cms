@@ -24,7 +24,8 @@ class CreatePermissionsTable extends Migration
 			
 			$table->unsignedInteger('permission_group_id')->nullable()->index()->comment('Foreign key to the permission groups table');
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('permissions', function (Blueprint $table) {

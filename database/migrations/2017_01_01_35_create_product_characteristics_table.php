@@ -25,7 +25,8 @@ class CreateProductCharacteristicsTable extends Migration
 			$table->string('value');
 			$table->string('commodity_code_representation');
     		
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('product_characteristics', function (Blueprint $table) {

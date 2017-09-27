@@ -24,7 +24,8 @@ class CreateShippingMethodsTable extends Migration
 			
 			$table->float('free_threshold', 8, 2);
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('shipping_methods', function (Blueprint $table) {

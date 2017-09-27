@@ -22,7 +22,8 @@ class CreatePermissionGroupsTable extends Migration
 			
 			$table->string('title');
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('permission_groups', function (Blueprint $table) {

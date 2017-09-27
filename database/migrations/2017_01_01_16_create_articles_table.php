@@ -33,7 +33,8 @@ class CreateArticlesTable extends Migration
 			
 			$table->timestamp('published_at');
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('articles', function (Blueprint $table) {

@@ -10,8 +10,6 @@ namespace App\Events;
 use Illuminate\Broadcasting\Channel;
 use App\Models\ProductCharacteristic;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -71,8 +69,8 @@ class ProductCharacteristicAdded implements ShouldBroadcast
 	 *
 	 * @return \Illuminate\Broadcasting\Channel|array
 	 */
-	public function broadcastOn()
+	public function broadcastOn() : Channel
 	{
-		return new PrivateChannel('product_characteristics.'.$this->productCharacteristic->id);
+		return new Channel('product_characteristics.'.$this->productCharacteristic->id);
 	}
 }

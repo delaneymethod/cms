@@ -10,7 +10,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Traits\ProductCategoryTrait;
 use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo, BelongsToMany};
-use App\Models\{Order, ProductVatRate, ProductStandard, ProductCategory, ProductCommodity, ProductAttribute, ProductManufacturer, ProductCharacteristic};
+use App\Models\{ProductVatRate, ProductStandard, ProductCategory, ProductCommodity, ProductAttribute, ProductManufacturer, ProductCharacteristic};
 
 class Product extends Model
 {
@@ -176,24 +176,6 @@ class Product extends Model
 	public function getImageUrlAttribute() : string
 	{
 		return $this->cloudfrontUrl.$this->image_uri;
-	}
-	
-	/**
-	 * Get the order records associated with the product.
-	 */
-	public function orders() : BelongsToMany
-	{
-		return $this->belongsToMany(Order::class, 'order_product')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');
-	}
-	
-	/**
-	 * Set orders for the product.
-	 *
-	 * $param 	array 	$orders
-	 */
-	public function setOrders(array $orders)
-	{
-		return $this->orders()->sync($orders);
 	}
 	
 	/**

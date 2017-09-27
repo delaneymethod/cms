@@ -25,7 +25,8 @@ class CreateProductManufacturersTable extends Migration
 			$table->string('logo_image')->nullable();
 			$table->string('cms_page_name')->nullable();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('product_manufacturers', function (Blueprint $table) {

@@ -7,6 +7,7 @@
 
 namespace App\Notifications;
 
+use App\User;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
@@ -17,6 +18,13 @@ use Illuminate\Notifications\Messages\BroadcastMessage;
 class OrderUpdated extends Notification implements ShouldQueue
 {
 	use Queueable;
+	
+	/**
+	 * Information about the user.
+	 *
+	 * @var string
+	 */
+	protected $user;
 	
 	/**
 	 * Information about the order.
@@ -37,9 +45,11 @@ class OrderUpdated extends Notification implements ShouldQueue
 	 *
 	 * @return void
 	 */
-	public function __construct(Order $order, string $subject = 'Order Updated')
+	public function __construct(Order $order, User $user, string $subject = 'Order Updated')
 	{
 		$this->order = $order;
+		
+		$this->user = $user;
 		
 		$this->subject = $subject;
 	}
@@ -47,7 +57,7 @@ class OrderUpdated extends Notification implements ShouldQueue
 	/**
 	 * Get the notification's delivery channels.
 	 *
-	 * @param  mixed  $notifiable
+	 * @param	mixed  $notifiable
 	 * @return array
 	 */
 	public function via($notifiable) : array
@@ -58,7 +68,7 @@ class OrderUpdated extends Notification implements ShouldQueue
 	/**
 	 * Get the mail representation of the notification.
 	 *
-	 * @param  mixed  $notifiable
+	 * @param	mixed  $notifiable
 	 * @return \Illuminate\Notifications\Messages\MailMessage
 	 */
 	public function toMail($notifiable)
@@ -75,22 +85,23 @@ class OrderUpdated extends Notification implements ShouldQueue
 	public function toBroadcast($notifiable)
 	{
 		$data = [
-			'order' => $this->order->load('status', 'location', 'order_type', 'shipping_method'),
+			'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method')
 		];
 		
-		return (new BroadcastMessage($data))->onQueue('orders');
+		// Note, if we dont stick this broadcast on a queue, it gets added to the default queue - unless you are listenings on default queue, this will never get processed.
+		return (new BroadcastMessage($data))->onQueue('orders.broadcasts');
 	}
 
 	/**
 	 * Get the array representation of the notification.
 	 *
-	 * @param  mixed  $notifiable
-	 * @return array
+	 * @param 	mixed 	$notifiable
+	 * @return 	array
 	 */
-	public function toArray($notifiable) : array
+	public function toDatabase($notifiable) : array
 	{
 		return [
-			'order' => $this->order->load('status', 'location', 'order_type', 'shipping_method'),
+			'order' => $this->order
 		];
 	}
 }

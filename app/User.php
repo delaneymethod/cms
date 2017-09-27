@@ -48,6 +48,31 @@ class User extends Authenticatable
 	];
 	
 	/**
+     * Attributes that get appended on serialization
+     *
+     * @var array
+     */
+	protected $appends = [
+		'location_postal_address',
+	];
+	
+	/**
+	 * Get the location postal address
+	 *
+	 * @return 	string
+	 */
+	public function getLocationPostalAddressAttribute() : string
+	{
+		$locationPostalAddress = explode(',', $this->location->postal_address);
+		
+		$locationPostalAddress = array_map('trim', $locationPostalAddress);
+		
+		$locationPostalAddress = array_merge([], [$this->location->title], $locationPostalAddress);
+		
+		return implode('<br>', $locationPostalAddress);
+	}
+	
+	/**
 	 * Get the role record associated with the user.
 	 */
 	public function role() : BelongsTo
@@ -183,7 +208,7 @@ class User extends Authenticatable
 	 */
 	public function receivesBroadcastNotificationsOn()
 	{
-		return 'user.'.$this->id;
+		return 'users.'.$this->id;
 	}
 	
 	/**

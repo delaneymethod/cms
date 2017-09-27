@@ -7,39 +7,49 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
-use App\Models\ProductCharacteristic;
+use App\User;
+use App\Models\Order;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductCharacteristicDeleted implements ShouldBroadcast
+class OrderPlaced implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
 	/**
-	 * Information about the product update.
+	 * Information about the user.
 	 *
 	 * @var string
 	 */
-	public $productCharacteristic;
+	public $user;
+	
+	/**
+	 * Information about the order.
+	 *
+	 * @var string
+	 */
+	public $order;
 	
 	/**
 	 * The name of the queue on which to place the event.
 	 *
 	 * @var string
 	 */
-	public $broadcastQueue = 'products';
+	public $broadcastQueue = 'orders.events';
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductCharacteristic $productCharacteristic)
+	public function __construct(Order $order, User $user)
 	{
-		$this->productCharacteristic = $productCharacteristic;
+		$this->order = $order;
+		
+		$this->user = $user;
 	}
 	
 	/**
@@ -49,7 +59,7 @@ class ProductCharacteristicDeleted implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'product_characteristic.deleted';
+		return 'order.placed';
 	}
 	
 	/**
@@ -59,8 +69,9 @@ class ProductCharacteristicDeleted implements ShouldBroadcast
 	 */
 	public function broadcastWith() : array
 	{
+		// Now pull in the orders related data since we'll be using this broadcast to update the UI's across the board
 		return [
-			'product_characteristic' => $this->productCharacteristic
+			'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method'),
 		];
 	}
 
@@ -69,8 +80,8 @@ class ProductCharacteristicDeleted implements ShouldBroadcast
 	 *
 	 * @return \Illuminate\Broadcasting\Channel|array
 	 */
-	public function broadcastOn() : Channel
+	public function broadcastOn()
 	{
-		return new Channel('product_characteristics.'.$this->productCharacteristic->id);
+		return new PrivateChannel('orders.'.$this->order->id);
 	}
 }

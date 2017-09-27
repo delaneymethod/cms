@@ -51,7 +51,8 @@ class CreateProductsTable extends Migration
 			$table->string('short_name')->nullable()->index();
 			$table->string('image_uri')->nullable();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('products', function (Blueprint $table) {

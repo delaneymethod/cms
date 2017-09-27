@@ -22,7 +22,8 @@ class CreateProductAttributesTable extends Migration
 			
 			$table->string('title');
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('product_attributes', function (Blueprint $table) {

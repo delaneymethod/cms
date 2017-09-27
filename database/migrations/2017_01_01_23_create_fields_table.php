@@ -29,7 +29,8 @@ class CreateFieldsTable extends Migration
 			$table->unsignedInteger('field_type_id')->index()->comment('Foreign key to the field types table');
 			$table->unsignedInteger('required')->default(0);
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('fields', function (Blueprint $table) {

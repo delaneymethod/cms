@@ -35,24 +35,24 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th class="no-sort">Slug</th>
-								<th>Parent</th>
-								<th>Template</th>
+								<th class="align-middle">Title</th>
+								<th class="align-middle no-sort">Slug</th>
+								<th class="align-middle">Parent</th>
+								<th class="align-middle">Template</th>
 								<th class="text-center">Status</th>
-								<th class="no-sort">&nbsp;</th>
+								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($pages as $page)
 								<tr>
-									<td>{{ $page->title }}{!! $page->isHiddenFromNav() ? '&nbsp;<i class="text-muted-lighter">(Hidden from Nav)</i>' : '' !!}</td>
-									<td>{{ $page->slug }}</td>
-									<td>{{ ($page->parent) ? $page->parent->title : '' }}</td>
-									<td>{{ $page->template->title }}</td>
-									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $page->status->id }}" title="{{ $page->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
+									<td class="align-middle">{{ $page->title }}{!! $page->isHiddenFromNav() ? '&nbsp;<i class="text-muted-lighter">(Hidden from Nav)</i>' : '' !!}</td>
+									<td class="align-middle">{{ $page->slug }}</td>
+									<td class="align-middle">{{ ($page->parent) ? $page->parent->title : '' }}</td>
+									<td class="align-middle">{{ $page->template->title }}</td>
+									<td class="align-middle status text-center"><i class="fa fa-circle fa-1 status_id-{{ $page->status->id }}" title="{{ $page->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_pages') || ($currentUser->hasPermission('delete_pages') && $page->id != 1))
-										<td class="actions dropdown text-center" id="submenu">
+										<td class="align-middle actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Page Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="actions dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_pages'))
@@ -64,7 +64,7 @@
 											</ul>
 										</td>
 									@else
-										<td>&nbsp;</td>
+										<td class="align-middle">&nbsp;</td>
 									@endif
 								</tr>
 							@endforeach

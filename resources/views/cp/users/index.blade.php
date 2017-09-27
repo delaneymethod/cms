@@ -35,30 +35,30 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th>Full Name</th>
-								<th>Email</th>
-								<th>Job Title</th>
-								<th>Telephone</th>
-								<th>Mobile</th>
-								<th>Location</th>
-								<th class="text-center">Status</th>
-								<th class="no-sort">&nbsp;</th>
+								<th class="align-middle">Full Name</th>
+								<th class="align-middle">Email</th>
+								<th class="align-middle">Job Title</th>
+								<th class="align-middle">Telephone</th>
+								<th class="align-middle">Mobile</th>
+								<th class="align-middle">Location</th>
+								<th class="align-middle text-center">Status</th>
+								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($users as $user)
 								<tr class="{{ str_slug($user->status->title) }}">
-									<td>{{ $user->first_name }} {{ $user->last_name }}{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}</td>
-									<td><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
-									<td>{{ $user->job_title }}</td>
-									<td>{{ $user->telephone }}</td>
-									<td>{{ $user->mobile }}</td>
-									<td>{{ $user->location->title }}</td>
-									<td class="status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
+									<td class="align-middle">{{ $user->first_name }} {{ $user->last_name }}{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}</td>
+									<td class="align-middle"><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
+									<td class="align-middle">{{ $user->job_title }}</td>
+									<td class="align-middle">{{ $user->telephone }}</td>
+									<td class="align-middle">{{ $user->mobile }}</td>
+									<td class="align-middle">{{ $user->location->title }}</td>
+									<td class="align-middle status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->isAdmin() && $user->isSuperAdmin())
-										<td>&nbsp;</td>
+										<td class="align-middle">&nbsp;</td>
 									@else
-										<td class="actions dropdown text-center" id="submenu">
+										<td class="align-middle actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="User Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_users') || $currentUser->id == $user->id)

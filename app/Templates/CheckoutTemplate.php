@@ -24,6 +24,13 @@ class CheckoutTemplate extends Template
 		
 		$cart = $parameters['cart'];
 		
+		// Restructre the data so its grouped by product.
+		$cartItems = $cart->product_commodities;
+		
+		$cart->cartTotalItems = count($cartItems);
+		
+		$cart->cartItems = $this->groupCartItemsByProduct($cartItems);
+		
 		$wishlistCart = $parameters['wishlistCart'];
 		
 		$savedCarts = $this->getSavedCarts($currentUser->id);

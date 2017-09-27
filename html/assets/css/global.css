@@ -11453,6 +11453,22 @@ a,
   padding: 0.5rem 1.25rem;
 }
 
+.btn-unstyled-gf-info {
+  background: none !important;
+  color: #2980B9;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit !important;
+}
+
+.btn-unstyled-gf-info:hover {
+  background: inherit;
+  color: #3498DB;
+}
+
 .text-gf-red {
   color: #C0392B;
 }

@@ -13,7 +13,7 @@ abstract class Template
 {
 	protected $view;
 	
-	abstract public function prepare(View $view, array $parameters);
+	public abstract function prepare(View $view, array $parameters);
 	
 	public function getView() : string
 	{

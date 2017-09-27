@@ -8,14 +8,11 @@
 namespace App\Jobs;
 
 use Log;
-use App\User;
-use Notification;
-use Carbon\Carbon;
-use GuzzleHttp\Psr7;
 use App\Models\Order;
-use GuzzleHttp\Client;
+use App\Events\OrderPlaced;
 use Illuminate\Bus\Queueable;
-use App\Notifications\OrderPlaced;
+use GuzzleHttp\{Psr7, Client};
+use App\Http\Traits\UserTrait;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -23,21 +20,7 @@ use Illuminate\Queue\{SerializesModels, InteractsWithQueue};
 
 class ProcessOrder implements ShouldQueue
 {
-	use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-	
-	/**
-	 * Information about the user.
-	 *
-	 * @var string
-	 */
-	protected $user;
-	
-	/**
-	 * Information about the order.
-	 *
-	 * @var string
-	 */
-	protected $order;
+	use UserTrait, Queueable, Dispatchable, SerializesModels, InteractsWithQueue;
 	
 	/**
      * The number of times the job may be attempted.
@@ -53,19 +36,12 @@ class ProcessOrder implements ShouldQueue
      */
     public $timeout = 30;
     
-    /**
-     * The number of minutes the job is delayed.
-     *
-     * @var int
-     */
-    protected $minutes;
-    
-    /**
-	 * Information about the supplier.
+	/**
+	 * Information about the order.
 	 *
 	 * @var string
 	 */
-    protected $supplierEmail;
+	protected $order;
     
     /**
 	 * Information about the api url.
@@ -82,23 +58,26 @@ class ProcessOrder implements ShouldQueue
     protected $endpoint;
     
     /**
+	 * Information about the super admin.
+	 *
+	 * @var User
+	 */
+    protected $superAdmin;
+    
+    /**
 	 * Create a new job instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(User $user, Order $order)
+	public function __construct(Order $order)
 	{
-		$this->user = $user;
-		
-		$this->order = $order->load('status', 'location', 'order_type', 'shipping_method');
-		
-		$this->minutes = config('cms.delays.notifications');
-		
-		$this->supplierEmail = config('cms.site.email');
+		$this->order = $order->load('user', 'status', 'location', 'order_type', 'shipping_method');
 		
 		$this->apiUrl = config('cms.api.url');
 	
 		$this->endpoint = config('cms.api.endpoints.orders.process');
+		
+		$this->superAdmin = $this->getUserById(1);
 	}
 
 	/**
@@ -110,9 +89,6 @@ class ProcessOrder implements ShouldQueue
 	{
 		Log::info('');
 		Log::info('---- Processing Order ----');
-		Log::info('');
-		Log::info('User:');
-		Log::info($this->user);
 		Log::info('');
 		Log::info('Order:');
 		Log::info($this->order);
@@ -127,7 +103,6 @@ class ProcessOrder implements ShouldQueue
 			]);
 			
 			$response = $client->request('POST', $this->endpoint, [
-				'user' => $this->user,
 				'order' => $this->order,
 			]);
 			
@@ -137,17 +112,13 @@ class ProcessOrder implements ShouldQueue
 			Log::info('Body:');
 			Log::info($response->getBody());
 			
-			// Now that the order has been sent to the API, send out new notifications to the supplier and the user.
-			$time = Carbon::now()->addMinutes($this->minutes);
+			// Sends out an order placed event across the system. Listeners will pick up the event and send out notifications to the customer and super admin user
+			event(new OrderPlaced($this->order, $this->order->user));
 			
-			// User - Sends an order placed notification to the user. Stick the notification in the "orders" queue to run in 5 minutes.
-			$this->user->notify((new OrderPlaced($this->user, $this->order))->delay($time));
-			
-			// Supplier - Sends an order placed notification to the supplier. Stick the notification in the "orders" queue to run in 5 minutes.
-			Notification::route('mail', $this->supplierEmail)->notify((new OrderPlaced($this->user, $this->order))->delay($time));
+			//event(new OrderPlaced($this->order, $this->superAdmin));
 		} catch (RequestException $exception) {
 			Log::info('');
-			Log::critical('RequestException:');
+			Log::critical('Request Exception:');
 			Log::critical(Psr7\str($exception->getRequest()));
 			
 			if ($exception->hasResponse()) {

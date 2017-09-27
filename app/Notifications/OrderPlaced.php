@@ -9,12 +9,12 @@ namespace App\Notifications;
 
 use App\User;
 use App\Models\Order;
-use App\Mail\OrderPlaced;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use App\Mail\{OrderPlacedMailCustomer, OrderPlacedMailSuperAdmin};
 
 class OrderPlaced extends Notification implements ShouldQueue
 {
@@ -42,17 +42,38 @@ class OrderPlaced extends Notification implements ShouldQueue
 	protected $subject;
 	
 	/**
+	 * Information about the delivery methods.
+	 *
+	 * @var array
+	 */
+	protected $deliveryMethods;
+	
+	/**
+	 * Information about the order placed email template.
+	 *
+	 * @var mixed
+	 */
+	protected $orderPlacedMail;
+	
+	/**
 	 * Create a new notification instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(User $user, Order $order, string $subject = 'Order Placed')
+	public function __construct(Order $order, User $user, string $subject = 'Order Placed')
 	{
+		$this->order = $order;
+		
 		$this->user = $user;
 		
-		$this->order = $order->load('status', 'location', 'order_type', 'shipping_method');
-		
 		$this->subject = $subject;
+		
+		$this->deliveryMethods = ['mail', 'database', 'broadcast'];
+		
+		// If user is the super admin (aka site owner), we dont want to 'database' or 'broadcast' as delivery methods. We only want mail.
+		if ($this->user->isSuperAdmin()) {
+			$this->deliveryMethods = $this->deliveryMethods[0];
+		}
 	}
 
 	/**
@@ -63,7 +84,7 @@ class OrderPlaced extends Notification implements ShouldQueue
 	 */
 	public function via($notifiable) : array
 	{
-		return ['mail', 'database', 'broadcast'];
+		return $this->deliveryMethods;
 	}
 
 	/**
@@ -74,7 +95,13 @@ class OrderPlaced extends Notification implements ShouldQueue
 	 */
 	public function toMail($notifiable)
 	{
-		return (new OrderPlaced($this->user, $this->order))->to($this->user->email)->subject($this->subject);
+		$this->orderPlacedMail = new OrderPlacedMailCustomer($this->order, $this->user);
+		
+		if ($this->user->isSuperAdmin()) {
+			$this->orderPlacedMail = new OrderPlacedMailSuperAdmin($this->order, $this->user);
+		}
+			
+		return ($this->orderPlacedMail)->to($this->user->email)->subject($this->subject);
 	}
 	
 	/**
@@ -86,22 +113,23 @@ class OrderPlaced extends Notification implements ShouldQueue
 	public function toBroadcast($notifiable)
 	{
 		$data = [
-			'order' => $this->order->load('status', 'location', 'order_type', 'shipping_method'),
+			'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method')
 		];
 		
-		return (new BroadcastMessage($data))->onQueue('orders');
+		// Note, if we dont stick this broadcast on a queue, it gets added to the default queue - unless you are listenings on default queue, this will never get processed.
+		return (new BroadcastMessage($data))->onQueue('orders.broadcasts');
 	}
 
 	/**
 	 * Get the array representation of the notification.
 	 *
-	 * @param	mixed  $notifiable
-	 * @return array
+	 * @param 	mixed 	$notifiable
+	 * @return 	array
 	 */
-	public function toArray($notifiable) : array
+	public function toDatabase($notifiable) : array
 	{
 		return [
-			'order' => $this->order->load('status', 'location', 'order_type', 'shipping_method'),
+			'order' => $this->order
 		];
 	}
 }

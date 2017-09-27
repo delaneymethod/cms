@@ -135,39 +135,41 @@
 										<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 											<thead>
 												<tr>
-													<th>Product</th>
-													<th>Product Commodity</th>
-													<th class="text-center">Qty</th>
-													<th class="text-center">Price</th>
-													<th class="text-right">Subtotal</th>
+													<th class="align-middle">&nbsp;</th>
+													<th class="align-middle">Product</th>
+													<th class="align-middle">Product Commodity</th>
+													<th class="align-middle text-center">Qty</th>
+													<th class="align-middle text-center">Price</th>
+													<th class="align-middle text-right">Subtotal</th>
 												</tr>
 											</thead>
 											<tbody>
 												@foreach ($cart->product_commodities as $productCommodity)
 													<tr>
-														<td><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}">{{ $productCommodity->model->product->title }}</a></td>
-														<td>{{ $productCommodity->name }}</td>
-														<td class="text-center">{{ $productCommodity->qty }}</td>
-														<td class="text-right">{{ $productCommodity->price() }}</td>
-														<td class="text-right">{{ $productCommodity->total() }}</td>
+														<td class="align-middle text-center"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" target="_blank" class="text-gf-info"><img src="{{ $productCommodity->model->product->image_url }}" class="img-fluid" alt="{{ $productCommodity->model->product->title }}"></a></td>
+														<td class="align-middle"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" target="_blank">{{ $productCommodity->model->product->title }}</a></td>
+														<td class="align-middle">{{ $productCommodity->name }}</td>
+														<td class="align-middle text-center">{{ $productCommodity->qty }}</td>
+														<td class="align-middle text-right">{{ $productCommodity->price() }}</td>
+														<td class="align-middle text-right">{{ $productCommodity->total() }}</td>
 													</tr>
 												@endforeach
 											</tbody>
 											<tfoot>
 												<tr>
-													<td colspan="3">&nbsp;</td>
-													<td class="text-right">Subtotal</td>
-													<td class="text-right">{{ $cart->subtotal }}</td>
+													<td colspan="4">&nbsp;</td>
+													<td class="align-middle text-right">Subtotal</td>
+													<td class="align-middle text-right">{{ $cart->subtotal }}</td>
 												</tr>
 												<tr>
-													<td colspan="3">&nbsp;</td>
-													<td class="text-right">Tax</td>
-													<td class="text-right">{{ $cart->tax }}</td>
+													<td colspan="4">&nbsp;</td>
+													<td class="align-middle text-right">Tax</td>
+													<td class="align-middle text-right">{{ $cart->tax }}</td>
 												</tr>
 												<tr>
-													<td colspan="3">&nbsp;</td>
-													<td class="text-right">Total</td>
-													<td class="text-right">{{ $cart->total }}</td>
+													<td colspan="4">&nbsp;</td>
+													<td class="align-middle text-right">Total</td>
+													<td class="align-middle text-right">{{ $cart->total }}</td>
 												</tr>
 											</tfoot>
 										</table>

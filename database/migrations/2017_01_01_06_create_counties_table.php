@@ -24,7 +24,8 @@ class CreateCountiesTable extends Migration
 			
 			$table->unsignedInteger('country_id')->index()->nullable()->comment('Foreign key to the countries table');
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('counties', function (Blueprint $table) {

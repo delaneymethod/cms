@@ -4,7 +4,7 @@ namespace App\Http\Transformers;
 
 use Carbon\Carbon;
 
-class ProductTransformer
+class ProductTransformer extends Transformer
 {	
 	/**
 	 * Transforms a data attribute names to match its models fillables.
@@ -12,7 +12,7 @@ class ProductTransformer
 	 * @param  array	$products
 	 * @return array
 	 */
-	public static function transformProducts(array $products) : array
+	public function transformProducts(array $products) : array
 	{
 		return collect($products)->map(function ($product) {
 			if (array_key_exists('Id', $product)) {
@@ -147,7 +147,7 @@ class ProductTransformer
 	 * @param  array	$productCategories
 	 * @return array
 	 */
-	public static function transformProductCategories(array $productCategories) : array
+	public function transformProductCategories(array $productCategories) : array
 	{
 		return collect($productCategories)->map(function ($productCategory) {
 			if (array_key_exists('Id', $productCategory)) {
@@ -216,7 +216,7 @@ class ProductTransformer
 	 * @param  array	$productCommodities
 	 * @return array
 	 */
-	public static function transformProductCommodities(array $productCommodities) : array
+	public function transformProductCommodities(array $productCommodities) : array
 	{
 		return collect($productCommodities)->map(function ($productCommodity) {
 			if (array_key_exists('Id', $productCommodity)) {
@@ -361,7 +361,7 @@ class ProductTransformer
 	 * @param  array	$productCharacteristics
 	 * @return array
 	 */
-	public static function transformProductCharacteristics(array $productCharacteristics) : array
+	public function transformProductCharacteristics(array $productCharacteristics) : array
 	{
 		return collect($productCharacteristics)->map(function ($productCharacteristic) {
 			if (array_key_exists('Id', $productCharacteristic)) {
@@ -404,7 +404,7 @@ class ProductTransformer
 	 * @param  array	$productManufacturers
 	 * @return array
 	 */
-	public static function transformProductManufacturers(array $productManufacturers) : array
+	public function transformProductManufacturers(array $productManufacturers) : array
 	{
 		return collect($productManufacturers)->map(function ($productManufacturer) {
 			if (array_key_exists('Id', $productManufacturer)) {
@@ -453,7 +453,7 @@ class ProductTransformer
 	 * @param  array	$productStandards
 	 * @return array
 	 */
-	public static function transformProductStandards(array $productStandards) : array
+	public function transformProductStandards(array $productStandards) : array
 	{
 		return collect($productStandards)->map(function ($productStandard) {
 			if (array_key_exists('Id', $productStandard)) {
@@ -502,7 +502,7 @@ class ProductTransformer
 	 * @param  array	$productStandards
 	 * @return array
 	 */
-	public static function transformProductStandard(array $productStandards) : array
+	public function transformProductStandard(array $productStandards) : array
 	{
 		return collect($productStandards)->map(function ($productStandard) {
 			unset($productStandard['Id']);
@@ -529,7 +529,7 @@ class ProductTransformer
 	 * @param  array	$productStandardOrganisations
 	 * @return array
 	 */
-	public static function transformProductStandardOrganisations(array $productStandardOrganisations) : array
+	public function transformProductStandardOrganisations(array $productStandardOrganisations) : array
 	{
 		return collect($productStandardOrganisations)->map(function ($productStandardOrganisation) {
 			if (array_key_exists('Id', $productStandardOrganisation)) {
@@ -578,7 +578,7 @@ class ProductTransformer
 	 * @param  array	$productAttributes
 	 * @return array
 	 */
-	public static function transformProductAttribute(array $productAttributes) : array
+	public function transformProductAttribute(array $productAttributes) : array
 	{
 		return collect($productAttributes)->map(function ($productAttribute) {
 			unset($productAttribute['Id']);
@@ -617,7 +617,7 @@ class ProductTransformer
 	 * @param  array	$productAttributes
 	 * @return array
 	 */
-	public static function transformProductAttributes(array $productAttributes) : array
+	public function transformProductAttributes(array $productAttributes) : array
 	{
 		return collect($productAttributes)->map(function ($productAttribute) {
 			if (array_key_exists('Id', $productAttribute)) {
@@ -648,7 +648,7 @@ class ProductTransformer
 	 * @param  array	$productVatRates
 	 * @return array
 	 */
-	public static function transformProductVatRates(array $productVatRates) : array
+	public function transformProductVatRates(array $productVatRates) : array
 	{
 		return collect($productVatRates)->map(function ($productVatRate) {
 			if (array_key_exists('Id', $productVatRate)) {

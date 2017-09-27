@@ -24,7 +24,8 @@ class CreateContentsTable extends Migration
 			
 			$table->longText('data')->nullable();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('contents', function (Blueprint $table) {

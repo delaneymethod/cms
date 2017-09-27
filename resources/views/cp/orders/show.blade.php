@@ -67,21 +67,25 @@
 							<table class="text-muted table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 								<thead>
 									<tr>
-										<th>Title</th>
-										<th class="text-center">Qty</th>
-										<th class="text-center">Tax</th>
-										<th class="text-right">Price</th>
-										<th class="text-right">Total</th>
+										<th class="align-middle">&nbsp;</th>
+										<th class="align-middle">Product</th>
+										<th class="align-middle">Product Commodity</th>
+										<th class="align-middle text-center">Qty</th>
+										<th class="align-middle text-center">Tax</th>
+										<th class="align-middle text-right">Price</th>
+										<th class="align-middle text-right">Total</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach ($order->products as $product)
+									@foreach ($order->product_commodities as $productCommodity)
 										<tr>
-											<td>{{ $product->title }}</td>
-											<td class="text-center">{{ $product->pivot->quantity }}</td>
-											<td class="text-center">{{ $product->pivot->tax_rate }}&#37;</td>
-											<td class="text-right">{{ $order->currency }}{{ number_format($product->pivot->price, 2, '.', ',') }}</td>
-											<td class="text-right">{{ $order->currency }}{{ number_format($product->pivot->price_tax, 2, '.', ',') }}</td>
+											<td class="align-middle text-center"><a href="{{ $productCommodity->product->url }}" title="{{ $productCommodity->product->title }}" target="_blank" class="text-gf-info"><img src="{{ $productCommodity->product->image_url }}" class="img-fluid" alt="{{ $productCommodity->product->title }}"></a></td>
+											<td class="align-middle">{{ $productCommodity->product->title }}</td>
+											<td class="align-middle">{{ $productCommodity->title }}</td>
+											<td class="align-middle text-center">{{ $productCommodity->pivot->quantity }}</td>
+											<td class="align-middle text-center">{{ $productCommodity->pivot->tax_rate }}&#37;</td>
+											<td class="align-middle text-right">{{ $order->currency }}{{ number_format($productCommodity->pivot->price, 2, '.', ',') }}</td>
+											<td class="align-middle text-right">{{ $order->currency }}{{ number_format($productCommodity->pivot->price_tax, 2, '.', ',') }}</td>
 										</tr>
 									@endforeach
 								</tbody>
@@ -90,7 +94,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<p></p>
+							<p>&nbsp;</p>
 							<ul class="list-unstyled list-inline">
 								<li class="list-inline-item"><a href="/cp/orders" title="View All Orders" class="btn btn-primary">View All Orders</a></li>
 								<li class="list-inline-item"><a href="/cp/orders/{{ $order->id }}/pdf" title="Download PDF Version" class="btn btn-outline-secondary">Download PDF Version</a></li>

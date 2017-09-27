@@ -23,7 +23,8 @@ class CreateStatusesTable extends Migration
 			$table->string('title')->index();
 			$table->string('description')->nullable();
 
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('statuses', function (Blueprint $table) {

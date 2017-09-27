@@ -49,20 +49,22 @@
 										@auth
 											@if (optional($currentUser)->hasPermission('create_orders'))
 												@component('_components.cart.addProductCommodity', [
-													'productCommodity' => $productCommodity, 
+													'productCommodity' => $productCommodity,
 													'instance' => 'cart', 
 													'action' => 'secret',
 													'extraClasses' => 'btn btn-outline-success'
 												])
 												@endcomponent
 												@if (!$wishlistCart->product_commodities->pluck('id')->contains($productCommodity->id))
-													@component('_components.cart.addProductCommodity', [
-														'productCommodity' => $productCommodity, 
-														'instance' => 'wishlist', 
-														'action' => 'secret',
-														'extraClasses' => 'btn btn-link text-gf-blue'
-													])
-													@endcomponent
+													<div style="margin-top: 10px;font-size: 12px;">
+														@component('_components.cart.addProductCommodity', [
+															'productCommodity' => $productCommodity, 
+															'instance' => 'wishlist', 
+															'action' => 'secret',
+															'extraClasses' => 'btn-unstyled-gf-info'
+														])
+														@endcomponent
+													</div>
 												@endif
 											@endif
 										@else

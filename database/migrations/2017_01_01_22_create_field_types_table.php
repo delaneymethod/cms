@@ -23,7 +23,8 @@ class CreateFieldTypesTable extends Migration
 			$table->string('title')->index();
 			$table->string('type')->index();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('field_types', function (Blueprint $table) {

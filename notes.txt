@@ -1,79 +1,29 @@
 
+Fail a job if API fails
+
+
+Fix jobs, events, listeners, notifications
+
+Fix orders - not filtered per user - pusher ignores super admin rule
+
+
 
 
 echo "" > storage/logs/laravel.log
 
+Look into: https://github.com/spatie/laravel-activitylog
 
+Setup daemon's for 
 
+php artisan queue:listen
+php artisan queue:work --queue=orders.jobs
+php artisan queue:work --queue=orders.events
+php artisan queue:work --queue=orders.notifications
+php artisan queue:work --queue=orders.broadcasts
 
-
-https://github.com/spatie/laravel-activitylog
-
-
-
-
-
-
-
-
-update order to use product_commodities across the board:
-migrations
-models
-jobs
-events
-traits
-controllers
-emails
-
-
-
-
-Update products and locations type channels to be public
-
-align-middle all tables
-
-update all migrations to set default timestamps
-$table->timestamps()->default('CURRENT_TIMESTAMP');
-
-
-
-
-
-
-
-
-setup daemon's for jobs
-setup cron for scheduled tasks
-
-
+Setup cron for scheduled tasks
 
 Fix caching issue with random records
-
-
-
-
-
-
-
-
-			
-			
-			
-			
-			
-						
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 {
 	"event_id": "54321",

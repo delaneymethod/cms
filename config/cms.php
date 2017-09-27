@@ -29,9 +29,9 @@ return [
     
 	'delays' => [
 	
-		'jobs' => 10,
-		'emails' => 5,
-		'notifications' => 5,
+		'jobs' => 0, //10,
+		'emails' => 0, //5,
+		'notifications' => 0,
 	
 	],
 	

@@ -23,7 +23,8 @@ class CreateTemplatesTable extends Migration
 			$table->string('title')->index();
 			$table->string('filename');
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('templates', function (Blueprint $table) {

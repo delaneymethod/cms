@@ -34,7 +34,8 @@ class CreateProductCategoriesTable extends Migration
 			
 			$table->boolean('publish_to_web')->nullable();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('product_categories', function (Blueprint $table) {

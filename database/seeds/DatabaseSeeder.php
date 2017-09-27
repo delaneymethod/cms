@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
 		$this->call(ProductManufacturersTableSeeder::class);
 		$this->call(ProductVatRatesTableSeeder::class);
 		$this->call(ProductsTableSeeder::class);
-		$this->call(OrderProductTableSeeder::class);
 		$this->call(ProductCharacteristicsTableSeeder::class);
 		$this->call(ProductStandardTableSeeder::class);
 		$this->call(ProductAttributeTableSeeder::class);
@@ -53,6 +52,7 @@ class DatabaseSeeder extends Seeder
 		$this->call(PageContentTableSeeder::class);
 		$this->call(ArticleContentTableSeeder::class);
 		$this->call(ProductCommoditiesTableSeeder::class);
+		$this->call(OrderProductCommodityTableSeeder::class);
 		
 		DB::enableQueryLog();
 	}

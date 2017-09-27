@@ -26,15 +26,15 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th>Filename</th>
+								<th class="align-middle">Title</th>
+								<th class="align-middle">Filename</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($templates as $template)
 								<tr>
-									<td>{{ $template->title }}</td>
-									<td>{{ $template->filename }}</td>
+									<td class="align-middle">{{ $template->title }}</td>
+									<td class="align-middle">{{ $template->filename }}</td>
 								</tr>
 							@endforeach
 						</tbody>

@@ -27,7 +27,8 @@ class CreateProductVatRatesTable extends Migration
 			
 			$table->string('rate_display')->nullable();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('product_vat_rates', function (Blueprint $table) {

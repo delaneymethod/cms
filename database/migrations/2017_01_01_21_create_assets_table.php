@@ -27,7 +27,8 @@ class CreateAssetsTable extends Migration
             
             $table->unsignedInteger('size');
             
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('assets', function (Blueprint $table) {

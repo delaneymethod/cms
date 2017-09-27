@@ -289,7 +289,7 @@ class UserController extends Controller
 			$notifications = $currentUser->notifications;
 			
 			foreach ($notifications as $notification) {
-				$notification->subject = str_replace('App\Notifications\OrderUpdated', 'Order Updated', $notification->type);
+				$notification->subject = str_replace(['App\Notifications\OrderUpdated', 'App\Notifications\OrderPlaced'], ['Order Updated', 'Order Placed'], $notification->type);
 			}
 			
 			return view('cp.users.notifications.index', compact('currentUser', 'title', 'subTitle', 'notifications'));
@@ -313,7 +313,7 @@ class UserController extends Controller
 			$notification = $this->getNotification($uuid);
 			
 			// Set a subject
-			$notification->subject = str_replace('App\Notifications\OrderUpdated', 'Order Updated', $notification->type);
+			$notification->subject = str_replace(['App\Notifications\OrderUpdated', 'App\Notifications\OrderPlaced'], ['Order Updated', 'Order Placed'], $notification->type);
 			
 			$title = $notification->subject;
 			
@@ -589,8 +589,6 @@ class UserController extends Controller
 				case 'users.updated':
 					$users = $cleanedEvent['data'];
 				
-					// TODO - Add in error checking and validation	
-							
 					collect($users)->each(function ($data) {
 						// Grab and update it
 						$user = User::find($data['id']);

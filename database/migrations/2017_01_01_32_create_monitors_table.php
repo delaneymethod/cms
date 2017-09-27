@@ -47,7 +47,8 @@ class CreateMonitorsTable extends Migration
 			$table->string('certificate_issuer')->nullable();
 			$table->string('certificate_check_failure_reason')->default('');
 
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('monitors', function (Blueprint $table) {

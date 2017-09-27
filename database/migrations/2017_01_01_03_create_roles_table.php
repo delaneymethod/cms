@@ -22,7 +22,8 @@ class CreateRolesTable extends Migration
 
 			$table->string('title')->index();
 
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('roles', function (Blueprint $table) {

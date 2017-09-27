@@ -122,12 +122,12 @@ class OrderController extends Controller
 			$cleanedOrder['subtotal'] = $cart->subtotal;
 			$cleanedOrder['total'] = $cart->total;
 			
-			$productCommodities = count($cart->productCommodities) - 1;
+			$productCommodities = count($cart->product_commodities) - 1;
 			
 			// Set some dynamic rules to valid our order
 			$rules = [];
 			
-			foreach (range(0, $products) as $index) {
+			foreach (range(0, $productCommodities) as $index) {
 				$rules['product_commodities.'.$index.'.product_commodity_id'] = 'required|integer';
 				$rules['product_commodities.'.$index.'.quantity'] = 'required|integer';
 				$rules['product_commodities.'.$index.'.price'] = 'required|numeric';
@@ -183,7 +183,7 @@ class OrderController extends Controller
 				$time = Carbon::now()->addMinutes($minutes);
 				
 				// Dispatches a new job to process the order. Sticks the job in the "orders" queue to run in 10 minutes.
-				ProcessOrder::dispatch($currentUser, $order)->delay($time)->onQueue('orders');
+				ProcessOrder::dispatch($order)->delay($time)->onQueue('orders.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -260,13 +260,13 @@ class OrderController extends Controller
 			$template .= '		</thead>';
 			$template .= '		<tbody>';
 					
-			foreach ($order->products as $product) {
+			foreach ($order->product_commodities as $productCommodity) {
 				$template .= '			<tr>';
-				$template .= '				<td>'.$product->title.'</td>';
-				$template .= '				<td align="center">'.$product->pivot->quantity.'</td>';
-				$template .= '				<td align="right">'.$product->pivot->tax_rate.'&#37;</td>';
-				$template .= '				<td align="right">'.$order->currency.number_format($product->pivot->price, 2, '.', ',').'</td>';
-				$template .= '				<td align="right">'.$order->currency.number_format($product->pivot->price_tax, 2, '.', ',').'</td>';
+				$template .= '				<td>'.$productCommodity->title.'</td>';
+				$template .= '				<td align="center">'.$productCommodity->pivot->quantity.'</td>';
+				$template .= '				<td align="right">'.$productCommodity->pivot->tax_rate.'&#37;</td>';
+				$template .= '				<td align="right">'.$order->currency.number_format($productCommodity->pivot->price, 2, '.', ',').'</td>';
+				$template .= '				<td align="right">'.$order->currency.number_format($productCommodity->pivot->price_tax, 2, '.', ',').'</td>';
 				$template .= '			</tr>';
 			}
 				
@@ -300,8 +300,6 @@ class OrderController extends Controller
 				case 'orders.updated':
 					$orders = $cleanedEvent['data'];
 				
-					// TODO - Add in error checking and validation	
-							
 					collect($orders)->each(function ($data) {
 						// Grab and update it
 						$order = Order::find($data['id']);

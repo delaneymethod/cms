@@ -34,4 +34,17 @@ Route::prefix('v1')->group(function () {
 		
 		Route::post('/users', 'UserController@webhook');
 	});
+	
+	
+	
+	// TEST ORDERS ENDPOINT - REMOVE ONCE REAL API IS REAY
+	Route::post('/orders', function (Illuminate\Http\Request $request) {
+		Log::info('');
+		Log::info('---- Processed Order ----');
+		Log::info('');
+		
+		return response()->json(['message' => 'Processed Order'], 200, []);
+	});
+	
+	
 });

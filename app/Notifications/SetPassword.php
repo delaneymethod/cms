@@ -17,20 +17,6 @@ class SetPassword extends Notification implements ShouldQueue
     use Queueable;
 	
 	/**
-	 * Information about the app name.
-	 *
-	 * @var string
-	 */
-	protected $appName;
-	
-	/**
-	 * Information about the app url.
-	 *
-	 * @var string
-	 */
-	protected $appUrl;
-	
-	/**
 	 * Information about the users first name.
 	 *
 	 * @var string
@@ -58,10 +44,6 @@ class SetPassword extends Notification implements ShouldQueue
      */
     public function __construct(string $token, string $firstName, string $subject = 'Set Password')
     {
-		$this->appName = config('cms.site.name');
-		
-		$this->appUrl = config('cms.site.url');
-		
 		$this->token = $token;
 		
 		$this->firstName = $firstName;
@@ -90,7 +72,6 @@ class SetPassword extends Notification implements ShouldQueue
     {
 	    // Notice how this one is a bit different than the order placed notification. All that is different is we are setting the mailiable in the user model instead.
 		$data = [
-			'appName' => $this->appName,
 			'firstName' => $this->firstName, 
 			'setPasswordUrl' => url('/password/reset', $this->token)
 		];

@@ -24,7 +24,8 @@ class CreateCompaniesTable extends Migration
 			
 			$table->unsignedInteger('default_location_id')->nullable();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('companies', function (Blueprint $table) {

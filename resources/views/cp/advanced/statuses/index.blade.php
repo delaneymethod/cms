@@ -35,18 +35,18 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th>Title</th>
-								<th>Description</th>
-								<th class="no-sort">&nbsp;</th>
+								<th class="align-middle">Title</th>
+								<th class="align-middle">Description</th>
+								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($statuses as $status)
 								<tr>
-									<td>{{ $status->title }}</td>
-									<td>{{ $status->description }}</td>
+									<td class="align-middle">{{ $status->title }}</td>
+									<td class="align-middle">{{ $status->description }}</td>
 									@if ($currentUser->hasPermission('edit_statuses') || $currentUser->hasPermission('delete_statuses'))
-										<td class="actions dropdown text-center" id="submenu">
+										<td class="align-middle actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Status Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_statuses'))
@@ -58,7 +58,7 @@
 											</ul>
 										</td>
 									@else
-										<td>&nbsp;</td>
+										<td class="align-middle">&nbsp;</td>
 									@endif
 								</tr>
 							@endforeach

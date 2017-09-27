@@ -27,7 +27,8 @@ class CreateProductStandardOrganisationsTable extends Migration
 			
 			$table->string('timecheck')->nullable();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('product_standard_organisations', function (Blueprint $table) {

@@ -7,11 +7,11 @@
  
 namespace App\Models;
 
-use App\Models\Product;
 use App\Http\Traits\CartTrait;
+use App\Models\{Order, Product};
 use Illuminate\Database\Eloquent\Model;
 use Gloudemans\Shoppingcart\Contracts\Buyable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class ProductCommodity extends Model implements Buyable
 {
@@ -165,5 +165,23 @@ class ProductCommodity extends Model implements Buyable
 	public function product() : BelongsTo
 	{
 		return $this->belongsTo(Product::class);
+	}
+	
+	/**
+	 * Get the order records associated with the product commodities.
+	 */
+	public function orders() : BelongsToMany
+	{
+		return $this->belongsToMany(Order::class, 'order_product_commodity')->withPivot('quantity', 'tax_rate', 'price', 'price_tax');
+	}
+	
+	/**
+	 * Set orders for the product commodities.
+	 *
+	 * $param 	array 	$orders
+	 */
+	public function setOrders(array $orders)
+	{
+		return $this->orders()->sync($orders);
 	}
 }

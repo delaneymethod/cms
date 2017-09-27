@@ -511,8 +511,6 @@ class LocationController extends Controller
 				case 'locations.updated':
 					$locations = $cleanedEvent['data'];
 				
-					// TODO - Add in error checking and validation	
-							
 					collect($locations)->each(function ($data) {
 						// Grab and update it
 						$location = Location::find($data['id']);
@@ -522,7 +520,7 @@ class LocationController extends Controller
 							$location->fill($data);
 						
 							$location->save();
-						
+							
 							// Broadcast an LocationUpdated event
 							broadcast(new LocationUpdated($location));
 						}

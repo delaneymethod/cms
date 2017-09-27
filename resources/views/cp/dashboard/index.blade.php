@@ -35,19 +35,18 @@
 								<table class="table table-striped table-bordered table-hover" style="margin-top: 5px;">
 									<thead>
 										<tr>
-											<th>Order Number</th>
-											<th>Date</th>
-											<th class="text-center">Status</th>
+											<th class="align-middle">Order Number</th>
+											<th class="align-middle">Date</th>
+											<th class="align-middle text-center">Status</th>
 										</tr>
 									</thead>
 									<tbody>
 										@php($chunk = $orders->take(5))
-										
 										@foreach ($chunk->all() as $order)
 											<tr>
-												<td>{{ $order->order_number }}</td>
-												<td>{{ $order->created_at }}</td>
-												<td id="order-{{ $order->id }}-status" class="text-center status_id-{{ $order->status->id }}">{{ $order->status->title }}</td>
+												<td class="align-middle">{{ $order->order_number }}</td>
+												<td class="align-middle">{{ $order->created_at }}</td>
+												<td id="order-{{ $order->id }}-status" class="align-middle text-center status_id-{{ $order->status->id }}">{{ $order->status->title }}</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -62,7 +61,7 @@
 							@foreach ($statCards as $statCard)
 								<div class="col-sm-12 col-md-2 col-lg-2 cols">
 									<a href="{{ $statCard->url }}" title="{{ $statCard->label }}">
-										<div class="stat-card text-center alert">
+										<div class="stat-card text-center alert" id="{{ $statCard->id }}-card">
 											<h5>{{ $statCard->label }}</h5>
 											<p>{{ $statCard->count }}</p>
 										</div>

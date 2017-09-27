@@ -53,7 +53,8 @@ class CreateProductCommoditiesTable extends Migration
 			$table->unsignedInteger('pack_quantity')->nullable();
 			$table->unsignedInteger('country_of_origin_id')->nullable();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('product_commodities', function (Blueprint $table) {

@@ -25,10 +25,10 @@
 						<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 							<thead>
 								<tr>
-									<th>Image</th>
-									<th>Description</th>
+									<th class="align-middle">Image</th>
+									<th class="align-middle">Description</th>
 									@foreach ($productAttributes as $productAttribute)
-										<th>{{ $productAttribute['title'] }}</th>
+										<th class="align-middle">{{ $productAttribute['title'] }}</th>
 									@endforeach
 								</tr>
 							</thead>
@@ -36,13 +36,13 @@
 								@foreach ($products as $product)
 									@php ($productUrl = $product->url)
 									<tr>
-										<td><a href="{{ $productUrl }}" title="{{ $product->short_name }}"><img src="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->short_name }}"></a></td>	
-										<td><a href="{{ $productUrl }}" title="{{ $product->short_name }}">{{ $product->title }}</a></td>
+										<td class="align-middle"><a href="{{ $productUrl }}" title="{{ $product->short_name }}"><img src="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->short_name }}"></a></td>	
+										<td class="align-middle"><a href="{{ $productUrl }}" title="{{ $product->short_name }}">{{ $product->title }}</a></td>
 										@foreach ($productAttributes as $productAttribute)
 											@if (array_key_exists($productAttribute['id'], $product->attributes_characteristics)) 
-												<td>{{ $product->attributes_characteristics[$productAttribute['id']]['value'] }}</td>
+												<td class="align-middle">{{ $product->attributes_characteristics[$productAttribute['id']]['value'] }}</td>
 											@else
-												<td>&nbsp;</td>
+												<td class="align-middle">&nbsp;</td>
 											@endif
 										@endforeach
 									</tr>

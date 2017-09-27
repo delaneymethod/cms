@@ -143,6 +143,60 @@ trait CartTrait
 	}
 	
 	/**
+	 * Groups cart items by product
+	 *
+	 * @param 	string 		$cartItem
+	 * @return 	array
+	 */
+	public function groupCartItemsByProduct(SupportCollectionResponse $cartItems) : array
+	{
+		// Create an array with both product and product commodity info so we can group by product
+		$productCommodities = [];
+		
+		foreach ($cartItems as $cartItem) {
+			array_push($productCommodities, [
+				'id' => $cartItem->id,
+				'title' => $cartItem->name,
+				'quantity' => $cartItem->qty,
+				'product_id' => $cartItem->model->product->id,
+				'product_title' => $cartItem->model->product->title,
+				'product_url' => $cartItem->model->product->url,
+				'product_image_url' => $cartItem->model->product->image_url,
+			]);
+		}
+		
+		// Create new array grouped by product title
+		$tmp = array();
+		
+		foreach ($productCommodities as $productCommodity) {
+			$tmp[$productCommodity['product_title']][] = [
+				'id' => $productCommodity['id'],
+				'title' => $productCommodity['title'],
+				'quantity' => $productCommodity['quantity'],
+				'product_id' => $productCommodity['product_id'],
+				'product_title' => $productCommodity['product_title'],
+				'product_url' => $productCommodity['product_url'],
+				'product_image_url' => $productCommodity['product_image_url'],
+			];
+		}
+		
+		// Now add back in product info
+		$cartItems = [];
+		
+		foreach ($tmp as $productTitle => $productCommodities) {
+			$cartItems[] = [
+				'product_id' => $productCommodities[0]['product_id'],
+				'product_title' => $productTitle,
+				'product_url' => $productCommodities[0]['product_url'],
+				'product_image_url' => $productCommodities[0]['product_image_url'],
+				'product_commodities' => $productCommodities,
+			];
+		}
+		
+		return $cartItems;
+	}
+	
+	/**
 	 * Restores cart instance.
 	 *
 	 * @param 	string 		$instance

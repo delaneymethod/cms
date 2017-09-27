@@ -58,7 +58,6 @@ class Location extends Model
 	/**
 	 * Get the locations postal address
 	 *
-	 * @param  	int  	$value
 	 * @return 	string
 	 */
 	public function getPostalAddressAttribute() : string
@@ -84,7 +83,7 @@ class Location extends Model
 		
 		return implode(', ', $address);
 	}
-
+	
 	/**
 	 * Get the county record associated with the location.
 	 */

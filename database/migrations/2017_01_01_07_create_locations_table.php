@@ -36,7 +36,8 @@ class CreateLocationsTable extends Migration
 			$table->unsignedInteger('company_id')->nullable()->index()->comment('Foreign key to the companies table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 
 		Schema::table('locations', function (Blueprint $table) {

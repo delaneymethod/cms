@@ -23,7 +23,7 @@
 					</tr>
 					<tr>
 						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">
-							Regards,<br>{{ $appName }}
+							Regards,<br>{{ config('cms.site.name') }}
 						</td>
 					</tr>
 					<tr>

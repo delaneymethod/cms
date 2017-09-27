@@ -24,10 +24,8 @@
 					</tbody>
 				</table>
 			@endif
-			
 			<h2>Your Cart</h2>
 			@if ($cart->count > 0)
-			
 				<ul class="list-unstyled list-inline">
 					<li class="list-inline-item"><a href="/cart/save" title="Save Cart for Later" class="btn btn-outline-secondary">Save Cart for Later</a></li>
 					<li class="list-inline-item">
@@ -43,18 +41,18 @@
 						])
 						@endcomponent
 					</li>
+					<li class="list-inline-item pull-right"><a href="/cart/checkout" title="Checkout" class="btn btn-primary">Checkout</a></li>
 				</ul>
-			
 				<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 					<thead>
 						<tr>
-							<th>&nbsp;</th>
+							<th class="align-middle">&nbsp;</th>
 							<th class="align-middle">Product</th>
 							<th class="align-middle">Product Commodity</th>
 							<th colspan="3" class="align-middle text-center">Qty</th>
 							<th class="align-middle text-right">Price</th>
 							<th class="align-middle text-right">Subtotal</th>
-							<th>&nbsp;</th>
+							<th class="align-middle">&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -120,9 +118,6 @@
 						</tr>
 					</tfoot>
 				</table>
-				
-				
-				
 				<ul class="list-unstyled list-inline">
 					<li class="list-inline-item"><a href="/cart/save" title="Save Cart for Later" class="btn btn-outline-secondary">Save Cart for Later</a></li>
 					<li class="list-inline-item">
@@ -134,17 +129,15 @@
 							'instance' => 'cart',
 							'action' => 'delete_cart',
 							'buttonLabel' => 'Empty Cart',
-							'extraClasses' => 'btn btn-outline-danger '
+							'extraClasses' => 'btn btn-outline-danger'
 						])
 						@endcomponent
 					</li>
-					
 					<li class="list-inline-item pull-right"><a href="/cart/checkout" title="Checkout" class="btn btn-primary">Checkout</a></li>
 				</ul>
 			@else
 				<p>There are currently no items in your cart!</p>
 			@endif
-			
 			<h2>Your Wishlist</h2>
 			@if ($wishlistCart->count > 0)
 				<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">

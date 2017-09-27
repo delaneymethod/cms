@@ -23,7 +23,8 @@ class CreateOrderTypesTable extends Migration
 			$table->string('title')->index();
 			$table->string('slug')->index();
 			
-			$table->timestamps();
+			$table->timestamp('created_at')->useCurrent();
+			$table->timestamp('updated_at')->useCurrent();
 		});
 		
 		Schema::table('order_types', function (Blueprint $table) {
