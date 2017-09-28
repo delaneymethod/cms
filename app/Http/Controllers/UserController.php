@@ -12,8 +12,8 @@ use Log;
 use App\User;
 use Exception;
 use Carbon\Carbon;
-use App\Events\UserUpdated;
 use Illuminate\Http\Request;
+use App\Events\UserUpdatedEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Password;
@@ -281,7 +281,7 @@ class UserController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($currentUser->hasPermission('view_users') && $currentUser->id == $id) {
+		if ($currentUser->id == $id) {
 			$title = 'Messages';
 			
 			$subTitle = $currentUser->company->title;
@@ -289,7 +289,7 @@ class UserController extends Controller
 			$notifications = $currentUser->notifications;
 			
 			foreach ($notifications as $notification) {
-				$notification->subject = str_replace(['App\Notifications\OrderUpdated', 'App\Notifications\OrderPlaced'], ['Order Updated', 'Order Placed'], $notification->type);
+				$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderPlacedNotification'], ['Order Updated', 'Order Placed'], $notification->type);
 			}
 			
 			return view('cp.users.notifications.index', compact('currentUser', 'title', 'subTitle', 'notifications'));
@@ -309,11 +309,11 @@ class UserController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		if ($currentUser->hasPermission('view_users') && $currentUser->id == $id) {
+		if ($currentUser->id == $id) {
 			$notification = $this->getNotification($uuid);
 			
 			// Set a subject
-			$notification->subject = str_replace(['App\Notifications\OrderUpdated', 'App\Notifications\OrderPlaced'], ['Order Updated', 'Order Placed'], $notification->type);
+			$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderPlacedNotification'], ['Order Updated', 'Order Placed'], $notification->type);
 			
 			$title = $notification->subject;
 			
@@ -599,8 +599,7 @@ class UserController extends Controller
 						
 							$user->save();
 						
-							// Broadcast an UserUpdated event
-							broadcast(new UserUpdated($user));
+							broadcast(new UserUpdatedEvent($user));
 						}
 					});
 					

@@ -12,10 +12,10 @@ use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
+use App\Mail\{OrderPlacedMailCustomer, OrderPlacedMailSuperAdmin};
 
-class OrderUpdated extends Notification implements ShouldQueue
+class OrderPlacedNotification extends Notification implements ShouldQueue
 {
 	use Queueable;
 	
@@ -41,11 +41,18 @@ class OrderUpdated extends Notification implements ShouldQueue
 	protected $subject;
 	
 	/**
+	 * Information about the order placed email template.
+	 *
+	 * @var mixed
+	 */
+	protected $orderPlacedMail;
+	
+	/**
 	 * Create a new notification instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(Order $order, User $user, string $subject = 'Order Updated')
+	public function __construct(Order $order, User $user, string $subject = 'Order Placed')
 	{
 		$this->order = $order;
 		
@@ -62,7 +69,7 @@ class OrderUpdated extends Notification implements ShouldQueue
 	 */
 	public function via($notifiable) : array
 	{
-		return ['database', 'broadcast'];
+		return ['mail', 'database', 'broadcast'];
 	}
 
 	/**
@@ -73,7 +80,13 @@ class OrderUpdated extends Notification implements ShouldQueue
 	 */
 	public function toMail($notifiable)
 	{
-		// We dont want to send out a new email - I think the API wil do this.
+		$this->orderPlacedMail = new OrderPlacedMailCustomer($this->order, $this->user);
+		
+		if ($this->user->isSuperAdmin()) {
+			$this->orderPlacedMail = new OrderPlacedMailSuperAdmin($this->order, $this->user);
+		}
+			
+		return ($this->orderPlacedMail)->to($this->user->email)->subject($this->subject);
 	}
 	
 	/**
@@ -85,7 +98,7 @@ class OrderUpdated extends Notification implements ShouldQueue
 	public function toBroadcast($notifiable)
 	{
 		$data = [
-			'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method')
+			'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method'),
 		];
 		
 		// Note, if we dont stick this broadcast on a queue, it gets added to the default queue - unless you are listenings on default queue, this will never get processed.
@@ -101,7 +114,7 @@ class OrderUpdated extends Notification implements ShouldQueue
 	public function toDatabase($notifiable) : array
 	{
 		return [
-			'order' => $this->order
+			'order' => $this->order,
 		];
 	}
 }

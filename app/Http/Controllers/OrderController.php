@@ -13,9 +13,9 @@ use App;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Order;
-use App\Jobs\ProcessOrder;
-use App\Events\OrderUpdated;
 use Illuminate\Http\Request;
+use App\Jobs\ProcessOrderJob;
+use App\Events\OrderUpdatedEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use App\Http\Traits\{CartTrait, OrderTrait, StatusTrait, OrderTypeTrait, ShippingMethodTrait};
@@ -183,7 +183,7 @@ class OrderController extends Controller
 				$time = Carbon::now()->addMinutes($minutes);
 				
 				// Dispatches a new job to process the order. Sticks the job in the "orders" queue to run in 10 minutes.
-				ProcessOrder::dispatch($order)->delay($time)->onQueue('orders.jobs');
+				ProcessOrderJob::dispatch($order)->delay($time)->onQueue('orders.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -310,8 +310,7 @@ class OrderController extends Controller
 						
 							$order->save();
 						
-							// Broadcast an OrderUpdated event
-							broadcast(new OrderUpdated($order));
+							broadcast(new OrderUpdatedEvent($order, $order->user));
 						}
 					});
 					

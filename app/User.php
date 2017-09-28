@@ -7,9 +7,9 @@
 
 namespace App;
 
-use App\Notifications\SetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Collection;
+use App\Notifications\SetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo};
 use App\Models\{Role, Order, Status, Company, Article, Location};
@@ -219,6 +219,6 @@ class User extends Authenticatable
 	 */
 	public function sendPasswordResetNotification($token)
 	{
-		$this->notify(new SetPassword($token, $this->first_name));
+		$this->notify(new SetPasswordNotification($token, $this->first_name));
 	}
 }

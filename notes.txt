@@ -1,13 +1,7 @@
 
 Fail a job if API fails
 
-
-Fix jobs, events, listeners, notifications
-
-Fix orders - not filtered per user - pusher ignores super admin rule
-
-
-
+Rename all events for user, orders and locations and update across the site
 
 echo "" > storage/logs/laravel.log
 

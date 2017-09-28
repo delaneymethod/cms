@@ -85,14 +85,14 @@ class DashboardController extends Controller
 				'url' => '/cp/users',
 				'count' => $users->count()
 			]);
-			
-			array_push($statCards, [
-				'id' => 'messages',
-				'label' => 'Messages',
-				'url' => '/cp/users/'.$currentUser->id.'/notifications',
-				'count' => $currentUser->notifications->count()
-			]);
 		}
+		
+		array_push($statCards, [
+			'id' => 'messages',
+			'label' => 'Messages',
+			'url' => '/cp/users/'.$currentUser->id.'/notifications',
+			'count' => $currentUser->notifications->count()
+		]);
 				
 		if ($currentUser->hasPermission('view_locations')) {
 			$locations = $this->getData('getLocations', 'locations');

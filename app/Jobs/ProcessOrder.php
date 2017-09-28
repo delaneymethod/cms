@@ -9,33 +9,19 @@ namespace App\Jobs;
 
 use Log;
 use App\Models\Order;
-use App\Events\OrderPlaced;
 use Illuminate\Bus\Queueable;
 use GuzzleHttp\{Psr7, Client};
 use App\Http\Traits\UserTrait;
+use App\Events\OrderPlacedEvent;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\{SerializesModels, InteractsWithQueue};
 
-class ProcessOrder implements ShouldQueue
+class ProcessOrderJob implements ShouldQueue
 {
 	use UserTrait, Queueable, Dispatchable, SerializesModels, InteractsWithQueue;
 	
-	/**
-     * The number of times the job may be attempted.
-     *
-     * @var int
-     */
-    public $tries = 5;
-    
-    /**
-     * The number of seconds the job can run before timing out.
-     *
-     * @var int
-     */
-    public $timeout = 30;
-    
 	/**
 	 * Information about the order.
 	 *
@@ -112,10 +98,12 @@ class ProcessOrder implements ShouldQueue
 			Log::info('Body:');
 			Log::info($response->getBody());
 			
-			// Sends out an order placed event across the system. Listeners will pick up the event and send out notifications to the customer and super admin user
-			event(new OrderPlaced($this->order, $this->order->user));
+			// Sends out an order placed event across the system.
 			
-			//event(new OrderPlaced($this->order, $this->superAdmin));
+			// Listeners will pick up the event and send out notifications to the customer and to the super admin (site owner)
+			event(new OrderPlacedEvent($this->order, $this->order->user));
+			
+			event(new OrderPlacedEvent($this->order, $this->superAdmin));
 		} catch (RequestException $exception) {
 			Log::info('');
 			Log::critical('Request Exception:');

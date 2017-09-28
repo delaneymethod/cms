@@ -12,7 +12,7 @@
 						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">Hello {{ $user->first_name }},</td>
 					</tr>
 					<tr>
-						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">A new order has been received and is now being processed. Your order details are shown below for your reference:</td>
+						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">A new order has been received and is now being processed. The order number is shown below for your reference:</td>
 					</tr>
 					<tr>
 						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 20px;line-height: 20px;font-weight: bold;">Order #{{ $order->order_number }}</td>

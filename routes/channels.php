@@ -26,7 +26,11 @@ Broadcast::channel('users.{id}', function (User $user, int $id) {
 
 // Current users > company > orders
 Broadcast::channel('orders.{id}', function (User $user, int $id) {
-	return $user->id === Order::find($id)->user_id;
+	if ($user->isSuperAdmin()) {
+		return true;
+	} else {
+		return $user->id === Order::find($id)->user_id;
+	}
 });
 
 Broadcast::channel('locations.{id}', function (User $user, int $id) {

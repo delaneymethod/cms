@@ -7,13 +7,14 @@
 
 namespace App\Mail;
 
+use App\User;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class OrderPlacedSuperAdmin extends Mailable implements ShouldQueue
+class OrderPlacedMailSuperAdmin extends Mailable implements ShouldQueue
 {
 	use Queueable, SerializesModels;
 	
