@@ -1,4 +1,17 @@
 
+Check permissions for carts
+
+Add permission to view all carts for company or just users own carts
+
+Page load time for commodities
+
+Delay image loading
+
+Make sure all "Additional Notes 30/08/17" are addressed
+
+
+
+
 echo "" > storage/logs/laravel.log
 
 Look into: https://github.com/spatie/laravel-activitylog
