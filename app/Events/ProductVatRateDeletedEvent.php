@@ -7,14 +7,14 @@
 
 namespace App\Events;
 
-use App\Models\ProductManufacturer;
+use App\Models\ProductVatRate;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductManufacturerDeleted implements ShouldBroadcast
+class ProductVatRateDeletedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
@@ -23,7 +23,7 @@ class ProductManufacturerDeleted implements ShouldBroadcast
 	 *
 	 * @var string
 	 */
-	public $productManufacturer;
+	public $productVatRate;
 	
 	/**
 	 * The name of the queue on which to place the event.
@@ -37,9 +37,9 @@ class ProductManufacturerDeleted implements ShouldBroadcast
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductManufacturer $productManufacturer)
+	public function __construct(ProductVatRate $productVatRate)
 	{
-		$this->productManufacturer = $productManufacturer;
+		$this->productVatRate = $productVatRate;
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class ProductManufacturerDeleted implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'product_manufacturer.deleted';
+		return 'product_vat_rate.deleted';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class ProductManufacturerDeleted implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'product_manufacturer' => $this->productManufacturer
+			'product_vat_rate' => $this->productVatRate,
 		];
 	}
 
@@ -71,6 +71,6 @@ class ProductManufacturerDeleted implements ShouldBroadcast
 	 */
 	public function broadcastOn() : Channel
 	{
-		return new Channel('product_manufacturers.'.$this->productManufacturer->id);
+		return new Channel('product_vat_rates.'.$this->productVatRate->id);
 	}
 }

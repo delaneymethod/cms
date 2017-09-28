@@ -7,39 +7,39 @@
 
 namespace App\Events;
 
-use App\Models\ProductVatRate;
+use App\Models\Location;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductVatRateDeleted implements ShouldBroadcast
+class LocationUpdatedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
-	
+    
 	/**
 	 * Information about the product update.
 	 *
 	 * @var string
 	 */
-	public $productVatRate;
+	public $location;
 	
 	/**
 	 * The name of the queue on which to place the event.
 	 *
 	 * @var string
 	 */
-	public $broadcastQueue = 'products';
+	public $broadcastQueue = 'locations';
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductVatRate $productVatRate)
+	public function __construct(Location $location)
 	{
-		$this->productVatRate = $productVatRate;
+		$this->location = $location;
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class ProductVatRateDeleted implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'product_vat_rate.deleted';
+		return 'location.updated';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class ProductVatRateDeleted implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'product_vat_rate' => $this->productVatRate
+			'location' => $this->location,
 		];
 	}
 
@@ -71,6 +71,6 @@ class ProductVatRateDeleted implements ShouldBroadcast
 	 */
 	public function broadcastOn() : Channel
 	{
-		return new Channel('product_vat_rates.'.$this->productVatRate->id);
+		return new Channel('locations.'.$this->location->id);
 	}
 }

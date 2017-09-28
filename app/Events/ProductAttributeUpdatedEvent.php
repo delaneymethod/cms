@@ -7,14 +7,14 @@
 
 namespace App\Events;
 
-use App\Models\Product;
+use App\Models\ProductAttribute;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductCreated implements ShouldBroadcast
+class ProductAttributeUpdatedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
@@ -23,7 +23,7 @@ class ProductCreated implements ShouldBroadcast
 	 *
 	 * @var string
 	 */
-	public $product;
+	public $productAttribute;
 	
 	/**
 	 * The name of the queue on which to place the event.
@@ -37,9 +37,9 @@ class ProductCreated implements ShouldBroadcast
 	 *
 	 * @return void
 	 */
-	public function __construct(Product $product)
+	public function __construct(ProductAttribute $productAttribute)
 	{
-		$this->product = $product;
+		$this->productAttribute = $productAttribute;
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class ProductCreated implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'product.created';
+		return 'product_attribute.updated';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class ProductCreated implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'product' => $this->product
+			'product_attribute' => $this->productAttribute,
 		];
 	}
 
@@ -71,6 +71,6 @@ class ProductCreated implements ShouldBroadcast
 	 */
 	public function broadcastOn() : Channel
 	{
-		return new Channel('products.'.$this->product->id);
+		return new Channel('product_attributes.'.$this->productAttribute->id);
 	}
 }

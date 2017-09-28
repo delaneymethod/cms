@@ -31,11 +31,11 @@ class Kernel extends ConsoleKernel
     {
 	    $schedule->command('monitor:check-uptime')->everyMinute();
 		
-		$schedule->command('backup:clean')->daily()->at('00:05');
+		$schedule->command('backup:clean')->daily()->at('00:01')->withoutOverlapping();
 	    
-		$schedule->command('backup:run')->daily()->at('00:10');
+		$schedule->command('backup:run')->daily()->at('00:31')->withoutOverlapping();
 		
-		$schedule->command('sitemap:generate')->daily()->at('00:15');
+		$schedule->command('sitemap:generate')->daily()->at('00:40')->withoutOverlapping();
 	}
 
     /**

@@ -14,7 +14,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductCommodityDeleted implements ShouldBroadcast
+class ProductCommodityAddedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
@@ -49,7 +49,7 @@ class ProductCommodityDeleted implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'product_commodity.deleted';
+		return 'product_commodity.added';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class ProductCommodityDeleted implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'product_commodity' => $this->productCommodity
+			'product_commodity' => $this->productCommodity,
 		];
 	}
 

@@ -7,39 +7,39 @@
 
 namespace App\Events;
 
-use App\User;
+use Illuminate\Broadcasting\Channel;
+use App\Models\ProductCharacteristic;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class UserUpdated implements ShouldBroadcast
+class ProductCharacteristicDeletedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
 	/**
-	 * Information about the user update.
+	 * Information about the product update.
 	 *
 	 * @var string
 	 */
-	public $user;
+	public $productCharacteristic;
 	
 	/**
 	 * The name of the queue on which to place the event.
 	 *
 	 * @var string
 	 */
-	public $broadcastQueue = 'users';
+	public $broadcastQueue = 'products';
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(User $user)
+	public function __construct(ProductCharacteristic $productCharacteristic)
 	{
-		$this->user = $user;
+		$this->productCharacteristic = $productCharacteristic;
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class UserUpdated implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'user.updated';
+		return 'product_characteristic.deleted';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class UserUpdated implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'user' => $this->user
+			'product_characteristic' => $this->productCharacteristic,
 		];
 	}
 
@@ -69,8 +69,8 @@ class UserUpdated implements ShouldBroadcast
 	 *
 	 * @return \Illuminate\Broadcasting\Channel|array
 	 */
-	public function broadcastOn()
+	public function broadcastOn() : Channel
 	{
-		return new PrivateChannel('users.'.$this->user->id);
+		return new Channel('product_characteristics.'.$this->productCharacteristic->id);
 	}
 }

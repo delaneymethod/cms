@@ -8,6 +8,7 @@
 namespace App\Jobs;
 
 use Log;
+use Exception;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use GuzzleHttp\{Psr7, Client};
@@ -16,12 +17,20 @@ use App\Events\OrderPlacedEvent;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Notifications\FailedJobNotification;
 use Illuminate\Queue\{SerializesModels, InteractsWithQueue};
 
 class ProcessOrderJob implements ShouldQueue
 {
 	use UserTrait, Queueable, Dispatchable, SerializesModels, InteractsWithQueue;
 	
+	/**
+     * The number of times the job may be attempted before it fails.
+     *
+     * @var int
+     */
+    public $tries = 5;
+    
 	/**
 	 * Information about the order.
 	 *
@@ -60,7 +69,7 @@ class ProcessOrderJob implements ShouldQueue
 		$this->order = $order->load('user', 'status', 'location', 'order_type', 'shipping_method');
 		
 		$this->apiUrl = config('cms.api.url');
-	
+		
 		$this->endpoint = config('cms.api.endpoints.orders.process');
 		
 		$this->superAdmin = $this->getUserById(1);
@@ -105,15 +114,50 @@ class ProcessOrderJob implements ShouldQueue
 			
 			event(new OrderPlacedEvent($this->order, $this->superAdmin));
 		} catch (RequestException $exception) {
-			Log::info('');
-			Log::critical('Request Exception:');
+			Log::critical('');
+			Log::critical('################################');
+			Log::critical('#      API REQUEST FAILED      #');
+			Log::critical('################################');
+			Log::critical('');
+			Log::critical('Request: ');
 			Log::critical(Psr7\str($exception->getRequest()));
+			Log::critical('');
 			
+			/*
 			if ($exception->hasResponse()) {
+				Log::critical('Response: ');
 				Log::critical(Psr7\str($exception->getResponse()));
 			}
+			*/
+			
+			throw new Exception($exception);
 		}
 	
 		Log::info('');
+	}
+	
+	/**
+	 * The job failed to process.
+	 *
+	 * @param  Exception  $exception
+	 * @return void
+	 */
+	public function failed(Exception $exception)
+	{
+		Log::critical('');
+		Log::critical('################################');
+		Log::critical('#          JOB FAILED          #');
+		Log::critical('################################');
+		Log::critical('');
+		Log::critical('Exception: '.$exception);
+		Log::critical('');
+		Log::critical('Message: '.$exception->getMessage());
+		Log::critical('File: '.$exception->getFile());
+		Log::critical('Line: '.$exception->getLine());
+		Log::critical('Trace: '.$exception->getTraceAsString());
+		Log::critical('');
+		
+		// Send notification of failure, setting the message
+		$this->superAdmin->notify(new FailedJobNotification('Process Order Job Failed'));
 	}
 }

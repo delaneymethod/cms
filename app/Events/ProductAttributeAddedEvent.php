@@ -7,14 +7,14 @@
 
 namespace App\Events;
 
-use App\Models\Location;
+use App\Models\ProductAttribute;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class LocationUpdated implements ShouldBroadcast
+class ProductAttributeAddedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
@@ -23,23 +23,23 @@ class LocationUpdated implements ShouldBroadcast
 	 *
 	 * @var string
 	 */
-	public $location;
+	public $productAttribute;
 	
 	/**
 	 * The name of the queue on which to place the event.
 	 *
 	 * @var string
 	 */
-	public $broadcastQueue = 'locations';
+	public $broadcastQueue = 'products';
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(Location $location)
+	public function __construct(ProductAttribute $productAttribute)
 	{
-		$this->location = $location;
+		$this->productAttribute = $productAttribute;
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class LocationUpdated implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'location.updated';
+		return 'product_attribute.added';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class LocationUpdated implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'location' => $this->location
+			'product_attribute' => $this->productAttribute,
 		];
 	}
 
@@ -71,6 +71,6 @@ class LocationUpdated implements ShouldBroadcast
 	 */
 	public function broadcastOn() : Channel
 	{
-		return new Channel('locations.'.$this->location->id);
+		return new Channel('product_attributes.'.$this->productAttribute->id);
 	}
 }

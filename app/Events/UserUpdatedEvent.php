@@ -7,39 +7,39 @@
 
 namespace App\Events;
 
-use App\Models\ProductCategory;
-use Illuminate\Broadcasting\Channel;
+use App\User;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductCategoryDeleted implements ShouldBroadcast
+class UserUpdatedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
 	/**
-	 * Information about the product update.
+	 * Information about the user update.
 	 *
 	 * @var string
 	 */
-	public $productCategory;
+	public $user;
 	
 	/**
 	 * The name of the queue on which to place the event.
 	 *
 	 * @var string
 	 */
-	public $broadcastQueue = 'products';
+	public $broadcastQueue = 'users';
 
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductCategory $productCategory)
+	public function __construct(User $user)
 	{
-		$this->productCategory = $productCategory;
+		$this->user = $user;
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class ProductCategoryDeleted implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'product_category.deleted';
+		return 'user.updated';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class ProductCategoryDeleted implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'product_category' => $this->productCategory
+			'user' => $this->user,
 		];
 	}
 
@@ -69,8 +69,8 @@ class ProductCategoryDeleted implements ShouldBroadcast
 	 *
 	 * @return \Illuminate\Broadcasting\Channel|array
 	 */
-	public function broadcastOn() : Channel
+	public function broadcastOn()
 	{
-		return new Channel('product_categories.'.$this->productCategory->id);
+		return new PrivateChannel('users.'.$this->user->id);
 	}
 }

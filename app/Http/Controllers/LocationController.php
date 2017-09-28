@@ -12,7 +12,7 @@ use Log;
 use Exception;
 use App\Models\Location;
 use Illuminate\Http\Request;
-use App\Events\LocationUpdated;
+use App\Events\LocationUpdatedEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use App\Http\Traits\{StatusTrait, CountyTrait, CountryTrait, CompanyTrait, LocationTrait};
@@ -521,8 +521,7 @@ class LocationController extends Controller
 						
 							$location->save();
 							
-							// Broadcast an LocationUpdated event
-							broadcast(new LocationUpdated($location));
+							broadcast(new LocationUpdatedEvent($location));
 						}
 					});
 					

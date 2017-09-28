@@ -1,8 +1,4 @@
 
-Fail a job if API fails
-
-Rename all events for user, orders and locations and update across the site
-
 echo "" > storage/logs/laravel.log
 
 Look into: https://github.com/spatie/laravel-activitylog

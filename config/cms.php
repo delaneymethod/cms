@@ -5,6 +5,8 @@
  * @license   https://www.delaneymethod.com/cms/license
  */
 
+$inDevelopmentMode = env('APP_DEBUG');
+
 return [
 	
 	/*
@@ -28,10 +30,11 @@ return [
     'public_path' => env('PUBLIC_PATH', 'public'),
     
 	'delays' => [
-	
-		'jobs' => 10,
-		'emails' => 5,
-		'notifications' => 1,
+		
+		// If in dev mode, no delays
+		'jobs' => ($inDevelopmentMode) ? 0 : 10,
+		'emails' => ($inDevelopmentMode) ? 0 : 5,
+		'notifications' => ($inDevelopmentMode) ? 0 : 1,
 	
 	],
 	

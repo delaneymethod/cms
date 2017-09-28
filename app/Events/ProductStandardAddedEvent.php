@@ -7,14 +7,14 @@
 
 namespace App\Events;
 
-use App\Models\ProductManufacturer;
+use App\Models\ProductStandard;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductManufacturerUpdated implements ShouldBroadcast
+class ProductStandardAddedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
@@ -23,7 +23,7 @@ class ProductManufacturerUpdated implements ShouldBroadcast
 	 *
 	 * @var string
 	 */
-	public $productManufacturer;
+	public $productStandard;
 	
 	/**
 	 * The name of the queue on which to place the event.
@@ -37,9 +37,9 @@ class ProductManufacturerUpdated implements ShouldBroadcast
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductManufacturer $productManufacturer)
+	public function __construct(ProductStandard $productStandard)
 	{
-		$this->productManufacturer = $productManufacturer;
+		$this->productStandard = $productStandard;
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class ProductManufacturerUpdated implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'product_manufacturer.updated';
+		return 'product_standard.added';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class ProductManufacturerUpdated implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'product_manufacturer' => $this->productManufacturer
+			'product_standard' => $this->productStandard,
 		];
 	}
 
@@ -71,6 +71,6 @@ class ProductManufacturerUpdated implements ShouldBroadcast
 	 */
 	public function broadcastOn() : Channel
 	{
-		return new Channel('product_manufacturers.'.$this->productManufacturer->id);
+		return new Channel('product_standards.'.$this->productStandard->id);
 	}
 }

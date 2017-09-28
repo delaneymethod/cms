@@ -18,7 +18,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class OrderPlacedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
-	
+    
 	/**
 	 * Information about the user.
 	 *

@@ -7,14 +7,14 @@
 
 namespace App\Events;
 
+use App\Models\ProductCategory;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use App\Models\ProductStandardOrganisation;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ProductStandardOrganisationAdded implements ShouldBroadcast
+class ProductCategoryDeletedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 	
@@ -23,7 +23,7 @@ class ProductStandardOrganisationAdded implements ShouldBroadcast
 	 *
 	 * @var string
 	 */
-	public $productStandardOrganisation;
+	public $productCategory;
 	
 	/**
 	 * The name of the queue on which to place the event.
@@ -37,9 +37,9 @@ class ProductStandardOrganisationAdded implements ShouldBroadcast
 	 *
 	 * @return void
 	 */
-	public function __construct(ProductStandardOrganisation $productStandardOrganisation)
+	public function __construct(ProductCategory $productCategory)
 	{
-		$this->productStandardOrganisation = $productStandardOrganisation;
+		$this->productCategory = $productCategory;
 	}
 	
 	/**
@@ -49,7 +49,7 @@ class ProductStandardOrganisationAdded implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'product_standard_organisation.added';
+		return 'product_category.deleted';
 	}
 	
 	/**
@@ -60,7 +60,7 @@ class ProductStandardOrganisationAdded implements ShouldBroadcast
 	public function broadcastWith() : array
 	{
 		return [
-			'product_standard_organisation' => $this->productStandardOrganisation
+			'product_category' => $this->productCategory,
 		];
 	}
 
@@ -71,6 +71,6 @@ class ProductStandardOrganisationAdded implements ShouldBroadcast
 	 */
 	public function broadcastOn() : Channel
 	{
-		return new Channel('product_standard_organisations.'.$this->productStandardOrganisation->id);
+		return new Channel('product_categories.'.$this->productCategory->id);
 	}
 }
