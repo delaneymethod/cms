@@ -30,6 +30,8 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+require('lazyload');
+
 require('bootstrap');
 
 require('bootstrap-datetime-picker');

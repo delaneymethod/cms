@@ -35,8 +35,8 @@ class OrderPlacedListener implements ShouldQueue
 	/**
 	 * Handle the event.
 	 *
-	 * @param	OrderPlaced	 $event
-	 * @return void
+	 * @param 	OrderPlaced 	$event
+	 * @return 	void
 	 */
 	public function handle(OrderPlacedEvent $event)
 	{

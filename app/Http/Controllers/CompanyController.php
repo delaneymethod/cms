@@ -52,6 +52,8 @@ class CompanyController extends Controller
 			if (is_null($companies)) {
 				$companies = $this->getCompanies();
 				
+				$companies = $this->filterCompanies($companies);
+			
 				$this->setCache($this->cacheKey, $companies);
 			}
 			
@@ -79,6 +81,8 @@ class CompanyController extends Controller
 			// Used to set location_id
 			$locations = $this->getData('getLocations', 'locations');
 			
+			$locations = $this->filterLocations($locations);
+				
 			return view('cp.companies.create', compact('currentUser', 'title', 'subTitle', 'locations'));
 		}
 
@@ -120,7 +124,11 @@ class CompanyController extends Controller
 				
 				$company->save();
 				
-				$this->setCache($this->cacheKey, $this->getCompanies());
+				$companies = $this->getCompanies();
+				
+				$companies = $this->filterCompanies($companies);
+			
+				$this->setCache($this->cacheKey, $companies);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -213,7 +221,11 @@ class CompanyController extends Controller
 				
 				$company->save();
 				
-				$this->setCache($this->cacheKey, $this->getCompanies());
+				$companies = $this->getCompanies();
+				
+				$companies = $this->filterCompanies($companies);
+			
+				$this->setCache($this->cacheKey, $companies);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -299,7 +311,11 @@ class CompanyController extends Controller
 			try {
 				$company->delete();
 				
-				$this->setCache($this->cacheKey, $this->getCompanies());
+				$companies = $this->getCompanies();
+				
+				$companies = $this->filterCompanies($companies);
+			
+				$this->setCache($this->cacheKey, $companies);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			

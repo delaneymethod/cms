@@ -1,13 +1,11 @@
 
-Check permissions for carts
-
-Add permission to view all carts for company or just users own carts
-
-Page load time for commodities
-
-Delay image loading
-
 Make sure all "Additional Notes 30/08/17" are addressed
+
+
+
+
+Login as each user type and check access / functionality
+
 
 
 
@@ -23,6 +21,9 @@ php artisan queue:work --queue=orders.jobs
 php artisan queue:work --queue=orders.events
 php artisan queue:work --queue=orders.notifications
 php artisan queue:work --queue=orders.broadcasts
+php artisan queue:work --queue=users
+php artisan queue:work --queue=locations
+php artisan queue:work --queue=products
 
 Setup cron for scheduled tasks
 
@@ -46,7 +47,6 @@ Fix caching issue with random records
 	}]
 }
 
-
 {
 	"event_id": "54321",
 	"event_type": "product_standard.updated",
@@ -63,4 +63,3 @@ Fix caching issue with random records
 		"StandardId": 3
 	}]
 }
-		

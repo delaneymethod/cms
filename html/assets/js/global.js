@@ -5480,6 +5480,158 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
+/***/ "./node_modules/jquery-inview/jquery.inview.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * author Christopher Blum
+ *    - based on the idea of Remy Sharp, http://remysharp.com/2009/01/26/element-in-view-event-plugin/
+ *    - forked from http://github.com/zuk/jquery.inview/
+ */
+(function (factory) {
+  if (true) {
+    // AMD
+    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__("./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+  } else if (typeof exports === 'object') {
+    // Node, CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+      // Browser globals
+    factory(jQuery);
+  }
+}(function ($) {
+
+  var inviewObjects = [], viewportSize, viewportOffset,
+      d = document, w = window, documentElement = d.documentElement, timer;
+
+  $.event.special.inview = {
+    add: function(data) {
+      inviewObjects.push({ data: data, $element: $(this), element: this });
+      // Use setInterval in order to also make sure this captures elements within
+      // "overflow:scroll" elements or elements that appeared in the dom tree due to
+      // dom manipulation and reflow
+      // old: $(window).scroll(checkInView);
+      //
+      // By the way, iOS (iPad, iPhone, ...) seems to not execute, or at least delays
+      // intervals while the user scrolls. Therefore the inview event might fire a bit late there
+      //
+      // Don't waste cycles with an interval until we get at least one element that
+      // has bound to the inview event.
+      if (!timer && inviewObjects.length) {
+         timer = setInterval(checkInView, 250);
+      }
+    },
+
+    remove: function(data) {
+      for (var i=0; i<inviewObjects.length; i++) {
+        var inviewObject = inviewObjects[i];
+        if (inviewObject.element === this && inviewObject.data.guid === data.guid) {
+          inviewObjects.splice(i, 1);
+          break;
+        }
+      }
+
+      // Clear interval when we no longer have any elements listening
+      if (!inviewObjects.length) {
+         clearInterval(timer);
+         timer = null;
+      }
+    }
+  };
+
+  function getViewportSize() {
+    var mode, domObject, size = { height: w.innerHeight, width: w.innerWidth };
+
+    // if this is correct then return it. iPad has compat Mode, so will
+    // go into check clientHeight/clientWidth (which has the wrong value).
+    if (!size.height) {
+      mode = d.compatMode;
+      if (mode || !$.support.boxModel) { // IE, Gecko
+        domObject = mode === 'CSS1Compat' ?
+          documentElement : // Standards
+          d.body; // Quirks
+        size = {
+          height: domObject.clientHeight,
+          width:  domObject.clientWidth
+        };
+      }
+    }
+
+    return size;
+  }
+
+  function getViewportOffset() {
+    return {
+      top:  w.pageYOffset || documentElement.scrollTop   || d.body.scrollTop,
+      left: w.pageXOffset || documentElement.scrollLeft  || d.body.scrollLeft
+    };
+  }
+
+  function checkInView() {
+    if (!inviewObjects.length) {
+      return;
+    }
+
+    var i = 0, $elements = $.map(inviewObjects, function(inviewObject) {
+      var selector  = inviewObject.data.selector,
+          $element  = inviewObject.$element;
+      return selector ? $element.find(selector) : $element;
+    });
+
+    viewportSize   = viewportSize   || getViewportSize();
+    viewportOffset = viewportOffset || getViewportOffset();
+
+    for (; i<inviewObjects.length; i++) {
+      // Ignore elements that are not in the DOM tree
+      if (!$.contains(documentElement, $elements[i][0])) {
+        continue;
+      }
+
+      var $element      = $($elements[i]),
+          elementSize   = { height: $element[0].offsetHeight, width: $element[0].offsetWidth },
+          elementOffset = $element.offset(),
+          inView        = $element.data('inview');
+
+      // Don't ask me why because I haven't figured out yet:
+      // viewportOffset and viewportSize are sometimes suddenly null in Firefox 5.
+      // Even though it sounds weird:
+      // It seems that the execution of this function is interferred by the onresize/onscroll event
+      // where viewportOffset and viewportSize are unset
+      if (!viewportOffset || !viewportSize) {
+        return;
+      }
+
+      if (elementOffset.top + elementSize.height > viewportOffset.top &&
+          elementOffset.top < viewportOffset.top + viewportSize.height &&
+          elementOffset.left + elementSize.width > viewportOffset.left &&
+          elementOffset.left < viewportOffset.left + viewportSize.width) {
+        if (!inView) {
+          $element.data('inview', true).trigger('inview', [true]);
+        }
+      } else if (inView) {
+        $element.data('inview', false).trigger('inview', [false]);
+      }
+    }
+  }
+
+  $(w).bind("scroll resize scrollstop", function() {
+    viewportSize = viewportOffset = null;
+  });
+
+  // IE < 9 scrolls to focused elements without firing the "scroll" event
+  if (!documentElement.addEventListener && documentElement.attachEvent) {
+    documentElement.attachEvent("onfocusin", function() {
+      viewportOffset = null;
+    });
+  }
+}));
+
+
+/***/ }),
+
 /***/ "./node_modules/jquery/dist/jquery.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -15738,6 +15890,187 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
+
+/***/ }),
+
+/***/ "./node_modules/lazyload/lazyload.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/*!
+ * Lazy Load - JavaScript plugin for lazy loading images
+ *
+ * Copyright (c) 2007-2017 Mika Tuupola
+ *
+ * Licensed under the MIT license:
+ *   http://www.opensource.org/licenses/mit-license.php
+ *
+ * Project home:
+ *   https://appelsiini.net/projects/lazyload
+ *
+ * Version: 2.0.0-beta.2
+ *
+ */
+
+(function (root, factory) {
+    if (true) {
+        module.exports = factory(root);
+    } else if (typeof define === "function" && define.amd) {
+        define([], factory(root));
+    } else {
+        root.LazyLoad = factory(root);
+    }
+}) (typeof global !== "undefined" ? global : this.window || this.global, function (root) {
+
+    "use strict";
+
+    const defaults = {
+        src: "data-src",
+        srcset: "data-srcset",
+        selector: ".lazyload"
+    };
+
+    /**
+    * Merge two or more objects. Returns a new object.
+    * @private
+    * @param {Boolean}  deep     If true, do a deep (or recursive) merge [optional]
+    * @param {Object}   objects  The objects to merge together
+    * @returns {Object}          Merged values of defaults and options
+    */
+    const extend = function ()  {
+
+        let extended = {};
+        let deep = false;
+        let i = 0;
+        let length = arguments.length;
+
+        /* Check if a deep merge */
+        if (Object.prototype.toString.call(arguments[0]) === "[object Boolean]") {
+            deep = arguments[0];
+            i++;
+        }
+
+        /* Merge the object into the extended object */
+        let merge = function (obj) {
+            for (let prop in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+                    /* If deep merge and property is an object, merge properties */
+                    if (deep && Object.prototype.toString.call(obj[prop]) === "[object Object]") {
+                        extended[prop] = extend(true, extended[prop], obj[prop]);
+                    } else {
+                        extended[prop] = obj[prop];
+                    }
+                }
+            }
+        };
+
+        /* Loop through each object and conduct a merge */
+        for (; i < length; i++) {
+            let obj = arguments[i];
+            merge(obj);
+        }
+
+        return extended;
+    };
+
+    function LazyLoad(images, options) {
+        this.settings = extend(defaults, options || {});
+        this.images = images || document.querySelectorAll(this.settings.selector);
+        this.observer = null;
+        this.init();
+    }
+
+    LazyLoad.prototype = {
+        init: function() {
+
+            /* Without observers load everything and bail out early. */
+            if (!root.IntersectionObserver) {
+                this.loadImages();
+                return;
+            }
+
+            let self = this;
+            let observerConfig = {
+                root: null,
+                rootMargin: "0px",
+                threshold: [0]
+            };
+
+            this.observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function (entry) {
+                    if (entry.intersectionRatio > 0) {
+                        self.observer.unobserve(entry.target);
+                        let src = entry.target.getAttribute(self.settings.src);
+                        let srcset = entry.target.getAttribute(self.settings.srcset);
+                        if ("img" === entry.target.tagName.toLowerCase()) {
+                            if (src) {
+                                entry.target.src = src;
+                            }
+                            if (srcset) {
+                                entry.target.srcset = srcset;
+                            }
+                        } else {
+                            entry.target.style.backgroundImage = "url(" + src + ")";
+                        }
+                    }
+                });
+            }, observerConfig);
+
+            this.images.forEach(function (image) {
+                self.observer.observe(image);
+            });
+        },
+
+        loadAndDestroy: function () {
+            if (!this.settings) { return; }
+            this.loadImages();
+            this.destroy();
+        },
+
+        loadImages: function () {
+            if (!this.settings) { return; }
+
+            let self = this;
+            this.images.forEach(function (image) {
+                let src = image.getAttribute(self.settings.src);
+                let srcset = image.getAttribute(self.settings.srcset);
+                if ("img" === image.tagName.toLowerCase()) {
+                    if (src) {
+                        image.src = src;
+                    }
+                    if (srcset) {
+                        image.srcset = srcset;
+                    }
+                } else {
+                    image.style.backgroundImage = "url(" + src + ")";
+                }
+            });
+        },
+
+        destroy: function () {
+            if (!this.settings) { return; }
+            this.observer.disconnect();
+            this.settings = null;
+        }
+    };
+
+    root.lazyload = function(images, options) {
+        return new LazyLoad(images, options);
+    };
+
+    if (root.jQuery) {
+        const $ = root.jQuery;
+        $.fn.lazyload = function (options) {
+            options = options || {};
+            options.attribute = options.attribute || "data-src";
+            new LazyLoad($.makeArray(this), options);
+            return this;
+        };
+    }
+
+    return LazyLoad;
+});
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/global.js")))
 
 /***/ }),
 
@@ -37383,6 +37716,10 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+__webpack_require__("./node_modules/lazyload/lazyload.js");
+
+__webpack_require__("./node_modules/jquery-inview/jquery.inview.js");
+
 __webpack_require__("./node_modules/bootstrap/dist/js/bootstrap.js");
 
 __webpack_require__("./resources/assets/plugins/delaneymethod/cms/index.js");
@@ -37394,23 +37731,26 @@ __webpack_require__("./resources/assets/plugins/delaneymethod/cms/index.js");
 
 var _this = this;
 
-/**
- * @link      https://www.delaneymethod.com/cms
- * @copyright Copyright (c) DelaneyMethod
- * @license   https://www.delaneymethod.com/cms/license
- */
-
 ;(function ($) {
 	$.delaneyMethodCMS = function (options) {
+		// Support multiple elements
+		if (_this.length > 1) {
+			_this.each(function () {
+				$(_this).delaneyMethodCMS(options);
+			});
+
+			return _this;
+		}
+
 		_this.name = 'DelaneyMethod CMS';
 
 		_this.version = '1.0.0';
 
 		_this.settings = {};
 
-		var defaults = {};
+		_this.defaults = {};
 
-		var loadAnimations = function loadAnimations() {
+		_this.loadAnimations = function () {
 			if ($('.main .message.success').length) {
 				$('.main .message.success').on('shown', function () {
 					setTimeout(function () {
@@ -37426,21 +37766,50 @@ var _this = this;
 			}
 
 			$('[data-toggle="tooltip"]').tooltip();
+
+			lazyload();
 		};
 
-		var init = function init() {
+		_this.loadProductCommodityPriceQuantity = function (element) {
+			$(element).on('inview', function (event, visible) {
+				if (visible && !$(element).hasClass('loaded')) {
+					var id = element.replace('#product_commodity_', '');
+
+					// Make API call to get price and quantity
+					axios.get(window.API.url + 'product-commodities/' + id + '/pricing').then(function (response) {
+						$(element).find('.price').html(response.data.price);
+
+						$(element).find('.price-per').html(response.data.price_per);
+
+						$(element).find('.quantity-available').html(response.data.quantity_available);
+
+						$(element).find('.price, .price-per, .quantity-available').removeClass('text-muted');
+
+						$(element).addClass('loaded');
+					}).catch(function (error) {
+						console.error(error);
+
+						$(element).find('.price, .price-per, .quantity-available').html('Error').css('color', '#FF0000');
+					});
+				}
+			});
+		};
+
+		_this.init = function () {
 			console.info(_this.name + ' v' + _this.version + ' is up and running!');
 
-			_this.settings = $.extend({}, defaults, options);
+			_this.settings = $.extend({}, _this.defaults, options);
 
-			loadAnimations();
+			_this.loadAnimations();
+
+			return _this;
 		};
 
-		init();
+		return _this.init();
 	};
 })(jQuery);
 
-$.delaneyMethodCMS();
+window.CMS = $.delaneyMethodCMS();
 
 /***/ }),
 

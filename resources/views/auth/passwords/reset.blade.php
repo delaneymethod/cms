@@ -33,32 +33,34 @@
 		'currentUser' => null,
 		'cart' => null
 	])
-	<section class="content">
-		<h2>Set Password</h2>
-		@if (session('status'))
-			{{ session('status') }}
-		@endif
-		<form name="" id="" class="" role="form" method="POST" action="{{ route('password.request') }}">
-			{{ csrf_field() }}
-			<input type="hidden" name="token" value="{{ $token }}">
-			<label for="email">Email Address</label>
-			<input type="email" name="email" id="email" class="" placeholder="" value="{{ old('email') }}" title="" required autofocus>
-			@if ($errors->has('email'))
-				<strong>{{ $errors->first('email') }}</strong>
-			@endif
-			<label for="password">Password</label>
-			<input type="password" name="password" id="password" class="" placeholder="" value="" title="" required>
-			@if ($errors->has('password'))
-				<strong>{{ $errors->first('password') }}</strong>
-			@endif
-			<label for="password-confirm">Confirm Password</label>
-			<input type="password" name="password_confirmation" id="password-confirm" class="" placeholder="" value="" title="" required>
-			@if ($errors->has('password_confirmation'))
-				<strong>{{ $errors->first('password_confirmation') }}</strong>
-			@endif
-			<button type="submit" name="" id="" class="" title="">Set Password</button>
-		</form>
-	</section>
+	<div class="row wrapper">
+		<div class="col main">
+			@include('_partials.message', [
+				'currentUser' => null
+			])
+			<h2>Set Password</h2>
+			<form name="" id="" class="" role="form" method="POST" action="{{ route('password.request') }}">
+				{{ csrf_field() }}
+				<input type="hidden" name="token" value="{{ $token }}">
+				<label for="email">Email Address</label>
+				<input type="email" name="email" id="email" class="" placeholder="" value="{{ old('email') }}" title="" required autofocus>
+				@if ($errors->has('email'))
+					<strong>{{ $errors->first('email') }}</strong>
+				@endif
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password" class="" placeholder="" value="" title="" required>
+				@if ($errors->has('password'))
+					<strong>{{ $errors->first('password') }}</strong>
+				@endif
+				<label for="password-confirm">Confirm Password</label>
+				<input type="password" name="password_confirmation" id="password-confirm" class="" placeholder="" value="" title="" required>
+				@if ($errors->has('password_confirmation'))
+					<strong>{{ $errors->first('password_confirmation') }}</strong>
+				@endif
+				<button type="submit" name="" id="" class="" title="">Set Password</button>
+			</form>
+		</div>
+	</div>
 	@include('_partials.footer', [
 		'currentUser' => null,
 		'cart' => null

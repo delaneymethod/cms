@@ -15,7 +15,7 @@ trait PasswordResetTrait
 	 * Get the specified password reset record based on email.
 	 *
 	 * @param 	string 		$email
-	 * @return 	Object
+	 * @return 	PasswordReset
 	 */
 	public function getPasswordReset(string $email)
 	{

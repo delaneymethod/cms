@@ -50,6 +50,18 @@ trait CartTrait
 	}
 	
 	/**
+	 * Get carts based on identifier, ignoring instance.
+	 *
+	 * @param 	string 		$identifier
+	 * @param 	string 		$instance
+	 * @return 	Object
+	 */
+	public function getCartsByIdentifier(string $identifier) : EloquentCollectionResponse
+	{
+		return Kart::where('identifier', 'like', '%'.$identifier)->get();
+	}
+	
+	/**
 	 * Get all the carts.
 	 *
 	 * @return 	Response
@@ -107,7 +119,7 @@ trait CartTrait
 	 */
 	public function getSavedCarts(int $userId) : EloquentCollectionResponse
 	{
-		$carts = $this->getCartsByIdentifierInstance('_'.$userId, 'cart');
+		$carts = $this->getCartsByIdentifier($userId);
 		
 		// Convert serialised data
 		foreach ($carts as &$cart) {

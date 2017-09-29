@@ -10,7 +10,7 @@ namespace App\Providers;
 use App;
 use App\Http\Traits\PageTrait;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\{View, Cache};
+use Illuminate\Support\Facades\{Auth, View, Cache};
 
 class ComposerServiceProvider extends ServiceProvider
 {
@@ -41,7 +41,12 @@ class ComposerServiceProvider extends ServiceProvider
 			}
 			
 			View::composer('*', function ($view) use ($pages) {
-				$view->with('pages', $pages);
+				$authenticated = Auth::check();
+				
+				$view->with([
+					'authenticated' => $authenticated,
+					'pages' => $pages,
+				]);
 				
 				$authViews = [
 					'auth.login',
@@ -62,6 +67,16 @@ class ComposerServiceProvider extends ServiceProvider
 					$view->with('page', $page);
 				}
 			});
+				
+			// Added by Sean
+			View::share('sidebarSmCols', config('cms.column_widths.cp.sidebar.sm'));
+			View::share('sidebarMdCols', config('cms.column_widths.cp.sidebar.md'));
+			View::share('sidebarLgCols', config('cms.column_widths.cp.sidebar.lg'));
+			
+			// Added by Sean
+			View::share('mainSmCols', config('cms.column_widths.cp.main.sm'));
+			View::share('mainMdCols', config('cms.column_widths.cp.main.md'));
+			View::share('mainLgCols', config('cms.column_widths.cp.main.lg'));
 		}
 	}
 

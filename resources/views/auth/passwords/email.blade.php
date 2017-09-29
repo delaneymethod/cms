@@ -33,21 +33,23 @@
 		'currentUser' => null,
 		'cart' => null
 	])
-	<section class="content">
-		<h2>Reset Password</h2>
-		@if (session('status'))
-			{{ session('status') }}
-		@endif
-		<form name="" id="" class="" role="form" method="POST" action="{{ route('password.email') }}">
-			{{ csrf_field() }}
-			<label for="email">Email Address</label>
-			<input type="email" name="email" id="email" class="" placeholder="" value="{{ old('email') }}" title="" required autofocus>
-			@if ($errors->has('email'))
-				<strong>{{ $errors->first('email') }}</strong>
-			@endif
-			<button type="submit" name="" id="" class="" title="">Send Reset Password Link</button>
-		</form>
-	</section>
+	<div class="row wrapper">
+		<div class="col main">
+			@include('_partials.message', [
+				'currentUser' => null
+			])
+			<h2>Reset Password</h2>
+			<form name="" id="" class="" role="form" method="POST" action="{{ route('password.email') }}">
+				{{ csrf_field() }}
+				<label for="email">Email Address</label>
+				<input type="email" name="email" id="email" class="" placeholder="" value="{{ old('email') }}" title="" required autofocus>
+				@if ($errors->has('email'))
+					<strong>{{ $errors->first('email') }}</strong>
+				@endif
+				<button type="submit" name="" id="" class="" title="">Send Reset Password Link</button>
+			</form>
+		</div>
+	</div>
 	@include('_partials.footer', [
 		'currentUser' => null,
 		'cart' => null

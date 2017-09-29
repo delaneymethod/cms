@@ -1,20 +1,23 @@
-/**
- * @link      https://www.delaneymethod.com/cms
- * @copyright Copyright (c) DelaneyMethod
- * @license   https://www.delaneymethod.com/cms/license
- */
-
 ;($ => {
 	$.delaneyMethodCMS = options => {
+		// Support multiple elements
+		if (this.length > 1){
+			this.each(() => { 
+				$(this).delaneyMethodCMS(options);
+			});
+			
+			return this;
+		}
+
 		this.name = 'DelaneyMethod CMS';
 		
 		this.version = '1.0.0';
 		
 		this.settings = {};
 
-		let defaults = {};
+		this.defaults = {};
 		
-		let loadAnimations = () => {
+		this.loadAnimations = () => {
 			if ($('.main .message.success').length) {	
 				$('.main .message.success').on('shown', () => {
 					setTimeout(() => {
@@ -30,18 +33,47 @@
 			}
 			
 			$('[data-toggle="tooltip"]').tooltip();
+			
+			lazyload();
 		};
 		
-		let init = () => {
+		this.loadProductCommodityPriceQuantity = element => {
+			$(element).on('inview', (event, visible) => {
+				if (visible && !$(element).hasClass('loaded')) {
+					const id = element.replace('#product_commodity_', '');
+					
+					// Make API call to get price and quantity
+					axios.get(window.API.url + 'product-commodities/' + id + '/pricing').then(response => {
+						$(element).find('.price').html(response.data.price);
+						
+						$(element).find('.price-per').html(response.data.price_per);
+						
+						$(element).find('.quantity-available').html(response.data.quantity_available);
+						
+						$(element).find('.price, .price-per, .quantity-available').removeClass('text-muted');
+						
+						$(element).addClass('loaded');
+					}).catch(error => {
+						console.error(error);
+				
+						$(element).find('.price, .price-per, .quantity-available').html('Error').css('color', '#FF0000');
+					});
+				}
+			});
+		};
+		
+		this.init = () => {
 			console.info(this.name + ' v' + this.version + ' is up and running!');
 			
-			this.settings = $.extend({}, defaults, options);
+			this.settings = $.extend({}, this.defaults, options);
 			
-			loadAnimations();
+			this.loadAnimations();
+			
+			return this;
 		};
-
-		init();
+		
+		return this.init();
 	};
 })(jQuery);
 
-$.delaneyMethodCMS();
+window.CMS = $.delaneyMethodCMS();

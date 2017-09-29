@@ -35,8 +35,8 @@ class OrderUpdatedListener implements ShouldQueue
 	/**
 	 * Handle the event.
 	 *
-	 * @param	OrderUpdated	 $event
-	 * @return void
+	 * @param 	OrderUpdated 	$event
+	 * @return 	void
 	 */
 	public function handle(OrderUpdatedEvent $event)
 	{

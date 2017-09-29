@@ -8,7 +8,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Company;
-use Illuminate\Database\Eloquent\Collection as CollectionResponse;
+use Illuminate\Support\Collection as SupportCollectionResponse;
 
 trait CompanyTrait
 {
@@ -20,9 +20,7 @@ trait CompanyTrait
 	 */
 	public function getCompany(int $id) : Company
 	{
-		$company = Company::findOrFail($id);
-		
-		return $this->filterCompanies([$company])->first();
+		return Company::findOrFail($id);
 	}
 
 	/**
@@ -30,7 +28,7 @@ trait CompanyTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getCompanies() : CollectionResponse
+	public function getCompanies() : SupportCollectionResponse
 	{
 		return Company::orderBy('title')->get();
 	}

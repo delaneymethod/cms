@@ -211,6 +211,10 @@
 			 		$('.main .message').fadeOut('fast');
 				});
 			}
+			
+			$('[data-toggle="tooltip"]').tooltip();
+			
+			lazyload();
 		};
 		
 		this.loadListeners = () => {
@@ -555,8 +559,6 @@
 			console.info(this.name + ' v' + this.version + ' is up and running!');
 			
 			this.settings = $.extend({}, this.defaults, options);
-			
-			$('[data-toggle="tooltip"]').tooltip();
 			
 			this.logout();
 			

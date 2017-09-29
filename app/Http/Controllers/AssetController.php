@@ -113,18 +113,18 @@ class AssetController extends Controller
 			}
 			
 			if (count($assets) > 0) {
-				$assets = $this->recursiveObject($assets);
+				$assets = recursiveObject($assets);
 			}
 			
 			$path = $this->directoryHelper->getListedPath();
 			
-			$breadcrumbs = $this->recursiveObject($this->directoryHelper->listBreadcrumbs());
+			$breadcrumbs = recursiveObject($this->directoryHelper->listBreadcrumbs());
 			
 			$zipEnabled = $this->directoryHelper->isZipEnabled();
 			
 			$zipDownloadPath = $this->directoryHelper->getDirectoryPath();
 			
-			$messages = collect($this->recursiveObject($this->directoryHelper->getSystemMessages()));
+			$messages = collect(recursiveObject($this->directoryHelper->getSystemMessages()));
 			
 			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle', 'path', 'breadcrumbs', 'deleteFolderEnabled', 'zipEnabled', 'zipDownloadPath', 'messages', 'assets', 'uploadDirectory'));
 		}
@@ -371,7 +371,7 @@ class AssetController extends Controller
 				]);
 			}
 			
-			$directories = $this->recursiveObject($directories);
+			$directories = recursiveObject($directories);
 			
 			$asset = $this->getAsset($id);
 			

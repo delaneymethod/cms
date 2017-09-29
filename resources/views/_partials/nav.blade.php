@@ -9,11 +9,11 @@
 								@endif
 							@endif
 						@endforeach
-						@guest
-							<li><a href="/login" title="Login">Login</a></li>
-						@else
+						@if ($authenticated)
 							<li><a href="/cp/dashboard" title="Dashboard">Dashboard</a></li>
-						@endguest
+						@else
+							<li><a href="/login" title="Login">Login</a></li>
+						@endif
 					</ul>
 				</nav>
 		

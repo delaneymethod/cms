@@ -8,7 +8,8 @@
 namespace App\Http\Traits;
 
 use App\User;
-use Illuminate\Database\Eloquent\Collection as CollectionResponse;
+use Illuminate\Support\Collection as SupportCollectionResponse;
+use Illuminate\Database\Eloquent\Collection as EloquentCollectionResponse;
 
 trait UserTrait
 {
@@ -20,16 +21,7 @@ trait UserTrait
 	 */
 	public function getUser(int $id) : User
 	{
-		$user = User::findOrFail($id);
-		
-		$currentUser = $this->getAuthenticatedUser();
-		
-		// No need to filter if the user we're editing is the current user.
-		if ($currentUser->id == $user->id) {
-			return $user;
-		}
-		
-		return $this->filterUsers([$user])->first();
+		return User::findOrFail($id);
 	}
 	
 	/**
@@ -37,7 +29,7 @@ trait UserTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getUsers() : CollectionResponse
+	public function getUsers() : SupportCollectionResponse
 	{
 		return User::latest()->get();
 	}
@@ -63,7 +55,7 @@ trait UserTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getSuperAdmins() : CollectionResponse
+	public function getSuperAdmins() : EloquentCollectionResponse
 	{
 		return User::where('role_id', 1);
 	}
@@ -73,7 +65,7 @@ trait UserTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getAdmins() : CollectionResponse
+	public function getAdmins() : EloquentCollectionResponse
 	{
 		return User::where('role_id', 2);
 	}

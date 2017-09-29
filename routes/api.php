@@ -37,13 +37,35 @@ Route::prefix('v1')->group(function () {
 	
 	
 	
-	// TEST ORDERS ENDPOINT - REMOVE ONCE REAL API IS REAY
+	// TEST ORDERS ENDPOINT - REMOVE ONCE REAL API IS READY
 	Route::post('/orders', function (Illuminate\Http\Request $request) {
 		Log::info('');
 		Log::info('---- Processed Order ----');
 		Log::info('');
 		
 		return response()->json(['message' => 'Processed Order'], 200, []);
+	});
+	
+	// TEST PRODUCT COMMMODITIES PRICING ENDPOINT - REMOVE ONCE REAL API IS READY
+	Route::get('/product-commodities/{id}/pricing', function (Illuminate\Http\Request $request, int $id) {
+		
+		// Real API would accept our Product Commodity ID, do a look and return back the data
+		$max = 100.0;
+		
+		$min = 0.5;
+
+		$range = $max - $min;
+		
+		$num = $min + $range * (mt_rand() / mt_getrandmax());    
+		
+		$price = (float) round($num, 2);
+	
+		return response()->json([
+			'id' => $id,
+			'price' => $price,
+			'price_per' => 1,
+			'quantity_available' => mt_rand(0, 500),
+		], 200, []);
 	});
 	
 	

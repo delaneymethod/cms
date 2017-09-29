@@ -27,7 +27,7 @@
 						<thead>
 							<tr>
 								<th class="align-middle no-sort">Subject</th>
-								<th class="align-middle no-sort text-center">Date Time</th>
+								<th class="align-middle text-center">Date Time</th>
 								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>

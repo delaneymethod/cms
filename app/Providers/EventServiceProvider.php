@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
 		'App\Events\OrderUpdatedEvent' => [
 			'App\Listeners\OrderUpdatedListener',
 		],
+		'App\Events\UserLoginEvent' => [
+			'App\Listeners\UserLoginListener',
+		],
 	];
 
 	/**
@@ -34,7 +37,5 @@ class EventServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		parent::boot();
-
-		//
 	}
 }

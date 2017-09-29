@@ -59,6 +59,8 @@ class LocationController extends Controller
 			if (is_null($locations)) {
 				$locations = $this->getLocations();
 				
+				$locations = $this->filterLocations($locations);
+		
 				$this->setCache($this->cacheKey, $locations);
 			}
 			
@@ -93,6 +95,8 @@ class LocationController extends Controller
 			
 			// Used to set company_id
 			$companies = $this->getData('getCompanies', 'companies');
+			
+			$companies = $this->filterCompanies($companies);
 			
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
@@ -153,7 +157,11 @@ class LocationController extends Controller
 				
 				$location->save();
 				
-				$this->setCache($this->cacheKey, $this->getLocations());
+				$locations = $this->getLocations();
+				
+				$locations = $this->filterLocations($locations);
+		
+				$this->setCache($this->cacheKey, $locations);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -206,6 +214,8 @@ class LocationController extends Controller
 			
 			// Used to set company_id
 			$companies = $this->getData('getCompanies', 'companies');
+			
+			$companies = $this->filterCompanies($companies);
 			
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
@@ -273,7 +283,11 @@ class LocationController extends Controller
 				
 				$location->save();
 				
-				$this->setCache($this->cacheKey, $this->getLocations());
+				$locations = $this->getLocations();
+				
+				$locations = $this->filterLocations($locations);
+				
+				$this->setCache($this->cacheKey, $locations);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -332,7 +346,11 @@ class LocationController extends Controller
 				
 				$location->save();
 				
-				$this->setCache($this->cacheKey, $this->getLocations());
+				$locations = $this->getLocations();
+				
+				$locations = $this->filterLocations($locations);
+				
+				$this->setCache($this->cacheKey, $locations);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -383,7 +401,11 @@ class LocationController extends Controller
 				
 				$location->save();
 				
-				$this->setCache($this->cacheKey, $this->getLocations());
+				$locations = $this->getLocations();
+				
+				$locations = $this->filterLocations($locations);
+				
+				$this->setCache($this->cacheKey, $locations);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -471,7 +493,11 @@ class LocationController extends Controller
 			try {
 				$location->delete();
 				
-				$this->setCache($this->cacheKey, $this->getLocations());
+				$locations = $this->getLocations();
+				
+				$locations = $this->filterLocations($locations);
+				
+				$this->setCache($this->cacheKey, $locations);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			

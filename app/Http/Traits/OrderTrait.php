@@ -11,7 +11,6 @@ use DB;
 use Carbon\Carbon;
 use App\Models\Order;
 use Illuminate\Support\Collection as SupportCollectionResponse;
-use Illuminate\Database\Eloquent\Collection as EloquentCollectionResponse;
 
 trait OrderTrait
 {
@@ -23,9 +22,7 @@ trait OrderTrait
 	 */
 	public function getOrder(int $id) : Order
 	{
-		$order = Order::findOrFail($id);
-	
-		return $this->filterOrders([$order])->first();
+		return Order::findOrFail($id);
 	}
 
 	/**
@@ -33,7 +30,7 @@ trait OrderTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getOrders() : EloquentCollectionResponse
+	public function getOrders() : SupportCollectionResponse
 	{
 		return Order::orderBy('created_at', 'desc')->get();
 	}
@@ -46,7 +43,7 @@ trait OrderTrait
 	 */
 	public function getOrdersByMonth(int $month) : SupportCollectionResponse
 	{
-		return $this->filterOrders(Order::where(DB::raw('MONTH(created_at)'), '=', $month)->get());
+		return Order::where(DB::raw('MONTH(created_at)'), '=', $month)->get();
 	}
 	
 	/**
@@ -58,6 +55,6 @@ trait OrderTrait
 	 */
 	public function getOrdersByMonthStatus(int $month, int $statusId) : SupportCollectionResponse
 	{
-		return $this->filterOrders(Order::where(DB::raw('MONTH(created_at)'), '=', $month)->where('status_id', $statusId)->get());
+		return Order::where(DB::raw('MONTH(created_at)'), '=', $month)->where('status_id', $statusId)->get();
 	}
 }

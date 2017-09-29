@@ -80,7 +80,7 @@ class Controller extends BaseController
 	 * @param	string			$cacheKey
 	 * @return 	Collection
 	 */
-	protected function getData(string $model, string $cacheKey) : EloquentCollectionResponse
+	protected function getData(string $model, string $cacheKey)
 	{
 		$data = $this->getCache($cacheKey);
 		

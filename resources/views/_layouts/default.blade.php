@@ -24,9 +24,13 @@
 	<script async>
 	'use strict';
 	
-	@auth
+	@if ($authenticated)
 	window.CMS = {};
-	@endauth
+	
+	window.API = {
+		'url': '{{ config('cms.api.url') }}'
+	};
+	@endif
 	
 	window.User = {!! Auth::check() ? Auth::user() : 'null' !!};
 	

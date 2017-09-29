@@ -8,6 +8,7 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
+use App\Events\UserLoginEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Traits\PasswordResetTrait;
@@ -63,7 +64,7 @@ class LoginController extends Controller
 			$this->deletePasswordReset($user->email);
 		}
 		
-		// https://github.com/tutsplus/build-a-cms-with-laravel/blob/master/app/Listeners/UpdateLastLoginOnLogin.php
+		broadcast(new UserLoginEvent($user));
 		
 		// If we are redirecting user back to previous page, then we set the new route here
 		$redirectTo = $request->get('redirectTo');

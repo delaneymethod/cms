@@ -68,6 +68,8 @@ class DashboardController extends Controller
 		if ($currentUser->hasPermission('view_companies')) {
 			$companies = $this->getData('getCompanies', 'companies');
 			
+			$companies = $this->filterCompanies($companies);
+			
 			array_push($statCards, [
 				'id' => 'companies',
 				'label' => 'Companies',
@@ -78,6 +80,8 @@ class DashboardController extends Controller
 		
 		if ($currentUser->hasPermission('view_users')) {
 			$users = $this->getData('getUsers', 'users');
+			
+			$users = $this->filterUsers($users);
 			
 			array_push($statCards, [
 				'id' => 'users',
@@ -97,6 +101,8 @@ class DashboardController extends Controller
 		if ($currentUser->hasPermission('view_locations')) {
 			$locations = $this->getData('getLocations', 'locations');
 			
+			$locations = $this->filterLocations($locations);
+			
 			array_push($statCards, [
 				'id' => 'locations',
 				'label' => 'Locations',
@@ -107,6 +113,8 @@ class DashboardController extends Controller
 				
 		if ($currentUser->hasPermission('view_orders')) {
 			$orders = $this->getOrders();
+			
+			$orders = $this->filterOrders($orders);
 			
 			// Now pull in the orders status data since we'll be using this broadcast to update some UI's
 			foreach ($orders as $order) {
@@ -121,11 +129,15 @@ class DashboardController extends Controller
 			]);
 			
 			$orderStats = [];
-		
+			
 			foreach ($months as $month) {
+				$ordersByMonth = $this->getOrdersByMonth($month->numeric);
+			
+				$ordersByMonth = $this->filterOrders($ordersByMonth);
+			
 				array_push($orderStats, [
 					'month' => $month->textual,
-					'total' => $this->getOrdersByMonth($month->numeric)->count(),
+					'total' => $ordersByMonth->count(),
 				]);
 			}
 			

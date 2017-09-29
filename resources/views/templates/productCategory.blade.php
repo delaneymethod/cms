@@ -10,7 +10,7 @@
 						<div class="col-sm-12 col-md-3 col-lg-3">
 							<a href="{{ $productCategory->url }}" title="{{ $productCategory->title }}">
 								<figure class="figure">
-									<img src="{{ $productCategory->image_url }}" class="figure-img img-fluid" alt="{{ $productCategory->title }}">
+									<img data-src="{{ $productCategory->image_url }}" class="lazyload figure-img img-fluid" alt="{{ $productCategory->title }}">
 									<figcaption class="figure-caption">{{ $productCategory->title }}</figcaption>
 								</figure>
 							</a>
@@ -19,7 +19,7 @@
 				</div>
 			@endif
 			
-			@if ($products->count())
+			@if ($products->count() > 0)
 				<div class="row">
 					<div class="col-sm-12 col-md-12 col-lg-12">
 						<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
@@ -34,10 +34,9 @@
 							</thead>
 							<tbody>
 								@foreach ($products as $product)
-									@php ($productUrl = $product->url)
 									<tr>
-										<td class="align-middle"><a href="{{ $productUrl }}" title="{{ $product->short_name }}"><img src="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->short_name }}"></a></td>	
-										<td class="align-middle"><a href="{{ $productUrl }}" title="{{ $product->short_name }}">{{ $product->title }}</a></td>
+										<td class="align-middle"><a href="{{ $product->url }}" title="{{ $product->short_name }}"><img data-src="{{ $product->image_url }}" class="lazyload img-fluid" alt="{{ $product->short_name }}"></a></td>	
+										<td class="align-middle"><a href="{{ $product->url }}" title="{{ $product->short_name }}">{{ $product->title }}</a></td>
 										@foreach ($productAttributes as $productAttribute)
 											@if (array_key_exists($productAttribute['id'], $product->attributes_characteristics)) 
 												<td class="align-middle">{{ $product->attributes_characteristics[$productAttribute['id']]['value'] }}</td>

@@ -1,8 +1,12 @@
+			@php ($totalProductCommodities = $product->product_commodities->count())	
+			@php ($currentUserCanCreateOrders = optional($currentUser)->hasPermission('create_orders'))
+			@php ($wishlistCartProductCommodityIds = $wishlistCart->product_commodities->pluck('id'))
+			@php ($redirectTo = '?redirectTo=/'.request()->path())
 			<h1>{{ $product->title }}</h1>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 col-lg-6">
 					@if (!empty($product->image_url))
-						<img src="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->title }}">
+						<img data-src="{{ $product->image_url }}" class="lazyload img-fluid" alt="{{ $product->title }}">
 					@endif
 				</div>
 				<div class="col-sm-12 col-md-6 col-lg-6">
@@ -20,8 +24,8 @@
 							<dt class="col-sm-3 font-weight-normal">{{ $productStandard->code }}</dt>
 							<dd class="col-sm-9">{{ $productStandard->title }}</dd>
 						@endforeach
-					</dl>	
-					<p>{{ $product->product_commodities->count() }} option{{ ($product->product_commodities->count() == 1) ? '' : 's' }} available.</p>
+					</dl>
+					<p>{{ $totalProductCommodities }} option{{ ($totalProductCommodities == 1) ? '' : 's' }} available.</p>
 				</div>
 			</div>
 			<div class="row">
@@ -39,37 +43,45 @@
 						</thead>
 						<tbody>
 							@foreach ($product->product_commodities as $productCommodity)
-								<tr>
+								<tr id="product_commodity_{{ $productCommodity->id }}">
 									<td class="align-middle text-center">{{ $productCommodity->short_description }}</td>
 									<td class="align-middle text-center">{{ $productCommodity->code }}</td>
-									<td class="align-middle text-center">TBC</td>
-									<td class="align-middle text-center">TBC</td>
-									<td class="align-middle text-center">{{ $productCommodity->quantity_available }}</td>	
+									@if ($authenticated)
+										<td class="align-middle text-center price text-muted">Please wait&hellip;</td>
+										<td class="align-middle text-center price-per text-muted">Please wait&hellip;</td>
+										<td class="align-middle text-center quantity-available text-muted">Please wait&hellip;</td>	
+									@else
+										<td class="align-middle text-center price text-muted">-</td>
+										<td class="align-middle text-center price-per text-muted">-</td>
+										<td class="align-middle text-center quantity-available text-muted">-</td>	
+									@endif
 									<td class="align-middle text-center">
-										@auth
-											@if (optional($currentUser)->hasPermission('create_orders'))
+										@if ($authenticated)
+											@if ($currentUserCanCreateOrders)
 												@component('_components.cart.addProductCommodity', [
-													'productCommodity' => $productCommodity,
+													'id' => $productCommodity->id,
 													'instance' => 'cart', 
 													'action' => 'secret',
-													'extraClasses' => 'btn btn-outline-success'
+													'extraClasses' => 'btn btn-outline-success',
+													'redirectTo' => $redirectTo
 												])
 												@endcomponent
-												@if (!$wishlistCart->product_commodities->pluck('id')->contains($productCommodity->id))
+												@if (!$wishlistCartProductCommodityIds->contains($productCommodity->id))
 													<div style="margin-top: 10px;font-size: 12px;">
 														@component('_components.cart.addProductCommodity', [
-															'productCommodity' => $productCommodity, 
+															'id' => $productCommodity->id, 
 															'instance' => 'wishlist', 
 															'action' => 'secret',
-															'extraClasses' => 'btn-unstyled-gf-info'
+															'extraClasses' => 'btn-unstyled-gf-info',
+															'redirectTo' => $redirectTo
 														])
 														@endcomponent
 													</div>
 												@endif
 											@endif
 										@else
-											<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-secondary disabled">Add to Cart</a><br><a href="/login?redirectTo={{ $product->url }}" title="Login" class="text-gf-info">Please login first</a> 
-										@endauth
+											<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-secondary disabled">Add to Cart</a><br><a href="/login?redirectTo={{ $redirectTo }}" title="Login" class="text-gf-info">Please login first</a> 
+										@endif
 									</td>
 								</tr>
 							@endforeach
@@ -77,4 +89,13 @@
 					</table>
 				</div>
 			</div>
+			<script async>
+			'use strict';
+				
+			window.onload = () => {
+				const productCommodityIds = @json($product->product_commodities->pluck('id'));
+				
+				productCommodityIds.map(productCommodityId => window.CMS.loadProductCommodityPriceQuantity(`#product_commodity_${productCommodityId}`));
+			};
+			</script>
 			

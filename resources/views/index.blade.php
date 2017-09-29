@@ -35,7 +35,9 @@
 	])
 	<div class="row wrapper">
 		<div class="col main">
-			@include('_partials.message')
+			@include('_partials.message', [
+				'currentUser' => $currentUser
+			])
 			{!! $page->view->render() !!}
 		</div>
 	</div>

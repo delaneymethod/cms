@@ -16,4 +16,4 @@ window.onload = () => {
 	window.Echo.private(`orders.${order.id}`).listen('.order.updated', event => window.CMS.ControlPanel.orderUpdated(event.order));
 	@endif
 };
-</script>	
+</script>

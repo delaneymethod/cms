@@ -145,9 +145,10 @@
 											</thead>
 											<tbody>
 												@foreach ($cart->product_commodities as $productCommodity)
+													@php ($productCommodityProduct = $productCommodity->model->product)
 													<tr>
-														<td class="align-middle text-center"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" target="_blank" class="text-gf-info"><img src="{{ $productCommodity->model->product->image_url }}" class="img-fluid" alt="{{ $productCommodity->model->product->title }}"></a></td>
-														<td class="align-middle"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" target="_blank">{{ $productCommodity->model->product->title }}</a></td>
+														<td class="align-middle text-center"><a href="{{ $productCommodityProduct->url }}" title="{{ $productCommodityProduct->title }}" target="_blank" class="text-gf-info"><img data-src="{{ $productCommodityProduct->image_url }}" class="lazyload img-fluid" alt="{{ $productCommodityProduct->title }}"></a></td>
+														<td class="align-middle"><a href="{{ $productCommodityProduct->url }}" title="{{ $productCommodityProduct->title }}" target="_blank">{{ $productCommodityProduct->title }}</a></td>
 														<td class="align-middle">{{ $productCommodity->name }}</td>
 														<td class="align-middle text-center">{{ $productCommodity->qty }}</td>
 														<td class="align-middle text-right">{{ $productCommodity->price() }}</td>

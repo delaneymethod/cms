@@ -8,7 +8,7 @@
 namespace App\Http\Traits;
 
 use App\Models\Location;
-use Illuminate\Database\Eloquent\Collection as CollectionResponse;
+use Illuminate\Support\Collection as SupportCollectionResponse;
 
 trait LocationTrait
 {
@@ -20,9 +20,7 @@ trait LocationTrait
 	 */
 	public function getLocation(int $id) : Location
 	{
-		$location = Location::findOrFail($id);
-		
-		return $this->filterLocations([$location])->first();
+		return Location::findOrFail($id);
 	}
 
 	/**
@@ -30,7 +28,7 @@ trait LocationTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getLocations() : CollectionResponse
+	public function getLocations() : SupportCollectionResponse
 	{
 		return Location::orderBy('title')->get();
 	}

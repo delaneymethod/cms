@@ -42,12 +42,16 @@ class CartController extends Controller
 			
 			$subTitle = '';
 			
-			$carts = $this->getCarts();
+			if ($currentUser->isSuperAdmin()) {
+				$carts = $this->getCarts();
+			} else {
+				$carts = $this->getCartsByIdentifier('_'.$currentUser->id);
+			}
 			
 			foreach ($carts as &$cart) {
 				$user = explode('_', $cart->identifier);
 				
-				$cart->user = $this->getUser($user[1]);
+				$cart->user = $this->getUserById($user[1]);
 				
 				// Convert cart items into usable format so we can restructre the data so its grouped by product.
 				$cartItems = unserialize($cart->content);

@@ -26,13 +26,13 @@
 					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="align-middle">Identifier</th>
+								<th class="align-middle no-sort">Identifier</th>
 								<th class="align-middle">Instance</th>
 								<th class="align-middle">User</th>
 								<th class="align-middle">Company</th>
 								<th class="align-middle text-center">Saved</th>
 								<th class="align-middle text-center">Items</th>
-								<th>&nbsp;</th>
+								<th class="no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -57,7 +57,7 @@
 														@foreach ($cart->cartItems as $cartItem)
 															<div class="row">
 																<div class="col-sm-12 col-md-3 col-lg-3 text-center">
-																	<a href="{{ $cartItem['product_url'] }}" title="{{ $cartItem['product_title'] }}"><img src="{{ $cartItem['product_image_url'] }}" class="img-fluid" alt="{{ $cartItem['product_title'] }}"></a>
+																	<a href="{{ $cartItem['product_url'] }}" title="{{ $cartItem['product_title'] }}"><img data-src="{{ $cartItem['product_image_url'] }}" class="lazyload img-fluid" alt="{{ $cartItem['product_title'] }}"></a>
 																</div>
 																<div class="col-sm-12 col-md-9 col-lg-9 text-left">
 																	<p><strong><a href="{{ $cartItem['product_url'] }}" title="{{ $cartItem['product_title'] }}" class="text-gf-red">{{ $cartItem['product_title'] }}</a></strong></p>

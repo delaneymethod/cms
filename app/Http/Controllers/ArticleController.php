@@ -129,6 +129,8 @@ class ArticleController extends Controller
 			// Used to set user_id
 			$users = $this->getData('getUsers', 'users');
 			
+			$users = $this->filterUsers($users);
+			
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');
 			
@@ -277,6 +279,8 @@ class ArticleController extends Controller
 			
 			// Used to set user_id
 			$users = $this->getData('getUsers', 'users');
+			
+			$users = $this->filterUsers($users);
 			
 			// Used to set status_id
 			$statuses = $this->getData('getStatuses', 'statuses');

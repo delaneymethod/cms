@@ -57,6 +57,8 @@ class OrderController extends Controller
 		
 			$orders = $this->getOrders();
 			
+			$orders = $this->filterOrders($orders);
+			
 			return view('cp.orders.index', compact('currentUser', 'title', 'subTitle', 'orders'));
 		}
 		
@@ -76,6 +78,8 @@ class OrderController extends Controller
 		
 		if ($currentUser->hasPermission('view_orders')) {
 			$order = $this->getOrder($id);
+			
+			$this->authorize('userOwnsThis', $order);
 			
 			$title = 'View Order';
 		
@@ -219,6 +223,8 @@ class OrderController extends Controller
 		if ($currentUser->hasPermission('view_orders')) {
 			$order = $this->getOrder($id);
 			
+			$this->authorize('userOwnsThis', $user);
+			
 			$pdf = app()->make('snappy.pdf.wrapper');
 			
 			$template = '';
@@ -303,7 +309,7 @@ class OrderController extends Controller
 					collect($orders)->each(function ($data) {
 						// Grab and update it
 						$order = Order::find($data['id']);
-					
+						
 						if ($order) {
 							// Mass assignment
 							$order->fill($data);

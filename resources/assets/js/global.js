@@ -24,6 +24,10 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+require('lazyload');
+
+require('jquery-inview');
+
 require('bootstrap');
 
 require('../plugins/delaneymethod/cms');

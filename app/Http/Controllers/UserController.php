@@ -60,6 +60,8 @@ class UserController extends Controller
 			if (is_null($users)) {
 				$users = $this->getUsers();
 				
+				$users = $this->filterUsers($users);
+				
 				$this->setCache($this->cacheKey, $users);
 			}
 			
@@ -86,6 +88,8 @@ class UserController extends Controller
 			
 			// Used to set company_id
 			$companies = $this->getData('getCompanies', 'companies');
+			
+			$companies = $this->filterCompanies($companies);
 			
 			// Used to set role_id
 			$roles = $this->getData('getRoles', 'roles');
@@ -165,7 +169,11 @@ class UserController extends Controller
 				// Allows user to set a password
 				Password::sendResetLink(['email' => $user->email]);
 				
-				$this->setCache($this->cacheKey, $this->getUsers());
+				$users = $this->getUsers();
+				
+				$users = $this->filterUsers($users);
+				
+				$this->setCache($this->cacheKey, $users);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -213,6 +221,8 @@ class UserController extends Controller
 			// Used to set company_id
 			$companies = $this->getData('getCompanies', 'companies');
 		
+			$companies = $this->filterCompanies($companies);
+			
 			// Used to set role_id
 			$roles = $this->getData('getRoles', 'roles');
 			
@@ -408,7 +418,11 @@ class UserController extends Controller
 				
 				$user->save();
 				
-				$this->setCache($this->cacheKey, $this->getUsers());
+				$users = $this->getUsers();
+				
+				$users = $this->filterUsers($users);
+				
+				$this->setCache($this->cacheKey, $users);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -465,7 +479,11 @@ class UserController extends Controller
 				
 				$user->save();
 				
-				$this->setCache($this->cacheKey, $this->getUsers());
+				$users = $this->getUsers();
+				
+				$users = $this->filterUsers($users);
+				
+				$this->setCache($this->cacheKey, $users);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -549,7 +567,11 @@ class UserController extends Controller
 			try {
 				$user->delete();
 				
-				$this->setCache($this->cacheKey, $this->getUsers());
+				$users = $this->getUsers();
+				
+				$users = $this->filterUsers($users);
+				
+				$this->setCache($this->cacheKey, $users);
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
