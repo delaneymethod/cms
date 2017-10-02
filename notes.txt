@@ -1,11 +1,34 @@
 
-Make sure all "Additional Notes 30/08/17" are addressed
+### To Do ###
+
+Pricing and Quantities 
+ 
+Delivery estimates - when the order is placed and is out of stock a note would be shown that the delivery window will be confirmed by a member of the team – agreed that this can be shown at commodity level.  
+
+The option for 'part delivery' should be added to the order page before confirming the order. If selected this would notify the Customer Care team to arrange for the 'in stock' items to be sent when picked but to arrange for the remainder of the order to go out when it arrives.
+ 
+
+
+
+### Pricing Rules / Criteria ###
+ 
+1. If a price agreement exists for a customer then this price will be used and displayed at commodity level and basket.
+ 
+2. If there is no price agreement then the list price is used with the relevant price band to discount the price for the customer at commodity level and basket.
+ 
+3. If there is no list price then it will use the cost price plus the mark up (as per the price band) at commodity level and basket.
+ 
+a. If the item is in stock and we are using cost price then this is not restricted by a ‘date’.
+b. If the item is not in stock and we are using cost price then the price is only valid if it is within the last 6 months.
+ 
+4. If there is an item with no price (or it is out of stock & older than the 6 month cut off period) then it will show nothing and not allow you to add to basket so will default to the ‘enquire’ status at commodity level.
+ 
+5. If a price is changed in the system this will need to notify/ping the system to know a change has been made.
 
 
 
 
-Login as each user type and check access / functionality
-
+On logout, if cart session has items, save it
 
 
 
@@ -16,19 +39,22 @@ Look into: https://github.com/spatie/laravel-activitylog
 
 Setup daemon's for 
 
+php artisan queue:listen &
+php artisan queue:work --queue=orders.jobs &
+php artisan queue:work --queue=orders.events &
+php artisan queue:work --queue=orders.notifications &
+php artisan queue:work --queue=orders.broadcasts &
+php artisan queue:work --queue=users &
+php artisan queue:work --queue=locations &
+php artisan queue:work --queue=products &
+php artisan queue:work --queue=default &
+
 php artisan queue:listen
-php artisan queue:work --queue=orders.jobs
-php artisan queue:work --queue=orders.events
-php artisan queue:work --queue=orders.notifications
-php artisan queue:work --queue=orders.broadcasts
-php artisan queue:work --queue=users
-php artisan queue:work --queue=locations
-php artisan queue:work --queue=products
+php artisan queue:work --queue=orders.jobs,orders.events,orders.notifications,orders.broadcasts,users,locations,products,default
+
 
 Setup cron for scheduled tasks
-
-Fix caching issue with random records
-			
+		
 {
 	"event_id": "54321",
 	"event_type": "orders.updated",
@@ -63,3 +89,17 @@ Fix caching issue with random records
 		"StandardId": 3
 	}]
 }
+
+
+brew install homebrew/php/php71-pcntl
+
+php -i | grep pcntl
+
+cd /usr/local/Cellar/php71-pcntl/7.1.8_15
+
+ls -al
+
+cp pcntl.so /Applications/MAMP/bin/php/php7.1.8/lib/php/extensions/no-debug-non-zts-20160303/
+
+php -i | grep pcntl
+

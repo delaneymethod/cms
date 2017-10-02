@@ -9,18 +9,16 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use DirectoryHelper;
 use App\Models\Asset;
 use Illuminate\Http\Request;
 use App\Http\Traits\AssetTrait;
-use App\Helpers\DirectoryHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 			
 class AssetController extends Controller
 {
 	use AssetTrait;
-	
-	protected $directoryHelper;
 	
 	protected $maxUploadFilesize;
 	
@@ -37,8 +35,6 @@ class AssetController extends Controller
 		
 		// 30 MB
 		$this->maxUploadFileSize = 30000000;
-		
-		$this->directoryHelper = new DirectoryHelper();
 	}
 
 	/**
@@ -70,10 +66,10 @@ class AssetController extends Controller
 		if ($directory != $this->assetsDisk) {
 			$uploadDirectory = '?directory='.$directory;
 		}
-			
+		
 		if (!empty($hash)) {
 			// Get file hash array and JSON encode it
-			$hashes = $this->directoryHelper->getFileHash($hash);
+			$hashes = DirectoryHelper::getFileHash($hash);
 			
 			// Return the data
 			return response()->json($hashes);
@@ -98,9 +94,9 @@ class AssetController extends Controller
 			$assets = [];
 			
 			if (!empty($zip)) {
-				$assets = $this->directoryHelper->zipDirectory($zip);
+				$assets = DirectoryHelper::zipDirectory($zip);
 			} else {
-				$assets = $this->directoryHelper->listDirectory($directory);
+				$assets = DirectoryHelper::listDirectory($directory);
 			}
 			
 			$deleteFolderEnabled = true;
@@ -116,15 +112,15 @@ class AssetController extends Controller
 				$assets = recursiveObject($assets);
 			}
 			
-			$path = $this->directoryHelper->getListedPath();
+			$path = DirectoryHelper::getListedPath();
 			
-			$breadcrumbs = recursiveObject($this->directoryHelper->listBreadcrumbs());
+			$breadcrumbs = recursiveObject(DirectoryHelper::listBreadcrumbs());
 			
-			$zipEnabled = $this->directoryHelper->isZipEnabled();
+			$zipEnabled = DirectoryHelper::isZipEnabled();
 			
-			$zipDownloadPath = $this->directoryHelper->getDirectoryPath();
+			$zipDownloadPath = DirectoryHelper::getDirectoryPath();
 			
-			$messages = collect(recursiveObject($this->directoryHelper->getSystemMessages()));
+			$messages = collect(recursiveObject(DirectoryHelper::getSystemMessages()));
 			
 			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle', 'path', 'breadcrumbs', 'deleteFolderEnabled', 'zipEnabled', 'zipDownloadPath', 'messages', 'assets', 'uploadDirectory'));
 		}
@@ -358,9 +354,9 @@ class AssetController extends Controller
 				'depth' => 1,
 			]);
 
-			$this->directoryHelper->listDirectoriesRecursive($this->assetsDisk);
+			DirectoryHelper::listDirectoriesRecursive($this->assetsDisk);
 			
-			$folders = $this->directoryHelper->getDirectories();
+			$folders = DirectoryHelper::getDirectories();
 			
 			foreach ($folders as $folder) {
 				$depth = count(explode(DIRECTORY_SEPARATOR, $folder));
@@ -674,7 +670,7 @@ class AssetController extends Controller
 			try {
 				$directory = $cleanedAssets['directory'];
 				
-				$assets = $this->directoryHelper->listDirectory($this->assetsDisk.$directory);
+				$assets = DirectoryHelper::listDirectory($this->assetsDisk.$directory);
 				
 				if (count($assets) > 0) {
 					foreach ($assets as $asset) {

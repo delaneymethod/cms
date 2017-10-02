@@ -22,6 +22,11 @@
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
+				<ul>
+					<li><strong>Super Administrators</strong> can see everything - no restrictions or filtering applied.</li>
+					<li><strong>Administrators</strong> can see their data and <strong>End Users</strong> data - filtering applied per company.</li>
+					<li><strong>End Users</strong> can only see their data - filtering applied per company.</li>
+				</ul>	
 				<div class="content padding bg-white">
 					<form name="createPermissions" id="createPermissions" class="createPermissions" role="form" method="POST" action="/cp/advanced/roles/permissions">
 						{{ csrf_field() }}

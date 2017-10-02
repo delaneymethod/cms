@@ -28,6 +28,7 @@ class ArticlesTemplate extends Template
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
+		/*
 		$cachingEnabled = config('cache.enabled');
 		
 		if ($cachingEnabled) {
@@ -41,8 +42,9 @@ class ArticlesTemplate extends Template
 				Cache::put('articles', $articles, $minutes);
 			}
 		} else {
+		*/
 			$articles = $this->getArticles();
-		}
+		//}
 		
 		// Filter out any articles with publish date in the future
 		$articles = $articles->filter(function ($article) {

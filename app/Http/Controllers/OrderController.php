@@ -316,7 +316,7 @@ class OrderController extends Controller
 						
 							$order->save();
 						
-							broadcast(new OrderUpdatedEvent($order, $order->user));
+							OrderUpdatedEvent::dispatch($order, $order->user);
 						}
 					});
 					

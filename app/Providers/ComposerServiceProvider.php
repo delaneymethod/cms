@@ -24,6 +24,7 @@ class ComposerServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		if (!App::runningInConsole()) {
+			/*
 			$cachingEnabled = config('cache.enabled');
 			
 			if ($cachingEnabled) {
@@ -37,8 +38,9 @@ class ComposerServiceProvider extends ServiceProvider
 					Cache::put('pages', $pages, $minutes);
 				}
 			} else {
+			*/	
 				$pages = $this->getPages();
-			}
+			//}
 			
 			View::composer('*', function ($view) use ($pages) {
 				$authenticated = Auth::check();

@@ -7,6 +7,7 @@
 
 namespace App\Http\Controllers;
 
+use Log;
 use Request;
 use App\User;
 use Carbon\Carbon;
@@ -570,9 +571,20 @@ class Controller extends BaseController
 		} else {
 			$allowedOrderIds = [];
 			
-			// Run over all users in current users company and grab order ids
-			foreach ($currentUser->company->users as $user) {
-				$allowedOrderIds = array_merge($allowedOrderIds, $user->orders->pluck('id')->toArray());
+			$users = [];
+			
+			// Load Admin orders and End User orders
+			if ($currentUser->isAdmin()) {
+				$users = $currentUser->company->users->filter(function ($user) {
+					return !$user->isSuperAdmin();
+				});
+				
+				// Run over all users and grab order ids
+				foreach ($users as $user) {
+					$allowedOrderIds = array_merge($allowedOrderIds, $user->orders->pluck('id')->toArray());
+				}
+			} else if ($currentUser->isEndUser()) {
+				$allowedOrderIds = $currentUser->orders->pluck('id')->toArray();
 			}
 			
 			$filteredOrders = [];
@@ -586,6 +598,56 @@ class Controller extends BaseController
 			}
 			
 			return collect($filteredOrders);
+		}
+	}
+	
+	/**
+	 * Filters cart records based on current users company.
+	 *
+	 * @param  Collection 	$carts
+	 * @return Collection
+	 */
+	protected function filterCarts($carts) : SupportCollectionResponse
+	{
+		if (count($carts) == 0) {
+			return collect($carts);
+		}
+		
+		$currentUser = $this->getAuthenticatedUser();
+		
+		// If super admin, return everything
+		if ($currentUser->isSuperAdmin()) {
+			return collect($carts);
+		} else {
+			$allowedCartIds = [];
+			
+			$users = [];
+			
+			// Load Admin orders and End User orders
+			if ($currentUser->isAdmin()) {
+				$users = $currentUser->company->users->filter(function ($user) {
+					return !$user->isSuperAdmin();
+				});
+				
+				// Run over all users and grab cart ids
+				foreach ($users as $user) {
+					$allowedCartIds = array_merge($allowedCartIds, $user->carts->pluck('identifier')->toArray());
+				}
+			} else if ($currentUser->isEndUser()) {
+				$allowedCartIds = $currentUser->carts->pluck('identifier')->toArray();
+			}
+			
+			$filteredCarts = [];
+			
+			if (count($allowedCartIds) > 0) {
+				foreach ($carts as $cart) {
+					if (in_array($cart->identifier, $allowedCartIds)) {
+						array_push($filteredCarts, $cart);
+					}
+				}
+			}
+			
+			return collect($filteredCarts);
 		}
 	}
 	
@@ -630,6 +692,16 @@ class Controller extends BaseController
 		if ($this->cachingEnabled) {
 			Cache::forget($key);
 		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Simple flush entire cache
+	 */
+	public function flushCache() 
+	{
+		Cache::flush();
 		
 		return $this;
 	}

@@ -21,10 +21,35 @@ class RolePermissionTableSeeder extends Seeder
 		
 		$permissions = $this->getPermissions();
 		
+		// Super Admin Permissions
 		$permissions->each(function ($permission) {
 			$rolePermission = [
 				'role_id' => 1,
 				'permission_id' => $permission->id,
+			];
+			
+			DB::table('role_permission')->insert($rolePermission);
+		});
+		
+		$permissionIds = collect([1, 2, 3, 4, 5, 6, 24, 25, 35, 37, 39, 40, 41, 42, 43, 56]);
+		
+		// Admin Permissions
+		$permissionIds->each(function ($permissionId) {
+			$rolePermission = [
+				'role_id' => 2,
+				'permission_id' => $permissionId,
+			];
+			
+			DB::table('role_permission')->insert($rolePermission);
+		});
+		
+		$permissionIds = collect([24, 25, 56]);
+		
+		// User Permissions
+		$permissionIds->each(function ($permissionId) {
+			$rolePermission = [
+				'role_id' => 3,
+				'permission_id' => $permissionId,
 			];
 			
 			DB::table('role_permission')->insert($rolePermission);

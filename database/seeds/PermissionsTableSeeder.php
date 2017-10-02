@@ -166,12 +166,6 @@ class PermissionsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
-				'title' => 'view_orders',
-				'permission_group_id' => 6,
-				'created_at' => $now,
-				'updated_at' => $now,
-			],
-			[
 				'title' => 'view_articles',
 				'permission_group_id' => 7,
 				'created_at' => $now,

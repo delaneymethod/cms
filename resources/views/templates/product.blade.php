@@ -80,7 +80,7 @@
 												@endif
 											@endif
 										@else
-											<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-secondary disabled">Add to Cart</a><br><a href="/login?redirectTo={{ $redirectTo }}" title="Login" class="text-gf-info">Please login first</a> 
+											<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-secondary disabled">Add to Cart</a><br><a href="/login{{ $redirectTo }}" title="Login" class="text-gf-info">Please login first</a> 
 										@endif
 									</td>
 								</tr>
@@ -89,6 +89,7 @@
 					</table>
 				</div>
 			</div>
+			@if ($authenticated)
 			<script async>
 			'use strict';
 				
@@ -98,4 +99,5 @@
 				productCommodityIds.map(productCommodityId => window.CMS.loadProductCommodityPriceQuantity(`#product_commodity_${productCommodityId}`));
 			};
 			</script>
+			@endif
 			

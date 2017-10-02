@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 use App\Notifications\SetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo};
-use App\Models\{Role, Order, Status, Company, Article, Location};
+use App\Models\{Role, Cart, Order, Status, Company, Article, Location};
 
 class User extends Authenticatable
 {
@@ -110,6 +110,14 @@ class User extends Authenticatable
 	public function orders() : HasMany
 	{
 		return $this->hasMany(Order::class);
+	}
+	
+	/**
+	 * Get the carts records associated with the user.
+	 */
+	public function carts() : HasMany
+	{
+		return $this->hasMany(Cart::class);
 	}
 	
 	/**

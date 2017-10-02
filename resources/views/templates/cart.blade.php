@@ -17,7 +17,7 @@
 					<tbody>
 						@foreach ($savedCarts as $savedCart)
 							<tr>
-								<td class="align-middle">{{ str_replace('_'.$currentUser->id, '', $savedCart->identifier) }}</td>
+								<td class="align-middle">{{ $savedCart->identifier }}</td>
 								<td class="align-middle text-center">{{ $savedCart->content->count() }}</td>
 								<td class="align-middle text-center"><a href="/cart/restore/{{ $savedCart->identifier }}" title="Restore Cart" class="btn btn-link text-gf-info">Restore Cart</a></td>
 							</tr>

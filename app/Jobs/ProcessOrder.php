@@ -110,9 +110,9 @@ class ProcessOrderJob implements ShouldQueue
 			// Sends out an order placed event across the system.
 			
 			// Listeners will pick up the event and send out notifications to the customer and to the super admin (site owner)
-			event(new OrderPlacedEvent($this->order, $this->order->user));
+			OrderPlacedEvent::dispatch($this->order, $this->order->user);
 			
-			event(new OrderPlacedEvent($this->order, $this->superAdmin));
+			OrderPlacedEvent::dispatch($this->order, $this->superAdmin);
 		} catch (RequestException $exception) {
 			Log::critical('');
 			Log::critical('################################');

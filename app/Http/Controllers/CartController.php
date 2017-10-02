@@ -42,28 +42,46 @@ class CartController extends Controller
 			
 			$subTitle = '';
 			
-			if ($currentUser->isSuperAdmin()) {
-				$carts = $this->getCarts();
-			} else {
-				$carts = $this->getCartsByIdentifier('_'.$currentUser->id);
-			}
+			$carts = $this->getCarts();
 			
-			foreach ($carts as &$cart) {
-				$user = explode('_', $cart->identifier);
-				
-				$cart->user = $this->getUserById($user[1]);
-				
-				// Convert cart items into usable format so we can restructre the data so its grouped by product.
-				$cartItems = unserialize($cart->content);
-				
-				$cart->cartTotalItems = count($cartItems);
-				
-				$cart->cartItems = $this->groupCartItemsByProduct($cartItems);
-			}
+			$carts = $this->filterCarts($carts);
 			
 			return view('cp.carts.index', compact('currentUser', 'title', 'subTitle', 'carts'));
 		}
 		
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Shows a cart.
+	 *
+	 * @params	Request 	$request
+	 * @param	string		$identifier
+	 * @return 	Response
+	 */
+   	public function show(Request $request, string $identifier)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('view_carts')) {
+			$cart = $this->getCart($identifier);
+			
+			$this->authorize('userOwnsThis', $cart);
+			
+			// Convert cart items into usable format so we can restructre the data so its grouped by product.
+			$cartItems = unserialize($cart->content);
+			
+			$cart->cartTotalItems = count($cartItems);
+			
+			$cart->cartItems = $this->groupCartItemsByProduct($cartItems);
+			
+			$title = 'View Cart';
+		
+			$subTitle = 'Carts';
+			
+			return view('cp.carts.show', compact('currentUser', 'title', 'subTitle', 'cart'));
+		}
+
 		abort(403, 'Unauthorised action');
 	}
 	
@@ -124,7 +142,7 @@ class CartController extends Controller
 			
 			// Store wishlist instances
 			if ($cleanedProductCommodity['instance'] == 'wishlist') {	
-				$this->storeCartInstance('wishlist_'.$currentUser->id);
+				$this->storeCartInstance('wishlist_'.$currentUser->id, $currentUser->id);
 			}
 			
 			// If the product commodity was added to the cart from the wishlist, an action "remove_wishlist" will have been passed
@@ -149,7 +167,7 @@ class CartController extends Controller
 				
 				// Store wishlist instances again if wishlist still have products
 				if ($this->getCartCount() > 0) {	
-					$this->storeCartInstance('wishlist_'.$currentUser->id);
+					$this->storeCartInstance('wishlist_'.$currentUser->id, $currentUser->id);
 				}
 				
 				// Quickly switch cart instances back
@@ -297,7 +315,7 @@ class CartController extends Controller
 				
 				// Store wishlist instances again if wishlist still have product commodities
 				if ($cleanedProductCommodity['instance'] == 'wishlist' && $this->getCartCount() > 0) {	
-					$this->storeCartInstance('wishlist_'.$currentUser->id);
+					$this->storeCartInstance('wishlist_'.$currentUser->id, $currentUser->id);
 				}
 				
 				flash('Item was removed from your '.$cleanedProductCommodity['instance'].'!', $level = 'info');
@@ -326,12 +344,12 @@ class CartController extends Controller
 			$this->setCartInstance('cart');
 			
 			// Create a random lowercase identifier with current users id
-			$identifier = implode('_', [str_random(30), $currentUser->id]);
+			$identifier = str_random(30);
 			
 			$identifier = strtolower($identifier);
 				
 			// Save instance to database
-			$this->storeCartInstance($identifier);
+			$this->storeCartInstance($identifier, $currentUser->id);
 			
 			// Empty cart instance
 			$this->destroyCart();

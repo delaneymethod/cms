@@ -24,11 +24,14 @@ class EventServiceProvider extends ServiceProvider
 		'App\Events\OrderUpdatedEvent' => [
 			'App\Listeners\OrderUpdatedListener',
 		],
-		'App\Events\UserLoginEvent' => [
+		'Illuminate\Auth\Events\Login' => [
 			'App\Listeners\UserLoginListener',
 		],
+		'Illuminate\Auth\Events\Logout' => [
+			'App\Listeners\UserLogoutListener',
+		],
 	];
-
+	
 	/**
 	 * Register any events for your application.
 	 *

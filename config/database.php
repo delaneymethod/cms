@@ -126,7 +126,7 @@ return [
             'database' => 0,
             
             // Added by Sean. See https://github.com/laravel/framework/issues/9326
-            'read_write_timeout' => 0
+            'read_write_timeout' => 60
         ],
 
     ],

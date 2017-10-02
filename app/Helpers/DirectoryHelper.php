@@ -1,6 +1,7 @@
 <?php 
 /**
  * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
  * @license   https://www.delaneymethod.com/cms/license
  */
 
@@ -161,7 +162,7 @@ class DirectoryHelper
 	 * @return array Array of directory being listed
 	 * @access public
 	 */
-	public function listDirectory($directory) : array
+	public function listDirectory($directory)
 	{
 		// Set directory
 		$directory = $this->setDirectoryPath($directory);
@@ -175,7 +176,7 @@ class DirectoryHelper
 		return $this->_readDirectory($directory);
 	}
 	
-	public function listDirectoriesRecursive($directory) : array
+	public function listDirectoriesRecursive($directory)
 	{
 		if (is_dir($directory)) {
 			$dirs = scandir($directory);

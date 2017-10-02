@@ -42,8 +42,12 @@
 				if (visible && !$(element).hasClass('loaded')) {
 					const id = element.replace('#product_commodity_', '');
 					
+					const endpoint = 'product-commodities/' + id + '/pricing';
+					
 					// Make API call to get price and quantity
-					axios.get(window.API.url + 'product-commodities/' + id + '/pricing').then(response => {
+					axios.get(window.API.url + endpoint, {
+						requestId: endpoint
+					}).then(response => {
 						$(element).find('.price').html(response.data.price);
 						
 						$(element).find('.price-per').html(response.data.price_per);
@@ -54,8 +58,23 @@
 						
 						$(element).addClass('loaded');
 					}).catch(error => {
-						console.error(error);
-				
+						if (axios.isCancel(error)) {
+							console.log('Request canceled', error.message);
+						} else if (error.response) {
+							// The request was made and the server responded with a status code that falls out of the range of 2xx
+							console.log(error.response.data);
+							console.log(error.response.status);
+							console.log(error.response.headers);
+						} else if (error.request) {
+							// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
+							console.log(error.request);
+						} else {
+							// Something happened in setting up the request that triggered an Error
+							console.log('Error', error.message);
+						}
+						
+						console.log(error.config);
+						
 						$(element).find('.price, .price-per, .quantity-available').html('Error').css('color', '#FF0000');
 					});
 				}

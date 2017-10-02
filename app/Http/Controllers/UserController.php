@@ -621,7 +621,7 @@ class UserController extends Controller
 						
 							$user->save();
 						
-							broadcast(new UserUpdatedEvent($user));
+							UserUpdatedEvent::dispatch($user);
 						}
 					});
 					

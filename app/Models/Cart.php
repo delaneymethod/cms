@@ -7,7 +7,9 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Cart extends Model
 {
@@ -30,6 +32,15 @@ class Cart extends Model
 	protected $fillable = [
 		'identifier',
 		'instance',
+		'user_id',
 		'content',
 	];
+	
+	/**
+	 * Get the user record associated with the order.
+	 */
+	public function user() : BelongsTo
+	{
+		return $this->belongsTo(User::class);
+	}
 }

@@ -22,14 +22,7 @@ class CartTemplate extends Template
 		
 		$page = $this->getPageContent($parameters['page']);
 		
-		$cart = $parameters['cart'];
-		
-		// Restructre the data so its grouped by product.
-		$cartItems = $cart->product_commodities;
-		
-		$cart->cartTotalItems = count($cartItems);
-		
-		$cart->cartItems = $this->groupCartItemsByProduct($cartItems);
+		$cart = $this->setCartItems($parameters['cart']);
 				
 		$wishlistCart = $parameters['wishlistCart'];
 		

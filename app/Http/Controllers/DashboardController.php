@@ -147,6 +147,8 @@ class DashboardController extends Controller
 		if ($currentUser->hasPermission('view_carts')) {
 			$carts = $this->getCarts();
 			
+			$carts = $this->filterCarts($carts);
+			
 			array_push($statCards, [
 				'id' => 'carts',
 				'label' => 'Carts',

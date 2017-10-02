@@ -21,6 +21,8 @@ class CreateCartsTable extends Migration
 			$table->string('identifier')->index();
 			$table->string('instance')->index();
 			
+			$table->unsignedInteger('user_id')->nullable()->index()->comment('Foreign key to the users table');
+			
 			$table->longText('content');
 			
 			$table->timestamp('created_at')->useCurrent();
@@ -30,6 +32,7 @@ class CreateCartsTable extends Migration
 		});
 	
 		Schema::table('carts', function (Blueprint $table) {
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 		});
 	}
 

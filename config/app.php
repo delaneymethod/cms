@@ -184,6 +184,8 @@ return [
 		Spatie\Backup\BackupServiceProvider::class,
 		Karlmonson\Ping\PingServiceProvider::class,
 		App\Providers\ComposerServiceProvider::class,
+		App\Providers\CartHelperServiceProvider::class,
+		App\Providers\DirectoryHelperServiceProvider::class,
 		Propaganistas\LaravelIntl\IntlServiceProvider::class,
 		Spatie\UptimeMonitor\UptimeMonitorServiceProvider::class,
 		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
@@ -242,7 +244,9 @@ return [
 		'Ping' => Karlmonson\Ping\Facades\Ping::class,
 		'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
 		'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+		'CartHelper' => App\Helpers\Facades\CartHelper::class,
 		'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+		'DirectoryHelper' => App\Helpers\Facades\DirectoryHelper::class,
 		
     ],
 

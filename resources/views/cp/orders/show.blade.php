@@ -46,7 +46,7 @@
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<h5>Originator</h5>
-							<p class="text-muted">{{ $order->user->first_name }} {{ $order->user->last_name }}<br><a href="mailto:{{ $order->user->email }}" title="Email {{ $order->user->first_name }}" class="text-gf-red">{{ $order->user->email }}</a><br>{{ $order->user->telephone }} / {{ $order->user->mobile }}<br>{{ $order->user->company->title }}</p>
+							<p class="text-muted">{{ $order->user->first_name }} {{ $order->user->last_name }}<br><a href="mailto:{{ $order->user->email }}" title="Email {{ $order->user->first_name }}" class="text-gf-red">{{ $order->user->email }}</a><br>@if (!empty($order->user->telephone) && !empty($order->user->mobile)){{ $order->user->telephone }} / {{ $order->user->mobile }}@elseif (!empty($order->user->telephone)){{ $order->user->telephone }}@elseif (!empty($order->user->mobile)){{ $order->user->mobile }}@endif<br>{{ $order->user->company->title }}</p>
 						</div>
 						<div class="col-sm-12 col-md-12 col-lg-12">
 							<h5>Order Shipping Method</h5>

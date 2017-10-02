@@ -8,6 +8,7 @@
 namespace App\Http\Traits;
 
 use Cart;
+use CartHelper;
 use Gloudemans\Shoppingcart\CartItem;
 use App\Models\{Cart as Kart, ProductCommodity};
 use Illuminate\Support\Collection as SupportCollectionResponse;
@@ -38,6 +39,17 @@ trait CartTrait
 	}
 	
 	/**
+	 * Get the specified cart based on user id.
+	 *
+	 * @param 	int 		$userId
+	 * @return 	Object
+	 */
+	public function getCartsByUserId(int $userId) : EloquentCollectionResponse
+	{
+		return Kart::where('user_id', $userId)->get();
+	}
+	
+	/**
 	 * Get carts based on identifier and instance.
 	 *
 	 * @param 	string 		$identifier
@@ -46,19 +58,7 @@ trait CartTrait
 	 */
 	public function getCartsByIdentifierInstance(string $identifier, string $instance) : EloquentCollectionResponse
 	{
-		return Kart::where('identifier', 'like', '%'.$identifier.'%')->where('instance', $instance)->get();
-	}
-	
-	/**
-	 * Get carts based on identifier, ignoring instance.
-	 *
-	 * @param 	string 		$identifier
-	 * @param 	string 		$instance
-	 * @return 	Object
-	 */
-	public function getCartsByIdentifier(string $identifier) : EloquentCollectionResponse
-	{
-		return Kart::where('identifier', 'like', '%'.$identifier)->get();
+		return Kart::where('identifier', $identifier)->where('instance', $instance)->get();
 	}
 	
 	/**
@@ -119,7 +119,7 @@ trait CartTrait
 	 */
 	public function getSavedCarts(int $userId) : EloquentCollectionResponse
 	{
-		$carts = $this->getCartsByIdentifier($userId);
+		$carts = $this->getCartsByUserId($userId);
 		
 		// Convert serialised data
 		foreach ($carts as &$cart) {
@@ -152,6 +152,23 @@ trait CartTrait
 	public function updateCartProductCommodityQuantity(string $rowId, int $quantity)
 	{
 		Cart::update($rowId, $quantity);
+	}
+	
+	/**
+	 * Restructre the data so its grouped by product
+	 *
+	 * @param 	Kart 		$cart
+	 * @return 	Kart
+	 */
+	public function setCartItems($cart)
+	{
+		$cartItems = $cart->product_commodities;
+		
+		$cart->cartTotalItems = count($cartItems);
+		
+		$cart->cartItems = $this->groupCartItemsByProduct($cartItems);
+		
+		return $cart;
 	}
 	
 	/**
@@ -209,25 +226,29 @@ trait CartTrait
 	}
 	
 	/**
+	 * Stores cart instance.
+	 *
+	 * !! Overrides "store" method from the 3rd party vendor library !!
+	 *
+	 * @param 	string 		$instance
+	 * @param 	int 		$userId 
+	 * @return 	void
+	 */
+	public function storeCartInstance(string $identifier, int $userId)
+	{
+		CartHelper::store($identifier, $userId);
+	}
+	
+	/**
 	 * Restores cart instance.
 	 *
 	 * @param 	string 		$instance
+	 * @param 	int 		$userId 
 	 * @return 	void
 	 */
 	public function restoreCartInstance(string $identifier)
 	{
 		Cart::restore($identifier);
-	}
-	
-	/**
-	 * Stores cart instance.
-	 *
-	 * @param 	string 		$instance
-	 * @return 	void
-	 */
-	public function storeCartInstance(string $identifier)
-	{
-		Cart::store($identifier);
 	}
 	
 	/**

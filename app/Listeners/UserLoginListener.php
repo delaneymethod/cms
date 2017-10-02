@@ -8,7 +8,7 @@
 namespace App\Listeners;
 
 use Carbon\Carbon;
-use App\Events\UserLoginEvent;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -29,7 +29,7 @@ class UserLoginListener implements ShouldQueue
 	 * @param 	UserLoginEvent 	$event
 	 * @return	void
 	 */
-	public function handle(UserLoginEvent $event)
+	public function handle(Login $event)
 	{
 		$event->user->last_login_at = Carbon::now();
 		

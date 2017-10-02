@@ -185,7 +185,7 @@ class ProductController extends Controller
 						$product = Product::create($data);
 						
 						if ($product) {
-							broadcast(new ProductCreatedEvent($product));
+							ProductCreatedEvent::dispatch($product);
 						}
 					});
 					
@@ -205,7 +205,7 @@ class ProductController extends Controller
 						
 							$product->save();
 						
-							broadcast(new ProductUpdatedEvent($product));
+							ProductUpdatedEvent::dispatch($product);
 						}
 					});
 					
@@ -220,7 +220,7 @@ class ProductController extends Controller
 						$product = Product::find($data['id']);
 						
 						if ($product) {
-							broadcast(new ProductDeletedEvent($product));
+							ProductDeletedEvent::dispatch($product);
 							
 							$product->delete();
 						}
@@ -237,7 +237,7 @@ class ProductController extends Controller
 						$productCategory = ProductCategory::create($data);
 						
 						if ($productCategory) {
-							broadcast(new ProductCategoryCreatedEvent($productCategory));
+							ProductCategoryCreatedEvent::dispatch($productCategory);
 						}
 					});
 					
@@ -257,7 +257,7 @@ class ProductController extends Controller
 							
 							$productCategory->save();
 							
-							broadcast(new ProductCategoryUpdatedEvent($productCategory));
+							ProductCategoryUpdatedEvent::dispatch($productCategory);
 						}
 					});
 					
@@ -272,7 +272,7 @@ class ProductController extends Controller
 						$productCategory = ProductCategory::find($data['id']);
 						
 						if ($productCategory) {
-							broadcast(new ProductCategoryDeletedEvent($productCategory));
+							ProductCategoryDeletedEvent::dispatch($productCategory);
 							
 							$productCategory->delete();
 						}
@@ -289,7 +289,7 @@ class ProductController extends Controller
 						$productCommodity = ProductCommodity::create($data);
 						
 						if ($productCommodity) {
-							broadcast(new ProductCommodityCreatedEvent($productCommodity));
+							ProductCommodityCreatedEvent::dispatch($productCommodity);
 						}
 					});
 					
@@ -309,7 +309,7 @@ class ProductController extends Controller
 							
 							$productCommodity->save();
 							
-							broadcast(new ProductCommodityUpdatedEvent($productCommodity));
+							ProductCommodityUpdatedEvent::dispatch($productCommodity);
 						}
 					});
 					
@@ -324,7 +324,7 @@ class ProductController extends Controller
 						$productCommodity = ProductCommodity::find($data['id']);
 						
 						if ($productCommodity) {
-							broadcast(new ProductCommodityDeletedEvent($productCommodity));
+							ProductCommodityDeletedEvent::dispatch($productCommodity);
 							
 							$productCommodity->delete();
 						}
@@ -341,7 +341,7 @@ class ProductController extends Controller
 						$productCharacteristic = ProductCharacteristic::create($data);
 						
 						if ($productCharacteristic) {
-							broadcast(new ProductCharacteristicCreatedEvent($productCharacteristic));
+							ProductCharacteristicCreatedEvent::dispatch($productCharacteristic);
 						}
 					});
 					
@@ -361,7 +361,7 @@ class ProductController extends Controller
 							
 							$productCharacteristic->save();
 							
-							broadcast(new ProductCharacteristicUpdatedEvent($productCharacteristic));
+							ProductCharacteristicUpdatedEvent::dispatch($productCharacteristic);
 						}
 					});
 					
@@ -376,7 +376,7 @@ class ProductController extends Controller
 						$productCharacteristic = ProductCharacteristic::find($data['id']);
 						
 						if ($productCharacteristic) {
-							broadcast(new ProductCharacteristicDeletedEvent($productCharacteristic));
+							ProductCharacteristicDeletedEvent::dispatch($productCharacteristic);
 							
 							$productCharacteristic->delete();
 						}
@@ -393,7 +393,7 @@ class ProductController extends Controller
 						$productManufacturer = ProductManufacturer::create($data);
 						
 						if ($productManufacturer) {
-							broadcast(new ProductManufacturerCreatedEvent($productManufacturer));
+							ProductManufacturerCreatedEvent::dispatch($productManufacturer);
 						}
 					});
 					
@@ -413,7 +413,7 @@ class ProductController extends Controller
 							
 							$productManufacturer->save();
 							
-							broadcast(new ProductManufacturerUpdatedEvent($productManufacturer));
+							ProductManufacturerUpdatedEvent::dispatch($productManufacturer);
 						}
 					});
 					
@@ -428,7 +428,7 @@ class ProductController extends Controller
 						$productManufacturer = ProductManufacturer::find($data['id']);
 						
 						if ($productManufacturer) {
-							broadcast(new ProductManufacturerDeletedEvent($productManufacturer));
+							ProductManufacturerDeletedEvent::dispatch($productManufacturer);
 							
 							$productManufacturer->delete();
 						}
@@ -456,7 +456,7 @@ class ProductController extends Controller
 							
 							$product->save();
 							
-							broadcast(new ProductUpdatedEvent($product));
+							ProductUpdatedEvent::dispatch($product);
 						}
 					});
 					
@@ -471,7 +471,7 @@ class ProductController extends Controller
 						$productStandard = ProductStandard::create($data);
 						
 						if ($productStandard) {
-							broadcast(new ProductStandardCreatedEvent($productStandard));
+							ProductStandardCreatedEvent::dispatch($productStandard);
 						}
 					});
 					
@@ -491,7 +491,7 @@ class ProductController extends Controller
 							
 							$productStandard->save();
 							
-							broadcast(new ProductStandardUpdatedEvent($productStandard));
+							ProductStandardUpdatedEvent::dispatch($productStandard);
 						}
 					});
 					
@@ -506,7 +506,7 @@ class ProductController extends Controller
 						$productStandard = ProductStandard::find($data['id']);
 						
 						if ($productStandard) {
-							broadcast(new ProductStandardDeletedEvent($productStandard));
+							ProductStandardDeletedEvent::dispatch($productStandard);
 							
 							$productStandard->delete();
 						}
@@ -523,7 +523,7 @@ class ProductController extends Controller
 						$productStandardOrganisation = ProductStandardOrganisation::create($data);
 						
 						if ($productStandardOrganisation) {
-							broadcast(new ProductStandardOrganisationCreatedEvent($productStandardOrganisation));
+							ProductStandardOrganisationCreatedEvent::dispatch($productStandardOrganisation);
 						}
 					});
 					
@@ -543,7 +543,7 @@ class ProductController extends Controller
 							
 							$productStandardOrganisation->save();
 							
-							broadcast(new ProductStandardOrganisationUpdatedEvent($productStandardOrganisation));
+							ProductStandardOrganisationUpdatedEvent::dispatch($productStandardOrganisation);
 						}
 					});
 					
@@ -558,7 +558,7 @@ class ProductController extends Controller
 						$productStandardOrganisation = ProductStandardOrganisation::find($data['id']);
 						
 						if ($productStandardOrganisation) {
-							broadcast(new ProductStandardOrganisationDeletedEvent($productStandardOrganisation));
+							ProductStandardOrganisationDeletedEvent::dispatch($productStandardOrganisation);
 							
 							$productStandardOrganisation->delete();
 						}
@@ -575,7 +575,7 @@ class ProductController extends Controller
 						$productAttribute = ProductAttribute::create($data);
 						
 						if ($productAttribute) {
-							broadcast(new ProductAttributeCreatedEvent($productAttribute));
+							ProductAttributeCreatedEvent::dispatch($productAttribute);
 						}
 					});
 					
@@ -595,7 +595,7 @@ class ProductController extends Controller
 							
 							$productAttribute->save();
 							
-							broadcast(new ProductAttributeUpdatedEvent($productAttribute));
+							ProductAttributeUpdatedEvent::dispatch($productAttribute);
 						}
 					});
 					
@@ -610,7 +610,7 @@ class ProductController extends Controller
 						$productAttribute = ProductAttribute::find($data['id']);
 						
 						if ($productAttribute) {
-							broadcast(new ProductAttributeDeletedEvent($productAttribute));
+							ProductAttributeDeletedEvent::dispatch($productAttribute);
 							
 							$productAttribute->delete();
 						}
@@ -627,7 +627,7 @@ class ProductController extends Controller
 						$productVatRate = ProductVatRate::create($data);
 						
 						if ($productVatRate) {
-							broadcast(new ProductVatRateCreatedEvent($productVatRate));
+							ProductVatRateCreatedEvent::dispatch($productVatRate);
 						}
 					});
 					
@@ -647,7 +647,7 @@ class ProductController extends Controller
 							
 							$productVatRate->save();
 							
-							broadcast(new ProductVatRateUpdatedEvent($productVatRate));
+							ProductVatRateUpdatedEvent::dispatch($productVatRate);
 						}
 					});
 					
@@ -662,7 +662,7 @@ class ProductController extends Controller
 						$productVatRate = ProductVatRate::find($data['id']);
 						
 						if ($productVatRate) {
-							broadcast(new ProductVatRateDeletedEvent($productVatRate));
+							ProductVatRateDeletedEvent::dispatch($productVatRate);
 							
 							$productVatRate->delete();
 						}

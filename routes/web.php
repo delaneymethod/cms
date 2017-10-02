@@ -123,6 +123,7 @@ Route::group(['prefix' => 'cp'], function () {
 	
 	// CP > Carts routes
 	Route::get('/carts', 'CartController@index');
+	Route::get('/carts/{identifier}', 'CartController@show');
 	
 	// CP > Templates routes
 	Route::get('/templates', 'TemplateController@index');

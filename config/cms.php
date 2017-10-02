@@ -19,12 +19,19 @@ return [
     
     'site' => [
 	    
-		'name' => env('SITE_NAME', 'Test Site'),
-		'url' => env('SITE_URL', 'http://www.delaneymethod.com'),
-		'email' => env('SITE_EMAIL', 'hello@delaneymethod.com'),
-		'phone' => env('SITE_TELEPHONE', ''),
-		'mobile' => env('SITE_MOBILE', ''),
-    
+		'name' => 'Test Site',
+		'url' => 'http://www.delaneymethod.com',
+		'emails' => [
+			'general' => 'hello@delaneymethod.com',
+			'sales' => 'hello@delaneymethod.com',
+			'customer_care' => 'hello@delaneymethod.com',
+		],
+		'telephone_numbers' => [
+			'general' => '',
+			'sales' => '',
+			'customer_care' => '',
+		],
+		
     ],
     
     'public_path' => env('PUBLIC_PATH', 'public'),

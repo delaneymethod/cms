@@ -547,7 +547,7 @@ class LocationController extends Controller
 						
 							$location->save();
 							
-							broadcast(new LocationUpdatedEvent($location));
+							LocationUpdatedEvent::dispatch($location);
 						}
 					});
 					
