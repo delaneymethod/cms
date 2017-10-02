@@ -1,5 +1,5 @@
 			<header>
-				<h1>{{ config('cms.site.name') }}</h1>
+				<h1><a href="/" title="{{ config('cms.site.name') }}"><img src="/assets/img/logo.png" alt="{{ config('cms.site.name') }} logo" class="logo img-fluid"></a></h1>
 				@include('_partials.nav', [
 					'currentUser' => $currentUser,
 					'cart' => $cart

@@ -19,26 +19,26 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
+			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
 					<div class="row">
-						<div class="col-sm-12 col-md-4 col-lg-4">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
 							<h5>Identifier</h5>
 							<p class="text-muted">{{ $cart->identifier }}</p>
 						</div>
-						<div class="col-sm-12 col-md-4 col-lg-4">
+						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
 							<h5>Instance</h5>
 							<p class="text-muted">{{ $cart->instance }}</p>
 						</div>
-						<div class="col-sm-12 col-md-12 col-lg-12">
+						<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 							<h5>Originator</h5>
 							<p class="text-muted">{{ $cart->user->first_name }} {{ $cart->user->last_name }}<br><a href="mailto:{{ $cart->user->email }}" title="Email {{ $cart->user->first_name }}" class="text-gf-red">{{ $cart->user->email }}</a><br>@if (!empty($cart->user->telephone) && !empty($cart->user->mobile)){{ $cart->user->telephone }} / {{ $cart->user->mobile }}@elseif (!empty($cart->user->telephone)){{ $cart->user->telephone }}@elseif (!empty($cart->user->mobile)){{ $cart->user->mobile }}@endif<br>{{ $cart->user->company->title }}</p>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-12">
+						<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 							<h5>Cart Items</h5>
 							<table class="text-muted table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 								<thead>

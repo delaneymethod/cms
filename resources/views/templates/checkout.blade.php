@@ -14,7 +14,7 @@
 							<div id="reviewBillingDetails" class="collapse show" role="tabpanel" aria-labelledby="reviewYourBillingDetails" data-parent="#accordion">
 								<h3>Review your Billing Details</h3>
 								<div class="row">
-									<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 										<div class="form-group">
 											<label for="company" class="control-label font-weight-bold">Company</label>
 											<input type="text" name="company" id="company" class="form-control" value="{{ $currentUser->company->title }}" readonly>
@@ -22,13 +22,13 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-12 col-md-6 col-lg-6">
+									<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 										<div class="form-group">
 											<label for="first_name" class="control-label font-weight-bold">First Name</label>
 											<input type="text" name="first_name" id="first_name" class="form-control" value="{{ $currentUser->first_name }}" readonly>
 										</div>
 									</div>
-									<div class="col-sm-12 col-md-6 col-lg-6">
+									<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 										<div class="form-group">
 											<label for="last_name" class="control-label font-weight-bold">Last Name</label>
 											<input type="text" name="last_name" id="last_name" class="form-control" value="{{ $currentUser->last_name }}" readonly>
@@ -36,13 +36,13 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-12 col-md-6 col-lg-6">
+									<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 										<div class="form-group">
 											<label for="email" class="control-label font-weight-bold">Email Address</label>
 											<input type="email" name="email" id="email" class="form-control" value="{{ $currentUser->email }}" readonly>
 										</div>
 									</div>
-									<div class="col-sm-12 col-md-6 col-lg-6">
+									<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 										<div class="form-group">
 											<label for="job_title" class="control-label font-weight-bold">Job Title</label>
 											<input type="text" name="job_title" id="job_title" class="form-control" value="{{ $currentUser->job_title }}" readonly>
@@ -50,13 +50,13 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-12 col-md-6 col-lg-6">
+									<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 										<div class="form-group">
 											<label for="telephone" class="control-label font-weight-bold">Telephone</label>
 											<input type="tel" name="telephone" id="telephone" class="form-control" value="{{ $currentUser->telephone }}" readonly>
 										</div>
 									</div>
-									<div class="col-sm-12 col-md-6 col-lg-6">
+									<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 										<div class="form-group">
 											<label for="mobile" class="control-label font-weight-bold">Mobile</label>
 											<input type="tel" name="mobile" id="mobile" class="form-control" value="{{ $currentUser->mobile }}" readonly>
@@ -73,7 +73,7 @@
 							<div id="reviewShippingDetails" class="collapse" role="tabpanel" aria-labelledby="reviewYourShippingDetails" data-parent="#accordion">
 								<h3>Review your Shipping Details</h3>
 								<div class="row">
-									<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 										<div class="form-group">
 											<label for="location_id" class="control-label font-weight-bold">Shipping Location</label>
 											<select name="location_id" id="location_id" class="form-control" aria-describedby="helpBlockLocationId">
@@ -99,7 +99,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 										<div class="form-group">
 											<label for="shipping_method_id" class="control-label font-weight-bold">Shipping Method</label>
 											@foreach ($shippingMethods as $shippingMethod)
@@ -114,7 +114,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 										<div class="form-group">
 											<label for="notes" class="control-label font-weight-bold">Notes</label>
 											<textarea name="notes" id="notes" class="form-control" autocomplete="off" placeholder="" rows="5" cols="50" aria-describedby="helpBlockNotes"></textarea>
@@ -131,7 +131,7 @@
 							<div id="reviewCart" class="collapse" role="tabpanel" aria-labelledby="reviewYourCart" data-parent="#accordion">
 								<h3>Review your Cart</h3>
 								<div class="row">
-									<div class="col-sm-12 col-md-12 col-lg-12">
+									<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 										<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 											<thead>
 												<tr>
@@ -177,7 +177,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-12 col-md-6 col-lg-6">
+									<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 										<div class="form-group">
 											<label for="po_number" class="control-label font-weight-bold">PO Number <span class="text-danger">&#42;</span></label>
 											<input type="text" name="po_number" id="po_number" class="form-control" value="{{ old('po_number') }}" placeholder="e.g 123456789" autocomplete="off" aria-describedby="helpBlockPoNumber" required>

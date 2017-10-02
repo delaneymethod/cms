@@ -5,8 +5,9 @@
 	"main": "webpack.mix.js",
 	"private": true,
 	"scripts": {
-		"dbsetup": "./db-setup.sh",
-		"dbmigrate": "./db-migrate.sh",
+		"logs": "./scripts/logs.sh",
+		"queues": "./scripts/queues.sh",
+		"migrations": "./scripts/migrations.sh",
 		"dev": "npm run development",
 		"development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
 		"watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",

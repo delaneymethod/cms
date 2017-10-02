@@ -184,12 +184,14 @@ return [
 				'sm' => 'col-sm-12',
 				'md' => 'col-md-2',
 				'lg' => 'col-lg-2',
+				'xl' => 'col-xl-2',
 			],
 			
 			'main' => [
 				'sm' => 'col-sm-12',
 				'md' => 'col-md-10',
 				'lg' => 'col-lg-10',
+				'xl' => 'col-xl-10',
 			],
 		],
 		

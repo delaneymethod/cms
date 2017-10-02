@@ -8,7 +8,6 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Log;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

@@ -13,4 +13,16 @@
 @import '~font-awesome/scss/font-awesome';
 
 @import 'common';
-	
+
+.container-fluid
+{
+}
+
+header 
+{
+	background-color: aqua;		
+		
+	.logo {
+		width: 500px;
+	}
+}

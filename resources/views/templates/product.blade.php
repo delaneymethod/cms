@@ -4,12 +4,12 @@
 			@php ($redirectTo = '?redirectTo=/'.request()->path())
 			<h1>{{ $product->title }}</h1>
 			<div class="row">
-				<div class="col-sm-12 col-md-6 col-lg-6">
+				<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 					@if (!empty($product->image_url))
 						<img data-src="{{ $product->image_url }}" class="lazyload img-fluid" alt="{{ $product->title }}">
 					@endif
 				</div>
-				<div class="col-sm-12 col-md-6 col-lg-6">
+				<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
 					@if (!empty($product->description))
 						{!! $product->description !!}
 					@endif
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 col-md-12 col-lg-12">
+				<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 					<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>

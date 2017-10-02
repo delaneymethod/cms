@@ -28,9 +28,6 @@ b. If the item is not in stock and we are using cost price then the price is onl
 
 
 
-On logout, if cart session has items, save it
-
-
 
 
 echo "" > storage/logs/laravel.log
@@ -39,7 +36,6 @@ Look into: https://github.com/spatie/laravel-activitylog
 
 Setup daemon's for 
 
-php artisan queue:listen &
 php artisan queue:work --queue=orders.jobs &
 php artisan queue:work --queue=orders.events &
 php artisan queue:work --queue=orders.notifications &
@@ -49,7 +45,6 @@ php artisan queue:work --queue=locations &
 php artisan queue:work --queue=products &
 php artisan queue:work --queue=default &
 
-php artisan queue:listen
 php artisan queue:work --queue=orders.jobs,orders.events,orders.notifications,orders.broadcasts,users,locations,products,default
 
 

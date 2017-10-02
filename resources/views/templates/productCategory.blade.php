@@ -7,7 +7,7 @@
 			@if ($productCategories->count())
 				<div class="row">
 					@foreach ($productCategories as $productCategory)
-						<div class="col-sm-12 col-md-3 col-lg-3">
+						<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
 							<a href="{{ $productCategory->url }}" title="{{ $productCategory->title }}">
 								<figure class="figure">
 									<img data-src="{{ $productCategory->image_url }}" class="lazyload figure-img img-fluid" alt="{{ $productCategory->title }}">
@@ -21,7 +21,7 @@
 			
 			@if ($products->count() > 0)
 				<div class="row">
-					<div class="col-sm-12 col-md-12 col-lg-12">
+					<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 						<table class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 							<thead>
 								<tr>

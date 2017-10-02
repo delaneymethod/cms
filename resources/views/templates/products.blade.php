@@ -4,7 +4,7 @@
 			
 			<div class="row">
 				@foreach ($productCategories as $productCategory)
-					<div class="col-sm-12 col-md-3 col-lg-3">
+					<div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
 						<a href="{{ $productCategory->url }}" title="{{ $productCategory->title }}">
 							<figure class="figure">
 								<img data-src="{{ $productCategory->image_url }}" class="lazyload figure-img img-fluid rounded" alt="{{ $productCategory->title }}">

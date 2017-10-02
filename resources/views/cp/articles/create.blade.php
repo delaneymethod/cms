@@ -19,7 +19,7 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
+			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
@@ -91,7 +91,7 @@
 							@foreach ($articleCategories->chunk(3) as $chunk)
 								<div class="row">
 									@foreach ($chunk as $articleCategory)
-										<div class="col-sm-12 col-md-4 col-lg-4">
+										<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
 											<div class="form-check">
 												<label for="article_category_id-{{ $articleCategory->slug }}" class="form-check-label">
 													<input type="checkbox" name="article_category_ids[]" id="article_category_id-{{ $articleCategory->slug }}" class="form-check-input" value="{{ $articleCategory->id }}" tabindex="7" aria-describedby="helpBlockArticleCCategoryIds" {{ (in_array($articleCategory->id, $articleCategoryIds)) ? 'checked' : '' }} {{ ($articleCategory->id == 1) ? 'disabled checked' : '' }}>{{ $articleCategory->title }}
@@ -142,7 +142,7 @@
 								</div>
 								<div class="modal-body">
 									<div class="row">
-										<div class="col-sm-12 col-md-12 col-lg-12">
+										<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
 										</div>
 									</div>
 								</div>

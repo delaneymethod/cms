@@ -13,6 +13,18 @@ return [
     */
 
     'tax' => 0,
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Default shipping rate
+    |--------------------------------------------------------------------------
+    |
+    | This default shipping rate will be used when you make a class implement the
+    | Shippable interface and use the HasShipping trait.
+    |
+    */
+    
+    'shipping' => 0,
 
     /*
     |--------------------------------------------------------------------------

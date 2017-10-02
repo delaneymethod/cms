@@ -19,7 +19,7 @@
 @section('content')
 		<div class="row wrapper">
 			@include('cp._partials.sidebar')
-			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} main">
+			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				@if ($currentUser->hasPermission('create_pages'))

@@ -24,11 +24,13 @@
 		'currentUser' => null,
 		'cart' => null
 	])
-	<section class="content">
-		<h2>Server Error: 429 (Too Many Attempts)</h2>
-		<h3>What does this mean?</h3>
-		<p>You have made too many requests to the same resource, and now you will have to wait for a {{ $retryAfter }} seconds before trying again.</p>
-	</section>
+	<div class="row wrapper">
+		<div class="col main">
+			<h2>Server Error: 429 (Too Many Attempts)</h2>
+			<h3>What does this mean?</h3>
+			<p>You have made too many requests to the same resource, and now you will have to wait for a {{ $retryAfter }} seconds before trying again.</p>
+		</div>
+	</div>
 	@include('_partials.footer', [
 		'currentUser' => null,
 		'cart' => null

@@ -1,4 +1,4 @@
-		<div class="{{ $sidebarSmCols }} {{ $sidebarMdCols }} {{ $sidebarLgCols }} sidebar">
+		<div class="{{ $sidebarSmCols }} {{ $sidebarMdCols }} {{ $sidebarLgCols }} {{ $sidebarXlCols }} sidebar">
 			<h3>{{ $currentUser->first_name }} {{ $currentUser->last_name }}</h3>
 			<h4 class="text-uppercase extra-breathing-space">Administration</h4>
 			<ul class="list-unstyled">

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Collection;
 use App\Notifications\SetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo};
-use App\Models\{Role, Cart, Order, Status, Company, Article, Location};
+use App\Models\{Role, Cart, Order, Status, Session, Company, Article, Location};
 
 class User extends Authenticatable
 {
@@ -126,6 +126,14 @@ class User extends Authenticatable
 	public function articles() : HasMany
 	{
 		return $this->hasMany(Article::class);
+	}
+	
+	/**
+	 * Get the sessions records associated with the user.
+	 */
+	public function sessions() : HasMany
+	{
+		return $this->hasMany(Session::class);
 	}
 	
 	/**

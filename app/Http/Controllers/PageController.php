@@ -47,7 +47,7 @@ class PageController extends Controller
 	public function index(Request $request)
 	{
 		$currentUser = $this->getAuthenticatedUser();
-		
+			
 		if ($currentUser->hasPermission('view_pages')) {
 			$title = 'Pages';
 			

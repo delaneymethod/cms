@@ -24,13 +24,15 @@
 		'currentUser' => null,
 		'cart' => null
 	])
-	<section class="content">
-		<h2>Scheduled Maintenance</h2>
-		<h3>We&#39;re taking a short break for some scheduled maintenance&hellip;</h3>
-		<p>{{ json_decode(file_get_contents(storage_path('framework/down')), true)['message'] }}</p>
-		<p>We&#39;ll be back in a few minutes, so don&#39;t forget to refresh this page.</p>
-		<p>Sorry for any inconvenience and for thanks for your patience.</p>
-	</section>
+	<div class="row wrapper">
+		<div class="col main">
+			<h2>Scheduled Maintenance</h2>
+			<h3>We&#39;re taking a short break for some scheduled maintenance&hellip;</h3>
+			<p>{{ json_decode(file_get_contents(storage_path('framework/down')), true)['message'] }}</p>
+			<p>We&#39;ll be back in a few minutes, so don&#39;t forget to refresh this page.</p>
+			<p>Sorry for any inconvenience and for thanks for your patience.</p>
+		</div>
+	</div>
 	@include('_partials.footer', [
 		'currentUser' => null,
 		'cart' => null
