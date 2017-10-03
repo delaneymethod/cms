@@ -13700,28 +13700,48 @@ a,
   padding: 0.5rem 1.25rem;
 }
 
-.btn-unstyled-gf-info {
+.btn-unstyled-gf-blue-gray {
   background: none !important;
-  color: #2980B9;
+  color: #607D8B;
   border: none;
   padding: 0;
   margin: 0;
+  text-decoration: underline;
   font: inherit;
   cursor: pointer;
   outline: inherit !important;
 }
 
-.btn-unstyled-gf-info:hover {
+.btn-unstyled-gf-blue-gray:hover {
   background: inherit;
-  color: #3498DB;
+  color: #D30E07;
+}
+
+.btn-styled-gf-blue-gray {
+  border-radius: 50px;
+  background: none !important;
+  color: #607D8B;
+  border: 1px solid #607D8B;
+  padding: 0 6px;
+  margin: 0;
+  text-decoration: underline;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit !important;
+}
+
+.btn-styled-gf-blue-gray:hover {
+  background: inherit;
+  color: #222d32;
+  border: 1px solid #222d32;
 }
 
 .text-gf-red {
-  color: #C0392B;
+  color: #D30E07;
 }
 
 .text-gf-red:hover {
-  color: #C0392B;
+  color: #D30E07;
 }
 
 .text-gf-blue {
@@ -13729,7 +13749,7 @@ a,
 }
 
 .text-gf-blue:hover {
-  color: #3498DB;
+  color: #D30E07;
 }
 
 .text-gf-info {
@@ -13737,7 +13757,15 @@ a,
 }
 
 .text-gf-info:hover {
-  color: #2980B9;
+  color: #D30E07;
+}
+
+.text-gf-blue-gray {
+  color: #607D8B;
+}
+
+.text-gf-blue-gray:hover {
+  color: #D30E07;
 }
 
 .text-muted-lighter {
@@ -13746,6 +13774,18 @@ a,
 
 .bg-white {
   background-color: #ffffff;
+}
+
+.bg-danger {
+  background-color: #D30E07 !important;
+}
+
+.bg-warning {
+  background-color: #F1C40F !important;
+}
+
+.bg-info {
+  background-color: #B0BEC5 !important;
 }
 
 .hidden {
@@ -13768,17 +13808,17 @@ a,
 }
 
 .btn-outline-gf-red {
-  color: #C0392B;
+  color: #D30E07;
   font-family: inherit;
   background-image: none;
   background-color: transparent;
-  border-color: #C0392B;
+  border-color: #D30E07;
 }
 
 .btn-outline-gf-red:hover {
   color: #ffffff;
-  background-color: #C0392B;
-  border-color: #C0392B;
+  background-color: #D30E07;
+  border-color: #D30E07;
 }
 
 .btn-outline-primary {
@@ -13838,7 +13878,7 @@ a,
   margin-left: -15px;
   margin-bottom: 0;
   padding: 20px 30px;
-  background-color: #C0392B;
+  background-color: #D30E07;
   color: #ffffff;
   font-weight: 600;
   font-size: 16px;
@@ -13868,7 +13908,7 @@ a,
 
 .message.danger {
   display: block;
-  background-color: #C0392B;
+  background-color: #D30E07;
 }
 
 html, body {
@@ -13886,7 +13926,7 @@ html, body {
 .datetimepicker .today {
   color: #ffffff !important;
   border-color: none !important;
-  background-color: #C0392B !important;
+  background-color: #D30E07 !important;
   background-image: none !important;
   background-repeat: no-repeat !important;
 }
@@ -13958,7 +13998,7 @@ html, body {
 
 .status_id-5,
 .status_id-7 {
-  color: #C0392B;
+  color: #D30E07;
   background-color: transparent;
 }
 
@@ -13981,13 +14021,13 @@ html, body {
 
 .page-item .page-link:hover {
   color: #ffffff;
-  background-color: #C0392B;
-  border-color: #C0392B;
+  background-color: #D30E07;
+  border-color: #D30E07;
 }
 
 .page-item.active .page-link {
-  border-color: #C0392B;
-  background-color: #C0392B;
+  border-color: #D30E07;
+  background-color: #D30E07;
   color: #ffffff;
 }
 
@@ -14007,7 +14047,7 @@ html, body {
 
 .badge-suspended {
   color: white !important;
-  background-color: #C0392B !important;
+  background-color: #D30E07 !important;
 }
 
 .dataTables_paginate {
@@ -14025,7 +14065,7 @@ html, body {
 }
 
 .breadcrumbs a:hover {
-  color: #C0392B;
+  color: #D30E07;
   text-decoration: none;
 }
 
@@ -14138,7 +14178,7 @@ html, body {
 }
 
 .sidebar ul .active a {
-  border-left-color: #C0392B;
+  border-left-color: #D30E07;
   color: #ffffff !important;
   text-decoration: none;
   background-color: #1e282c;
@@ -14197,7 +14237,7 @@ html, body {
 }
 
 .main .content form .gf-red {
-  color: #C0392B;
+  color: #D30E07;
 }
 
 .main .content form .cancel-button {
@@ -14214,7 +14254,7 @@ html, body {
 }
 
 .main .content table a:hover {
-  color: #C0392B;
+  color: #D30E07;
 }
 
 .main .content table .status {
@@ -14457,7 +14497,7 @@ html, body {
 }
 
 .main .content .assets .asset .modal-body a:hover {
-  color: #C0392B;
+  color: #D30E07;
   text-decoration: none;
 }
 

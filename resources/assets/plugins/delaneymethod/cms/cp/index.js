@@ -166,51 +166,41 @@
 		};
 		
 		this.loadAnimations = () => {
-			if ($('.sidebar #submenu').length) {
-				$('.sidebar #submenu').on('click', event => {
-					event.preventDefault();
-					
-					$(event.target).toggleClass('highlight');
-					
-					$(event.target).next('ul').slideToggle(500);
-			
-					$(event.target).find('span > i').toggleClass('fa-rotate', 'fast');
-				});
-			}
-			
-			if ($('.main .content #pageActions').length) {
-				$('.main .content #pageActions').on('click', event => {
-					event.preventDefault();
-					
-					$('.main .content #pageActions i').removeClass('fa-rotate');
-					
-					if (event.target === event.currentTarget) {
-						$(event.target).find('i').toggleClass('fa-rotate', 'fast');
-					} else {
-						$(event.target).toggleClass('fa-rotate', 'fast');
-					}
-				});
-			}
-			
-			if ($('.main .content #submenu').length) {	
-				$('.main .content #submenu').on('hide.bs.dropdown', () => {
-					$('.main .content #pageActions i').removeClass('fa-rotate', 'fast');
-				});
-			}
+			$('.sidebar #submenu').on('click', event => {
+				event.preventDefault();
 				
-			if ($('.main .message.success').length) {	
-				$('.main .message.success').on('shown', () => {
-					setTimeout(() => {
-						$('.main .message.success').fadeOut('fast');
-					}, 4000);
-				});
+				$(event.target).toggleClass('highlight');
+				
+				$(event.target).next('ul').slideToggle(500);
+		
+				$(event.target).find('span > i').toggleClass('fa-rotate', 'fast');
+			});
+
+			$('.content #pageActions').on('click', event => {
+				event.preventDefault();
+				
+				$('.content #pageActions i').removeClass('fa-rotate');
+				
+				if (event.target === event.currentTarget) {
+					$(event.target).find('i').toggleClass('fa-rotate', 'fast');
+				} else {
+					$(event.target).toggleClass('fa-rotate', 'fast');
+				}
+			});
+
+			$('.content #submenu').on('hide.bs.dropdown', () => {
+				$('.content #pageActions i').removeClass('fa-rotate', 'fast');
+			});
+			
+			if ($('#message').length) {
+				setTimeout(() => {
+					$('.message.success').fadeOut('fast');
+				}, 4000);
 			}
 			
-			if ($('.main .message #hideMessage').length) {	
-				$('.main .message #hideMessage').on('click', () => {
-			 		$('.main .message').fadeOut('fast');
-				});
-			}
+			$('.message #hideMessage').on('click', () => {
+		 		$('.message').fadeOut('fast');
+			});
 			
 			$('[data-toggle="tooltip"]').tooltip();
 			

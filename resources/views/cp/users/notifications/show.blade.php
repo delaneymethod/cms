@@ -17,7 +17,8 @@
 @endpush
 
 @section('content')
-		<div class="row wrapper">
+	<div class="container-fluid">
+		<div class="row">
 			@include('cp._partials.sidebar')
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
@@ -28,7 +29,7 @@
 							@php($order = json_decode($notification->data)->order)
 							<p>Order <strong>#{{ $order->order_number }}</strong></p>
 							<div class="row">
-								<div class="col">
+								<div class="col-12">
 									<p></p>
 									<ul class="list-unstyled list-inline">
 										<li class="list-inline-item"><a href="/cp/orders/{{ $order->id }}" title="View Order" class="btn btn-primary">View Order</a></li>
@@ -53,4 +54,5 @@
 				@include('cp._partials.footer')
 			</div>
 		</div>
+	</div>
 @endsection

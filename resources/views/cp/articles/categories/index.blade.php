@@ -17,14 +17,15 @@
 @endpush
 
 @section('content')
-		<div class="row wrapper">
+	<div class="container-fluid">
+		<div class="row">
 			@include('cp._partials.sidebar')
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				@if ($currentUser->hasPermission('create_article_categories'))
 					<div class="row">
-						<div class="col">
+						<div class="col-12">
 							<ul class="list-unstyled list-inline buttons">
 								<li class="list-inline-item"><a href="/cp/articles/categories/create" title="Add Article Category" class="btn btn-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Article Category</a></li>
 							</ul>
@@ -70,4 +71,5 @@
 				@include('cp._partials.footer')
 			</div>
 		</div>
+	</div>
 @endsection

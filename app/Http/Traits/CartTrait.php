@@ -121,6 +121,10 @@ trait CartTrait
 	{
 		$carts = $this->getCartsByUserId($userId);
 		
+		$carts = $carts->filter(function ($cart) {
+			return $cart->instance == 'cart';
+		});
+		
 		// Convert serialised data
 		foreach ($carts as &$cart) {
 			$cart->content = unserialize($cart->content);

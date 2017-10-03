@@ -17,14 +17,15 @@
 @endpush
 
 @section('content')
-		<div class="row wrapper">
+	<div class="container-fluid">
+		<div class="row">
 			@include('cp._partials.sidebar')
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
 				@if ($messages->count() > 0)
                 	@foreach ($messages as $message)
                     	<div class="row">
-							<div class="col">
+							<div class="col-12">
 								<p id="system-message" class="message {{ $message->type }}">{!! $message->text !!}<a href="javascript:void(0);" title="Hide this message" class="pull-right" id="hideMessage"><i class="fa fa-times" aria-hidden="true"></i></a></p>
 							</div>
 						</div>
@@ -38,7 +39,7 @@
 				@include('cp._partials.pageTitle')
 				@if ($currentUser->hasPermission('upload_assets'))
 					<div class="row">
-						<div class="col">
+						<div class="col-12">
 							<ul class="list-unstyled list-inline buttons">
 								<li class="list-inline-item"><a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-success"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
 								@if ($zipEnabled && count($assets) > 0)
@@ -158,4 +159,5 @@
 				@include('cp._partials.footer')
 			</div>
 		</div>
+	</div>
 @endsection

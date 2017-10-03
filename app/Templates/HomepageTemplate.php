@@ -26,6 +26,19 @@ class HomepageTemplate extends Template
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
+		$page->breadcrumbs = collect([]);
+		
+		$page->breadcrumbs->push([
+			'title' => $page->title,
+			'slug' => $page->slug,
+			'url' => $page->url,
+		]);
+		
+		// Convert inners to objects
+		$page->breadcrumbs = $page->breadcrumbs->map(function ($row) {
+			return (object) $row;
+		});
+		
 		$page->description = '';
 		
 		$page->keywords = '';

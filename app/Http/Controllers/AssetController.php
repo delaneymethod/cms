@@ -258,7 +258,7 @@ class AssetController extends Controller
 						$asset->path = $this->buildPath([
 							'',
 							$this->assetsDisk,
-							$path
+							$path,
 						]);
 					}
 					

@@ -55,6 +55,7 @@ class ProductCategoryTemplate extends Template
 		
 		$page->breadcrumbs->push([
 			'title' => $page->title,
+			'slug' => $page->slug,
 			'url' => $page->url,
 		]);
 		
@@ -72,6 +73,7 @@ class ProductCategoryTemplate extends Template
 			// Add each slug
 			$page->breadcrumbs->push([
 				'title' => $parentProductCategory->title,
+				'slug' => $parentProductCategory->slug,
 				'url' => $parentProductCategory->url,
 			]);
 		});

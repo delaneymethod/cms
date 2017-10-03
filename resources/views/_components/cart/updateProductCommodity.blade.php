@@ -4,5 +4,5 @@
 	<input type="hidden" name="id" value="{{ $id }}">
 	<input type="hidden" name="quantity" value="{{ $quantity }}">
 	<input type="hidden" name="instance" value="{{ $instance }}">
-	<button type="submit" name="submit_update_product_commodity_{{ $id }}" id="submit_update_product_commodity_{{ $id }}" title="{{ $buttonLabel }}" class="{{ $extraClasses }}">{{ $buttonLabel }}</button>
+	<button type="submit" name="submit_update_product_commodity_{{ $id }}" id="submit_update_product_commodity_{{ $id }}" title="Update Cart" class="{{ $extraClasses }}">{!! $buttonLabel !!}</button>
 </form>

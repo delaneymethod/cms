@@ -17,7 +17,8 @@
 @endpush
 
 @section('content')
-		<div class="row wrapper">
+	<div class="container-fluid">
+		<div class="row">
 			@include('cp._partials.sidebar')
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
@@ -93,7 +94,7 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="col">
+						<div class="col-12">
 							<p>&nbsp;</p>
 							<ul class="list-unstyled list-inline">
 								<li class="list-inline-item"><a href="/cp/orders" title="View All Orders" class="btn btn-primary">View All Orders</a></li>
@@ -105,4 +106,5 @@
 				@include('cp._partials.footer')
 			</div>
 		</div>
+	</div>
 @endsection

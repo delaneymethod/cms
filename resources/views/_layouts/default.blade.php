@@ -39,9 +39,7 @@
 	@stack('headScripts')
 </head>
 <body>
-	<div class="container-fluid">
-		@yield('content')
-	</div>
+	@yield('content')
 	@stack('bodyScripts')
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-
+	
 return [
 
     /*
@@ -51,7 +51,7 @@ return [
         // Added by Sean
         'uploads' => [
 			'driver' => 'local',
-			'root' => public_path('uploads'),
+			'root' => base_path().'/'.env('PUBLIC_PATH').'/uploads',
 		],
         
         'public' => [

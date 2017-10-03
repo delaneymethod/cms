@@ -17,7 +17,8 @@
 @endpush
 
 @section('content')
-		<div class="row wrapper">
+	<div class="container-fluid">
+		<div class="row">
 			@include('cp._partials.sidebar')
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
@@ -157,4 +158,5 @@
 				@include('cp._partials.footer')
 			</div>
 		</div>
+	</div>
 @endsection

@@ -46,12 +46,12 @@ trait AssetTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getAssetByFilename(string $filename) : Asset
+	public function getAssetByFilename(string $filename)// : Asset
 	{
 		$asset = Asset::where('filename', $filename)->first();
 		
 		if (!empty($asset)) {
-			$asset->filesize = $this->getSize($asset->size);
+			//$asset->filesize = $this->getSize($asset->size);
 			
 			if (starts_with($asset->mime_type, 'image')) {
 				$path = $this->getPath($asset);
@@ -77,7 +77,7 @@ trait AssetTrait
 		$assets = Asset::all();
 		
 		foreach ($assets as $asset) {
-			$asset->filesize = $this->getSize($asset->size);
+			//$asset->filesize = $this->getSize($asset->size);
 			
 			if (starts_with($asset->mime_type, 'image')) {
 				$path = $this->getPath($asset);

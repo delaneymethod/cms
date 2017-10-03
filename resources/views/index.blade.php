@@ -29,18 +29,30 @@
 @endpush
 
 @section('content')
+	@include('_partials.message', [
+		'currentUser' => $currentUser
+	])
 	@include('_partials.header', [
 		'currentUser' => $currentUser,
 		'cart' => $cart
 	])
-	<div class="row wrapper">
-		<div class="col main">
-			@include('_partials.message', [
-				'currentUser' => $currentUser
-			])
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
 			{!! $page->view->render() !!}
-		</div>
-	</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+		</div>	
+	</main>
 	@include('_partials.footer', [
 		'currentUser' => $currentUser,
 		'cart' => $cart

@@ -14,15 +14,172 @@
 
 @import 'common';
 
-.container-fluid
-{
+.spacer {
+	display: block;
+	width: 100%;
+	height: 15px;
+	padding: 0;
+	margin: 0;	
 }
 
-header 
-{
-	background-color: aqua;		
+.tall {
+	height: 25px;
+}
+
+.very-tall {
+	height: 50px;
+}
+
+header {
+	border-bottom: 1px solid #ECEFF1;
+	
+	nav {
+		ul {
+			margin: 0;
+			padding: 0;
 		
-	.logo {
-		width: 500px;
+			li {
+				a {
+					text-decoration: underline;
+					color: $gf-blue-gray-500;
+						
+					&:hover {
+						color: $gf-red;
+					}
+				}
+			}
+			
+			.active {
+				a {
+					color: $gf-red;
+				}
+			}		
+		}
+	}
+	
+	h1 {
+		margin: 0;
+		padding: 0;
+	}
+	
+	hr {
+		border-top: 1px solid #FFFFFF;
+	}
+	
+	.banner {
+		color: #FFFFFF;
+		background-color: #333333;
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+		height: 440px;
+		
+		h2 {
+			font-size: 42px;
+			line-height: 44px;
+			margin-bottom: 2rem;
+		}
+		
+		h4 {
+			margin-bottom: 1rem;
+		}
+	}
+	
+	.breadcrumbs {
+		margin: 0;
+		padding: 0;
+		color: $gf-blue-gray-500;
+		
+		li {
+			a {
+				text-decoration: underline;
+				color: $gf-blue-gray-500;
+				
+				&:hover {
+					color: $gf-red;
+				}
+				
+				.fa {
+					font-size: 18px;
+				}
+			}
+			
+			&:last-child {
+				a {
+					color: $gf-red;
+					
+					&:hover {
+						color: $gf-red;
+					}
+				}
+			}
+		}
+	}
+}
+
+main {
+	a {
+		text-decoration: underline;
+		color: $gf-blue-gray-500;
+		
+		&:hover {
+			color: $gf-red;
+		}
+	}
+	
+	a.btn {
+		text-decoration: none;
+	}
+		
+	.products {
+		a {
+			h4 {
+				font-size: 14px;
+				font-weight: normal;
+			}
+		}
+	}
+	
+	.btn-qty {
+		padding: 2px 7px;
+		background-color: aqua;
+	}
+}
+
+footer {
+	color: #FFFFFF;
+	background-color: #333333;
+	
+	ul {
+		margin: 0;
+		padding: 0;
+		
+		li {
+			padding: 2px 0;
+			
+			a {
+				text-decoration: none;
+				color: inherit;
+					
+				&:hover {
+					text-decoration: underline;
+					color: $gf-red;
+				}
+				
+				.fa {
+					font-size: 18px;
+				}
+			}
+		}		
+	}
+	
+	hr {
+		border-top: 1px solid #FFFFFF;
+	}
+		
+	.social-media {
+		li {
+			padding: 0 0 0 10px;
+		}
 	}
 }

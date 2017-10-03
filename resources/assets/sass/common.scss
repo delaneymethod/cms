@@ -90,19 +90,39 @@ a,
 	padding: 0.5rem 1.25rem;
 }
 
-.btn-unstyled-gf-info {
+.btn-unstyled-gf-blue-gray {
 	background: none !important;
-	color: $gf-info;
+	color: $gf-blue-gray-500;
 	border: none;
 	padding: 0;
 	margin: 0;
+	text-decoration: underline;
 	font: inherit;
 	cursor: pointer;
 	outline: inherit !important;
 	
 	&:hover {
 		background: inherit;
-		color: $gf-blue;
+		color: $gf-red;
+	}
+}
+
+.btn-styled-gf-blue-gray {
+	border-radius: 50px;
+	background: none !important;
+	color: $gf-blue-gray-500;
+	border: 1px solid $gf-blue-gray-500;
+	padding: 0 6px;
+	margin: 0;
+	text-decoration: underline;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit !important;
+	
+	&:hover {
+		background: inherit;
+		color: $gf-default;
+		border: 1px solid $gf-default;
 	}
 }
 
@@ -118,7 +138,7 @@ a,
 	color: $gf-blue;
 	
 	&:hover {
-		color: $gf-blue;
+		color: $gf-red;
 	}
 }
 
@@ -126,7 +146,15 @@ a,
 	color: $gf-info;
 	
 	&:hover {
-		color: $gf-info;
+		color: $gf-red;
+	}
+}
+
+.text-gf-blue-gray {
+	color: $gf-blue-gray-500;
+	
+	&:hover {
+		color: $gf-red;
 	}
 }
 
@@ -136,6 +164,18 @@ a,
 
 .bg-white {
 	background-color: #ffffff;
+}
+
+.bg-danger {
+	background-color: $gf-red !important;
+}
+
+.bg-warning {
+	background-color: $gf-warning !important;
+}
+
+.bg-info {
+	background-color: $gf-blue-gray-200 !important;
 }
 
 .hidden {

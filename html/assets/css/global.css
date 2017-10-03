@@ -11453,28 +11453,48 @@ a,
   padding: 0.5rem 1.25rem;
 }
 
-.btn-unstyled-gf-info {
+.btn-unstyled-gf-blue-gray {
   background: none !important;
-  color: #2980B9;
+  color: #607D8B;
   border: none;
   padding: 0;
   margin: 0;
+  text-decoration: underline;
   font: inherit;
   cursor: pointer;
   outline: inherit !important;
 }
 
-.btn-unstyled-gf-info:hover {
+.btn-unstyled-gf-blue-gray:hover {
   background: inherit;
-  color: #3498DB;
+  color: #D30E07;
+}
+
+.btn-styled-gf-blue-gray {
+  border-radius: 50px;
+  background: none !important;
+  color: #607D8B;
+  border: 1px solid #607D8B;
+  padding: 0 6px;
+  margin: 0;
+  text-decoration: underline;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit !important;
+}
+
+.btn-styled-gf-blue-gray:hover {
+  background: inherit;
+  color: #222d32;
+  border: 1px solid #222d32;
 }
 
 .text-gf-red {
-  color: #C0392B;
+  color: #D30E07;
 }
 
 .text-gf-red:hover {
-  color: #C0392B;
+  color: #D30E07;
 }
 
 .text-gf-blue {
@@ -11482,7 +11502,7 @@ a,
 }
 
 .text-gf-blue:hover {
-  color: #3498DB;
+  color: #D30E07;
 }
 
 .text-gf-info {
@@ -11490,7 +11510,15 @@ a,
 }
 
 .text-gf-info:hover {
-  color: #2980B9;
+  color: #D30E07;
+}
+
+.text-gf-blue-gray {
+  color: #607D8B;
+}
+
+.text-gf-blue-gray:hover {
+  color: #D30E07;
 }
 
 .text-muted-lighter {
@@ -11499,6 +11527,18 @@ a,
 
 .bg-white {
   background-color: #ffffff;
+}
+
+.bg-danger {
+  background-color: #D30E07 !important;
+}
+
+.bg-warning {
+  background-color: #F1C40F !important;
+}
+
+.bg-info {
+  background-color: #B0BEC5 !important;
 }
 
 .hidden {
@@ -11521,17 +11561,17 @@ a,
 }
 
 .btn-outline-gf-red {
-  color: #C0392B;
+  color: #D30E07;
   font-family: inherit;
   background-image: none;
   background-color: transparent;
-  border-color: #C0392B;
+  border-color: #D30E07;
 }
 
 .btn-outline-gf-red:hover {
   color: #ffffff;
-  background-color: #C0392B;
-  border-color: #C0392B;
+  background-color: #D30E07;
+  border-color: #D30E07;
 }
 
 .btn-outline-primary {
@@ -11591,7 +11631,7 @@ a,
   margin-left: -15px;
   margin-bottom: 0;
   padding: 20px 30px;
-  background-color: #C0392B;
+  background-color: #D30E07;
   color: #ffffff;
   font-weight: 600;
   font-size: 16px;
@@ -11621,13 +11661,157 @@ a,
 
 .message.danger {
   display: block;
-  background-color: #C0392B;
+  background-color: #D30E07;
+}
+
+.spacer {
+  display: block;
+  width: 100%;
+  height: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.tall {
+  height: 25px;
+}
+
+.very-tall {
+  height: 50px;
 }
 
 header {
+  border-bottom: 1px solid #ECEFF1;
+}
+
+header nav ul {
+  margin: 0;
+  padding: 0;
+}
+
+header nav ul li a {
+  text-decoration: underline;
+  color: #607D8B;
+}
+
+header nav ul li a:hover {
+  color: #D30E07;
+}
+
+header nav ul .active a {
+  color: #D30E07;
+}
+
+header h1 {
+  margin: 0;
+  padding: 0;
+}
+
+header hr {
+  border-top: 1px solid #FFFFFF;
+}
+
+header .banner {
+  color: #FFFFFF;
+  background-color: #333333;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  height: 440px;
+}
+
+header .banner h2 {
+  font-size: 42px;
+  line-height: 44px;
+  margin-bottom: 2rem;
+}
+
+header .banner h4 {
+  margin-bottom: 1rem;
+}
+
+header .breadcrumbs {
+  margin: 0;
+  padding: 0;
+  color: #607D8B;
+}
+
+header .breadcrumbs li a {
+  text-decoration: underline;
+  color: #607D8B;
+}
+
+header .breadcrumbs li a:hover {
+  color: #D30E07;
+}
+
+header .breadcrumbs li a .fa {
+  font-size: 18px;
+}
+
+header .breadcrumbs li:last-child a {
+  color: #D30E07;
+}
+
+header .breadcrumbs li:last-child a:hover {
+  color: #D30E07;
+}
+
+main a {
+  text-decoration: underline;
+  color: #607D8B;
+}
+
+main a:hover {
+  color: #D30E07;
+}
+
+main a.btn {
+  text-decoration: none;
+}
+
+main .products a h4 {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+main .btn-qty {
+  padding: 2px 7px;
   background-color: aqua;
 }
 
-header .logo {
-  width: 500px;
+footer {
+  color: #FFFFFF;
+  background-color: #333333;
+}
+
+footer ul {
+  margin: 0;
+  padding: 0;
+}
+
+footer ul li {
+  padding: 2px 0;
+}
+
+footer ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+footer ul li a:hover {
+  text-decoration: underline;
+  color: #D30E07;
+}
+
+footer ul li a .fa {
+  font-size: 18px;
+}
+
+footer hr {
+  border-top: 1px solid #FFFFFF;
+}
+
+footer .social-media li {
+  padding: 0 0 0 10px;
 }

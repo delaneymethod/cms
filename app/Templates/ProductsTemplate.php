@@ -41,6 +41,7 @@ class ProductsTemplate extends Template
 		
 		$page->breadcrumbs->push([
 			'title' => $page->title,
+			'slug' => $page->slug,
 			'url' => $page->url,
 		]);
 		

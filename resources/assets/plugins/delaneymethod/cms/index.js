@@ -18,20 +18,16 @@
 		this.defaults = {};
 		
 		this.loadAnimations = () => {
-			if ($('.main .message.success').length) {	
-				$('.main .message.success').on('shown', () => {
-					setTimeout(() => {
-						$('.main .message.success').fadeOut('fast');
-					}, 4000);
-				});
+			if ($('#message').length) {
+				setTimeout(() => {
+					$('.message.success').fadeOut('fast');
+				}, 4000);
 			}
-			
-			if ($('.main .message #hideMessage').length) {	
-				$('.main .message #hideMessage').on('click', () => {
-			 		$('.main .message').fadeOut('fast');
-				});
-			}
-			
+		
+			$('.message #hideMessage').on('click', () => {
+		 		$('.message').fadeOut('fast');
+			});
+		
 			$('[data-toggle="tooltip"]').tooltip();
 			
 			lazyload();
@@ -54,7 +50,7 @@
 						
 						$(element).find('.quantity-available').html(response.data.quantity_available);
 						
-						$(element).find('.price, .price-per, .quantity-available').removeClass('text-muted');
+						$(element).find('.price, .price-per, .quantity-available').removeClass('text-muted').css('color', '#333333');
 						
 						$(element).addClass('loaded');
 					}).catch(error => {
@@ -75,7 +71,7 @@
 						
 						console.log(error.config);
 						
-						$(element).find('.price, .price-per, .quantity-available').html('Error').css('color', '#FF0000');
+						$(element).find('.price, .price-per, .quantity-available').html('Error').css('color', '#D30E07');
 					});
 				}
 			});

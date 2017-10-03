@@ -28,6 +28,19 @@ class CartTemplate extends Template
 		
 		$savedCarts = $this->getSavedCarts($currentUser->id);
 		
+		$page->breadcrumbs = collect([]);
+		
+		$page->breadcrumbs->push([
+			'title' => $page->title,
+			'slug' => $page->slug,
+			'url' => $page->url,
+		]);
+		
+		// Convert inners to objects
+		$page->breadcrumbs = $page->breadcrumbs->map(function ($row) {
+			return (object) $row;
+		});
+		
 		$page->description = '';
 		
 		$page->keywords = '';

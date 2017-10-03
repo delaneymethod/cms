@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\ContentTrait;
+use App\Http\Traits\{PageTrait, ContentTrait};
 
 class PageTemplate extends Template
 {
-	use ContentTrait;
+	use PageTrait, ContentTrait;
 	
 	protected $view = 'page';
 	
@@ -25,6 +25,32 @@ class PageTemplate extends Template
 		$cart = $parameters['cart'];
 		
 		$wishlistCart = $parameters['wishlistCart'];
+		
+		// Try to get all pages based on current pages url.
+		$slugs = explode(DIRECTORY_SEPARATOR, $page->url);
+		
+		$slugs = collect($slugs);
+		
+		// Remove ""
+		unset($slugs[0]);
+		
+		$page->breadcrumbs = collect([]);
+		
+		collect($slugs)->each(function ($slug) use ($page) {
+			$parent = $this->getPageBySlug($slug);
+			
+			// Add each slug
+			$page->breadcrumbs->push([
+				'title' => $parent->title,
+				'slug' => $parent->slug,
+				'url' => $parent->url,
+			]);
+		});
+		
+		// Convert inners to objects
+		$page->breadcrumbs = $page->breadcrumbs->map(function ($row) {
+			return (object) $row;
+		});
 		
 		$page->description = '';
 		

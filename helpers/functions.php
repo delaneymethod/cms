@@ -15,6 +15,22 @@
 |
 */
 
+if (!function_exists('isCp')) {
+	/**
+	 * Checks the path against the request path and return true or false.
+	 *
+	 * @return string
+	 */
+	function isCp($path)
+	{
+		if (is_array($path)) {
+			return in_array(request()->path(), $path) ? true : false;
+		}
+		
+		return request()->is($path.'*') ? true : false;
+	}
+}
+
 if (!function_exists('setActive')) {
 	/**
 	 * Checks the path against the request path and return true or false.
@@ -23,6 +39,11 @@ if (!function_exists('setActive')) {
 	 */
 	function setActive($path)
 	{
+		// If homepage
+		if ($path == '') {
+			$path = '/';
+		}
+		
 		if (is_array($path)) {
 			return in_array(request()->path(), $path) ? 'active' : '';
 		}

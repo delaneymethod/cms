@@ -32,13 +32,14 @@ class ProductTemplate extends Template
 		
 		$page->breadcrumbs->push([
 			'title' => $page->title,
+			'slug' => $page->slug,
 			'url' => $page->url,
 		]);
 		
 		// Try to get all product categories based on current products product category url.
 		$slugs = explode(DIRECTORY_SEPARATOR, $product->product_category->url);
 		
-		// Remove "" and "browse"
+		// Remove ""
 		unset($slugs[0], $slugs[1]);
 		
 		$slugs = collect($slugs);
@@ -49,6 +50,7 @@ class ProductTemplate extends Template
 			// Add each slug
 			$page->breadcrumbs->push([
 				'title' => $productCategory->title,
+				'slug' => $productCategory->slug,
 				'url' => $productCategory->url,
 			]);
 		});
@@ -56,6 +58,7 @@ class ProductTemplate extends Template
 		// Add product itself to the list
 		$page->breadcrumbs->push([
 			'title' => $product->title,
+			'slug' => $product->slug,
 			'url' => $product->url,
 		]);
 		

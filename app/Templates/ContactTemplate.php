@@ -8,13 +8,13 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\{CartTrait, ContentTrait, ShippingMethodTrait};
+use App\Http\Traits\{PageTrait, ContentTrait};
 
-class CheckoutTemplate extends Template
+class ContactTemplate extends Template
 {
-	use CartTrait, ContentTrait, ShippingMethodTrait;
+	use PageTrait, ContentTrait;
 	
-	protected $view = 'checkout';
+	protected $view = 'contact';
 	
 	public function prepare(View $view, array $parameters)
 	{
@@ -22,23 +22,30 @@ class CheckoutTemplate extends Template
 		
 		$page = $this->getPageContent($parameters['page']);
 		
-		$cart = $this->setCartItems($parameters['cart']);
+		$cart = $parameters['cart'];
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
-		$savedCarts = $this->getSavedCarts($currentUser->id);
+		// Try to get all pages based on current pages url.
+		$slugs = explode(DIRECTORY_SEPARATOR, $page->url);
 		
-		$locations = $currentUser->company->locations;
+		$slugs = collect($slugs);
 		
-		$shippingMethods = $this->getShippingMethods();
+		// Remove ""
+		unset($slugs[0]);
 		
 		$page->breadcrumbs = collect([]);
 		
-		$page->breadcrumbs->push([
-			'title' => $page->title,
-			'slug' => $page->slug,
-			'url' => $page->url,
-		]);
+		collect($slugs)->each(function ($slug) use ($page) {
+			$parent = $this->getPageBySlug($slug);
+			
+			// Add each slug
+			$page->breadcrumbs->push([
+				'title' => $parent->title,
+				'slug' => $parent->slug,
+				'url' => $parent->url,
+			]);
+		});
 		
 		// Convert inners to objects
 		$page->breadcrumbs = $page->breadcrumbs->map(function ($row) {
@@ -49,6 +56,6 @@ class CheckoutTemplate extends Template
 		
 		$page->keywords = '';
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'savedCarts', 'locations', 'shippingMethods'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart'));
 	}
 }
