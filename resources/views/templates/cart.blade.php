@@ -1,6 +1,6 @@
 			@php ($totalSavedCarts = $savedCarts->count())
 			<div class="row">
-				<div class="col-12 text-center text-sm-left text-md-left text-lg-left text-xl-left">
+				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 					<h3>{{ $page->title }}</h3>
 				</div>
 			</div>
@@ -12,6 +12,9 @@
 					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 						{!! $page->content !!}
 					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 spacer tall"></div>
 				</div>
 			@endif
 			@if ($cart->count > 0)
@@ -29,11 +32,11 @@
 									'instance' => 'cart',
 									'action' => 'delete_cart',
 									'buttonLabel' => 'Empty Cart',
-									'extraClasses' => 'btn btn-outline-danger'
+									'extraClasses' => 'btn btn-outline-warning'
 								])
 								@endcomponent
 							</li>
-							<li class="list-inline-item pull-right"><a href="/cart/checkout" title="Proceed to Checkout" class="btn btn-primary">Proceed to Checkout</a></li>
+							<li class="list-inline-item pull-right"><a href="/cart/checkout" title="Proceed to Checkout" class="btn btn-danger">Proceed to Checkout</a></li>
 						</ul>
 					</div>
 				</div>
@@ -42,9 +45,9 @@
 				</div>	
 				<div class="row">
 					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
-						<table class="table table-striped1 table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
+						<table class="table table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
 							<thead>
-								<tr class="bg-danger text-white very-tall">
+								<tr class="bg-default text-white very-tall">
 									<th class="align-middle">&nbsp;</th>
 									<th class="align-middle">Product</th>
 									<th class="align-middle">&nbsp;</th>
@@ -92,7 +95,7 @@
 												'instance' => 'cart',
 												'action' => 'delete_product_commodity',
 												'buttonLabel' => 'Remove',
-												'extraClasses' => 'btn btn-link text-gf-red'
+												'extraClasses' => 'btn btn-link text-gf-blue-gray'
 											])
 											@endcomponent
 										</td>
@@ -116,11 +119,11 @@
 									'instance' => 'cart',
 									'action' => 'delete_cart',
 									'buttonLabel' => 'Empty Cart',
-									'extraClasses' => 'btn btn-outline-danger'
+									'extraClasses' => 'btn btn-outline-warning'
 								])
 								@endcomponent
 							</li>
-							<li class="list-inline-item pull-right"><a href="/cart/checkout" title="Proceed to Checkout" class="btn btn-primary">Proceed to Checkout</a></li>
+							<li class="list-inline-item pull-right"><a href="/cart/checkout" title="Proceed to Checkout" class="btn btn-danger">Proceed to Checkout</a></li>
 						</ul>
 					</div>
 				</div>	
@@ -190,7 +193,7 @@
 				</div>
 				<div class="row">
 					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
-						<h5>Wishlist&#39;s</h5>
+						<h5>Wishlist</h5>
 					</div>
 				</div>
 				<div class="row">
@@ -228,7 +231,7 @@
 												'instance' => 'wishlist',
 												'action' => 'delete_product_commodity',
 												'buttonLabel' => 'Remove',
-												'extraClasses' => 'btn btn-link text-gf-red'
+												'extraClasses' => 'btn btn-link text-gf-blue-gray'
 											])
 											@endcomponent
 										</td>

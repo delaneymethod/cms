@@ -68,10 +68,6 @@ class ProductTemplate extends Template
 		});
 		
 		$page->title = $product->title;
-		
-		$page->description = '';
-		
-		$page->keywords = '';
 			
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'product'));
 	}

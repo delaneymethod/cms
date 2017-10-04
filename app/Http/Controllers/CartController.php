@@ -386,4 +386,53 @@ class CartController extends Controller
 
 		abort(403, 'Unauthorised action');
 	}
+	
+	/**
+     * Saves user id billing info into cart session and takes user to the next step.
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+	public function checkoutStep1(Request $request) 
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('create_orders')) {
+			$request->session()->put('cart.user_id', $request->get('user_id'));
+			
+			return redirect('/cart/checkout/step-2');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+     * Saves user id shipping info into cart session and takes user to the next step.
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+	public function checkoutStep2(Request $request) 
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('create_orders')) {
+			$userId = $request->session()->get('cart.user_id');
+			
+			// Make sure step 2's user id is the same as step 1's user id
+			if ($userId == $currentUser->id) {
+				$request->session()->put('cart.location_id', $request->get('location_id'));
+				
+				$request->session()->put('cart.shipping_method_id', $request->get('shipping_method_id'));
+				
+				$request->session()->put('cart.notes', $request->get('notes'));
+				
+				return redirect('/cart/checkout/step-3');
+			}
+			
+			abort(403, 'Unauthorised action');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
 }

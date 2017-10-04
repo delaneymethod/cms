@@ -3,14 +3,17 @@
 					<h3>{{ $productCategory->title }}</h3>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
 			@if (!empty($productCategory->description))
-				<div class="row">
-					<div class="col-12 spacer"></div>
-				</div>
 				<div class="row">
 					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 						<p>{{ $productCategory->description }}</p>
 					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 spacer tall"></div>
 				</div>
 			@endif
 			@if ($productCategories->count() > 0)

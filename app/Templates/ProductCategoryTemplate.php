@@ -85,10 +85,6 @@ class ProductCategoryTemplate extends Template
 		
 		$page->title = $productCategory->title;
 		
-		$page->description = '';
-		
-		$page->keywords = '';
-		
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategory', 'productCategories', 'products', 'productAttributes'));
 	}
 }

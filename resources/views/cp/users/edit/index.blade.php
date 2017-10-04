@@ -28,6 +28,10 @@
 					<form name="editUser" id="editUser" class="editUser" role="form" method="POST" action="/cp/users/{{ $user->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
+						@php ($redirectTo = request()->get('redirectTo'))
+						@if (!empty($redirectTo))
+							<input type="hidden" name="redirectTo" value="{{ $redirectTo }}">
+						@endif
 						@if ($user->id == $currentUser->id)
 							<input type="hidden" name="company_id" value="{{ $user->company_id }}">
 							<input type="hidden" name="role_id" value="{{ $user->role_id }}">

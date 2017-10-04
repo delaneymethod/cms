@@ -49,10 +49,6 @@ class ProductsTemplate extends Template
 			return (object) $row;
 		});
 		
-		$page->description = '';
-		
-		$page->keywords = '';
-		
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategories'));
 	}
 }

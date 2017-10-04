@@ -718,7 +718,7 @@ class AssetController extends Controller
 	/**
 	 * Does what it says on the tin!
 	 */
-	private function convertToJson($assets, $type = null) : string
+	private function convertToJson($assets, $type = null) : array
 	{
 		$json = [];
 		

@@ -126,7 +126,12 @@ a,
 	}
 }
 
+.text-black {
+	color: #000000;
+}
+
 .text-gf-red {
+	text-decoration: underline;
 	color: $gf-red;
 	
 	&:hover {
@@ -135,6 +140,7 @@ a,
 }
 
 .text-gf-blue {
+	text-decoration: underline;
 	color: $gf-blue;
 	
 	&:hover {
@@ -143,6 +149,7 @@ a,
 }
 
 .text-gf-info {
+	text-decoration: underline;
 	color: $gf-info;
 	
 	&:hover {
@@ -151,6 +158,7 @@ a,
 }
 
 .text-gf-blue-gray {
+	text-decoration: underline;
 	color: $gf-blue-gray-500;
 	
 	&:hover {
@@ -178,8 +186,16 @@ a,
 	background-color: $gf-blue-gray-200 !important;
 }
 
+.bg-default {
+	background-color: #333333 !important;
+}
+
 .hidden {
 	display: none;
+}
+
+.gf-red {
+	color: $gf-red;
 }
 
 .text-wrap {
@@ -194,6 +210,14 @@ a,
 .table-responsive {
 	@include media-breakpoint-up(md) {
 		display: table;
+	}
+}
+
+.table {
+	thead {
+		th {
+			border: 0;		
+		}
 	}
 }
 

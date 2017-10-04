@@ -4,19 +4,19 @@
 @section('description', '500 Internal Server Error - '.config('cms.site.name'))
 @section('keywords', '500, Internal, Server, Error, '.config('cms.site.name'))
 
+@php ($page->bannerMessage = '<h2>500 Internal Server Error</h2>')
+@php ($page->bannerImage = '')
+
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
+	@include('_partials.styles')
 @endpush
 
 @push('headScripts')
-	<!--[if lt IE 9]>
-	<script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+	@include('_partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/global.js') }}"></script>
+	@include('_partials.bodyScripts')
 @endpush
 
 @section('content')
@@ -24,19 +24,41 @@
 		'currentUser' => null,
 		'cart' => null
 	])
-	<div class="row wrapper">
-		<div class="col main">
-			<h2>Server Error: 500 (Internal Server Error)</h2>
-			<h3>What does this mean?</h3>
-			<p>Something went wrong on our servers while we were processing your request.</p>
-			<p>We&#39;re really sorry about this, and will work hard to get this resolved as soon as possible.</p>
-			<p>Perhaps you would like to go <a href="javascript:window.history.back();" title="Back">back</a> or go to our <a href="/" title="Home">homepage</a> ?</p>
-			@if ($exception->getMessage())
-				<h3>Exception</h3>
-				<small><pre>{{ $exception->getMessage() }}</pre></small>
-			@endif
-		</div>
-	</div>
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center text-sm-left text-md-left text-lg-left text-xl-left">
+					<h4>What does this mean?</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center text-sm-left text-md-left text-lg-left text-xl-left">		
+					<p>Something went wrong on our servers while we were processing your request.</p>
+					<p>We&#39;re really sorry about this, and will work hard to get this resolved as soon as possible.</p>
+					<p>Perhaps you would like to go <a href="javascript:window.history.back();" title="Back">back</a> or go to our <a href="/" title="Home">homepage</a> ?</p>
+					@if ($exception->getMessage())
+						<h3>Exception</h3>
+						<small><pre>{{ $exception->getMessage() }}</pre></small>
+					@endif
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+		</div>	
+	</main>
 	@include('_partials.footer', [
 		'currentUser' => null,
 		'cart' => null

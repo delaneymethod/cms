@@ -11489,7 +11489,12 @@ a,
   border: 1px solid #222d32;
 }
 
+.text-black {
+  color: #000000;
+}
+
 .text-gf-red {
+  text-decoration: underline;
   color: #D30E07;
 }
 
@@ -11498,6 +11503,7 @@ a,
 }
 
 .text-gf-blue {
+  text-decoration: underline;
   color: #3498DB;
 }
 
@@ -11506,6 +11512,7 @@ a,
 }
 
 .text-gf-info {
+  text-decoration: underline;
   color: #2980B9;
 }
 
@@ -11514,6 +11521,7 @@ a,
 }
 
 .text-gf-blue-gray {
+  text-decoration: underline;
   color: #607D8B;
 }
 
@@ -11541,8 +11549,16 @@ a,
   background-color: #B0BEC5 !important;
 }
 
+.bg-default {
+  background-color: #333333 !important;
+}
+
 .hidden {
   display: none;
+}
+
+.gf-red {
+  color: #D30E07;
 }
 
 .text-wrap {
@@ -11558,6 +11574,10 @@ a,
   .table-responsive {
     display: table;
   }
+}
+
+.table thead th {
+  border: 0;
 }
 
 .btn-outline-gf-red {
@@ -11777,7 +11797,6 @@ main .products a h4 {
 
 main .btn-qty {
   padding: 2px 7px;
-  background-color: aqua;
 }
 
 footer {

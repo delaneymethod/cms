@@ -94,7 +94,12 @@
 														<div class="row">
 															<div class="col-sm-12 col-md-12 col-lg-7 col-xl-7 text-center">
 																@if (file_exists($meta->file_path))
-																	<a href="{{ $meta->url_path }}" title="{{ $filename }}" target="_blank"><img src="{{ $meta->url_path }}" width="100%" class="align-top text-center" alt="{{ $filename }}"></a>
+																	@if (!starts_with($meta->mime_type, 'image'))
+																		<p>&nbsp;</p>
+																		<p><a href="{{ $meta->url_path }}" title="{{ $filename }}" target="_blank"><i class="fa {{ $meta->icon_class }} fa-5x align-middle" aria-hidden="true"></i><br><br>No Preview Available</a></p>
+																	@else
+																		<a href="{{ $meta->url_path }}" title="{{ $filename }}" target="_blank"><img src="{{ $meta->url_path }}" width="100%" class="align-top text-center" alt="{{ $filename }}"></a>
+																	@endif
 																@else
 																	<p>&nbsp;</p>
 																	<p><a href="{{ $meta->url_path }}" title="{{ $filename }}" target="_blank"><i class="fa {{ $meta->icon_class }} fa-5x align-middle" aria-hidden="true"></i><br><br>No Preview Available</a></p>

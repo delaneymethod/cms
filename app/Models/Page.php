@@ -9,7 +9,7 @@ namespace App\Models;
 
 use Baum\Node;
 use App\Models\{Status, Content, Template};
-use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
+use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo, BelongsToMany};
 
 class Page extends Node
 {
@@ -76,6 +76,14 @@ class Page extends Node
 	public function parent() : BelongsTo
 	{
 		return $this->belongsTo(Page::class, 'parent_id', 'id');
+	}
+	
+	/**
+	 * Get the page record associated with the page.
+	 */
+	public function children() : HasMany
+	{
+		return $this->hasMany(Page::class, 'parent_id', 'id');
 	}
 	
 	/**
@@ -166,5 +174,14 @@ class Page extends Node
 	public function isHiddenFromNav() : bool
 	{
 		return $this->hide_from_nav == 1;
+	}
+	
+	/**
+	 * Gets a page by slug
+	 *
+	 * @return Page
+	 */
+	public static function getPageBySlug(string $slug) : Page	{
+		return Page::where('slug', $slug)->where('status_id', 4)->firstOrFail();
 	}
 }

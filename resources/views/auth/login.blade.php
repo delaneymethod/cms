@@ -4,63 +4,113 @@
 @section('description', 'Login - '.config('cms.site.name'))
 @section('keywords', 'Login, '.config('cms.site.name'))
 
+@php ($page->content = '')
+
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
+	@include('_partials.styles')
 @endpush
 
 @push('headScripts')
-	<!--[if lt IE 9]>
-	<script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+	@include('_partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/global.js') }}"></script>
-	<!--
-	<script async>
-	'use strict';
-	
-	window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-	ga('create','XX-XXX-XXX','auto');ga('send','pageview')
-	</script>
-	<script async defer src="//www.google-analytics.com/analytics.js"></script>
-	//-->
+	@include('_partials.bodyScripts')
 @endpush
 
 @section('content')
+	@include('_partials.message', [
+		'currentUser' => null
+	])
 	@include('_partials.header', [
 		'currentUser' => null,
 		'cart' => null
 	])
-	<div class="row wrapper">
-		<div class="col main">
-			@include('_partials.message', [
-				'currentUser' => null
-			])
-			<h2>Login</h2>
-			@php ($redirectTo = request()->get('redirectTo'))
-			@if (!empty($redirectTo))
-				@php ($redirectTo = '?redirectTo='.$redirectTo)
-			@endif			
-			<form name="" id="" class="" role="form" method="POST" action="{{ route('login') }}{{ $redirectTo }}">
-				{{ csrf_field() }}
-				<label for="email">Email Address</label>
-				<input type="email" name="email" id="email" class="" placeholder="" value="{{ old('email') }}" title="" required autofocus>
-				@if ($errors->has('email'))
-					<strong>{{ $errors->first('email') }}</strong>
-				@endif
-				<label for="password" >Password</label>
-				<input type="password" name="password" id="password" class="" placeholder="" value="" title="" required>
-				@if ($errors->has('password'))
-					<strong>{{ $errors->first('password') }}</strong>
-				@endif
-				<label><input type="checkbox" name="remember" id="" class="" placeholder="" title="" {{ old('remember') ? 'checked' : '' }}> Remember me</label>
-				<button type="submit" name="" id="" class="" title="">Login</button>
-				<a href="{{ route('password.request') }}" title="">Forgot Your Password?</a>
-			</form>
-		</div>
-	</div>
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+					<h3>Login</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			@if (!empty($page->content))
+				<div class="row">
+					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+						{!! $page->content !!}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 spacer tall"></div>
+				</div>
+			@endif
+			<div class="row d-flex h-100 justify-content-center justify-content-sm-center justify-content-md-start justify-content-lg-start justify-content-xl-start">
+				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center">
+					@php ($redirectTo = request()->get('redirectTo'))
+					@if (!empty($redirectTo))
+						@php ($redirectTo = '?redirectTo='.$redirectTo)
+					@endif	
+					<form name="login" id="login" class="login" role="form" method="POST" action="{{ route('login') }}{{ $redirectTo }}">
+						{{ csrf_field() }}
+						<div class="form-group">
+							<label for="email" class="control-label">Email Address <span class="text-danger">&#42;</span></label>
+							<input type="email" name="email" id="email" class="form-control" placeholder="e.g joe@bloggs.com" value="{{ old('email') }}" title="Email Address" tabindex="1" autocomplete="on" aria-describedby="helpBlockEmail" required autofocus>
+							@if ($errors->has('email'))
+								<span id="helpBlockEmail" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
+							@endif
+						</div>
+						<div class="form-group">
+							<label for="password" class="control-label">Password <span class="text-danger">&#42;</span></label>
+							<input type="password" name="password" id="password" class="form-control" placeholder="e.g y1Fwc]_C" value="" title="Password" tabindex="2" autocomplete="off" aria-describedby="helpBlockPassword" required>
+							@if ($errors->has('password'))
+								<span id="helpBlockPassword" class="form-control-feedback form-text gf-red">- {{ $errors->first('password') }}</span>
+							@endif
+						</div>
+						<div class="form-group">
+							<div class="form-check">
+								<label class="form-check-label"><input type="checkbox" name="remember" id="remember" class="form-check-input" title="Remember me" {{ old('remember') ? 'checked' : '' }} tabindex="3" autocomplete="off"> Remember me</label>
+							</div>
+						</div>
+						<div class="spacer"></div>
+						<div class="form-group text-center text-sm-center text-md-left text-lg-left text-xl-left">
+							<button type="submit" name="submit" id="submit" class="btn btn-danger" title="Login" tabindex="4">Login</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer very-tall"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+					<h4>Forgotten your Password?<h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+					<p>Not a problem, it happens!</p>
+					<p><a href="{{ route('password.request') }}" title="Click here to Reset Password">Click here to Reset Password.</a></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+		</div>	
+	</main>
 	@include('_partials.footer', [
 		'currentUser' => null,
 		'cart' => null

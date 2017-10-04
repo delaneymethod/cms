@@ -1,3 +1,7 @@
+			@php ($bannerImage = '')	
+			@if (!empty($page->bannerImage))
+				@php ($bannerImage = ' style="background-image: url(\''.$page->bannerImage.'\');"')
+			@endif
 			<header>
 				<div class="container">
 					<div class="row">
@@ -26,26 +30,26 @@
 						<div class="col-12 spacer tall"></div>
 					</div>
 				</div>
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-12 spacer tall"></div>
-					</div>
-					<div class="row">
-						<div class="col-12 banner" style="background-image: url('https://www.grampianfasteners.com/files/1680c433-741e-4778-8522-0dcc6545d33f/bg_rigs_1_edit_darker.jpg');">
-							<div class="row d-flex h-100 justify-content-center">
-								<div class="col-10 col-sm-10 col-md-10 col-lg-12 col-xl-12 align-self-center text-center">
-									<div class="row">
-										<div class="col-12">
-											<h2>We make your connections simple</h2>
-											<h4>Imagine one place for everything you need to connect your equipment.</h4>
-											<h4>We have a huge range of fasteners and tools to make the connections in stock.</h4>
+				@if (!empty($page->bannerMessage))
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-12 spacer tall"></div>
+						</div>
+						<div class="row">
+							<div class="col-12 banner"{!! $bannerImage !!}>
+								<div class="row d-flex h-100 justify-content-center">
+									<div class="col-10 col-sm-10 col-md-10 col-lg-12 col-xl-12 align-self-center text-center">
+										<div class="row">
+											<div class="col-12">
+												{!! $page->bannerMessage !!}
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>	
+				@endif
 				<div class="container">	
 					<div class="row">
 						<div class="col-12 spacer tall"></div>

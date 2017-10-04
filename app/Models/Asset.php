@@ -36,6 +36,15 @@ class Asset extends Model
 	];
 	
 	/**
+     * Attributes that get appended on serialization
+     *
+     * @var array
+     */
+	protected $appends = [
+		'filesize',
+	];
+	
+	/**
      * Is this asset an audio file?
      *
      * @return bool

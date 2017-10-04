@@ -36,16 +36,19 @@ class ArticleTemplate extends Template
 			'url' => $page->url,
 		]);
 		
+		// Add article itself to the list
+		$page->breadcrumbs->push([
+			'title' => $article->title,
+			'slug' => $article->slug,
+			'url' => $article->url,
+		]);
+		
 		// Convert inners to objects
 		$page->breadcrumbs = $page->breadcrumbs->map(function ($row) {
 			return (object) $row;
 		});
 		
 		$page->title = $article->title.' - '.$page->title;
-		
-		$page->description = '';
-		
-		$page->keywords = '';
 		
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'article'));
 	}

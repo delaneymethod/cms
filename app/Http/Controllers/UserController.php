@@ -438,9 +438,16 @@ class UserController extends Controller
 			}
 
 			DB::commit();
+			
+			// This will only be the case if the user has requested to edit their details fron the checkout page
+			$redirectTo = $request->get('redirectTo');
 
+			if (!empty($redirectTo)) {
+				return redirect($redirectTo);
+			}
+		
 			flash('User updated successfully.', $level = 'success');
-
+			
 			return redirect('/cp/users');
 		}
 

@@ -30,20 +30,6 @@ b. If the item is not in stock and we are using cost price then the price is onl
 
 
 
-Page templates:
-
-
-add breadcrumbs to articles
-Checkout
-Add in Pages as per current site
-Hide child pages from nav unless hover state
-
-
-
-
-
-
-
 echo "" > storage/logs/laravel.log
 
 Look into: https://github.com/spatie/laravel-activitylog

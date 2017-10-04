@@ -21,9 +21,14 @@ Auth::routes();
 // FRONT END ROUTES
 
 // Cart routes
+Route::redirect('/cart/checkout', '/cart/checkout/step-1', 301);
+
 Route::get('/cart/save', 'CartController@save');
 Route::get('/cart/restore/{identifier}', 'CartController@restore');
+Route::get('/cart/checkout/{slug}', 'PageController@show');
 Route::post('/cart', 'CartController@store');
+Route::post('/cart/checkout/step-1', 'CartController@checkoutStep1');
+Route::post('/cart/checkout/step-2', 'CartController@checkoutStep2');
 Route::put('/cart/{rowId}', 'CartController@update');
 Route::patch('/cart/{rowId}', 'CartController@update');
 Route::delete('/cart', 'CartController@delete');
@@ -34,6 +39,9 @@ Route::get('/articles/{slug}', 'ArticleController@show');
 // Order routes
 Route::get('/orders/{id}/pdf', 'OrderController@pdf');
 Route::post('/orders', 'OrderController@store');
+
+// Contact routes
+Route::post('/contact', 'PageController@contact');
 
 // Products routes
 Route::get('/products/{catchAll}', 'ProductController@show')->where('catchAll', '(.*)');

@@ -4,63 +4,95 @@
 @section('description', 'Set Password - '.config('cms.site.name'))
 @section('keywords', 'Set, Password, '.config('cms.site.name'))
 
+@php ($page->content = '')
+
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
+	@include('_partials.styles')
 @endpush
 
 @push('headScripts')
-	<!--[if lt IE 9]>
-	<script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+	@include('_partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/global.js') }}"></script>
-	<!--
-	<script async>
-	'use strict';
-	
-	window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-	ga('create','XX-XXX-XXX','auto');ga('send','pageview')
-	</script>
-	<script async defer src="//www.google-analytics.com/analytics.js"></script>
-	//-->
+	@include('_partials.bodyScripts')
 @endpush
 
 @section('content')
+	@include('_partials.message', [
+		'currentUser' => null
+	])
 	@include('_partials.header', [
 		'currentUser' => null,
 		'cart' => null
 	])
-	<div class="row wrapper">
-		<div class="col main">
-			@include('_partials.message', [
-				'currentUser' => null
-			])
-			<h2>Set Password</h2>
-			<form name="" id="" class="" role="form" method="POST" action="{{ route('password.request') }}">
-				{{ csrf_field() }}
-				<input type="hidden" name="token" value="{{ $token }}">
-				<label for="email">Email Address</label>
-				<input type="email" name="email" id="email" class="" placeholder="" value="{{ old('email') }}" title="" required autofocus>
-				@if ($errors->has('email'))
-					<strong>{{ $errors->first('email') }}</strong>
-				@endif
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" class="" placeholder="" value="" title="" required>
-				@if ($errors->has('password'))
-					<strong>{{ $errors->first('password') }}</strong>
-				@endif
-				<label for="password-confirm">Confirm Password</label>
-				<input type="password" name="password_confirmation" id="password-confirm" class="" placeholder="" value="" title="" required>
-				@if ($errors->has('password_confirmation'))
-					<strong>{{ $errors->first('password_confirmation') }}</strong>
-				@endif
-				<button type="submit" name="" id="" class="" title="">Set Password</button>
-			</form>
-		</div>
-	</div>
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+					<h3>Set Password</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			@if (!empty($page->content))
+				<div class="row">
+					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+						{!! $page->content !!}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 spacer tall"></div>
+				</div>
+			@endif
+			<div class="row d-flex h-100 justify-content-center justify-content-sm-center justify-content-md-start justify-content-lg-start justify-content-xl-start">
+				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center">
+					<form name="setPassword" id="setPassword" class="setPassword" role="form" method="POST" action="{{ route('password.request') }}">
+						{{ csrf_field() }}
+						<input type="hidden" name="token" value="{{ $token }}">
+						<div class="form-group">
+							<label for="email" class="control-label">Email Address <span class="text-danger">&#42;</span></label>
+							<input type="email" name="email" id="email" class="form-control" placeholder="e.g. joe@bloggs.com" value="{{ old('email') }}" title="Email Address" tabindex="1" autocomplete="off" aria-describedby="helpBlockEmail" required autofocus>
+							@if ($errors->has('email'))
+								<span id="helpBlockEmail" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
+							@endif
+						</div>
+						<div class="form-group">
+							<label for="password" class="control-label">Password <span class="text-danger">&#42;</span></label>
+							<input type="password" name="password" id="password" class="form-control" placeholder="e.g y1Fwc]_C" value="" title="Password" tabindex="2" autocomplete="off" aria-describedby="helpBlockPassword" required>
+							@if ($errors->has('password'))
+								<span id="helpBlockPassword" class="form-control-feedback form-text gf-red">- {{ $errors->first('password') }}</span>
+							@endif
+						</div>
+						<div class="form-group">
+							<label for="password-confirm" class="control-label">Confirm Password <span class="text-danger">&#42;</span></label>
+							<input type="password" name="password_confirmation" id="password-confirm" class="form-control" placeholder="e.g y1Fwc]_C" value="" title="Confirm Password" tabindex="3" autocomplete="off" aria-describedby="helpBlockConfirmPassword" required>
+							@if ($errors->has('password_confirmation'))
+								<span id="helpBlockConfirmPassword" class="form-control-feedback form-text gf-red">- {{ $errors->first('password_confirmation') }}</span>
+							@endif
+						</div>
+						<div class="spacer"></div>
+						<div class="form-group text-center text-sm-center text-md-left text-lg-left text-xl-left">
+							<button type="submit" name="submit" id="submit" class="btn btn-danger" title="Set Password" tabindex="4">Set Password</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+		</div>	
+	</main>
 	@include('_partials.footer', [
 		'currentUser' => null,
 		'cart' => null

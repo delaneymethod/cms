@@ -108,6 +108,14 @@ class OrderController extends Controller
 			// Get the cart instance
 			$cart = $this->getCartInstance('cart');
 			
+			$cleanedOrder['user_id'] = $request->session()->get('cart.user_id');
+			
+			$cleanedOrder['location_id'] = $request->session()->get('cart.location_id');
+			
+			$cleanedOrder['shipping_method_id'] = $request->session()->get('cart.shipping_method_id');
+			
+			$cleanedOrder['notes'] = $request->session()->get('cart.notes');
+			
 			// Create our order based on cart content
 			$cleanedOrder['product_commodities'] = [];
 			
@@ -179,6 +187,14 @@ class OrderController extends Controller
 				
 				$order->setProductCommodities($cleanedOrder['product_commodities']);
 				
+				$request->session()->forget('cart.user_id');
+			
+				$request->session()->forget('cart.location_id');
+				
+				$request->session()->forget('cart.shipping_method_id');
+				
+				$request->session()->forget('cart.notes');
+			
 				// finally empty the cart instance
 				$this->destroyCart();
 				

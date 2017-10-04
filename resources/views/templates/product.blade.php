@@ -14,7 +14,7 @@
 				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 					@if (!empty($product->description))
 						<div class="row">
-							<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+							<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">	
 								{!! $product->description !!}
 							</div>
 						</div>
@@ -51,7 +51,7 @@
 					</div>
 				</div>
 				@if (!empty($product->image_url))
-					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-center text-lg-center text-xl-center align-self-center">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-center text-lg-center text-xl-center align-self-start">
 						<img src="/assets/img/loading.svg" data-src="{{ $product->image_url }}" class="lazyload img-fluid" alt="{{ $product->title }}">
 					</div>
 				@endif
@@ -64,7 +64,7 @@
 					<p class="d-block d-sm-block d-md-none d-lg-none d-xl-none text-center font-weight-bold">Tip: You can slide / scroll to the table below.</p>
 					<table class="table table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
-							<tr class="very-tall bg-danger text-white">
+							<tr class="very-tall bg-default text-white">
 								<th class="align-middle text-center">Option</th>
 								<th class="align-middle text-center">Product Code</th>
 								<th class="align-middle text-center">Price (GBP)</th>
@@ -112,7 +112,7 @@
 												@endif
 											@endif
 										@else
-											<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-secondary disabled">Add to Cart</a><br><a href="/login{{ $redirectTo }}" title="Login" class="text-gf-blue-gray">Please login first</a> 
+											<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-sucess disabled">Add to Cart</a><br><a href="/login{{ $redirectTo }}" title="Login" class="text-gf-blue-gray">Please login first</a> 
 										@endif
 									</td>
 								</tr>

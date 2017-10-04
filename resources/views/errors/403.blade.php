@@ -3,20 +3,20 @@
 @section('title', '403 Forbidden - '.config('cms.site.name'))
 @section('description', '403 Forbidden - '.config('cms.site.name'))
 @section('keywords', '403, Forbidden, '.config('cms.site.name'))
+	
+@php ($page->bannerMessage = '<h2>Server Error: 403 (Forbidden)</h2>')
+@php ($page->bannerImage = '')
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
+	@include('_partials.styles')
 @endpush
 
 @push('headScripts')
-	<!--[if lt IE 9]>
-	<script src="//oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
+	@include('_partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/global.js') }}"></script>
+	@include('_partials.bodyScripts')
 @endpush
 
 @section('content')
@@ -24,14 +24,36 @@
 		'currentUser' => null,
 		'cart' => null
 	])
-	<div class="row wrapper">
-		<div class="col main">
-			<h2>Server Error: 403 (Forbidden)</h2>
-			<h3>What does this mean?</h3>
-			<p>You don&#39;t have the right credentials to view the requested resource.</p>
-			<p>Perhaps you would like to go <a href="javascript:window.history.back();" title="Back">back</a> or go to our <a href="/" title="Home">homepage</a> ?</p>
-		</div>
-	</div>
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center text-sm-left text-md-left text-lg-left text-xl-left">
+					<h4>What does this mean?</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center text-sm-left text-md-left text-lg-left text-xl-left">		
+					<p>You don&#39;t have the right credentials to view the requested resource.</p>
+					<p>Perhaps you would like to go <a href="javascript:window.history.back();" title="Back">back</a> or go to our <a href="/" title="Home">homepage</a> ?</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer tall"></div>
+			</div>
+		</div>	
+	</main>
 	@include('_partials.footer', [
 		'currentUser' => null,
 		'cart' => null

@@ -14,12 +14,20 @@ use Illuminate\Http\Request;
 use App\Models\{Page, Content};
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
-use App\Http\Traits\{CartTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait};
+use App\Notifications\ContactNotification;
+use App\Http\Traits\{CartTrait, UserTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait};
 
 class PageController extends Controller
 {
-	use CartTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait;
+	use CartTrait, UserTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait;
 	
+	/**
+	 * Information about the super admin.
+	 *
+	 * @var User
+	 */
+    protected $superAdmin;
+    
 	/**
 	 * Create a new controller instance.
 	 *
@@ -31,7 +39,8 @@ class PageController extends Controller
 		
 		$this->middleware('auth', [
 			'except' => [
-				'show'
+				'show',
+				'contact',
 			]
 		]);
 		
@@ -79,6 +88,9 @@ class PageController extends Controller
 			return redirect('/login');
 		}
 		
+		// Grab parameters
+		$parameters = $request->route()->parameters();
+		
 		// Get the URL segments
 		if ($slug == DIRECTORY_SEPARATOR) {
 			$segments = collect([0 => '']);
@@ -86,8 +98,16 @@ class PageController extends Controller
 			$segments = collect(explode(DIRECTORY_SEPARATOR, $slug));
 		}
 		
-		// Set slug based on the last segment
-		$slug = $segments->last();
+		// Cart Checkout Steps
+		if ($slug == 'step-1' || $slug == 'step-2' || $slug == 'step-3') {
+			$parameters['step'] = $slug;
+			
+			// Set slug to checkout
+			$slug = 'checkout';
+		} else {
+			// Set slug based on the last segment
+			$slug = $segments->last();
+		}
 		
 		// Get the requested page based on slug - if it doesnt exist, a 404 is thrown!
 		$page = $this->getPageBySlug($slug);
@@ -97,9 +117,6 @@ class PageController extends Controller
 		
 		// Grab any wishlist instances since user can add to cart and wishlist on products page
 		$wishlistCart = $this->getCartInstance('wishlist');
-		
-		// Grab parameters
-		$parameters = $request->route()->parameters();
 		
 		// Pass any global required data to the page template
 		$parameters['currentUser'] = $currentUser;
@@ -115,6 +132,38 @@ class PageController extends Controller
 		$this->preparePageTemplate($page, $parameters);
 		
 		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
+	}
+	
+	/**
+	 * Creates a new contact notification.
+	 *
+	 * @params Request 	$request
+	 * @return Response
+	 */
+	public function contact(Request $request)
+	{
+		$form = new \stdClass;
+		
+		$form->first_name = $request->get('first_name');    
+		
+		$form->last_name = $request->get('last_name');
+		
+		$form->email = $request->get('email');
+		
+		$form->telephone = $request->get('telephone');
+		
+		$form->subject = $request->get('subject');
+		
+		$form->message = $request->get('message');
+	
+		$this->superAdmin = $this->getUserById(1);
+
+		// Send notification of contact form submission
+		$this->superAdmin->notify(new ContactNotification($form));
+		
+		flash('Thank you for contacting us.', $level = 'success');
+
+		return back();
 	}
 	
 	/**
