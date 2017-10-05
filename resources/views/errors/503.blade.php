@@ -4,7 +4,7 @@
 @section('description', 'Scheduled Maintenance - '.config('cms.site.name'))
 @section('keywords', 'Scheduled, Maintenance, '.config('cms.site.name'))
 
-@php ($page->bannerMessage = '<h2>Scheduled, Maintenance<</h2>')
+@php ($page->bannerContent = '<h2>Scheduled, Maintenance<</h2>')
 @php ($page->bannerImage = '')
 
 @push('styles')

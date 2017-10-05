@@ -4,7 +4,7 @@
 @section('description', '429 Too Many Attempts - '.config('cms.site.name'))
 @section('keywords', '429, Too, Many, Attempts, '.config('cms.site.name'))
 
-@php ($page->bannerMessage = '<h2>Server Error: 429 (Too Many Attempts)</h2>')
+@php ($page->bannerContent = '<h2>Server Error: 429 (Too Many Attempts)</h2>')
 @php ($page->bannerImage = '')
 
 @push('styles')

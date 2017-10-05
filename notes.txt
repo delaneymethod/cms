@@ -1,4 +1,29 @@
 
+
+
+
+convert current pages data into SQL for importing
+
+update all templates to have more fields
+
+
+add categories to blog sidebar
+
+add contact info and map to contact template
+
+
+
+new homepage design?
+
+add products search so visible and clear on all pages
+
+
+
+
+
+
+
+
 ### To Do ###
 
 Pricing and Quantities 
@@ -24,8 +49,6 @@ b. If the item is not in stock and we are using cost price then the price is onl
 4. If there is an item with no price (or it is out of stock & older than the 6 month cut off period) then it will show nothing and not allow you to add to basket so will default to the ‘enquire’ status at commodity level.
  
 5. If a price is changed in the system this will need to notify/ping the system to know a change has been made.
-
-
 
 
 

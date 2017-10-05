@@ -892,6 +892,22 @@ class Controller extends BaseController
 					'default' => [], // array('option1', 'option2'),
 					'instructions' => $field->instructions,
 				]);
+			} else if ($field->field_type->id == 10) {
+				// File
+				array_push($fields, [
+					'template_id' => $template->id,
+					'field_type_id' => $field->field_type_id,
+					'_id' => $field->id,
+					'label' => $field->title,
+					'type' => $field->field_type->type,
+					'name' => 'templates['.$template->id.']['.$field->id.']',
+					'id' => $template->id.'_'.$field->id.'_'.$field->handle,
+					'class' => 'form-control-file',
+					'placeholder' => '',
+					'value' => '',
+					'required' => $field->required == 1 ? true : false,
+					'instructions' => $field->instructions,
+				]);
 			}
 		}
 		
@@ -974,6 +990,11 @@ class Controller extends BaseController
 					if ($field->field_type->type == 'checkbox' && $field->required) {
 						array_push($fieldRules, 'array');
 						array_push($fieldRules, 'min:1');
+					}
+					
+					if ($field->field_type->type == 'file' && $field->required) {
+						array_push($fieldRules, 'file');
+						array_push($fieldRules, 'max:3000');
 					}
 					
 					if (count($fieldRules) > 0) {

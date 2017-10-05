@@ -1,0 +1,39 @@
+.selected-asset {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.browse {
+	padding: 0;
+	margin: 0;
+	
+	li {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		
+		a {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			color: #333333;
+			text-decoration: none;
+			display: block;
+			padding: 5px;
+			
+			i {
+				padding: 0;
+				margin: 0 5px 0 0;
+			}
+			
+			&:focus {
+				color: $gf-red;
+			}
+		}
+	}
+	
+	li li {
+		padding: 0 20px 0;
+	}
+}

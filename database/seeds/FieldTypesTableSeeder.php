@@ -69,6 +69,12 @@ class FieldTypesTableSeeder extends Seeder
 				'created_at' => $now,
 				'updated_at' => $now,
 			],
+			[	
+				'title' => 'File',
+				'type' => 'file',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
 		];
 		
 		DB::table('field_types')->delete();

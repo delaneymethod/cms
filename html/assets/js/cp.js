@@ -75639,6 +75639,8 @@ __webpack_require__("./resources/assets/plugins/redactor/plugins/source.js");
 
 __webpack_require__("./resources/assets/plugins/redactor/plugins/table.js");
 
+__webpack_require__("./resources/assets/plugins/redactor/plugins/definedlinks.js");
+
 __webpack_require__("./resources/assets/plugins/redactor/plugins/alignment/alignment.js");
 
 __webpack_require__("./resources/assets/plugins/redactor/plugins/fullscreen.js");
@@ -75658,6 +75660,8 @@ __webpack_require__("./resources/assets/plugins/datatables/datatables.js");
 __webpack_require__("./resources/assets/plugins/datatables/datatables-bootstrap.js");
 
 __webpack_require__("./resources/assets/plugins/delaneymethod/cms/cp/index.js");
+
+__webpack_require__("./resources/assets/plugins/delaneymethod/cms/cp/browse.js");
 
 /***/ }),
 
@@ -89833,6 +89837,111 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = ty
 
 /***/ }),
 
+/***/ "./resources/assets/plugins/delaneymethod/cms/cp/browse.js":
+/***/ (function(module, exports) {
+
+;(function ($) {
+	$.extend($.fn, {
+		browse: function browse(options, callback) {
+			var _this = this;
+
+			if (!options) {
+				var _options = {};
+			}
+
+			if (options.root == undefined) {
+				options.root = '/';
+			}
+
+			if (options.script == undefined) {
+				options.script = '/cp/assets/browse';
+			}
+
+			if (options.folderEvent == undefined) {
+				options.folderEvent = 'click';
+			}
+
+			if (options.multiFolder == undefined) {
+				options.multiFolder = true;
+			}
+
+			if (options.loadMessage == undefined) {
+				options.loadMessage = 'Loading...';
+			}
+
+			$(this).each(function () {
+				function showAssets(element, directory) {
+					$(element);
+
+					$('.browse.start').remove();
+
+					window.axios.post(options.script, { directory: directory }).then(function (response) {
+						$(element).find('.start').html('');
+
+						$(element).append(response.data);
+
+						if (options.root == directory) {
+							$(element).find('ul:hidden').show();
+						} else {
+							$(element).find('ul:hidden').slideDown();
+						}
+
+						bindAssets(element);
+					}).catch(function (error) {
+						console.error(error);
+					});
+				}
+
+				function bindAssets(element) {
+					$(element).find('li a').bind(options.folderEvent, function () {
+						if ($(this).parent().hasClass('directory')) {
+							if ($(this).parent().hasClass('collapsed')) {
+								if (!options.multiFolder) {
+									$(this).parent().parent().find('ul').slideUp();
+
+									$(this).parent().parent().find('li.directory').removeClass('expanded').addClass('collapsed');
+
+									$(this).parent().find('i').removeClass('fa-folder-open').addClass('fa-folder');
+								}
+
+								$(this).parent().find('ul').remove();
+
+								showAssets($(this).parent(), escape($(this).attr('rel').match(/.*\//)));
+
+								$(this).parent().removeClass('collapsed').addClass('expanded');
+
+								$(this).parent().find('i').removeClass('fa-folder').addClass('fa-folder-open');
+							} else {
+								$(this).parent().find('ul').slideUp();
+
+								$(this).parent().removeClass('expanded').addClass('collapsed');
+
+								$(this).parent().find('i').removeClass('fa-folder-open').addClass('fa-folder');
+							}
+						} else {
+							callback($(this).attr('rel'));
+						}
+
+						return false;
+					});
+
+					if (options.folderEvent.toLowerCase != 'click') {
+						$(element).find('li a').bind('click', function () {
+							return false;
+						});
+					}
+				}
+
+				$(_this).html('<ul class="browse start"><li>' + options.loadMessage + '<li></ul>');
+
+				showAssets($(_this), escape(options.root));
+			});
+		}
+	});
+})(jQuery);
+
+/***/ }),
+
 /***/ "./resources/assets/plugins/delaneymethod/cms/cp/index.js":
 /***/ (function(module, exports) {
 
@@ -90074,7 +90183,7 @@ var _this = this;
 
 				var buttons = ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link', 'horizontalrule'];
 
-				var plugins = ['source', 'table', 'alignment', 'fullscreen', 'filemanager', 'imagemanager', 'video'];
+				var plugins = ['source', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video'];
 
 				if (element == '#excerpt') {
 					minHeight = 100;
@@ -90093,6 +90202,7 @@ var _this = this;
 					'imageResizable': true,
 					'imagePosition': true,
 					'structure': true,
+					'definedLinks': '/cp/pages?format=json',
 					'tabAsSpaces': 4,
 					'minHeight': minHeight,
 					'buttons': buttons,
@@ -90367,6 +90477,35 @@ var _this = this;
 				default:
 					return 'th';
 			}
+		};
+
+		_this.attachAssetBrowser = function (element, id) {
+			$('#' + id + '-selected-asset').html('');
+
+			$('#' + id + '-selected-asset-preview').html('');
+
+			// Loads assets into modal window body
+			$(element).browse({
+				root: '/uploads/',
+				script: '/cp/assets/browse'
+			}, function (file) {
+				$('#' + id + '-selected-asset').html('<strong>Asset</strong> ' + file + '<div class="spacer d-sm-block d-md-block d-lg-none d-xl-none"></div>');
+
+				// Show preview
+				$('#' + id + '-selected-asset-preview').html('<div class="spacer d-sm-block d-md-block d-lg-none d-xl-none"></div><img src="' + file + '" class="img-fluid" width="100%">');
+
+				// Close modal when user clicks select button and set the file URL in the Banner image URL field on the form.
+				$('#' + id + '-select-asset').on('click', function () {
+					$('#' + id + '-browse-modal').modal('hide');
+
+					// Update the form field and remove focus
+					$('#' + id).val(file).blur();
+				});
+
+				$('#' + id + '-reset-field').on('click', function () {
+					$('#' + id).val('').blur();
+				});
+			});
 		};
 
 		_this.init = function () {
@@ -93523,6 +93662,63 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 				this.alignment.removeAlign();
 				this.block.addClass('text-justify');
 				this.core.editor().focus();
+			}
+		};
+	};
+})(jQuery);
+
+/***/ }),
+
+/***/ "./resources/assets/plugins/redactor/plugins/definedlinks.js":
+/***/ (function(module, exports) {
+
+(function ($) {
+	$.Redactor.prototype.definedlinks = function () {
+		return {
+			init: function init() {
+				if (!this.opts.definedLinks) {
+					return;
+				}
+
+				this.modal.addCallback('link', $.proxy(this.definedlinks.load, this));
+			},
+			load: function load() {
+				var $section = $('<section />');
+				var $select = $('<select id="redactor-defined-links" />');
+
+				$section.append($select);
+				this.modal.getModal().prepend($section);
+
+				this.definedlinks.storage = {};
+
+				var url = this.opts.definedlinks ? this.opts.definedlinks : this.opts.definedLinks;
+				$.getJSON(url, $.proxy(function (data) {
+					$.each(data, $.proxy(function (key, val) {
+						this.definedlinks.storage[key] = val;
+						$select.append($('<option>').val(key).html(val.title));
+					}, this));
+
+					$select.on('change', $.proxy(this.definedlinks.select, this));
+				}, this));
+			},
+			select: function select(e) {
+				var oldText = $.trim($('#redactor-link-url-text').val());
+
+				var key = $(e.target).val();
+				var title = '',
+				    name = '',
+				    url = '';
+				if (key !== 0) {
+					title = this.definedlinks.storage[key].title;
+					name = this.definedlinks.storage[key].name;
+					url = this.definedlinks.storage[key].url;
+				}
+
+				$('#redactor-link-url').val(url);
+
+				if (oldText === '') {
+					$('#redactor-link-url-text').val(name);
+				}
 			}
 		};
 	};

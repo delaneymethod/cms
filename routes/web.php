@@ -192,6 +192,7 @@ Route::group(['prefix' => 'cp'], function () {
 	Route::get('/assets/{id}/delete', 'AssetController@confirm');
 	Route::post('/assets', 'AssetController@store');
 	Route::post('/assets/folder', 'AssetController@folderStore');
+	Route::post('/assets/browse', 'AssetController@browse');
 	Route::put('/assets/{id}/move', 'AssetController@move');
 	Route::patch('/assets/{id}/move', 'AssetController@move');
 	Route::delete('/assets/folder', 'AssetController@folderDelete');

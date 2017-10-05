@@ -4,7 +4,7 @@
 @section('description', '404 Page not found - '.config('cms.site.name'))
 @section('keywords', '404, Page, not, found, '.config('cms.site.name'))
 
-@php ($page->bannerMessage = '<h2>Server Error: 404 (Page not found)</h2>')
+@php ($page->bannerContent = '<h2>Server Error: 404 (Page not found)</h2>')
 @php ($page->bannerImage = '')
 										
 @push('styles')

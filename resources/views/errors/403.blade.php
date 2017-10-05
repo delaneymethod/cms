@@ -4,7 +4,7 @@
 @section('description', '403 Forbidden - '.config('cms.site.name'))
 @section('keywords', '403, Forbidden, '.config('cms.site.name'))
 	
-@php ($page->bannerMessage = '<h2>Server Error: 403 (Forbidden)</h2>')
+@php ($page->bannerContent = '<h2>Server Error: 403 (Forbidden)</h2>')
 @php ($page->bannerImage = '')
 
 @push('styles')

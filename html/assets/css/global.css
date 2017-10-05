@@ -11384,6 +11384,12 @@ a.text-dark:focus, a.text-dark:hover {
  * @copyright Copyright (c) DelaneyMethod
  * @license   https://www.delaneymethod.com/cms/license
  */
+@media (min-width: 1200px) {
+  .modal-xl {
+    max-width: 1140px;
+  }
+}
+
 html, body {
   height: 100%;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

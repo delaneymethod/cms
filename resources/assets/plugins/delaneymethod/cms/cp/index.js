@@ -240,7 +240,7 @@
 				
 				let buttons = ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link', 'horizontalrule'];
 				
-				let plugins = ['source', 'table', 'alignment', 'fullscreen', 'filemanager', 'imagemanager', 'video'];
+				let plugins = ['source', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video'];
 					
 				if (element == '#excerpt') {
 					minHeight = 100;
@@ -259,6 +259,7 @@
 					'imageResizable': true,
 					'imagePosition': true,
 					'structure': true,
+					'definedLinks': '/cp/pages?format=json',
 					'tabAsSpaces': 4,
 					'minHeight': minHeight,
 					'buttons': buttons,
@@ -545,6 +546,35 @@
 			}
 		};
 		
+		this.attachAssetBrowser = (element, id) => {
+			$('#' + id + '-selected-asset').html('');
+			
+			$('#' + id + '-selected-asset-preview').html('');
+			
+			// Loads assets into modal window body
+			$(element).browse({
+				root: '/uploads/',
+				script: '/cp/assets/browse',
+			}, file => {
+				$('#' + id + '-selected-asset').html('<strong>Asset</strong> ' + file + '<div class="spacer d-sm-block d-md-block d-lg-none d-xl-none"></div>');
+				
+				// Show preview
+				$('#' + id + '-selected-asset-preview').html('<div class="spacer d-sm-block d-md-block d-lg-none d-xl-none"></div><img src="' + file + '" class="img-fluid" width="100%">');
+				
+				// Close modal when user clicks select button and set the file URL in the Banner image URL field on the form.
+				$('#' + id + '-select-asset').on('click', () => {
+					$('#' + id + '-browse-modal').modal('hide');
+					
+					// Update the form field and remove focus
+					$('#' + id).val(file).blur();
+				});
+				
+				$('#' + id + '-reset-field').on('click', () => {
+					$('#' + id).val('').blur();
+				});
+			});
+		};
+		
 		this.init = () => {
 			console.info(this.name + ' v' + this.version + ' is up and running!');
 			
@@ -609,7 +639,7 @@
 			this.savePageChangesAndLoadTemplate('#editPage #template_id');
 			
 			this.saveMenuChanges('#nestedSortable');
-			
+					
 			return this;
 		};
 		

@@ -50,6 +50,8 @@ require('../plugins/redactor/plugins/source');
 
 require('../plugins/redactor/plugins/table');
 
+require('../plugins/redactor/plugins/definedlinks');
+
 require('../plugins/redactor/plugins/alignment/alignment');
 
 require('../plugins/redactor/plugins/fullscreen');
@@ -69,3 +71,5 @@ require('../plugins/datatables/datatables');
 require('../plugins/datatables/datatables-bootstrap');
 
 require('../plugins/delaneymethod/cms/cp');
+
+require('../plugins/delaneymethod/cms/cp/browse');

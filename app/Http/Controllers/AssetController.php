@@ -31,12 +31,16 @@ class AssetController extends Controller
 	{
 		parent::__construct();
 		
-		$this->middleware('auth');
+		$this->middleware('auth', [
+			'except' => [
+				'browse'
+			]
+		]);
 		
 		// 30 MB
 		$this->maxUploadFileSize = 30000000;
 	}
-
+	
 	/**
 	 * Get assets view.
 	 *
@@ -47,85 +51,193 @@ class AssetController extends Controller
 	{
 		$currentUser = $this->getAuthenticatedUser();
 		
-		$title = 'Assets';
+		if ($currentUser->hasPermission('view_assets')) {
+			$title = 'Assets';
 		
-		$subTitle = '';
-		
-		$type = $request->get('type');
-		
-		$format = $request->get('format');
-		
-		$hash = $request->get('hash');
-		
-		$zip = $request->get('zip');
-		
-		$directory = $request->get('directory') ?? $this->assetsDisk;
-		
-		$uploadDirectory = '';
-		
-		if ($directory != $this->assetsDisk) {
-			$uploadDirectory = '?directory='.$directory;
-		}
-		
-		if (!empty($hash)) {
-			// Get file hash array and JSON encode it
-			$hashes = DirectoryHelper::getFileHash($hash);
+			$subTitle = '';
 			
-			// Return the data
-			return response()->json($hashes);
-		}
-		
-		// Filter based on type and/or format 
-		if (!empty($type) && $type === 'image' && !empty($format) && $format === 'json') {
-			$assets = $this->getAssets();
+			$type = $request->get('type');
 			
-			$assets = $this->filterByImage($assets);
+			$format = $request->get('format');
 			
-			$json = $this->convertToJson($assets, $type);
+			$hash = $request->get('hash');
 			
-			return response()->json($json);
-		} else if (!empty($format) && $format === 'json') {
-			$assets = $this->getAssets();
+			$zip = $request->get('zip');
 			
-			$json = $this->convertToJson($assets);
+			$directory = $request->get('directory') ?? $this->assetsDisk;
 			
-			return response()->json($json);
-		} else {
-			$assets = [];
+			$uploadDirectory = '';
 			
-			if (!empty($zip)) {
-				$assets = DirectoryHelper::zipDirectory($zip);
-			} else {
-				$assets = DirectoryHelper::listDirectory($directory);
+			if ($directory != $this->assetsDisk) {
+				$uploadDirectory = '?directory='.$directory;
 			}
 			
-			$deleteFolderEnabled = true;
-			
-			// If we are viewing top level folder, remove up icon.
-			if ($directory == $this->assetsDisk) {
-				$deleteFolderEnabled = false;
+			if (!empty($hash)) {
+				// Get file hash array and JSON encode it
+				$hashes = DirectoryHelper::getFileHash($hash);
 				
-				unset($assets['..']);
+				// Return the data
+				return response()->json($hashes);
 			}
 			
-			if (count($assets) > 0) {
-				$assets = recursiveObject($assets);
+			// Filter based on type and/or format 
+			if (!empty($type) && $type === 'image' && !empty($format) && $format === 'json') {
+				$assets = $this->getAssets();
+				
+				$assets = $this->filterByImage($assets);
+				
+				$json = $this->convertToJson($assets, $type);
+				
+				return response()->json($json);
+			} else if (!empty($format) && $format === 'json') {
+				$assets = $this->getAssets();
+				
+				$json = $this->convertToJson($assets);
+				
+				return response()->json($json);
+			} else {
+				$assets = [];
+				
+				if (!empty($zip)) {
+					$assets = DirectoryHelper::zipDirectory($zip);
+				} else {
+					$assets = DirectoryHelper::listDirectory($directory);
+				}
+				
+				$deleteFolderEnabled = true;
+				
+				// If we are viewing top level folder, remove up icon.
+				if ($directory == $this->assetsDisk) {
+					$deleteFolderEnabled = false;
+					
+					unset($assets['..']);
+				}
+				
+				if (count($assets) > 0) {
+					$assets = recursiveObject($assets);
+				}
+				
+				$path = DirectoryHelper::getListedPath();
+				
+				$breadcrumbs = recursiveObject(DirectoryHelper::listBreadcrumbs());
+				
+				$zipEnabled = DirectoryHelper::isZipEnabled();
+				
+				$zipDownloadPath = DirectoryHelper::getDirectoryPath();
+				
+				$messages = collect(recursiveObject(DirectoryHelper::getSystemMessages()));
+				
+				return view('cp.assets.index', compact('currentUser', 'title', 'subTitle', 'path', 'breadcrumbs', 'deleteFolderEnabled', 'zipEnabled', 'zipDownloadPath', 'messages', 'assets', 'uploadDirectory'));
 			}
-			
-			$path = DirectoryHelper::getListedPath();
-			
-			$breadcrumbs = recursiveObject(DirectoryHelper::listBreadcrumbs());
-			
-			$zipEnabled = DirectoryHelper::isZipEnabled();
-			
-			$zipDownloadPath = DirectoryHelper::getDirectoryPath();
-			
-			$messages = collect(recursiveObject(DirectoryHelper::getSystemMessages()));
-			
-			return view('cp.assets.index', compact('currentUser', 'title', 'subTitle', 'path', 'breadcrumbs', 'deleteFolderEnabled', 'zipEnabled', 'zipDownloadPath', 'messages', 'assets', 'uploadDirectory'));
 		}
+		
+		abort(403, 'Unauthorised action');
 	}
-	
+
+	/**
+	 * Get assets view file browser used in custom file pickers.
+	 *
+	 * @params	Request 	$request
+	 * @return 	Response
+	 */
+	public function browse(Request $request)
+	{
+		$html = '';
+		
+		$root = public_path();
+		
+		$directory = urldecode($request->get('directory'));
+		
+		if (file_exists($root.$directory)) {
+			$files = scandir($root.$directory);
+			
+			natcasesort($files);
+			
+			if (count($files) > 0) {
+				$html .= '<ul class="list-unstyled browse" style="display: none;">';
+				
+				foreach ($files as $file) {
+					if (file_exists($root.$directory.$file) && $file != '.DS_Store' && $file != '.' && $file != '..' && is_dir($root.$directory.$file)) {
+						$html .= '<li class="directory collapsed"><a href="javascript:void(0);" rel="'.htmlentities($directory.$file).'/"><i class="fa fa-folder" aria-hidden="true"></i> '.htmlentities($file).'</a></li>';
+					}
+				}
+		
+				foreach ($files as $file) {
+					$ext = preg_replace('/^.*\./', '', $file);
+					
+					if (file_exists($root.$directory.$file) && $file != '.DS_Store' && $file != '.' && $file != '..' && !is_dir($root.$directory.$file)) {
+						switch ($ext) {
+							case '3gp': $fa = 'fa-file-movie-o'; break;
+							case 'afp': $fa = 'fa-file-code-o'; break;
+							case 'afpa': $fa = 'fa-file-code-o'; break;
+							case 'asp': $fa = 'fa-file-code-o'; break;
+							case 'aspx': $fa = 'fa-file-code-o'; break;
+							case 'avi': $fa = 'fa-file-movie-o'; break;
+							case 'bat': $fa = 'fa-file-code-o'; break;
+							case 'bmp': $fa = 'fa-file-picture-o'; break;
+							case 'c': $fa = 'fa-file-code-o'; break;
+							case 'cfm': $fa = 'fa-file-code-o'; break;
+							case 'cgi': $fa = 'fa-file-code-o'; break;
+							case 'com': $fa = 'fa-file-o'; break;
+							case 'cpp': $fa = 'fa-file-code-o'; break;
+							case 'css': $fa = 'fa-file-code-o'; break;
+							case 'doc': $fa = 'fa-file-o'; break;
+							case 'exe': $fa = 'fa-file-o'; break;
+							case 'gif': $fa = 'fa-file-picture-o'; break;
+							case 'fla': $fa = 'fa-file-code-o'; break;
+							case 'h': $fa = 'fa-file-code-o'; break;
+							case 'htm': $fa = 'fa-file-code-o'; break;
+							case 'html': $fa = 'fa-file-code-o'; break;
+							case 'jar': $fa = 'fa-file-code-o'; break;
+							case 'jpg': $fa = 'fa-file-picture-o'; break;
+							case 'jpeg': $fa = 'fa-file-picture-o'; break;
+							case 'js': $fa = 'fa-file-code-o'; break;
+							case 'lasso': $fa = 'fa-file-code-o'; break;
+							case 'log': $fa = 'fa-file-text-o'; break;
+							case 'm4p': $fa = 'fa-file-audio-o'; break;
+							case 'mov': $fa = 'fa-file-movie-o'; break;
+							case 'mp3': $fa = 'fa-file-audio-o'; break;
+							case 'mp4': $fa = 'fa-file-movie-o'; break;
+							case 'mpg': $fa = 'fa-file-movie-o'; break;
+							case 'mpeg': $fa = 'fa-file-movie-o'; break;
+							case 'ogg': $fa = 'fa-file-audio-o'; break;
+							case 'pcx': $fa = 'fa-file-picture-o'; break;
+							case 'pdf': $fa = 'fa-file-pdf-o'; break;
+							case 'php': $fa = 'fa-file-code-o'; break;
+							case 'png': $fa = 'fa-file-picture-o'; break;
+							case 'ppt': $fa = 'fa-file-powerpoint-o'; break;
+							case 'psd': $fa = 'fa-file-picture-o'; break;
+							case 'pl': $fa = 'fa-file-code-o'; break;
+							case 'py': $fa = 'fa-file-code-o'; break;
+							case 'rb': $fa = 'fa-file-code-o'; break;
+							case 'rbx': $fa = 'fa-file-code-o'; break;
+							case 'rhtml': $fa = 'fa-file-code-o'; break;
+							case 'rpm': $fa = 'fa-file-code-o'; break;
+							case 'ruby': $fa = 'fa-file-code-o'; break;
+							case 'sql': $fa = 'fa-file-code-o'; break;
+							case 'swf': $fa = 'fa-file-code-o'; break;
+							case 'tif': $fa = 'fa-file-picture-o'; break;
+							case 'tiff': $fa = 'fa-file-picture-o'; break;
+							case 'txt': $fa = 'fa-file-text-o'; break;
+							case 'vb': $fa = 'fa-file-code-o'; break;
+							case 'wav': $fa = 'fa-file-audio-o'; break;
+							case 'wmv': $fa = 'fa-file-movie-o'; break;
+							case 'xls': $fa = 'fa-file-excel-o'; break;
+							case 'xml': $fa = 'fa-file-code-o'; break;
+							case 'zip': $fa = 'fa-file-zip-o'; break;
+						}
+						
+						$html .= '<li class="file"><a href="javascript:void(0);" rel="'.htmlentities($directory.$file).'"><i class="fa fa-file '.$fa.'" aria-hidden="true"></i> '.htmlentities($file).'</a></li>';
+					}
+				}
+				
+				$html .= '</ul>';	
+			}
+		}
+		
+		return response($html, 200);
+	}
+
 	/**
 	 * Shows a form for uploading files.
 	 *

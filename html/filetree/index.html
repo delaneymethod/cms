@@ -1,0 +1,17 @@
+<link href="browse.css" rel="stylesheet" type="text/css" media="screen">
+
+<script src="jquery.js"></script>
+<script src="browse.js"></script>
+
+<script>
+$(document).ready(() => {
+	$('#demo').browse({
+		root: '/uploads/',
+		script: '/cp/assets/browse'
+	}, file => { 
+		alert(file);
+	});
+});
+</script>
+
+<div id="demo"></div>
