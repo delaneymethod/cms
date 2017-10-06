@@ -18,6 +18,6 @@ class PageContentTableSeeder extends Seeder
 		
 		DB::table('page_content')->delete();
 		
-		//DB::table('page_content')->insert($pageContents);
+		// DB::table('page_content')->insert($pageContents);
 	}
 }

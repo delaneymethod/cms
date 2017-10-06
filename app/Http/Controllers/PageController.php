@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use App\Models\{Page, Content};
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
-use Baum\Extensions\Eloquent\Collection;
 use App\Notifications\ContactNotification;
 use App\Http\Traits\{CartTrait, UserTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait};
 
@@ -59,50 +58,15 @@ class PageController extends Controller
 		$currentUser = $this->getAuthenticatedUser();
 			
 		if ($currentUser->hasPermission('view_pages')) {
-			$format = $request->get('format');
+			$title = 'Pages';
 			
-			// Used in Refactor Links modal
-			if (!empty($format) && $format === 'json') {
-				$pages = $this->getPages();
-				
-				// Only use published pages
-				$pages = $pages->filter(function ($page) {
-					return $page->isPublished();
-				});
-				
-				// Add indentation to show levels
-				foreach ($pages as &$page) {
-					$indent = '';
-					
-					$depth = $page->depth;
-					
-					while ($depth > 0) {
-						$indent .= '-';
-						
-						$depth--;
-					}
-					
-					if ($indent > '') {
-						$indent .= '&nbsp;';
-					}
-					
-					$page->indent = $indent;
-				}
-				
-				$json = $this->convertToJson($pages);
-				
-				return response()->json($json);
-			} else {
-				$title = 'Pages';
-				
-				$subTitle = '';
-				
-				$this->rebuildPages();
-				
-				// Note: we dont call getPages and pass the data to the view. This is because pages is available to all views. See ComposerServiceProvider
+			$subTitle = '';
 			
-				return view('cp.pages.index', compact('currentUser', 'title', 'subTitle'));
-			}
+			$this->rebuildPages();
+			
+			// Note: we dont call getPages and pass the data to the view. This is because pages is available to all views. See ComposerServiceProvider
+		
+			return view('cp.pages.index', compact('currentUser', 'title', 'subTitle'));
 		}
 
 		abort(403, 'Unauthorised action');
@@ -178,6 +142,7 @@ class PageController extends Controller
 	 */
 	public function contact(Request $request)
 	{
+		// FIXME - this is messy as fuck - get it sorted!
 		$form = new \stdClass;
 		
 		$form->first_name = $request->get('first_name');    
@@ -391,7 +356,7 @@ class PageController extends Controller
 			$pageTemplate = $templates->first(function ($template) use ($templateId) {
 				return $template->id == $templateId;
 			});
-		
+			
 			$pageTemplate = $this->mapFieldsToFieldTypes($pageTemplate);
 			
 			if ($page->contents->count() > 0) {
@@ -799,23 +764,5 @@ class PageController extends Controller
 		}
 
 		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Does what it says on the tin!
-	 */
-	private function convertToJson(Collection $pages) : array
-	{
-		$json = [];
-		
-		foreach ($pages as $page) {
-			array_push($json, array(
-				'title' => $page->indent.$page->title,
-				'name' => $page->title,
-				'url' => $page->url,
-			));
-		}
-			
-		return $json;
 	}
 }

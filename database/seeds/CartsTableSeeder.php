@@ -18,6 +18,6 @@ class CartsTableSeeder extends Seeder
 			 
 		DB::table('carts')->delete();
 		
-		//DB::table('carts')->insert($carts);
+		// DB::table('carts')->insert($carts);
 	}
 }

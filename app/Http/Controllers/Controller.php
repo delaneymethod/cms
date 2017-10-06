@@ -12,7 +12,7 @@ use Request;
 use App\User;
 use Carbon\Carbon;
 use App\Models\Template;
-use App\Http\Traits\{UserTrait, FieldTrait};
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -23,11 +23,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Validator as ValidatorResponse;
 use Illuminate\Support\Facades\{File, Auth, Cache, Validator};
 use Illuminate\Support\Collection as SupportCollectionResponse;
+use App\Http\Traits\{UserTrait, PageTrait, FieldTrait, ArticleTrait};
 use Illuminate\Database\Eloquent\Collection as EloquentCollectionResponse;
 
 class Controller extends BaseController
 {
-	use UserTrait, FieldTrait, DispatchesJobs, AuthorizesRequests, ValidatesRequests;
+	use UserTrait, PageTrait, FieldTrait, ArticleTrait, DispatchesJobs, AuthorizesRequests, ValidatesRequests;
 	
 	protected $env;
 	
@@ -285,6 +286,90 @@ class Controller extends BaseController
 
 		return $data;
 	}
+	
+	/**
+	 * Get links for Refactor > Insert Link > Select Link view.
+	 *
+	 * @params	Request 	$request
+	 * @return 	Response
+	 */
+	public function links(HttpRequest $request)
+	{
+		$json = [];
+		
+		$format = $request->get('format');
+		
+		if (!empty($format) && $format === 'json') {
+			array_push($json, [
+				'title' => '---- Pages ----',
+				'name' => '',
+				'url' => '',
+			]);
+			
+			// Add in Pages
+			$pages = $this->getPages();
+			
+			// Only use published pages
+			$pages = $pages->filter(function ($page) {
+				return $page->isPublished();
+			});
+			
+			// Add indentation to show levels
+			foreach ($pages as &$page) {
+				$indent = '';
+				
+				$depth = $page->depth;
+				
+				while ($depth > 0) {
+					$indent .= '-';
+					
+					$depth--;
+				}
+				
+				if ($indent > '') {
+					$indent .= '&nbsp;';
+				}
+				
+				$page->indent = $indent;
+			}
+			
+			// Now add pages to array
+			foreach ($pages as $page) {
+				array_push($json, [
+					'title' => $page->indent.$page->title,
+					'name' => $page->title,
+					'url' => $page->url,
+				]);
+			}
+			
+			array_push($json, []);
+			
+			array_push($json, [
+				'title' => '---- Articles ----',
+				'name' => '',
+				'url' => '',
+			]);
+			
+			// Add in Articles
+			$articles = $this->getArticles();
+				
+			// Only use published pages
+			$articles = $articles->filter(function ($article) {
+				return $article->isPublished();
+			});
+
+			// Now add pages to array
+			foreach ($articles as $article) {
+				array_push($json, [
+					'title' => $article->indent.$article->title,
+					'name' => $article->title,
+					'url' => $article->url,
+				]);
+			}	
+		}
+		
+		return response()->json($json);
+	}	
 	
 	/**
 	 * Checks if we are running in console
@@ -741,6 +826,9 @@ class Controller extends BaseController
 		return $paginator;
 	}
 	
+	/**
+	 * Does what it says on the tin!
+	 */
 	protected function mapFieldsToFieldTypes(Template $template) : Template
 	{
 		$template->reference = 'template_'.$template->filename;
@@ -916,6 +1004,9 @@ class Controller extends BaseController
 		return $template;
 	}
 	
+	/**
+	 * Does what it says on the tin!
+	 */
 	protected function mapContentsToFields(Template $template, Collection $contents) : Template
 	{
 		$template->fields = recursiveObject($template->fields);
@@ -931,6 +1022,10 @@ class Controller extends BaseController
 				 * We would only enter this logic if the field value is empty and the user was 
 				 * creating or editing a page and picked a different template...
 				 */
+				 
+				// Commented out 06/Oct/2017 - Bug investigation - seems to be causing all template fields to be populated with same data
+				
+				/*
 				if (empty($field->value)) {
 					$contentField = $this->getField($content->field_id);
 					
@@ -938,6 +1033,7 @@ class Controller extends BaseController
 						$field->value = $content->data;
 					}
 				}
+				*/
 			}
 		}
 		
@@ -946,6 +1042,9 @@ class Controller extends BaseController
 		return $template;
 	}
 	
+	/**
+	 * Does what it says on the tin!
+	 */
 	protected function setTemplateFieldRules(array $rules, array $templates) : array
 	{
 		foreach ($templates as $template_id => $fields) {

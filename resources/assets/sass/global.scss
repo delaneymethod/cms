@@ -127,6 +127,20 @@ main {
 	.btn-qty {
 		padding: 2px 7px;
 	}
+	
+	.telephone-number {
+		white-space: nowrap;
+	}
+	
+	.email-address {
+		overflow-wrap: break-word;
+	}
+	
+	#map {
+		width: 100%;
+		height: 600px;
+		background-color: #333333;
+	}
 }
 
 footer {

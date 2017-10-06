@@ -55,7 +55,7 @@
 				@endif
 				<div class="content padding bg-white">
 					<div class="row">
-						<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+						<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 							<ul class="breadcrumbs list-unstyled list-inline">
 								<li class="list-inline-item">You are here:</li>
 								@foreach ($breadcrumbs as $breadcrumb)
@@ -71,7 +71,7 @@
 					<div class="row assets">
 						@if (count($assets) > 0)
 							@foreach ($assets as $filename => $meta)
-								<div class="col-sm-3 col-md-3 col-lg-2 col-xl-1 asset text-center">
+								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 asset text-center">
 									@if (!empty($meta->mime_type))
 										@if (starts_with($meta->mime_type, 'image'))	
 											<a href="javascript:void(0);" title="{{ $filename }}" class="image asset-opener" style="background-image: url('{{ $meta->url_path }}');" data-toggle="modal" data-target=".asset-{{ $meta->id }}-modal-lg">
@@ -92,7 +92,7 @@
 													</div>
 													<div class="modal-body">
 														<div class="row">
-															<div class="col-sm-12 col-md-12 col-lg-7 col-xl-7 text-center">
+															<div class="col-12 col-sm-12 col-md-12 col-lg-7 col-xl-7 text-center">
 																@if (file_exists($meta->file_path))
 																	@if (!starts_with($meta->mime_type, 'image'))
 																		<p>&nbsp;</p>
@@ -105,7 +105,8 @@
 																	<p><a href="{{ $meta->url_path }}" title="{{ $filename }}" target="_blank"><i class="fa {{ $meta->icon_class }} fa-5x align-middle" aria-hidden="true"></i><br><br>No Preview Available</a></p>
 																@endif
 															</div>
-															<div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 text-left">
+															<div class="col-12 col-sm-12 col-md-12 col-lg-5 col-xl-5 text-left">
+																<div class="spacer d-block d-sm-block d-md-block d-lg-none d-xl-none"></div>
 																<form>
 																	<div class="form-group">
 																		<label class="d-block">File Uploaded: <strong>{{ $meta->mod_time }}</strong></label>
@@ -133,9 +134,15 @@
 														</div>
 													</div>
 													<div class="modal-footer">
-														<a href="/cp/assets/{{ $meta->id }}/delete{{ $uploadDirectory }}" title="Delete" class="btn btn-outline-danger">Delete</a>
-														<a href="/cp/assets/{{ $meta->id }}/move{{ $uploadDirectory }}" title="Move" class="btn btn-outline-info">Move</a>
-														<button type="button" class="float-right btn btn-outline-secondary" data-dismiss="modal">Close</button>
+														<div class="container-fluid">
+															<div class="row d-flex h-100 justify-content-start">
+																<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center text-sm-center text-md-center text-lg-right text-xl-right align-self-center">
+																	<a href="/cp/assets/{{ $meta->id }}/delete{{ $uploadDirectory }}" title="Delete" class="btn btn-outline-danger">Delete</a>
+																	<a href="/cp/assets/{{ $meta->id }}/move{{ $uploadDirectory }}" title="Move" class="btn btn-outline-info">Move</a>
+																	<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+																</div>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -149,7 +156,7 @@
 								</div>
 							@endforeach
 						@else
-							<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+							<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
 								<p>&nbsp;</p>
 								<h4><i class="fa fa-folder-o fa-5x" aria-hidden="true"></i><br>Empty folder</h4>
 								<p>&nbsp;</p>

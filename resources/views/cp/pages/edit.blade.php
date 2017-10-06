@@ -32,7 +32,15 @@
 				
 				const fieldId = button.data('field_id');
 				
-				window.CMS.ControlPanel.attachAssetBrowser('#' + assetBrowserElement + '-container', fieldId);
+				const value = button.data('value');
+				
+				window.CMS.ControlPanel.attachAssetBrowser('#' + assetBrowserElement + '-container', fieldId, value);
+			});
+			
+			$('#' + assetBrowserElement + '-reset-field').on('click', () => {
+				$('#' + assetBrowserElement).val('').blur();
+				
+				$('a[data-target="#' + assetBrowserElement + '-browse-modal"]').data('value', '');
 			});
 		});
 	};
@@ -178,14 +186,11 @@
 							<div class="form-group">
 								{{ showField($field, old($field['id']), (9 + $loop->iteration)) }}
 								@if (str_contains(strtolower($field['id']), 'image'))
-									<div class="spacer"></div>
-									<p><a href="javascript:void(0);" title="Reset field" id="{{ $field['id'] }}-reset-field" class="btn btn-outline-secondary">Reset field</a></p>
-									<div class="spacer"></div>
 									<div class="modal fade" id="{{ $field['id'] }}-browse-modal" tabindex="-1" role="dialog" aria-labelledby="{{ $field['id'] }}-browse-moda-label" aria-hidden="true">
 										<div class="modal-dialog modal-lg modal-xl" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
-													<h5 class="modal-title" id="{{ $field['id'] }}-browse-modal-label">Browse Assets</h5>
+													<h5 class="modal-title" id="{{ $field['id'] }}-browse-modal-label">Assets</h5>
 												</div>
 												<div class="modal-body">
 													<div class="container-fluid">

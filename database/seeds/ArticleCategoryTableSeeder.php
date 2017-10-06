@@ -19,14 +19,6 @@ class ArticleCategoryTableSeeder extends Seeder
 				'article_id' => 1,
 				'article_category_id' => 1,
 			],
-			[
-				'article_id' => 1,
-				'article_category_id' => 5,
-			],
-			[
-				'article_id' => 1,
-				'article_category_id' => 2,
-			],
 		];	
 		
 		DB::table('article_category')->delete();

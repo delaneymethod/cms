@@ -16,23 +16,12 @@
 }
 
 html, body {
-	height: 100%;
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 1.42857143;
 	color: #333333;
 	background-color: #ffffff;
-}
-
-html {
-	position: relative;
-	min-height: 100%;
-}
-
-body {
-	min-height: 100%;
-	overflow-x: hidden;
 }
 
 canvas {
@@ -172,6 +161,10 @@ a,
 
 .text-muted-lighter {
 	color: #c1c1c1;	
+}
+
+.text-gf-default {
+	color: #333333;
 }
 
 .bg-white {

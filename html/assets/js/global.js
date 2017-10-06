@@ -37729,6 +37729,15 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+// IE10 viewport hack for Surface/desktop Windows 8 bug
+if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+  var msViewportStyle = document.createElement('style');
+
+  msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
+
+  document.head.appendChild(msViewportStyle);
+}
+
 __webpack_require__("./node_modules/lazyload/lazyload.js");
 
 __webpack_require__("./node_modules/jquery-inview/jquery.inview.js");
@@ -37743,6 +37752,12 @@ __webpack_require__("./resources/assets/plugins/delaneymethod/cms/index.js");
 /***/ (function(module, exports) {
 
 var _this = this;
+
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
 
 ;(function ($) {
 	$.delaneyMethodCMS = function (options) {
@@ -37777,6 +37792,29 @@ var _this = this;
 			$('[data-toggle="tooltip"]').tooltip();
 
 			lazyload();
+		};
+
+		_this.loadMap = function (element) {
+			if ($(element).length) {
+				var position = {
+					lat: 57.215075,
+					lng: -2.199492
+				};
+
+				var map = new google.maps.Map($(element).get(0), {
+					zoom: 16,
+					center: position
+				});
+
+				var marker = new google.maps.Marker({
+					position: position,
+					map: map
+				});
+
+				google.maps.event.addDomListener(window, 'resize', function () {
+					map.setCenter(position);
+				});
+			}
 		};
 
 		_this.loadProductCommodityPriceQuantity = function (element) {
@@ -37827,6 +37865,8 @@ var _this = this;
 			console.info(_this.name + ' v' + _this.version + ' is up and running!');
 
 			_this.settings = $.extend({}, _this.defaults, options);
+
+			_this.loadMap('#map');
 
 			_this.loadAnimations();
 

@@ -50,8 +50,8 @@ class ComposerServiceProvider extends ServiceProvider
 				
 				$footerLinksLeft = collect([]);
 				
-				// Gets Terms and Conditions PDF
-				$asset = $this->getAsset(6);
+				// Gets Terms and Conditions PDF - 2 matches asset id
+				$asset = $this->getAsset(2);
 				
 				$footerLinksLeft->push((object) [
 					'title' => 'Terms and Conditions',
@@ -59,8 +59,8 @@ class ComposerServiceProvider extends ServiceProvider
 					'target' => 'target="_blank"',
 				]);
 				
-				// Gets Privacy Policy PDF
-				$asset = $this->getAsset(7);
+				// Gets Privacy Policy PDF - 1 matches asset id
+				$asset = $this->getAsset(1);
 				
 				$footerLinksLeft->push((object) [
 					'title' => 'Privacy Policy',
@@ -120,9 +120,9 @@ class ComposerServiceProvider extends ServiceProvider
 						return (object) $row;
 					});
 					
-					$page->bannerMessage = '<h2>'.$specialTitles[$found].'</h2>';
+					$page->bannerContent = '<h2>'.$specialTitles[$found].'</h2>';
 					
-					$page->bannerImage = 'https://www.grampianfasteners.com/files/1680c433-741e-4778-8522-0dcc6545d33f/bg_rigs_1_edit_darker.jpg';
+					$page->bannerImage = '/uploads/bg_rigs_1_edit_darker.jpg';
 					
 					$view->with('page', $page);
 				}

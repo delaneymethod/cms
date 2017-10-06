@@ -121,7 +121,7 @@ class Article extends Model
 	public function getUrlAttribute() : string
 	{
 		// Grab articles page
-		$page = $this->getPage(9);
+		$page = $this->getPage(8);
 		
 		return $page->url.DIRECTORY_SEPARATOR.$this->slug;
 	}

@@ -1,4 +1,10 @@
-;($ => {
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+ 
+ ;($ => {
 	$.delaneyMethodCMS = options => {
 		// Support multiple elements
 		if (this.length > 1){
@@ -31,6 +37,29 @@
 			$('[data-toggle="tooltip"]').tooltip();
 			
 			lazyload();
+		};
+		
+		this.loadMap = element => {
+			if ($(element).length) {
+				const position = {
+					lat: 57.215075,
+					lng: -2.199492
+				};
+				
+				const map = new google.maps.Map($(element).get(0), {
+					zoom: 16,
+					center: position
+				});
+				
+				const marker = new google.maps.Marker({
+					position: position,
+					map: map
+				});
+				
+				google.maps.event.addDomListener(window, 'resize', () => {
+					map.setCenter(position);
+				});
+			}
 		};
 		
 		this.loadProductCommodityPriceQuantity = element => {
@@ -82,6 +111,8 @@
 			
 			this.settings = $.extend({}, this.defaults, options);
 			
+			this.loadMap('#map');
+
 			this.loadAnimations();
 			
 			return this;

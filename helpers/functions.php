@@ -221,14 +221,12 @@ if (!function_exists('showField')) {
 			case 'text':
 			case 'password':
 			case 'number':
-				$extraAttributes = '';
-				
 				if (str_contains(strtolower($arguments['id']), 'image')) {
-					$extraAttributes = 'data-toggle="modal" data-target="#'.$arguments['id'].'-browse-modal" data-field_id="'.$arguments['id'].'"';
+					printf('<label for="%3$s" class="control-label font-weight-bold">%7$s%9$s</label><div class="input-group"><input type="%1$s" name="%2$s" id="%3$s" class="%4$s" autocomplete="off" placeholder="%5$s" value="%6$s"%8$s tabindex="%10$s" aria-describedby="helpBlock_%3$s" /><span class="input-group-btn"><a href="javascript:void(0);" title="Select Asset" data-toggle="modal" data-target="#'.$arguments['id'].'-browse-modal" data-field_id="'.$arguments['id'].'" data-value="'.$arguments['value'].'" class="btn btn-outline-secondary">Select Asset</a><a href="javascript:void(0);" title="Clear Asset" id="%3$s-reset-field" class="btn btn-outline-secondary">Clear Asset</a></span></div>', $arguments['type'], $arguments['name'], $arguments['id'], $arguments['class'], $arguments['placeholder'], $arguments['value'], $arguments['label'], $attributes, $symbol, $tabIndex);
+				} else {
+					printf('<label for="%3$s" class="control-label font-weight-bold">%7$s%9$s</label><input type="%1$s" name="%2$s" id="%3$s" class="%4$s" autocomplete="off" placeholder="%5$s" value="%6$s"%8$s tabindex="%10$s" aria-describedby="helpBlock_%3$s" />', $arguments['type'], $arguments['name'], $arguments['id'], $arguments['class'], $arguments['placeholder'], $arguments['value'], $arguments['label'], $attributes, $symbol, $tabIndex);
 				}
 			 
-				printf('<label for="%3$s" class="control-label font-weight-bold">%7$s%9$s</label><input type="%1$s" name="%2$s" id="%3$s" class="%4$s" autocomplete="off" placeholder="%5$s" value="%6$s"%8$s tabindex="%10$s" aria-describedby="helpBlock_%3$s" %11$s />', $arguments['type'], $arguments['name'], $arguments['id'], $arguments['class'], $arguments['placeholder'], $arguments['value'], $arguments['label'], $attributes, $symbol, $tabIndex, $extraAttributes);
-				
 				break;
 			
 			case 'textarea':

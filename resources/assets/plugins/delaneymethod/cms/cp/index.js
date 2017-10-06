@@ -1,7 +1,7 @@
 /**
- * @link      https://www.delaneymethod.com/cms
+ * @link	  https://www.delaneymethod.com/cms
  * @copyright Copyright (c) DelaneyMethod
- * @license   https://www.delaneymethod.com/cms/license
+ * @license	  https://www.delaneymethod.com/cms/license
  */
 
 ;($ => {
@@ -51,12 +51,12 @@
 				
 				_.each(orderStats.reverse(), orderStat => {
 					if (max < orderStat.total) {
-	            		max = orderStat.total;
-	            	}
-	            	
-	            	labels.push(orderStat.month);
-	            	
-	            	data.push(orderStat.total);
+				 		max = orderStat.total;
+				 	}
+				 	
+				 	labels.push(orderStat.month);
+				 	
+				 	data.push(orderStat.total);
 				});
 				
 				datasets.push({
@@ -65,9 +65,9 @@
 					'borderColor': this.colours[0],
 					'data': data,
 					'fill': false,
-            	});
-            	
-            	max = max + 2;
+				});
+				
+				max = max + 2;
 				
 				const options = {
 					'responsive': true,
@@ -240,14 +240,14 @@
 				
 				let buttons = ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link', 'horizontalrule'];
 				
-				let plugins = ['source', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video'];
+				let plugins = ['codemirror', 'inlinestyle', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video', 'fontcolor', 'properties', 'textexpander'];
 					
 				if (element == '#excerpt') {
 					minHeight = 100;
 					
 					buttons = ['format', 'bold', 'italic'];
 					
-					plugins = ['source'];
+					plugins = ['codemirror'];
 				}
 				
 				$(element).redactor({
@@ -259,11 +259,21 @@
 					'imageResizable': true,
 					'imagePosition': true,
 					'structure': true,
-					'definedLinks': '/cp/pages?format=json',
+					'definedLinks': '/cp/links?format=json',
 					'tabAsSpaces': 4,
 					'minHeight': minHeight,
 					'buttons': buttons,
 					'plugins': plugins,
+					'codemirror': {
+						'lineNumbers': true,
+						'mode': 'htmlmixed',
+						'indentUnit': 4
+					},
+					'textexpander': [
+						['lorem', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'],
+						['gf', 'Grampian Fasteners'],
+						['dm', 'DelaneyMethod']
+					],
 					'callbacks': {
 						'imageUpload': (image, json) => {
 							$(image).attr('id', json.id);
@@ -546,10 +556,16 @@
 			}
 		};
 		
-		this.attachAssetBrowser = (element, id) => {
-			$('#' + id + '-selected-asset').html('');
+		this.attachAssetBrowser = (element, id, value) => {
+			if (value != '') {
+				$('#' + id + '-selected-asset').html('<strong>Asset</strong> ' + value + '<div class="spacer d-sm-block d-md-block d-lg-none d-xl-none"></div>');
+				
+				$('#' + id + '-selected-asset-preview').html('<div class="spacer d-sm-block d-md-block d-lg-none d-xl-none"></div><img src="' + value + '" class="img-fluid" width="100%">');
+			} else {
+				$('#' + id + '-selected-asset').html('');
 			
-			$('#' + id + '-selected-asset-preview').html('');
+				$('#' + id + '-selected-asset-preview').html('');
+			}
 			
 			// Loads assets into modal window body
 			$(element).browse({
@@ -566,11 +582,9 @@
 					$('#' + id + '-browse-modal').modal('hide');
 					
 					// Update the form field and remove focus
-					$('#' + id).val(file).blur();
-				});
-				
-				$('#' + id + '-reset-field').on('click', () => {
-					$('#' + id).val('').blur();
+					$('#' + id).val(window.location.origin + file).blur();
+					
+					$('a[data-target="#' + id + '-browse-modal"]').data('value', file);
 				});
 			});
 		};

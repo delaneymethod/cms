@@ -6,14 +6,11 @@
 			<div class="row">
 				<div class="col-12 spacer"></div>
 			</div>
-			@if (!empty($page->content))
-				<div class="row">
-					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">	
-						{!! $page->content !!}
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12 spacer tall"></div>
-				</div>
-			@endif
+			@for ($i = 1; $i <= 10; $i++)
+				@component('_components.page.content', [
+					'page' => $page,
+					'field' => 'section'.$i.'Content'
+				])
+				@endcomponent
+			@endfor
 			

@@ -840,13 +840,13 @@ class AssetController extends Controller
 			}
 		} else {
 			foreach ($assets as $asset) {
-				array_push($json, array(
+				array_push($json, [
 					'id' => $asset->id,
 					'title' => $asset->filename,
 					'name' => $asset->filename,
 					'url' => $asset->path,
 					'size' => $asset->filesize,
-				));
+				]);
 			}
 		}
 			
@@ -881,12 +881,12 @@ class AssetController extends Controller
 		$assets = $assets->whereIn('mime_type', $mimeTypes);
 		
 		foreach ($assets as $asset) {
-			array_push($images, array(
+			array_push($images, [
 				'id' => $asset->id,
 				'title' => $asset->filename, 
 				'thumb' => $asset->path, 
 				'url' => $asset->path,
-			));
+			]);
 		}
 		
 		return $images;

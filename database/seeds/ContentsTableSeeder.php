@@ -18,6 +18,6 @@ class ContentsTableSeeder extends Seeder
 		
 		DB::table('contents')->delete();
 		
-		//DB::table('contents')->insert($contents);
+		// DB::table('contents')->insert($contents);
 	}
 }

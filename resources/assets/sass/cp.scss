@@ -8,8 +8,6 @@
 
 @import 'reboot';
 
-@import url('//fonts.googleapis.com/css?family=Source+Sans+Pro');
-
 @import '~bootstrap/scss/bootstrap';
 
 @import '~font-awesome/scss/font-awesome';
@@ -22,7 +20,9 @@
 
 @import '../plugins/redactor/plugins/alignment/alignment';
 
-@import '../plugins/delaneymethod/cms/cp/browse';
+@import '../plugins/codemirror/codemirror';
+
+@import '../plugins/delaneymethod/browse/browse';
 
 @import 'common';
 	
@@ -385,6 +385,7 @@ html, body {
 		
 		table {
 			a {
+				text-decoration: underline;
 				display: block;
 				color: $sidebar-bg-color;
 				
@@ -411,6 +412,7 @@ html, body {
 				width: auto;
 				
 				a {
+					text-decoration: none;
 					font-size: 14px;
 					color: $sidebar-bg-color;
 					

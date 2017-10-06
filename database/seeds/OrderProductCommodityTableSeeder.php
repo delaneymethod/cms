@@ -18,6 +18,6 @@ class OrderProductCommodityTableSeeder extends Seeder
 		
 		DB::table('order_product_commodity')->delete();
 		
-		//DB::table('order_product_commodity')->insert($orderProductCommodities);
+		// DB::table('order_product_commodity')->insert($orderProductCommodities);
 	}
 }

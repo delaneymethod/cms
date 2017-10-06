@@ -272,7 +272,7 @@ class OrderController extends Controller
 			$template .= '	<p><strong>Order Items</strong></p>';
 			$template .= '	<table cellspacing="0" border="1" cellpadding="10" width="100%">';
 			$template .= '		<thead>';
-			$template .= '			<tr>';
+			$template .= '			<tr">';
 			$template .= '				<th align="left">Title</th>';
 			$template .= '				<th>Qty</th>';
 			$template .= '				<th align="right">Tax</th>';

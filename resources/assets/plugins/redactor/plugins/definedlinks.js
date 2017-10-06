@@ -53,11 +53,7 @@
 
 				$('#redactor-link-url').val(url);
 
-				if (oldText === '')
-				{
-					$('#redactor-link-url-text').val(name);
-				}
-
+				$('#redactor-link-url-text').val(name);
 			}
 		};
 	};

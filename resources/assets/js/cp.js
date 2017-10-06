@@ -36,6 +36,15 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+// IE10 viewport hack for Surface/desktop Windows 8 bug
+if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+	var msViewportStyle = document.createElement('style');
+	
+	msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
+	
+	document.head.appendChild(msViewportStyle);
+}
+
 require('lazyload');
 
 require('bootstrap');
@@ -62,6 +71,26 @@ require('../plugins/redactor/plugins/imagemanager');
 
 require('../plugins/redactor/plugins/video');
 
+require('../plugins/redactor/plugins/inlinestyle');
+
+require('../plugins/redactor/plugins/fontcolor');
+
+require('../plugins/redactor/plugins/properties');
+
+require('../plugins/redactor/plugins/textexpander');
+
+require('../plugins/redactor/plugins/codemirror');
+
+window.CodeMirror = require('../plugins/codemirror/codemirror');
+
+require('../plugins/codemirror/modes/htmlmixed');
+
+require('../plugins/codemirror/modes/javascript');
+
+require('../plugins/codemirror/modes/css');
+
+require('../plugins/codemirror/modes/xml');
+
 require('../plugins/jquery-ui/sortable');
 
 require('../plugins/jquery-ui/sortable-nested');
@@ -70,6 +99,6 @@ require('../plugins/datatables/datatables');
 
 require('../plugins/datatables/datatables-bootstrap');
 
-require('../plugins/delaneymethod/cms/cp');
+require('../plugins/delaneymethod/browse/browse');
 
-require('../plugins/delaneymethod/cms/cp/browse');
+require('../plugins/delaneymethod/cms/cp');

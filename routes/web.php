@@ -149,6 +149,9 @@ Route::group(['prefix' => 'cp'], function () {
 	Route::patch('/pages/{id}', 'PageController@update');
 	Route::delete('/pages/{id}', 'PageController@delete');
 	
+	// Only used in Refactor > Insert Link > Select Link
+	Route::get('/links', 'Controller@links');
+	
 	// CP > Menu routes
 	Route::get('/menu', 'PageController@menu');
 	Route::put('/menu', 'PageController@tree');

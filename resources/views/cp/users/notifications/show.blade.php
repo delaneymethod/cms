@@ -25,7 +25,7 @@
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
 					<div class="row">
-						<div class="col-sm-12 col-md-8 col-lg-8 col-xl-8">
+						<div class="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8">
 							@php($order = json_decode($notification->data)->order)
 							<p>Order <strong>#{{ $order->order_number }}</strong></p>
 							<div class="row">
@@ -38,7 +38,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 							<h3>Stats</h3>
 							<dl class="row">
 								<dt class="col-sm-4">Read</dt>

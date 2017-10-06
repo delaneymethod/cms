@@ -25,7 +25,7 @@
 				@include('cp._partials.pageTitle')
 				@if ($currentUser->hasPermission('create_companies'))
 					<div class="row">
-						<div class="col">
+						<div class="col-12">
 							<ul class="list-unstyled list-inline buttons">
 								<li class="list-inline-item"><a href="/cp/companies/create" title="Add Company" class="btn btn-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Company</a></li>
 							</ul>
@@ -33,7 +33,7 @@
 					</div>
 				@endif
 				<div class="content padding bg-white">	
-					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-striped table-bordered table-hover table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
 								<th class="align-middle">Title</th>

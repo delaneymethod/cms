@@ -31,7 +31,7 @@
 				<div class="content padding bg-white">
 					<form name="createPermissions" id="createPermissions" class="createPermissions" role="form" method="POST" action="/cp/advanced/roles/permissions">
 						{{ csrf_field() }}
-						<table class="permissions table table-hover table-bordered table-striped">
+						<table class="permissions table table-hover table-bordered table-striped table-responsive">
 							<thead>
 								<tr>
 									<th class="align-middle">&nbsp;</th>

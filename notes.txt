@@ -1,25 +1,15 @@
 
-
-
-
-convert current pages data into SQL for importing
-
-update all templates to have more fields
-
-
 add categories to blog sidebar
 
-add contact info and map to contact template
+if article has no banner image itself, use article template banner image as fallback
 
-
-
-new homepage design?
+if product has no banner image itself, use product template banner image as fallback
 
 add products search so visible and clear on all pages
 
+ability to reindex assets folder and import all files found
 
-
-
+new homepage design?
 
 
 

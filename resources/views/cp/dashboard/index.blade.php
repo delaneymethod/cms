@@ -26,14 +26,14 @@
 				@if (count($orders) > 0)
 					<div class="content padding bg-white">
 						<div class="row">
-							<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
+							<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
 								<h4>Recent Orders</h4>
 							</div>
-							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
+							<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 								<canvas id="orderTotals" data-order-stats="{{ $orderStats }}"></canvas>
 							</div>
-							<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6">
-								<table class="table table-striped table-bordered table-hover" style="margin-top: 5px;">
+							<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+								<table class="table table-striped table-bordered table-hover table-responsive" style="margin-top: 5px;">
 									<thead>
 										<tr>
 											<th class="align-middle">Order Number</th>
@@ -60,7 +60,7 @@
 					<div class="content padding bg-white">
 						<div class="row stats">
 							@foreach ($statCards as $statCard)
-								<div class="col-sm-12 col-md-2 col-lg-2 col-xl-2 cols">
+								<div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 cols">
 									<a href="{{ $statCard->url }}" title="{{ $statCard->label }}">
 										<div class="stat-card text-center alert" id="{{ $statCard->id }}-card">
 											<h5>{{ $statCard->label }}</h5>
@@ -75,7 +75,7 @@
 				@if (count($roles) > 0)
 					<div class="content padding bg-white">
 						<div class="row">
-							<div class="col-sm-12 col-md-4 col-lg-4 col-xl-4">
+							<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 								<canvas id="roleUsersStats" data-total-super-admins="{{ $roles[0]->users->count() }}" data-total-admins="{{ $roles[1]->users->count() }}" data-total-end-users="{{ $roles[2]->users->count() }}"></canvas>
 							</div>
 						</div>

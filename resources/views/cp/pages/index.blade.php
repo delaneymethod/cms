@@ -33,14 +33,15 @@
 					</div>
 				@endif
 				<div class="content padding bg-white">	
-					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-striped table-bordered table-hover table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
 								<th class="align-middle">Title</th>
 								<th class="align-middle no-sort">Slug</th>
 								<th class="align-middle">Parent</th>
 								<th class="align-middle">Template</th>
-								<th class="text-center">Status</th>
+								<th class="align-middle text-center no-sort">&nbsp;</th>
+								<th class="align-middle text-center">Status</th>
 								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
@@ -51,6 +52,7 @@
 									<td class="align-middle">{{ $page->slug }}</td>
 									<td class="align-middle">{{ ($page->parent) ? $page->parent->title : '' }}</td>
 									<td class="align-middle">{{ $page->template->title }}</td>
+									<td class="align-middle text-center"><a href="{{ $page->url }}" title="Preview {{ $page->title }}" target="_blank">Preview</a></td>
 									<td class="align-middle status text-center"><i class="fa fa-circle fa-1 status_id-{{ $page->status->id }}" title="{{ $page->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_pages') || ($currentUser->hasPermission('delete_pages') && $page->id != 1))
 										<td class="align-middle actions dropdown text-center" id="submenu">

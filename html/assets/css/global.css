@@ -11391,23 +11391,12 @@ a.text-dark:focus, a.text-dark:hover {
 }
 
 html, body {
-  height: 100%;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
   background-color: #ffffff;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  min-height: 100%;
-  overflow-x: hidden;
 }
 
 canvas {
@@ -11537,6 +11526,10 @@ a,
 
 .text-muted-lighter {
   color: #c1c1c1;
+}
+
+.text-gf-default {
+  color: #333333;
 }
 
 .bg-white {
@@ -11803,6 +11796,20 @@ main .products a h4 {
 
 main .btn-qty {
   padding: 2px 7px;
+}
+
+main .telephone-number {
+  white-space: nowrap;
+}
+
+main .email-address {
+  overflow-wrap: break-word;
+}
+
+main #map {
+  width: 100%;
+  height: 600px;
+  background-color: #333333;
 }
 
 footer {
