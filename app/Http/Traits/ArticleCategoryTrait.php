@@ -24,6 +24,17 @@ trait ArticleCategoryTrait
 	}
 	
 	/**
+	 * Get the specified article category based on slug.
+	 *
+	 * @param 	string 		$slug
+	 * @return 	Object
+	 */
+	public function getArticleCategoryBySlug(string $slug) : ArticleCategory
+	{
+		return ArticleCategory::where('slug', $slug)->firstOrFail();
+	}
+	
+	/**
 	 * Get all the article categories.
 	 *
 	 * @return 	Collection

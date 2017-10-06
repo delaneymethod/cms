@@ -9,12 +9,11 @@ namespace App\Templates;
 
 use Carbon\Carbon;
 use Illuminate\View\View;
-use Illuminate\Support\Facades\Cache;
-use App\Http\Traits\{ArticleTrait, ContentTrait};
+use App\Http\Traits\{ArticleTrait, ContentTrait, ArticleCategoryTrait};
 
 class ArticlesTemplate extends Template
 {
-	use ArticleTrait, ContentTrait;
+	use ArticleTrait, ContentTrait, ArticleCategoryTrait;
 	
 	protected $view = 'articles';
 	
@@ -28,23 +27,17 @@ class ArticlesTemplate extends Template
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
-		/*
-		$cachingEnabled = config('cache.enabled');
+		$articleCategory = $parameters['articleCategory'];
 		
-		if ($cachingEnabled) {
-			$articles = Cache::get('articles');
+		if (!empty($articleCategory)) {
+			$articles = $this->getArticlesByCategory($articleCategory);
 			
-			if (is_null($articles)) {
-				$articles = $this->getArticles();
-				
-				$minutes = config('cache.expiry_in_minutes');
-				
-				Cache::put('articles', $articles, $minutes);
-			}
+			$articleCategory = $this->getArticleCategoryBySlug($articleCategory);
+			
+			$page->bannerContent = '<h2>Articles</h2><h4>'.$articleCategory->title.'</h4>';
 		} else {
-		*/
 			$articles = $this->getArticles();
-		//}
+		}
 		
 		// Filter out any articles with publish date in the future
 		$articles = $articles->filter(function ($article) {
@@ -59,11 +52,19 @@ class ArticlesTemplate extends Template
 			'url' => $page->url,
 		]);
 		
+		if (!empty($articleCategory)) {
+			$page->breadcrumbs->push([
+				'title' => $articleCategory->title,
+				'slug' => $articleCategory->slug,
+				'url' => '/articles/category/'.$articleCategory->slug,
+			]);
+		}
+		
 		// Convert inners to objects
 		$page->breadcrumbs = $page->breadcrumbs->map(function ($row) {
 			return (object) $row;
 		});
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles', 'articleCategory'));
 	}
 }

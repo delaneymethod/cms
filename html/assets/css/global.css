@@ -11806,10 +11806,15 @@ main .email-address {
   overflow-wrap: break-word;
 }
 
-main #map {
+main .map {
   width: 100%;
   height: 600px;
-  background-color: #333333;
+}
+
+main .map,
+main .map-info,
+main .map-padding {
+  display: none;
 }
 
 footer {

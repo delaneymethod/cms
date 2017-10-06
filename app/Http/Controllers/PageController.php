@@ -88,6 +88,15 @@ class PageController extends Controller
 			return redirect('/login');
 		}
 		
+		// used when filtering articles by category
+		$articleCategory = '';
+		
+		$filterByArticleCategory = false;
+		
+		if (str_contains($slug, 'category')) {
+			$filterByArticleCategory = true;
+		}
+		
 		// Grab parameters
 		$parameters = $request->route()->parameters();
 		
@@ -107,6 +116,15 @@ class PageController extends Controller
 		} else {
 			// Set slug based on the last segment
 			$slug = $segments->last();
+		}
+		
+		// Set page to articles and pass the category to the articles template
+		if ($filterByArticleCategory) {
+			$parameters['articleCategory'] = $slug;
+			
+			$slug = 'articles';
+		} else {
+			$parameters['articleCategory'] = '';
 		}
 		
 		// Get the requested page based on slug - if it doesnt exist, a 404 is thrown!

@@ -1,6 +1,4 @@
 
-add categories to blog sidebar
-
 if article has no banner image itself, use article template banner image as fallback
 
 if product has no banner image itself, use product template banner image as fallback
@@ -111,3 +109,49 @@ cp pcntl.so /Applications/MAMP/bin/php/php7.1.8/lib/php/extensions/no-debug-non-
 
 php -i | grep pcntl
 
+
+window.CMS.loaded = new CustomEvent('loaded', {
+	bubbles: true,
+	cancelable: false
+});
+
+window.dispatchEvent(window.CMS.loaded);
+
+window.addEventListener('loaded', event => {
+	console.info('Event is: ', event);
+});
+
+// Cache the pages frontend
+$cachingEnabled = config('cache.enabled');
+
+if ($cachingEnabled) {
+	$pages = Cache::get('pages');
+	
+	if (is_null($pages)) {
+		$pages = $this->getPages();
+		
+		$minutes = config('cache.expiry_in_minutes');
+		
+		Cache::put('pages', $pages, $minutes);
+	}
+} else {
+	$pages = $this->getPages();
+}
+
+Cache the articles frontend
+
+$cachingEnabled = config('cache.enabled');
+
+if ($cachingEnabled) {
+	$articles = Cache::get('articles');
+	
+	if (is_null($articles)) {
+		$articles = $this->getArticles();
+		
+		$minutes = config('cache.expiry_in_minutes');
+		
+		Cache::put('articles', $articles, $minutes);
+	}
+} else {
+	$articles = $this->getArticles();
+}		

@@ -37721,23 +37721,6 @@ window.axiosCancel(window.axios, {
   debug: false
 });
 
-var token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
-
-// IE10 viewport hack for Surface/desktop Windows 8 bug
-if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-  var msViewportStyle = document.createElement('style');
-
-  msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
-
-  document.head.appendChild(msViewportStyle);
-}
-
 __webpack_require__("./node_modules/lazyload/lazyload.js");
 
 __webpack_require__("./node_modules/jquery-inview/jquery.inview.js");
@@ -37795,7 +37778,7 @@ var _this = this;
 		};
 
 		_this.loadMap = function (element) {
-			if ($(element).length) {
+			if ($(element).length && typeof google !== 'undefined') {
 				var position = {
 					lat: 57.215075,
 					lng: -2.199492
@@ -37810,6 +37793,10 @@ var _this = this;
 					position: position,
 					map: map
 				});
+
+				$('.map-padding, .map-info').show();
+
+				$(element).show();
 
 				google.maps.event.addDomListener(window, 'resize', function () {
 					map.setCenter(position);
@@ -37866,9 +37853,26 @@ var _this = this;
 
 			_this.settings = $.extend({}, _this.defaults, options);
 
-			_this.loadMap('#map');
+			var token = document.head.querySelector('meta[name="csrf-token"]');
+
+			if (token) {
+				window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+			} else {
+				console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+			}
+
+			// IE10 viewport hack for Surface/desktop Windows 8 bug
+			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+				var msViewportStyle = document.createElement('style');
+
+				msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
+
+				document.head.appendChild(msViewportStyle);
+			}
 
 			_this.loadAnimations();
+
+			_this.loadMap('.map');
 
 			return _this;
 		};

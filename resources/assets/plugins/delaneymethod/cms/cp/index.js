@@ -594,6 +594,23 @@
 			
 			this.settings = $.extend({}, this.defaults, options);
 			
+			let token = document.head.querySelector('meta[name="csrf-token"]');
+
+			if (token) {
+			    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+			} else {
+			    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+			}
+			
+			// IE10 viewport hack for Surface/desktop Windows 8 bug
+			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+				let msViewportStyle = document.createElement('style');
+				
+				msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
+				
+				document.head.appendChild(msViewportStyle);
+			}
+
 			this.logout();
 			
 			this.loadOrderStats();

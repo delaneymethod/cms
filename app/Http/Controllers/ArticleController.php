@@ -31,7 +31,8 @@ class ArticleController extends Controller
 		
 		$this->middleware('auth', [
 			'except' => [
-				'show'
+				'show',
+				'filterByCategory',
 			]
 		]);
 		
@@ -39,7 +40,7 @@ class ArticleController extends Controller
 	}
 
 	/**
-	 * Get pages view.
+	 * Get articles view.
 	 *
 	 * @params	Request 	$request
 	 * @return 	Response

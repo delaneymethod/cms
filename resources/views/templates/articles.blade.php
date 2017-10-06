@@ -1,6 +1,6 @@
 			<div class="row">
 				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
-					<h3>{{ $page->title }}</h3>
+					<h3>{{ $page->title }} @if (!empty($articleCategory))<small class="text-muted">{{ $articleCategory->title }}</small>@endif</h3>
 				</div>
 			</div>
 			<div class="row">
@@ -16,9 +16,9 @@
 					<div class="col-12 spacer tall"></div>
 				</div>
 			@endif
-			@if ($articles->count() > 0)
-				<div class="row">
-					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+			<div class="row d-flex">
+				<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 text-center text-sm-center text-md-left text-lg-left text-xl-left order-2 order-sm-2 order-md-1 order-lg-1 order-xl-1">
+					@if ($articles->count() > 0)
 						<ul class="list-unstyled list-inline articles">
 							@foreach ($articles as $article)
 								@if ($article->isPublished())
@@ -31,7 +31,8 @@
 								@endif
 							@endforeach
 						</ul>
-					</div>
+					@endif
 				</div>
-			@endif
+				@include('_partials.sidebar')			
+			</div>
 			

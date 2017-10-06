@@ -40,7 +40,7 @@
 		};
 		
 		this.loadMap = element => {
-			if ($(element).length) {
+			if ($(element).length && typeof google !== 'undefined') {
 				const position = {
 					lat: 57.215075,
 					lng: -2.199492
@@ -56,6 +56,10 @@
 					map: map
 				});
 				
+				$('.map-padding, .map-info').show();
+				
+				$(element).show();
+	
 				google.maps.event.addDomListener(window, 'resize', () => {
 					map.setCenter(position);
 				});
@@ -111,9 +115,26 @@
 			
 			this.settings = $.extend({}, this.defaults, options);
 			
-			this.loadMap('#map');
+			let token = document.head.querySelector('meta[name="csrf-token"]');
 
+			if (token) {
+			    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+			} else {
+			    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+			}
+			
+			// IE10 viewport hack for Surface/desktop Windows 8 bug
+			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+				let msViewportStyle = document.createElement('style');
+				
+				msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
+				
+				document.head.appendChild(msViewportStyle);
+			}
+			
 			this.loadAnimations();
+			
+			this.loadMap('.map');
 			
 			return this;
 		};
@@ -123,3 +144,6 @@
 })(jQuery);
 
 window.CMS = $.delaneyMethodCMS();
+
+
+

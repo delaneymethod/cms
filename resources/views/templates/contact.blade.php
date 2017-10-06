@@ -142,12 +142,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row map-padding">
 						<div class="col-12">
 							<div class="spacer very-tall"></div>
 						</div>
 					</div>		
-					<div class="row">
+					<div class="row map-info">
 						<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 							<h4>How To Find Us</h4>
 						</div>
@@ -158,6 +158,6 @@
 				<div class="col-12 spacer tall"></div>
 			</div>
 		</div>
-		<div class="container-fluid" id="map" style="margin-bottom: -40px;"></div>
+		<div class="container-fluid map" style="margin-bottom: -40px;"></div>
 		<div class="container">		
 			

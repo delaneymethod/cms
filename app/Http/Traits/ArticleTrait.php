@@ -35,6 +35,19 @@ trait ArticleTrait
 	}
 	
 	/**
+	 * Get all the articles based on category slug.
+	 *
+	 * @param 	string 		$slug
+	 * @return 	Object
+	 */
+	public function getArticlesByCategory(string $slug) : CollectionResponse
+	{
+		return Article::whereHas('article_categories', function ($query) use ($slug) {
+			$query->where('slug', $slug);
+		})->get();
+	}
+	
+	/**
 	 * Get the specified article based on id.
 	 *
 	 * @param 	int 		$id

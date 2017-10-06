@@ -22,7 +22,6 @@ Auth::routes();
 
 // Cart routes
 Route::redirect('/cart/checkout', '/cart/checkout/step-1', 301);
-
 Route::get('/cart/save', 'CartController@save');
 Route::get('/cart/restore/{identifier}', 'CartController@restore');
 Route::get('/cart/checkout/{slug}', 'PageController@show');
@@ -34,6 +33,7 @@ Route::patch('/cart/{rowId}', 'CartController@update');
 Route::delete('/cart', 'CartController@delete');
 
 // Articles routes
+Route::redirect('/articles/category', '/articles', 301);
 Route::get('/articles/{slug}', 'ArticleController@show');
 
 // Order routes

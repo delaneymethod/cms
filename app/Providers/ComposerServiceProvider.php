@@ -10,7 +10,7 @@ namespace App\Providers;
 use App;
 use Illuminate\Support\ServiceProvider;
 use App\Http\Traits\{PageTrait, AssetTrait};
-use Illuminate\Support\Facades\{Auth, View, Cache};
+use Illuminate\Support\Facades\{Auth, View};
 
 class ComposerServiceProvider extends ServiceProvider
 {
@@ -24,23 +24,7 @@ class ComposerServiceProvider extends ServiceProvider
 	public function boot()
 	{
 		if (!App::runningInConsole()) {
-			/*
-			$cachingEnabled = config('cache.enabled');
-			
-			if ($cachingEnabled) {
-				$pages = Cache::get('pages');
-				
-				if (is_null($pages)) {
-					$pages = $this->getPages();
-					
-					$minutes = config('cache.expiry_in_minutes');
-					
-					Cache::put('pages', $pages, $minutes);
-				}
-			} else {
-			*/	
-				$pages = $this->getPages();
-			//}
+			$pages = $this->getPages();
 			
 			View::composer('*', function ($view) use ($pages) {
 				$authenticated = Auth::check();

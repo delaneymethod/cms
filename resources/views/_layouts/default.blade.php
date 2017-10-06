@@ -20,13 +20,14 @@
 	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/apple-icon-72x72.png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/apple-icon-144x144.png">
 	<link rel="dns-prefetch" href="{{ config('cms.site.url') }}">
+	
 	<base href="/">
 	<script async>
 	'use strict';
 	
-	@if ($authenticated)
 	window.CMS = {};
 	
+	@if ($authenticated)
 	window.API = {
 		'url': '{{ config('cms.api.url') }}'
 	};
