@@ -44,6 +44,18 @@ class ArticlesTemplate extends Template
 			return $article->published_at <= Carbon::now();
 		});
 		
+		// Only show published articles
+		$articles = $articles->filter(function ($article) {
+			return $article->isPublished();
+		});
+		
+		// Now get each articles content
+		$articles = $articles->map(function ($article) {
+			return $this->getArticleContent($article);
+		});
+		
+		$articleCategories = $this->getArticleCategories();
+		
 		$page->breadcrumbs = collect([]);
 		
 		$page->breadcrumbs->push([
@@ -65,6 +77,6 @@ class ArticlesTemplate extends Template
 			return (object) $row;
 		});
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles', 'articleCategory'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles', 'articleCategory', 'articleCategories'));
 	}
 }

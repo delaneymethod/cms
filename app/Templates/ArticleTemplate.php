@@ -50,6 +50,8 @@ class ArticleTemplate extends Template
 		
 		$page->title = $article->title.' - '.$page->title;
 		
+		$page->bannerContent = '<h2>'.$article->title.'</h2>';
+		
 		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'article'));
 	}
 }

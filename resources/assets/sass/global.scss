@@ -146,6 +146,12 @@ main {
 	.map-padding {
 		display: none;
 	}
+	
+	.article-content {
+		img {
+			max-width: 100%;
+		}
+	}
 }
 
 footer {

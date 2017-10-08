@@ -14,15 +14,10 @@ class ArticleCategoryTableSeeder extends Seeder
 	{
 		$now = Carbon::now()->format('Y-m-d H:i:s');
 		
-		$articleCategories = [
-			[
-				'article_id' => 1,
-				'article_category_id' => 1,
-			],
-		];	
+		$articleCategories = [];	
 		
 		DB::table('article_category')->delete();
 		
-		DB::table('article_category')->insert($articleCategories);
+		// DB::table('article_category')->insert($articleCategories);
 	}
 }

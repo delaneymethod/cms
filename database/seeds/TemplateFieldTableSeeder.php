@@ -246,38 +246,48 @@ class TemplateFieldTableSeeder extends Seeder
 				'field_id' => 43,
 				'order' => 3,
 			],
+			[
+				'template_id' => 8,
+				'field_id' => 44,
+				'order' => 4,
+			],
+			[
+				'template_id' => 8,
+				'field_id' => 45,
+				'order' => 5,
+			],
 			
 			// Product template fields
 			[
 				'template_id' => 9,
-				'field_id' => 44,
+				'field_id' => 46,
 				'order' => 1,
 			],
 			[
 				'template_id' => 9,
-				'field_id' => 45,
+				'field_id' => 47,
 				'order' => 2,
 			],
 			[
 				'template_id' => 9,
-				'field_id' => 46,
+				'field_id' => 48,
 				'order' => 3,
 			],
 			
 			// Product Category template fields
 			[
 				'template_id' => 10,
-				'field_id' => 47,
+				'field_id' => 49,
 				'order' => 1,
 			],
 			[
 				'template_id' => 10,
-				'field_id' => 48,
+				'field_id' => 50,
 				'order' => 2,
 			],
 			[
 				'template_id' => 10,
-				'field_id' => 49,
+				'field_id' => 51,
 				'order' => 3,
 			],
 		

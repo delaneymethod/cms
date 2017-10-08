@@ -1,3 +1,15 @@
+add article image and excerpt to create article
+
+
+
+add pagination to articles
+
+finish article page
+
+fix article categories and all categories in articles and each article
+
+ 
+
 
 if article has no banner image itself, use article template banner image as fallback
 

@@ -11817,6 +11817,10 @@ main .map-padding {
   display: none;
 }
 
+main .article-content img {
+  max-width: 100%;
+}
+
 footer {
   color: #FFFFFF;
   background-color: #333333;

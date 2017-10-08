@@ -1,3 +1,4 @@
+			{{--
 			<div class="row">
 				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 					<h3>{{ $article->title }}</h3>
@@ -6,26 +7,12 @@
 			<div class="row">
 				<div class="col-12 spacer"></div>
 			</div>
+			--}}
 			<div class="row d-flex">
 				<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 text-center text-sm-center text-md-left text-lg-left text-xl-left order-2 order-sm-2 order-md-1 order-lg-1 order-xl-1">
-					@if ($article->article_categories->count() > 0)
-						<div class="row">
-							<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">	
-								<ul class="list-unstyled list-inline">
-									<li class="list-inline-item">Categories:</li>
-									@foreach ($article->article_categories as $articleCategory)
-										<li class="list-inline-item"><a href="/articles/category/{{ $articleCategory->slug }}" title="{{ $articleCategory->title }}">{{ $articleCategory->title }}</a></li>
-										@if (!$loop->last)
-											<li class="list-inline-item">, </li>
-										@endif
-									@endforeach
-								</ul>
-							</div>
-						</div>
-					@endif
 					@if (!empty($article->section1Content))
 						<div class="row">
-							<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">	
+							<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left article-content">	
 								{!! $article->section1Content !!}
 							</div>
 						</div>
