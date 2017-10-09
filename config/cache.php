@@ -15,9 +15,9 @@ return [
     |
     */
 	
-	'enabled' => env('CACHE_ENABLED', false),
+	'enabled' => env('CACHE_ENABLED', true),
 	
-    'default' => env('CACHE_DRIVER', 'file'),
+    'default' => env('CACHE_DRIVER', 'database'),
 	
 	'expiry_in_minutes' => env('CACHE_EXPIRY_IN_MINUTES', 60),
 	

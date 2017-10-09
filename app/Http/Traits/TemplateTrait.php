@@ -9,7 +9,7 @@ namespace App\Http\Traits;
 
 use App\Models\{Page, Template};
 use Illuminate\Database\Eloquent\Collection as CollectionResponse;
-use App\Templates\{CartTemplate, PageTemplate, ContactTemplate, ProductTemplate, ProductsTemplate, ArticleTemplate, CheckoutTemplate, ArticlesTemplate, HomepageTemplate, ProductCategoryTemplate};
+use App\Templates\{CartTemplate, PageTemplate, ContactTemplate, ProductTemplate, ProductsTemplate, ArticleTemplate, CheckoutTemplate, ArticlesTemplate, HomepageTemplate, ProductSearchTemplate, ProductCategoryTemplate};
 
 trait TemplateTrait
 {
@@ -61,6 +61,10 @@ trait TemplateTrait
 			$page->template->filename = 'productCategory';
 		}
 		
+		if ($page->slug == 'products' && !empty($parameters['search'])) {
+			$page->template->filename = 'productSearch';
+		}
+		
 		// Since individual articles do not have pages as such we need to use their parent page.
 		if ($page->slug == 'articles' && !empty($parameters['article'])) {
 			$page->template->filename = 'article';
@@ -77,6 +81,7 @@ trait TemplateTrait
 			'products' => ProductsTemplate::class,
 			'articles' => ArticlesTemplate::class,
 			'homepage' => HomepageTemplate::class,
+			'productSearch' => ProductSearchTemplate::class,
 			'productCategory' => ProductCategoryTemplate::class,
 		];
 		

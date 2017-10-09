@@ -141,8 +141,8 @@ class ArticleController extends Controller
 			// Used to set categories_ids
 			$articleCategories = $this->getData('getArticleCategories', 'article_categories');
 			
-			// 9 = Article
-			$articleTemplate = $this->getTemplate(9);
+			// 8 = Article
+			$articleTemplate = $this->getTemplate(8);
 			
 			$articleTemplate = $this->mapFieldsToFieldTypes($articleTemplate);
 			
@@ -292,7 +292,7 @@ class ArticleController extends Controller
 			// Used to set categories_ids
 			$articleCategories = $this->getData('getArticleCategories', 'article_categories');
 			
-			// 9 = Article but we still use whats stored in the model
+			// 8 = Article but we still use whats stored in the model
 			$articleTemplate = $this->getTemplate($article->template_id);
 			
 			$articleTemplate = $this->mapFieldsToFieldTypes($articleTemplate);

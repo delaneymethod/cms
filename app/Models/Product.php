@@ -7,6 +7,7 @@
  
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use App\Http\Traits\ProductCategoryTrait;
 use Illuminate\Database\Eloquent\Relations\{HasMany, BelongsTo, BelongsToMany};
@@ -14,7 +15,7 @@ use App\Models\{ProductVatRate, ProductStandard, ProductCategory, ProductCommodi
 
 class Product extends Model
 {
-	use ProductCategoryTrait;
+	use Searchable, ProductCategoryTrait;
 	
 	/**
      * The table associated with the model.
@@ -68,6 +69,33 @@ class Product extends Model
 		'image_url',
 		'attributes_characteristics',
 	];
+	
+	/**
+	 * Get the indexable data array for the model.
+	 *
+	 * @return array
+	 */
+	public function toSearchableArray() : array
+	{
+		$pattern = '/<p(.*?)>((.*?)+)\<\/p>/';
+		
+		$replacement = '${2} ';
+		
+		$subject = $this->description;
+		
+		$description = preg_replace($pattern, $replacement, $subject);
+		
+		$description = $description.', '.$this->product_category->title.', '.$this->product_category->description.', '.$this->product_manufacturer->title;
+		
+		$description = str_replace(', ,', ',', $description);
+
+		$description = trim($description);
+	
+		return [
+			'title' => $this->title,
+			'description' => $description,
+		];
+	}
 	
 	/**
 	 * Get the product record associated with the product.

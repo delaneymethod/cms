@@ -5,7 +5,7 @@
  * @license   https://www.delaneymethod.com/cms/license
  */
 
-$inDevelopmentMode = env('APP_DEBUG');
+$inDevelopmentMode = config('app.debug');
 
 return [
 	
@@ -20,7 +20,7 @@ return [
     'site' => [
 	    
 		'name' => 'Test Site',
-		'url' => 'http://www.delaneymethod.com',
+		'url' => 'http://www.delaneymethod.com/cms',
 		'emails' => [
 			'general' => 'hello@delaneymethod.com',
 			'sales' => 'hello@delaneymethod.com',
@@ -44,6 +44,8 @@ return [
 		'notifications' => ($inDevelopmentMode) ? 0 : 1,
 	
 	],
+	
+	'slack_webhook_url' => env('UPTIME_MONITOR_SLACK_WEBHOOK_URL', ''),
 	
 	// Used to POST order data too
 	'api' => [

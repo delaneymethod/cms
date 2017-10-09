@@ -7,10 +7,10 @@
 			<div class="row">
 				<div class="col-12 spacer"></div>
 			</div>
-			@if (!empty($page->content))
+			@if (!empty($page->section1Content))
 				<div class="row">
 					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
-						{!! $page->content !!}
+						{!! $page->section1Content !!}
 					</div>
 				</div>
 				<div class="row">

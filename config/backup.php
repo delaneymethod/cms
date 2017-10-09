@@ -8,7 +8,7 @@ return [
          * The name of this application. You can use this name to monitor
          * the backups.
          */
-        'name' => env('APP_URL'),
+        'name' => config('app.url'),
 
         'source' => [
 
@@ -92,11 +92,11 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => env('MAIL_FROM_ADDRESS'),
+            'to' => config('mail.from.address'),
         ],
 
         'slack' => [
-            'webhook_url' => '',
+            'webhook_url' => config('cms.slack_webhook_url'),
 
             /*
              * If this is set to null the default channel of the webhook will be used.
@@ -112,7 +112,7 @@ return [
      */
     'monitorBackups' => [
         [
-            'name' => env('APP_URL'),
+            'name' => config('app.url'),
             'disks' => ['local'],
             'newestBackupsShouldNotBeOlderThanDays' => 1,
             'storageUsedMayNotBeHigherThanMegabytes' => 5000,

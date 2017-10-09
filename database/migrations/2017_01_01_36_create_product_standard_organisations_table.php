@@ -21,7 +21,7 @@ class CreateProductStandardOrganisationsTable extends Migration
 			$table->unsignedInteger('id')->primary();
 			
 			$table->string('title')->nullable()->index();
-			$table->string('website')->nullable();
+			$table->string('website')->nullable()->index();
 			
 			$table->longText('description')->nullable();
 			

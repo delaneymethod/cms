@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductStandardsTable extends Migration
+class CreateProductManufacturersTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,24 +15,21 @@ class CreateProductStandardsTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 
-		Schema::create('product_standards', function (Blueprint $table) {
+		Schema::create('product_manufacturers', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
 			$table->unsignedInteger('id')->primary();
 			
 			$table->string('title')->nullable()->index();
-			$table->string('code')->nullable();
-			
-			$table->longText('further_details')->nullable();
-			
-			$table->unsignedInteger('product_standard_organisation_id')->nullable()->index()->comment('Foreign key to the product standard organisations table');
+			$table->string('website')->nullable()->index();
+			$table->string('logo_image')->nullable();
+			$table->string('cms_page_name')->nullable();
 			
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrent();
 		});
 
-		Schema::table('product_standards', function (Blueprint $table) {
-			$table->foreign('product_standard_organisation_id')->references('id')->on('product_standard_organisations')->onDelete('set null');
+		Schema::table('product_manufacturers', function (Blueprint $table) {
 		});
 	}
 
@@ -43,6 +40,6 @@ class CreateProductStandardsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('product_standards');
+		Schema::dropIfExists('product_manufacturers');
 	}
 }

@@ -7,7 +7,6 @@
 
 namespace App\Templates;
 
-use Carbon\Carbon;
 use Illuminate\View\View;
 use App\Http\Traits\{ArticleTrait, ContentTrait, ArticleCategoryTrait};
 
@@ -32,29 +31,32 @@ class ArticlesTemplate extends Template
 		if (!empty($articleCategory)) {
 			$articles = $this->getArticlesByCategory($articleCategory);
 			
+			$articles = $this->getFilterPublishContentArticles($articles);
+			
+			// Get recent articles to add extra template content
+			$recentArticles = $this->getArticles();
+			
+			// We only want 5 though
+			$recentArticles = $recentArticles->slice(0, 5);
+			
+			$recentArticles = $this->getFilterPublishContentArticles($recentArticles);
+		
 			$articleCategory = $this->getArticleCategoryBySlug($articleCategory);
 			
 			$page->bannerContent = '<h2>Articles</h2><h4>'.$articleCategory->title.'</h4>';
 		} else {
+			$recentArticles = collect([]);
+		
 			$articles = $this->getArticles();
+			
+			$articles = $this->getFilterPublishContentArticles($articles);
 		}
 		
-		// Filter out any articles with publish date in the future
-		$articles = $articles->filter(function ($article) {
-			return $article->published_at <= Carbon::now();
-		});
-		
-		// Only show published articles
-		$articles = $articles->filter(function ($article) {
-			return $article->isPublished();
-		});
-		
-		// Now get each articles content
-		$articles = $articles->map(function ($article) {
-			return $this->getArticleContent($article);
-		});
-		
+		// Grab all article categories
 		$articleCategories = $this->getArticleCategories();
+		
+		// Remove the All categories
+		$articleCategories->forget(0);
 		
 		$page->breadcrumbs = collect([]);
 		
@@ -77,6 +79,6 @@ class ArticlesTemplate extends Template
 			return (object) $row;
 		});
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles', 'articleCategory', 'articleCategories'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles', 'recentArticles', 'articleCategory', 'articleCategories'));
 	}
 }

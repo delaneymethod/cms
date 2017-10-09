@@ -14,6 +14,37 @@
 @push('bodyScripts')
 	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
 	@include('cp._partials.listeners')
+	<script async>
+	'use strict';
+	
+	window.onload = () => {	
+		let assetBrowserElements = [];
+	
+		@foreach ($articleTemplate->fields as $field)
+			@if (str_contains(strtolower($field['id']), 'image'))
+				assetBrowserElements.push('{{ $field['id'] }}');
+			@endif
+		@endforeach	
+		
+		assetBrowserElements.map(assetBrowserElement => {
+			$('#' + assetBrowserElement + '-browse-modal').on('show.bs.modal', event => {
+				const button = $(event.relatedTarget);
+				
+				const fieldId = button.data('field_id');
+				
+				const value = button.data('value');
+				
+				window.CMS.ControlPanel.attachAssetBrowser('#' + assetBrowserElement + '-container', fieldId, value);
+			});
+			
+			$('#' + assetBrowserElement + '-reset-field').on('click', () => {
+				$('#' + assetBrowserElement).val('').blur();
+				
+				$('a[data-target="#' + assetBrowserElement + '-browse-modal"]').data('value', '');
+			});
+		});
+	};
+	</script>
 @endpush
 
 @section('content')

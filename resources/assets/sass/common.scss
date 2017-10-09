@@ -167,8 +167,12 @@ a,
 	color: #333333;
 }
 
+.bg-light-grey {
+	background-color: #F2F2F2;
+}
+
 .bg-white {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 }
 
 .bg-danger {
@@ -218,6 +222,7 @@ a,
 	}
 }
 
+.btn-outline-danger,
 .btn-outline-gf-red {
 	color: $gf-red;
 	font-family: inherit;

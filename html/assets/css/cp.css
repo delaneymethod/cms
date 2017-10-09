@@ -14330,8 +14330,12 @@ a,
   color: #333333;
 }
 
+.bg-light-grey {
+  background-color: #F2F2F2;
+}
+
 .bg-white {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 .bg-danger {
@@ -14377,6 +14381,7 @@ a,
   border: 0;
 }
 
+.btn-outline-danger,
 .btn-outline-gf-red {
   color: #D30E07;
   font-family: inherit;
@@ -14385,6 +14390,7 @@ a,
   border-color: #D30E07;
 }
 
+.btn-outline-danger:hover,
 .btn-outline-gf-red:hover {
   color: #ffffff;
   background-color: #D30E07;

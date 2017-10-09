@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\ContentTrait;
+use App\Http\Traits\{ContentTrait, ArticleCategoryTrait};
 
 class ArticleTemplate extends Template
 {
-	use ContentTrait;
+	use ContentTrait,  ArticleCategoryTrait;
 	
 	protected $view = 'article';
 	
@@ -26,7 +26,20 @@ class ArticleTemplate extends Template
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
-		$article = $this->getArticleContent($parameters['article']);
+		// Convert to collect.
+		$articles = collect([$parameters['article']]);
+		
+		// Filter and do any other house keeping.
+		$articles = $this->getFilterPublishContentArticles($articles);
+		
+		// Convert it back.
+		$article = $articles->first();
+			
+		// Grab all article categories
+		$articleCategories = $this->getArticleCategories();
+		
+		// Remove the All categories
+		$articleCategories->forget(0);
 		
 		$page->breadcrumbs = collect([]);
 		
@@ -52,6 +65,11 @@ class ArticleTemplate extends Template
 		
 		$page->bannerContent = '<h2>'.$article->title.'</h2>';
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'article'));
+		// If the article has a banner image use this instead.
+		if (!empty($article->bannerImage)) {
+			$page->bannerImage = $article->bannerImage;
+		}
+		
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'article', 'articleCategories'));
 	}
 }

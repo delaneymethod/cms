@@ -20,7 +20,7 @@ class CreateProductAttributesTable extends Migration
 			
 			$table->unsignedInteger('id')->primary();
 			
-			$table->string('title');
+			$table->string('title')->index();
 			
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrent();

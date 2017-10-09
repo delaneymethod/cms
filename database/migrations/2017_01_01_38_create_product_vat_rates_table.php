@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductManufacturersTable extends Migration
+class CreateProductVatRatesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,21 +15,23 @@ class CreateProductManufacturersTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 
-		Schema::create('product_manufacturers', function (Blueprint $table) {
+		Schema::create('product_vat_rates', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
 			$table->unsignedInteger('id')->primary();
 			
-			$table->string('title')->nullable()->index();
-			$table->string('website')->nullable();
-			$table->string('logo_image')->nullable();
-			$table->string('cms_page_name')->nullable();
+			$table->string('code')->nullable()->index();
+			$table->string('description')->nullable()->index();
+			
+			$table->float('rate', 8, 2);
+			
+			$table->string('rate_display')->nullable();
 			
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrent();
 		});
 
-		Schema::table('product_manufacturers', function (Blueprint $table) {
+		Schema::table('product_vat_rates', function (Blueprint $table) {
 		});
 	}
 
@@ -40,6 +42,6 @@ class CreateProductManufacturersTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('product_manufacturers');
+		Schema::dropIfExists('product_vat_rates');
 	}
 }

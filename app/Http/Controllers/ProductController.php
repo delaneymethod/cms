@@ -44,6 +44,7 @@ class ProductController extends Controller
 		$this->middleware('auth', [
 			'except' => [
 				'show',
+				'search',
 				'webhook',
 			]
 		]);
@@ -157,6 +158,49 @@ class ProductController extends Controller
 		
 		// Dynamically set type and data
 		$parameters[$modelType] = $modelData;
+		
+		// Selects the page template and injects any data required
+		$this->preparePageTemplate($page, $parameters);
+		
+		return view('index', compact('currentUser', 'page', 'cart', 'wishlistCart'));
+	}
+	
+	/**
+     * Searches products based on keywords 
+     *
+	 * @params Request 	$request
+     * @return Response
+     */
+    public function search(Request $request)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		// We're going to use the products page as our page - it is the products parent after all...
+		$page = $this->getPageBySlug('products');
+		
+		// Grab a cart instance	- available across all pages
+		$cart = $this->getCartInstance('cart');
+		
+		// Grab any wishlist instances since user can add to cart and wishlist on products page
+		$wishlistCart = $this->getCartInstance('wishlist');
+		
+		// Grab parameters
+		$parameters = $request->route()->parameters();
+		
+		// Pass any global required data to the page template
+		$parameters['currentUser'] = $currentUser;
+		
+		// Add the page to the parameters array - we want to pass the page model data to the template.
+		$parameters['page'] = $page;
+		
+		$parameters['cart'] = $cart;
+		
+		$parameters['wishlistCart'] = $wishlistCart;
+		
+		// Dynamically set type and data
+		$parameters['search'] = true;
+		
+		$parameters['keywords'] = $request->get('keywords');
 		
 		// Selects the page template and injects any data required
 		$this->preparePageTemplate($page, $parameters);

@@ -22,8 +22,8 @@ class CreateProductCharacteristicsTable extends Migration
 			
 			$table->unsignedInteger('product_attribute_id')->nullable()->index()->comment('Foreign key to the product attributes table');
 	
-			$table->string('value');
-			$table->string('commodity_code_representation');
+			$table->string('value')->index();
+			$table->string('commodity_code_representation')->index();
     		
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrent();

@@ -56,7 +56,7 @@ header {
 		background-repeat: no-repeat;
 		background-position: center center;
 		background-size: cover;
-		height: 440px;
+		height: 340px;
 		
 		h2 {
 			font-size: 42px;
@@ -117,6 +117,10 @@ main {
 		
 	.products {
 		a {
+			img {
+				max-height: 200px; 	
+			}
+			
 			h4 {
 				font-size: 14px;
 				font-weight: normal;
@@ -151,6 +155,11 @@ main {
 		img {
 			max-width: 100%;
 		}
+	}
+	
+	.search {
+		border-top: 1px solid #ECECEC;
+		background-color: #EFEFEF;
 	}
 }
 

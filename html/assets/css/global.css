@@ -11532,8 +11532,12 @@ a,
   color: #333333;
 }
 
+.bg-light-grey {
+  background-color: #F2F2F2;
+}
+
 .bg-white {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 .bg-danger {
@@ -11579,6 +11583,7 @@ a,
   border: 0;
 }
 
+.btn-outline-danger,
 .btn-outline-gf-red {
   color: #D30E07;
   font-family: inherit;
@@ -11587,6 +11592,7 @@ a,
   border-color: #D30E07;
 }
 
+.btn-outline-danger:hover,
 .btn-outline-gf-red:hover {
   color: #ffffff;
   background-color: #D30E07;
@@ -11736,7 +11742,7 @@ header .banner {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-  height: 440px;
+  height: 340px;
 }
 
 header .banner h2 {
@@ -11789,6 +11795,10 @@ main a.btn {
   text-decoration: none;
 }
 
+main .products a img {
+  max-height: 200px;
+}
+
 main .products a h4 {
   font-size: 14px;
   font-weight: normal;
@@ -11819,6 +11829,11 @@ main .map-padding {
 
 main .article-content img {
   max-width: 100%;
+}
+
+main .search {
+  border-top: 1px solid #ECECEC;
+  background-color: #EFEFEF;
 }
 
 footer {

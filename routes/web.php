@@ -44,6 +44,8 @@ Route::post('/orders', 'OrderController@store');
 Route::post('/contact', 'PageController@contact');
 
 // Products routes
+Route::get('/products/search', 'ProductController@search');
+Route::post('/products/search', 'ProductController@search');
 Route::get('/products/{catchAll}', 'ProductController@show')->where('catchAll', '(.*)');
 
 // BACK END ROUTES

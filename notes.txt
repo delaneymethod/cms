@@ -1,30 +1,19 @@
-add article image and excerpt to create article
+
+ability to reindex assets folder and import all files found
 
 
 
 add pagination to articles
 
-finish article page
+allow more than 1 banner image
 
-fix article categories and all categories in articles and each article
-
- 
-
-
-if article has no banner image itself, use article template banner image as fallback
-
-if product has no banner image itself, use product template banner image as fallback
-
-add products search so visible and clear on all pages
-
-ability to reindex assets folder and import all files found
-
-new homepage design?
 
 
 
 
 ### To Do ###
+
+Discuss Homepage Design
 
 Pricing and Quantities 
  
@@ -49,6 +38,9 @@ b. If the item is not in stock and we are using cost price then the price is onl
 4. If there is an item with no price (or it is out of stock & older than the 6 month cut off period) then it will show nothing and not allow you to add to basket so will default to the ‘enquire’ status at commodity level.
  
 5. If a price is changed in the system this will need to notify/ping the system to know a change has been made.
+
+
+
 
 
 

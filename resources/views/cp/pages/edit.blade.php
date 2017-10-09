@@ -185,42 +185,6 @@
 						@foreach ($pageTemplate->fields as $field)
 							<div class="form-group">
 								{{ showField($field, old($field['id']), (9 + $loop->iteration)) }}
-								@if (str_contains(strtolower($field['id']), 'image'))
-									<div class="modal fade" id="{{ $field['id'] }}-browse-modal" tabindex="-1" role="dialog" aria-labelledby="{{ $field['id'] }}-browse-moda-label" aria-hidden="true">
-										<div class="modal-dialog modal-lg modal-xl" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="{{ $field['id'] }}-browse-modal-label">Assets</h5>
-												</div>
-												<div class="modal-body">
-													<div class="container-fluid">
-														<div class="row no-gutters">
-															<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 text-left">
-																<div id="{{ $field['id'] }}-container"></div>
-															</div>
-															<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4 text-center">
-																<div id="{{ $field['id'] }}-selected-asset-preview"></div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="modal-footer">
-													<div class="container-fluid">
-														<div class="row d-flex h-100 justify-content-start">
-															<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 align-self-center align-self-sm-center align-self-md-left align-self-lg-left align-self-xl-left">
-																<div class="text-center text-sm-center text-md-left text-lg-left text-xl-left selected-asset" id="{{ $field['id'] }}-selected-asset"></div>
-															</div>
-															<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 text-center text-sm-center text-md-center text-lg-right text-xl-right align-self-center">
-																<button type="button" class="btn btn-primary" id="{{ $field['id'] }}-select-asset">Insert</button>
-																<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								@endif
 								@if ($errors->has($field['id']))
 									<span id="helpBlock_{{ $field['id'] }}" class="form-control-feedback form-text gf-red">- {{ $errors->first($field['id']) }}</span>
 								@endif

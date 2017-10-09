@@ -37777,14 +37777,16 @@ var _this = this;
 			lazyload();
 		};
 
-		_this.loadMap = function (element) {
-			if ($(element).length && typeof google !== 'undefined') {
+		_this.loadPagination = function () {};
+
+		_this.loadMap = function () {
+			if ($('.map').length && typeof google !== 'undefined') {
 				var position = {
 					lat: 57.215075,
 					lng: -2.199492
 				};
 
-				var map = new google.maps.Map($(element).get(0), {
+				var map = new google.maps.Map($('.map').get(0), {
 					zoom: 16,
 					center: position
 				});
@@ -37794,9 +37796,7 @@ var _this = this;
 					map: map
 				});
 
-				$('.map-padding, .map-info').show();
-
-				$(element).show();
+				$('.map, .map-padding, .map-info').show();
 
 				google.maps.event.addDomListener(window, 'resize', function () {
 					map.setCenter(position);
@@ -37872,7 +37872,9 @@ var _this = this;
 
 			_this.loadAnimations();
 
-			_this.loadMap('.map');
+			_this.loadPagination();
+
+			_this.loadMap();
 
 			return _this;
 		};

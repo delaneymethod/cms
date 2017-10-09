@@ -18,7 +18,7 @@ trait PageTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getPage(int $id) : Page
+	public function getPage(int $id)
 	{
 		return Page::find($id);
 	}

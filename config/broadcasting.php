@@ -37,7 +37,7 @@ return [
             'app_id' => env('PUSHER_APP_ID', 399588),
             'options' => [
 				'cluster' => env('PUSHER_APP_CLUSTER', 'eu'),
-				'encrypted' => env('PUSHER_APP_ENCRYPTED', true),
+				'encrypted' => env('PUSHER_APP_ENCRYPTED', false),
             ],
         ],
 

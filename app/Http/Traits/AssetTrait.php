@@ -21,20 +21,22 @@ trait AssetTrait
 	 * @param 	int 		$id
 	 * @return 	Object
 	 */
-	public function getAsset(int $id) : Asset
+	public function getAsset(int $id)
 	{
 		$asset = Asset::findOrFail($id);
 		
-		$asset->filesize = $this->getSize($asset->size);
+		if (!empty($asset)) {
+			$asset->filesize = $this->getSize($asset->size);
 			
-		if (starts_with($asset->mime_type, 'image')) {
-			$path = $this->getPath($asset);
-			
-			list($width, $height) = getimagesize($path);
-			
-			$asset->width = $width;
-			
-			$asset->height = $height;
+			if (starts_with($asset->mime_type, 'image')) {
+				$path = $this->getPath($asset);
+				
+				list($width, $height) = getimagesize($path);
+				
+				$asset->width = $width;
+				
+				$asset->height = $height;
+			}
 		}
 		
 		return $asset;

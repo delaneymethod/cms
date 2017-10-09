@@ -63,7 +63,7 @@ trait ArticleTrait
 	 *
 	 * @return 	Response
 	 */
-	public function getArticles() : CollectionResponse
+	public function getArticles()
 	{
 		return Article::latest()->get();
 	}
