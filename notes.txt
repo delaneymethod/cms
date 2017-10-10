@@ -154,4 +154,44 @@ if ($cachingEnabled) {
 	}
 } else {
 	$articles = $this->getArticles();
-}		
+}
+
+
+Node installation Steps on Ubuntu 16.4
+--------------------------------------
+
+sudo service apache2 stop
+
+sudo service mysql stop
+
+sudo apt-get update
+
+sudo apt-get upgrade
+
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+
+sudo apt-get install nodejs
+
+sudo npm install -g npm 
+
+sudo apt-get install php7.0-sqlite
+
+sudo apt autoremove
+
+sudo chmod -R 777 bootstrap/cache
+
+sudo chmod -R 777 storage
+
+sudo chmod -R 777 storage/logs
+
+sudo touch storage/logs/laravel.log
+
+sudo chmod 775 storage/logs/laravel.log
+
+sudo yarn install
+
+sudo composer update
+
+sudo service apache2 restart
+
+sudo service mysql restart
