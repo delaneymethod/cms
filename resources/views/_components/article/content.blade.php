@@ -16,6 +16,7 @@
 									</div>
 									<div class="col-12">
 										<div class="spacer"></div>
+										<p>Published by {{ $article->user->first_name }} {{ $article->user->last_name }} on {{ date('jS F Y', strtotime($article->published_at)) }}</p>
 										<p>{!! $article->section1Excerpt !!}</p>
 										<p><a href="{{ $article->url }}" title="Read full article">Read full article.</a></p>
 									</div>	

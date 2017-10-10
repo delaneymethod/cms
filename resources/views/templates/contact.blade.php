@@ -10,8 +10,8 @@
 			--}}
 			@for ($i = 1; $i <= 10; $i++)
 				@component('_components.page.content', [
-					'page' => $page,
-					'field' => 'section'.$i.'Content'
+					'field' => 'section'.$i.'Content',
+					'page' => $page
 				])
 				@endcomponent
 			@endfor
@@ -114,7 +114,7 @@
 								<div class="col-12 col-sm-6 col-md-6 col-lg-12 col-xl-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 									<h5 class="text-danger">International &amp; Projects</h5>
 									<p>For all international orders or quotes: <a href="tel:+441224727467" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">+44 (0) 1224 727 467</a></p>
-									<p><a href="mailto:paul.cunningham@grampianfasteners.com" title="Email us" class="email-address">paul.cunningham@grampianfasteners.com</a></p>
+									<p><a href="mailto:paul.cunningham@grampianfasteners.com" title="Email us" class="email-address">paul.cunningham<br>@grampianfasteners.com</a></p>
 									<div class="spacer"></div>
 								</div>
 								<div class="col-12 col-sm-6 col-md-6 col-lg-12 col-xl-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
@@ -158,6 +158,6 @@
 				<div class="col-12 spacer tall"></div>
 			</div>
 		</div>
-		<div class="container-fluid map" style="margin-bottom: -40px;"></div>
+		<div class="container-fluid map" style="margin-bottom: -40px;background-image: url('/');"></div>
 		<div class="container">		
 			

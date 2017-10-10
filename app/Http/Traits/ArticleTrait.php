@@ -48,6 +48,19 @@ trait ArticleTrait
 	}
 	
 	/**
+	 * Get all the articles based on author slug.
+	 *
+	 * @param 	string 		$slug
+	 * @return 	Object
+	 */
+	public function getArticlesByAuthor(string $slug) : CollectionResponse
+	{
+		return Article::whereHas('user', function ($query) use ($slug) {
+			$query->where('slug', $slug);
+		})->get();
+	}
+	
+	/**
 	 * Get the specified article based on id.
 	 *
 	 * @param 	int 		$id

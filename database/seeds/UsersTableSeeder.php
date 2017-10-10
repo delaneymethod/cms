@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
 			[
 				'first_name' => 'Sean',
 				'last_name' => 'Delaney',
+				'slug' => 'sean-delaney',
 				'email' => 'hello@delaneymethod.com',
 				'password' => bcrypt('12345678'),
 				'job_title' => 'Software Engineer',
@@ -35,6 +36,7 @@ class UsersTableSeeder extends Seeder
 			[
 				'first_name' => 'Zara',
 				'last_name' => 'Vaughan',
+				'slug' => 'zara-vaughan',
 				'email' => 'zara.vaughan@grampianfasteners.com',
 				'password' => bcrypt('12345678'),
 				'job_title' => 'Digital Media Marketing Manager',
@@ -52,6 +54,7 @@ class UsersTableSeeder extends Seeder
 			[ 
 				'first_name' => 'Test',
 				'last_name' => 'User 1',
+				'slug' => 'test-user-1',
 				'email' => 'tu1@domain.tld',
 				'password' => bcrypt('12345678'),
 				'job_title' => 'Business Development Manager',
@@ -69,6 +72,7 @@ class UsersTableSeeder extends Seeder
 			[
 				'first_name' => 'Test',
 				'last_name' => 'User 2',
+				'slug' => 'test-user-2',
 				'email' => 'tu2@domain.tld',
 				'password' => bcrypt('12345678'),
 				'job_title' => '',
@@ -86,6 +90,7 @@ class UsersTableSeeder extends Seeder
 			[
 				'first_name' => 'Test',
 				'last_name' => 'User 3',
+				'slug' => 'test-user-3',
 				'email' => 'tu3@domain.tld',
 				'password' => bcrypt('12345678'),
 				'job_title' => '',
@@ -103,6 +108,7 @@ class UsersTableSeeder extends Seeder
 			[
 				'first_name' => 'Test',
 				'last_name' => 'User 4',
+				'slug' => 'test-user-4',
 				'email' => 'tu4@domain.tld',
 				'password' => bcrypt('12345678'),
 				'job_title' => '',
@@ -120,6 +126,7 @@ class UsersTableSeeder extends Seeder
 			[
 				'first_name' => 'Test',
 				'last_name' => 'User 5',
+				'slug' => 'test-user-5',
 				'email' => 'tu5@domain.tld',
 				'password' => bcrypt('12345678'),
 				'job_title' => '',

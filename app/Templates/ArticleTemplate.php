@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\{ContentTrait, ArticleCategoryTrait};
+use App\Http\Traits\{UserTrait, ArticleTrait, ContentTrait, ArticleCategoryTrait};
 
 class ArticleTemplate extends Template
 {
-	use ContentTrait,  ArticleCategoryTrait;
+	use UserTrait, ArticleTrait, ContentTrait, ArticleCategoryTrait;
 	
 	protected $view = 'article';
 	
@@ -34,6 +34,9 @@ class ArticleTemplate extends Template
 		
 		// Convert it back.
 		$article = $articles->first();
+		
+		// Grab all article authors
+		$articleAuthors = $this->getArticles()->pluck('user')->unique();
 			
 		// Grab all article categories
 		$articleCategories = $this->getArticleCategories();
@@ -70,6 +73,6 @@ class ArticleTemplate extends Template
 			$page->bannerImage = $article->bannerImage;
 		}
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'article', 'articleCategories'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'article', 'articleAuthors', 'articleCategories'));
 	}
 }

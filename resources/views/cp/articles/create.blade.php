@@ -60,6 +60,14 @@
 						{{ csrf_field() }}
 						<input type="hidden" name="template_id" value="9">
 						<input type="hidden" name="article_category_ids[]" value="1">
+						<div class="form-buttons">
+							@if ($currentUser->hasPermission('view_articles'))
+								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+							@endif
+							<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+						</div>
+						<div class="spacer"></div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
 							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" placeholder="e.g Blog Post Title" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
@@ -68,6 +76,7 @@
 							@endif
 							<span id="helpBlockTitle" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="slug" class="control-label font-weight-bold">Slug <span class="text-danger">&#42;</span></label>
 							<input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') }}" placeholder="e.g blog-post-title" tabindex="2" autocomplete="off" aria-describedby="helpBlockSlug" required>
@@ -76,6 +85,7 @@
 							@endif
 							<span id="helpBlockSlug" class="form-control-feedback form-text text-muted">- The slug is auto-generated based on the title but feel free to edit it.</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="description" class="control-label font-weight-bold">Meta Description</label>
 							<input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}" placeholder="e.g Blog Post Description" tabindex="3" autocomplete="off" aria-describedby="helpBlockDescription">
@@ -84,14 +94,16 @@
 							@endif
 							<span id="helpBlockDescription" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="keywords" class="control-label font-weight-bold">Meta Keywords</label>
 							<input type="text" name="keywords" id="keywords" class="form-control" value="{{ old('keywords') }}" placeholder="e.g Blog, Post, Keywords" tabindex="4" autocomplete="off" aria-describedby="helpBlockKeywords">
 							@if ($errors->has('keywords'))
 								<span id="helpBlockKeywords" class="form-control-feedback form-text gf-red">- {{ $errors->first('keywords') }}</span>
 							@endif
-							<span id="helpBlockKeywords" class="form-control-feedback form-text text-muted">- Separate your keywords by commas.</span>
+							<span id="helpBlockKeywords" class="form-control-feedback form-text text-muted">- The keywords are auto-generated based on the title but feel free to edit them.<br>- Remember to separate your keywords by commas.</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="published_at" class="control-label font-weight-bold">Publish Date</label>
 							<div class="input-group date">
@@ -103,6 +115,7 @@
 							@endif
 							<span id="helpBlockPublishedAt" class="form-control-feedback form-text text-muted">- Articles will only appear on/after this date.</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
 							@foreach ($statuses as $status)
@@ -117,6 +130,7 @@
 							@endif
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Article Categories</label>
 							@php ($articleCategoryIds = old('article_category_ids') ?? [])
@@ -138,6 +152,7 @@
 							@endif
 							<span id="helpBlockArticleCategoryIds" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="user_id" class="control-label font-weight-bold">Author</label>
 							<select name="user_id" id="user_id" class="form-control" tabindex="8" aria-describedby="helpBlockUserId" required>
@@ -151,6 +166,7 @@
 							<span id="helpBlockUserId" class="form-control-feedback form-text text-muted"></span>
 						</div>
 						@foreach ($articleTemplate->fields as $field)
+							<div class="spacer"></div>
 							<div class="form-group">
 								{{ showField($field, old($field['id']), (9 + $loop->iteration)) }}
 								@if ($errors->has($field['id']))
@@ -158,6 +174,7 @@
 								@endif
 							</div>
 						@endforeach
+						<div class="spacer"></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_articles'))
 								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
@@ -165,26 +182,6 @@
 							<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
 						</div>
 					</form>
-					<div class="modal fade add-assets-modal-lg" tabindex="-1" role="dialog" aria-labelledby="addAssetsModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="assetModalLabel">Assets</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								</div>
-								<div class="modal-body">
-									<div class="row">
-										<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-										</div>
-									</div>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="float-right btn btn-outline-secondary" data-dismiss="modal">Close</button>
-									<button type="button" class="float-right btn btn-primary">Insert Assets</button>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 				@include('cp._partials.footer')
 			</div>

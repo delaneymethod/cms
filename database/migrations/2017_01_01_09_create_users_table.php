@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
 			
 			$table->string('first_name')->index();
 			$table->string('last_name')->index();
+			$table->string('slug')->unique()->index();
 			$table->string('email')->unique()->index();
 			$table->string('password')->nullable();
 			$table->string('job_title')->nullable()->index();

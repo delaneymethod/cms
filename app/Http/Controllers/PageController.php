@@ -97,6 +97,15 @@ class PageController extends Controller
 			$filterByArticleCategory = true;
 		}
 		
+		// used when filtering articles by author
+		$articleAuthor = '';
+		
+		$filterByArticleAuthor = false;
+		
+		if (str_contains($slug, 'author')) {
+			$filterByArticleAuthor = true;
+		}
+		
 		// Grab parameters
 		$parameters = $request->route()->parameters();
 		
@@ -125,6 +134,15 @@ class PageController extends Controller
 			$slug = 'articles';
 		} else {
 			$parameters['articleCategory'] = '';
+		}
+		
+		// Set page to articles and pass the author to the articles template
+		if ($filterByArticleAuthor) {
+			$parameters['articleAuthor'] = $slug;
+			
+			$slug = 'articles';
+		} else {
+			$parameters['articleAuthor'] = '';
 		}
 		
 		// Get the requested page based on slug - if it doesnt exist, a 404 is thrown!

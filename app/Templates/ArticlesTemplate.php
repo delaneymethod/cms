@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\{ArticleTrait, ContentTrait, ArticleCategoryTrait};
+use App\Http\Traits\{UserTrait, ArticleTrait, ContentTrait, ArticleCategoryTrait};
 
 class ArticlesTemplate extends Template
 {
-	use ArticleTrait, ContentTrait, ArticleCategoryTrait;
+	use UserTrait, ArticleTrait, ContentTrait, ArticleCategoryTrait;
 	
 	protected $view = 'articles';
 	
@@ -26,9 +26,27 @@ class ArticlesTemplate extends Template
 		
 		$wishlistCart = $parameters['wishlistCart'];
 		
+		$articleAuthor = $parameters['articleAuthor'];
+		
 		$articleCategory = $parameters['articleCategory'];
 		
-		if (!empty($articleCategory)) {
+		if (!empty($articleAuthor)) {
+			$articles = $this->getArticlesByAuthor($articleAuthor);
+			
+			$articles = $this->getFilterPublishContentArticles($articles);
+			
+			// Get recent articles to add extra template content
+			$recentArticles = $this->getArticles();
+			
+			// We only want 5 though
+			$recentArticles = $recentArticles->slice(0, 5);
+			
+			$recentArticles = $this->getFilterPublishContentArticles($recentArticles);
+		
+			$articleAuthor = $this->getUserBySlug($articleAuthor);
+			
+			$page->bannerContent = '<h2>Articles</h2><h4>'.$articleAuthor->first_name.' '.$articleAuthor->last_name.'</h4>';
+		} else if (!empty($articleCategory)) {
 			$articles = $this->getArticlesByCategory($articleCategory);
 			
 			$articles = $this->getFilterPublishContentArticles($articles);
@@ -52,6 +70,9 @@ class ArticlesTemplate extends Template
 			$articles = $this->getFilterPublishContentArticles($articles);
 		}
 		
+		// Grab all article authors
+		$articleAuthors = $this->getArticles()->pluck('user')->unique();
+		
 		// Grab all article categories
 		$articleCategories = $this->getArticleCategories();
 		
@@ -74,11 +95,19 @@ class ArticlesTemplate extends Template
 			]);
 		}
 		
+		if (!empty($articleAuthor)) {
+			$page->breadcrumbs->push([
+				'title' => $articleAuthor->first_name.' '.$articleAuthor->last_name,
+				'slug' => $articleAuthor->slug,
+				'url' => '/articles/author/'.$articleAuthor->slug,
+			]);
+		}
+		
 		// Convert inners to objects
 		$page->breadcrumbs = $page->breadcrumbs->map(function ($row) {
 			return (object) $row;
 		});
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles', 'recentArticles', 'articleCategory', 'articleCategories'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'articles', 'recentArticles', 'articleAuthor', 'articleAuthors', 'articleCategory', 'articleCategories'));
 	}
 }

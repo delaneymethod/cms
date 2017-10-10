@@ -43,7 +43,7 @@
 		};
 		
 		this.loadMap = () => {
-			if ($('.map').length && typeof google !== 'undefined') {
+			if ($('.map').length) {
 				const position = {
 					lat: 57.215075,
 					lng: -2.199492
@@ -111,6 +111,28 @@
 			});
 		};
 		
+		this.waitForGoogleMaps = () => {
+			/*
+			if (typeof window.google.maps !== 'undefined') {
+				this.loadMap();
+			} else {
+				setTimeout(() => {
+					this.waitForGoogleMaps();
+				}, 1000);
+			}
+			*/
+			
+			let googleMapsLoaded = setInterval(() => {
+				if (typeof window.google == 'undefined' || typeof window.google.maps == 'undefined') {
+					return;
+				}
+				
+				clearInterval(googleMapsLoaded);
+        
+				this.loadMap();
+    		}, 1000);
+		};
+		
 		this.init = () => {
 			console.info(this.name + ' v' + this.version + ' is up and running!');
 			
@@ -137,7 +159,7 @@
 			
 			this.loadPagination();
 			
-			this.loadMap();
+			this.waitForGoogleMaps();
 			
 			return this;
 		};
@@ -147,6 +169,3 @@
 })(jQuery);
 
 window.CMS = $.delaneyMethodCMS();
-
-
-

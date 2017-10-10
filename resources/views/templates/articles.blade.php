@@ -92,7 +92,27 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-12 spacer very-tall"></div>
+							<div class="col-12 spacer"></div>
+						</div>						
+					@endif
+					@if ($articleAuthors->count() > 0)
+						<div class="row">
+							<div class="col-12">
+								<div class="spacer d-block d-sm-block d-md-block d-lg-none d-xl-none"></div>
+								<h4>Articles by Author</h4>
+								<div class="spacer"></div>
+								<ul class="list-unstyled">
+									@foreach ($articleAuthors as $articleAuthor)
+										<li class="d-inline-block d-sm-inline-block d-md-inline-block d-lg-block d-xl-block {{ setActive('articles/author/'.$articleAuthor->slug) }}"><a href="/articles/author/{{ $articleAuthor->slug }}" title="{{ $articleAuthor->first_name }} {{ $articleAuthor->last_name }}">{{ $articleAuthor->first_name }} {{ $articleAuthor->last_name }}</a></li>
+										@if (!$loop->last)
+											<li class="d-inline-block d-sm-inline-block d-md-inline-block d-lg-none d-xl-none">&nbsp;|&nbsp;</li>
+										@endif
+									@endforeach
+								</ul>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 spacer"></div>
 						</div>						
 					@endif
 				</div>

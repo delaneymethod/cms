@@ -37780,7 +37780,7 @@ var _this = this;
 		_this.loadPagination = function () {};
 
 		_this.loadMap = function () {
-			if ($('.map').length && typeof google !== 'undefined') {
+			if ($('.map').length) {
 				var position = {
 					lat: 57.215075,
 					lng: -2.199492
@@ -37848,6 +37848,28 @@ var _this = this;
 			});
 		};
 
+		_this.waitForGoogleMaps = function () {
+			/*
+   if (typeof window.google.maps !== 'undefined') {
+   	this.loadMap();
+   } else {
+   	setTimeout(() => {
+   		this.waitForGoogleMaps();
+   	}, 1000);
+   }
+   */
+
+			var googleMapsLoaded = setInterval(function () {
+				if (typeof window.google == 'undefined' || typeof window.google.maps == 'undefined') {
+					return;
+				}
+
+				clearInterval(googleMapsLoaded);
+
+				_this.loadMap();
+			}, 1000);
+		};
+
 		_this.init = function () {
 			console.info(_this.name + ' v' + _this.version + ' is up and running!');
 
@@ -37874,7 +37896,7 @@ var _this = this;
 
 			_this.loadPagination();
 
-			_this.loadMap();
+			_this.waitForGoogleMaps();
 
 			return _this;
 		};

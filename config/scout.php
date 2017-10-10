@@ -92,7 +92,7 @@ return [
 		// Where the index files will be stored
 		'storage'  => storage_path('indexes'),
 		// When the fuzziness flag is set to true the keyword juleit will return documents that match the word juliet, the default levenshtein distance is 2
-		'fuzziness' => env('TNTSEARCH_FUZZINESS', true),
+		'fuzziness' => env('TNTSEARCH_FUZZINESS', false),
 		'fuzzy' => [
 			'prefix_length' => 2,
 			'max_expansions' => 50,

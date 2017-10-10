@@ -33,6 +33,7 @@ Route::patch('/cart/{rowId}', 'CartController@update');
 Route::delete('/cart', 'CartController@delete');
 
 // Articles routes
+Route::redirect('/articles/author', '/articles', 301);
 Route::redirect('/articles/category', '/articles', 301);
 Route::get('/articles/{slug}', 'ArticleController@show');
 

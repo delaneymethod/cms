@@ -12,7 +12,7 @@
 							@endif
 						@endforeach
 						@if ($authenticated)
-							<li class="list-inline-item"><a href="/cp/dashboard" title="Dashboard">Dashboard</a></li>
+							<li class="list-inline-item"><a href="/cp/dashboard" title="My Account">My Account</a></li>
 						@else
 							<li class="list-inline-item {{ setActive('login') }}"><a href="/login" title="Login">Login</a></li>
 						@endif

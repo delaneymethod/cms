@@ -43,6 +43,14 @@ trait UserTrait
 	}
 
 	/**
+	 * Get the user record by their slug.
+	 */
+	public function getUserBySlug(string $slug) : User
+	{
+		return User::where('slug', $slug)->firstOrFail();
+	}
+	
+	/**
 	 * Get the user record by their email.
 	 */
 	public function getUserByEmail(string $email) : User

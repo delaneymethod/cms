@@ -177,7 +177,6 @@
 															<tr class="bg-default text-white very-tall">
 																<th class="align-middle">&nbsp;</th>
 																<th class="align-middle">Product</th>
-																<th class="align-middle">Product Commodity</th>
 																<th class="align-middle text-center">Qty</th>
 																<th class="align-middle text-center">Price</th>
 																<th class="align-middle text-right">Subtotal</th>
@@ -187,9 +186,8 @@
 															@foreach ($cart->product_commodities as $productCommodity)
 																@php ($productCommodityProduct = $productCommodity->model->product)
 																<tr>
-																	<td class="align-middle text-center"><a href="{{ $productCommodityProduct->url }}" title="{{ $productCommodityProduct->title }}" target="_blank" class="text-gf-info"><img src="/assets/img/loading.svg" data-src="{{ $productCommodityProduct->image_url }}" class="lazyload img-fluid" width="100px" alt="{{ $productCommodityProduct->title }}"></a></td>
-																	<td class="align-middle"><a href="{{ $productCommodityProduct->url }}" title="{{ $productCommodityProduct->title }}" target="_blank">{{ $productCommodityProduct->title }}</a></td>
-																	<td class="align-middle">{{ $productCommodity->name }}</td>
+																	<td class="align-middle text-center d-none d-sm-none d-md-block d-lg-block d-xl-block"><a href="{{ $productCommodityProduct->url }}" title="{{ $productCommodityProduct->title }}" target="_blank" class="text-gf-info"><img src="/assets/img/loading.svg" data-src="{{ $productCommodityProduct->image_url }}" class="lazyload img-fluid" width="100px" alt="{{ $productCommodityProduct->title }}"></a></td>
+																	<td class="align-middle"><a href="{{ $productCommodityProduct->url }}" title="{{ $productCommodityProduct->title }}" target="_blank">{{ $productCommodity->name }}</a></td>
 																	<td class="align-middle text-center">{{ $productCommodity->qty }}</td>
 																	<td class="align-middle text-right">{{ $productCommodity->price() }}</td>
 																	<td class="align-middle text-right">{{ $productCommodity->total() }}</td>
@@ -198,17 +196,17 @@
 														</tbody>
 														<tfoot>
 															<tr>
-																<td colspan="4">&nbsp;</td>
+																<td colspan="3">&nbsp;</td>
 																<td class="align-middle text-right">Subtotal</td>
 																<td class="align-middle text-right">{{ $cart->subtotal }}</td>
 															</tr>
 															<tr>
-																<td colspan="4">&nbsp;</td>
+																<td colspan="3">&nbsp;</td>
 																<td class="align-middle text-right">Tax</td>
 																<td class="align-middle text-right">{{ $cart->tax }}</td>
 															</tr>
 															<tr>
-																<td colspan="4">&nbsp;</td>
+																<td colspan="3">&nbsp;</td>
 																<td class="align-middle text-right">Total</td>
 																<td class="align-middle text-right">{{ $cart->total }}</td>
 															</tr>
