@@ -1,4 +1,8 @@
 <?php
+	
+$inDevelopmentMode = config('app.debug');
+	
+$enabled = ($inDevelopmentMode) ? false : true;
 
 return [
 
@@ -15,7 +19,7 @@ return [
     |
     */
 	
-	'enabled' => env('CACHE_ENABLED', true),
+	'enabled' => env('CACHE_ENABLED', $enabled),
 	
     'default' => env('CACHE_DRIVER', 'database'),
 	

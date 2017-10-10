@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\{ContentTrait, ProductCategoryTrait};
+use App\Http\Traits\{ContentTrait, ProductTrait, ProductCategoryTrait};
 
 class ProductTemplate extends Template
 {
-	use ContentTrait, ProductCategoryTrait;
+	use ContentTrait, ProductTrait, ProductCategoryTrait;
 	
 	protected $view = 'product';
 	
@@ -27,6 +27,8 @@ class ProductTemplate extends Template
 		$wishlistCart = $parameters['wishlistCart'];
 		
 		$product = $parameters['product'];
+		
+		$totalProducts = number_format($this->getProducts()->count(), 0, '.', ',');
 		
 		$page->breadcrumbs = collect([]);
 		
@@ -69,6 +71,6 @@ class ProductTemplate extends Template
 		
 		$page->title = $product->title;
 			
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'product'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'product', 'totalProducts'));
 	}
 }

@@ -1,3 +1,4 @@
+			{{--
 			<div class="row">
 				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 					<h3>{{ $page->title }}</h3>
@@ -16,6 +17,19 @@
 					<div class="col-12 spacer tall"></div>
 				</div>
 			@endif
+			--}}
+			@include('_partials.productSearch', [
+				'totalProducts' => $totalProducts,
+				'keywords' => ''
+			])
+			<div class="row">
+				<div class="col-12 text-center">
+					<h4>Browse our Products by category</h4>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 spacer"></div>
+			</div>
 			@if ($productCategories->count() > 0)
 				<div class="row">
 					<div class="col-12 spacer tall"></div>
@@ -33,3 +47,4 @@
 					@endforeach
 				</div>
 			@endif
+			

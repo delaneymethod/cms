@@ -30,6 +30,7 @@ class ProductVatRate extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'code',
 		'description',
 		'rate',

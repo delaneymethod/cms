@@ -182,9 +182,9 @@ return [
 		Barryvdh\Snappy\ServiceProvider::class,
 		Baum\Providers\BaumServiceProvider::class,
 		Spatie\Backup\BackupServiceProvider::class,
-		Karlmonson\Ping\PingServiceProvider::class,
 		App\Providers\ComposerServiceProvider::class,
 		App\Providers\CartHelperServiceProvider::class,
+		TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
 		App\Providers\DirectoryHelperServiceProvider::class,
 		Propaganistas\LaravelIntl\IntlServiceProvider::class,
 		Spatie\UptimeMonitor\UptimeMonitorServiceProvider::class,
@@ -241,7 +241,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         
 		// Added by Sean
-		'Ping' => Karlmonson\Ping\Facades\Ping::class,
 		'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
 		'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
 		'CartHelper' => App\Helpers\Facades\CartHelper::class,

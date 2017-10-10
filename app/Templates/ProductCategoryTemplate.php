@@ -51,6 +51,8 @@ class ProductCategoryTemplate extends Template
 		
 		$productAttributes = collect($productAttributes)->unique()->toArray();
 		
+		$totalProducts = number_format($this->getProducts()->count(), 0, '.', ',');
+		
 		$page->breadcrumbs = collect([]);
 		
 		$page->breadcrumbs->push([
@@ -85,6 +87,6 @@ class ProductCategoryTemplate extends Template
 		
 		$page->title = $productCategory->title;
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategory', 'productCategories', 'products', 'productAttributes'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategory', 'productCategories', 'products', 'productAttributes', 'totalProducts'));
 	}
 }

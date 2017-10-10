@@ -38,6 +38,7 @@ class Product extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'slug',
 		'import_id',
@@ -77,21 +78,40 @@ class Product extends Model
 	 */
 	public function toSearchableArray() : array
 	{
-		$pattern = '/<p(.*?)>((.*?)+)\<\/p>/';
+		$description = '';
 		
-		$replacement = '${2} ';
+		$descriptions = [];
 		
-		$subject = $this->description;
+		if (!empty($this->description)) {
+			$pattern = '/<p(.*?)>((.*?)+)\<\/p>/';
+			
+			$replacement = '${2} ';
 		
-		$description = preg_replace($pattern, $replacement, $subject);
+			$subject = $this->description;
 		
-		$description = $description.', '.$this->product_category->title.', '.$this->product_category->description.', '.$this->product_manufacturer->title;
+			$description = preg_replace($pattern, $replacement, $subject);
+			
+			array_push($descriptions, trim($description));
+		}
 		
-		$description = str_replace(', ,', ',', $description);
-
-		$description = trim($description);
-	
+		if (!empty($this->product_category)) {
+			array_push($descriptions, trim($this->product_category->title));
+			
+			if (!empty($this->product_category->description)) {
+				array_push($descriptions, trim($this->product_category->description));
+			}
+		}
+		
+		if (!empty($this->product_manufacturer)) {
+			array_push($descriptions, trim($this->product_manufacturer->title));
+		}
+		
+		if (count($descriptions) > 0) {
+			$description = implode(', ', $descriptions);
+		}
+		
 		return [
+			'id' => $this->id,
 			'title' => $this->title,
 			'description' => $description,
 		];
@@ -128,27 +148,31 @@ class Product extends Model
 	/**
 	 * Gets product description but pretty.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
-	public function getDescriptionAttribute(string $description) : string
+	public function getDescriptionAttribute($description)
 	{
-		// Fix up the description
-		$description = str_replace(["\r\n", "\r", "\n"], '<br>', $description);
-		
-		// Split into paragraphs
-		$descriptions = explode('<br>', $description); 
-		
-		// Remove empty or null paragraphs 
-		$descriptions = array_filter($descriptions, 'strlen');
-		
-		// Fixes keys - not needed but I have OCD
-		$descriptions = array_values($descriptions);
-		
-		foreach ($descriptions as &$description) {
-			$description = '<p>'.$description.'</p>';
+		if (!empty($description)) {
+			// Fix up the description
+			$description = str_replace(["\r\n", "\r", "\n"], '<br>', $description);
+			
+			// Split into paragraphs
+			$descriptions = explode('<br>', $description); 
+			
+			// Remove empty or null paragraphs 
+			$descriptions = array_filter($descriptions, 'strlen');
+			
+			// Fixes keys - not needed but I have OCD
+			$descriptions = array_values($descriptions);
+			
+			foreach ($descriptions as &$description) {
+				$description = '<p>'.$description.'</p>';
+			}
+			
+			return implode('', $descriptions);
 		}
 		
-		return implode('', $descriptions);
+		return $description;
 	}
 	
 	/**

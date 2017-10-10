@@ -51,6 +51,7 @@ class ProductCommodity extends Model implements Buyable
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'is_dirty',
 		'weight',

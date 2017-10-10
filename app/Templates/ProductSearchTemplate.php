@@ -48,7 +48,7 @@ class ProductSearchTemplate extends Template
 			$productCategories = $productCategories->whereStrict('parent_id', 0)->whereStrict('publish_to_web', 1)->sortBy('sort_order');
 		}
 		
-		$totalProducts = Product::count();
+		$totalProducts = number_format(Product::count(), 0, '.', ',');
 		
 		$page->breadcrumbs = collect([]);
 		
@@ -61,7 +61,7 @@ class ProductSearchTemplate extends Template
 		$page->breadcrumbs->push([
 			'title' => 'Search',
 			'slug' => 'search',
-			'url' => $page->url.'search',
+			'url' => '/products/search',
 		]);
 		
 		// Convert inners to objects
@@ -71,8 +71,6 @@ class ProductSearchTemplate extends Template
 		
 		$page->title = 'Search - '.$page->title;
 		
-		$page->bannerContent = '<h2>Search '.number_format($totalProducts, 0, '.', ',').' Products</h2>';
-		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategories', 'products', 'keywords'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategories', 'products', 'keywords', 'totalProducts'));
 	}
 }

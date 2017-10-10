@@ -30,6 +30,7 @@ class ProductStandard extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'code',
 		'further_details',

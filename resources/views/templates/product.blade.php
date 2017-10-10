@@ -2,6 +2,10 @@
 			@php ($currentUserCanCreateOrders = optional($currentUser)->hasPermission('create_orders'))
 			@php ($wishlistCartProductCommodityIds = $wishlistCart->product_commodities->pluck('id'))
 			@php ($redirectTo = '?redirectTo=/'.request()->path())
+			@include('_partials.productSearch', [
+				'totalProducts' => $totalProducts,
+				'keywords' => ''
+			])
 			<div class="row">
 				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 					<h3>{{ $product->title }}</h3>

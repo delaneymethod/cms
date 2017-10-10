@@ -30,6 +30,7 @@ class ProductAttribute extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 	];
 	

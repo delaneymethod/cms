@@ -1,12 +1,8 @@
 
-ability to reindex assets folder and import all files found
-
-
 
 add pagination to articles
 
 allow more than 1 banner image
-
 
 
 

@@ -30,6 +30,7 @@ class ProductStandardOrganisation extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'website',
 		'description',

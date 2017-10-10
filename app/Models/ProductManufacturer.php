@@ -32,6 +32,7 @@ class ProductManufacturer extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'website',
 		'logo_image',

@@ -11705,6 +11705,10 @@ a,
   height: 50px;
 }
 
+hr {
+  border-top: 1px solid #ECEFF1;
+}
+
 header {
   border-bottom: 1px solid #ECEFF1;
 }
@@ -11730,10 +11734,6 @@ header nav ul .active a {
 header h1 {
   margin: 0;
   padding: 0;
-}
-
-header hr {
-  border-top: 1px solid #FFFFFF;
 }
 
 header .banner {

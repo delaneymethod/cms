@@ -30,6 +30,7 @@ class ProductCharacteristic extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'product_attribute_id',
 		'value',
 		'commodity_code_representation',

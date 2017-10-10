@@ -1,3 +1,7 @@
+			@include('_partials.productSearch', [
+				'totalProducts' => $totalProducts,
+				'keywords' => ''
+			])
 			<div class="row">
 				<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 					<h3>{{ $productCategory->title }}</h3>
@@ -48,6 +52,9 @@
 							@foreach ($productAttributes as $productAttribute)
 								<div class="col-1 col-sm-1 col-md-1 col-lg-1 col-xl-1 text-center font-weight-bold d-none d-sm-none d-mg-block d-lg-block d-xl-block align-self-center">{{ $productAttribute['title'] }}</div>
 							@endforeach
+						</div>
+						<div class="row">
+							<div class="col-12 spacer"></div>
 						</div>
 						@foreach ($products as $product)
 							<div class="row">

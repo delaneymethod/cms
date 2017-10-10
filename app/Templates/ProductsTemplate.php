@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\{ContentTrait, ProductCategoryTrait};
+use App\Http\Traits\{ContentTrait, ProductTrait, ProductCategoryTrait};
 
 class ProductsTemplate extends Template
 {
-	use ContentTrait, ProductCategoryTrait;
+	use ContentTrait, ProductTrait, ProductCategoryTrait;
 	
 	protected $view = 'products';
 	
@@ -37,6 +37,8 @@ class ProductsTemplate extends Template
 		// Grab all top level product categories - ones with parent id = 0, published to the web and sorted
 		$productCategories = $productCategories->whereStrict('parent_id', 0)->whereStrict('publish_to_web', 1)->sortBy('sort_order');
 		
+		$totalProducts = number_format($this->getProducts()->count(), 0, '.', ',');
+		
 		$page->breadcrumbs = collect([]);
 		
 		$page->breadcrumbs->push([
@@ -49,6 +51,6 @@ class ProductsTemplate extends Template
 			return (object) $row;
 		});
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategories'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategories', 'totalProducts'));
 	}
 }

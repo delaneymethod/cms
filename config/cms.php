@@ -6,7 +6,7 @@
  */
 
 $inDevelopmentMode = config('app.debug');
-
+	
 return [
 	
 	/*

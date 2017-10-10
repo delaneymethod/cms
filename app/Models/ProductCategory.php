@@ -34,6 +34,7 @@ class ProductCategory extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'slug',
 		'description',
