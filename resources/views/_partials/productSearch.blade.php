@@ -1,6 +1,6 @@
 			<div class="row">
 				<div class="col-12 text-center">
-					<h4>Search {{ $totalProducts }} Products</h4>
+					<h4>Search {{ $totalProducts }} Products &amp; Commodities</h4>
 					{{--
 					<p>Type in your keywords to begin searching&hellip;</p>
 					--}}

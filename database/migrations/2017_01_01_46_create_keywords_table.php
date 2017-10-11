@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompaniesTable extends Migration
+class CreateKeywordsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,22 +15,18 @@ class CreateCompaniesTable extends Migration
 	{
 		Schema::enableForeignKeyConstraints();
 
-		Schema::create('companies', function (Blueprint $table) {
+		Schema::create('keywords', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
-			
+
 			$table->increments('id');
 			
-			$table->unsignedBigInteger('solution_id')->nullable();
-			
 			$table->string('title')->index();
-			
-			$table->unsignedInteger('default_location_id')->nullable();
 			
 			$table->timestamp('created_at')->useCurrent();
 			$table->timestamp('updated_at')->useCurrent();
 		});
 
-		Schema::table('companies', function (Blueprint $table) {
+		Schema::table('keywords', function (Blueprint $table) {
 		});
 	}
 
@@ -41,6 +37,6 @@ class CreateCompaniesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('companies');
+		Schema::dropIfExists('keywords');
 	}
 }

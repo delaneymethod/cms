@@ -8,7 +8,7 @@
 namespace App\Http\Traits;
 
 use App\Models\County;
-use Illuminate\Database\Eloquent\Collection as CollectionResponse;
+use Illuminate\Database\Eloquent\Collection;
 
 trait CountyTrait
 {
@@ -41,7 +41,7 @@ trait CountyTrait
 	 *
 	 * @return 	Collection
 	 */
-	public function getCounties() : CollectionResponse
+	public function getCounties() : Collection
 	{
 		return County::all();
 	}

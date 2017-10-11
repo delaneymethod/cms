@@ -111,6 +111,62 @@
 			});
 		};
 		
+		this.attachDataTable = element => {
+			if ($(element).length) {
+				// If we're on the product page, hide pagination and x of y records information, change the layout too!
+				if ($(element).hasClass('product-commodities')) {
+					$.extend(true, $.fn.dataTable.defaults, {
+						'bPaginate': false,
+						'bInfo': false,
+						'dom': '<"row"<"col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"f>">',
+						'order': [],
+						'oLanguage': {
+							'sLengthMenu': '_MENU_',
+							'sSearch': '',
+							'sSearchPlaceholder': 'Filter by Option or Product Code e.g M3.5, DIN 931 or 25mm',
+						},
+						'deferRender': true,
+						'columnDefs': [{
+							'targets': 'no-sort',
+							'orderable': false,
+						}],
+						'language': {
+							'zeroRecords': 'Nothing found - sorry',
+							'info': 'Showing page _PAGE_ of _PAGES_',
+							'infoEmpty': 'No records available',
+							'infoFiltered': '(filtered from _MAX_ total records)',
+						},
+						'retrieve': true,
+						'deferRender': true,
+					});
+				} else {
+					$.extend(true, $.fn.dataTable.defaults, {
+						'order': [],
+						'oLanguage': {
+							'sLengthMenu': '_MENU_',
+							'sSearch': '',
+							'sSearchPlaceholder': 'Search...',
+						},
+						'deferRender': true,
+						'columnDefs': [{
+							'targets': 'no-sort',
+							'orderable': false,
+						}],
+						'language': {
+							'zeroRecords': 'Nothing found - sorry',
+							'info': 'Showing page _PAGE_ of _PAGES_',
+							'infoEmpty': 'No records available',
+							'infoFiltered': '(filtered from _MAX_ total records)',
+						},
+						'retrieve': true,
+						'deferRender': true,
+					});
+				}
+				
+				$(element).dataTable();
+			}
+		};
+		
 		this.waitForGoogleMaps = () => {
 			/*
 			if (typeof window.google.maps !== 'undefined') {
@@ -158,6 +214,8 @@
 			this.loadAnimations();
 			
 			this.loadPagination();
+			
+			this.attachDataTable('#datatable');
 			
 			this.waitForGoogleMaps();
 			

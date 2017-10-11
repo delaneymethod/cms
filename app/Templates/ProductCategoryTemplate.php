@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\{ContentTrait, ProductTrait, ProductCategoryTrait};
+use App\Http\Traits\{ContentTrait, ProductTrait, ProductCategoryTrait, ProductCommodityTrait};
 
 class ProductCategoryTemplate extends Template
 {
-	use ContentTrait, ProductTrait, ProductCategoryTrait;
+	use ContentTrait, ProductTrait, ProductCategoryTrait, ProductCommodityTrait;
 	
 	protected $view = 'productCategory';
 	
@@ -51,7 +51,11 @@ class ProductCategoryTemplate extends Template
 		
 		$productAttributes = collect($productAttributes)->unique()->toArray();
 		
-		$totalProducts = number_format($this->getProducts()->count(), 0, '.', ',');
+		$totalProducts = $this->getProductCount();
+		
+		$totalProductCommodities = $this->getProductCommodityCount();
+		
+		$totalProducts = number_format($totalProducts + $totalProductCommodities, 0, '.', ',');
 		
 		$page->breadcrumbs = collect([]);
 		

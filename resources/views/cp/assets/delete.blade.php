@@ -30,6 +30,7 @@
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
 						<input type="hidden" name="directory" value="{{ $directory }}">
+						<div class="spacer blank"></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_assets'))
 								<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>

@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
 		$this->call(ArticleContentTableSeeder::class);
 		$this->call(ProductCommoditiesTableSeeder::class);
 		$this->call(OrderProductCommodityTableSeeder::class);
+		$this->call(KeywordsTableSeeder::class);
 		
 		DB::enableQueryLog();
 	}

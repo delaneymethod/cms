@@ -7,6 +7,7 @@
  
 namespace App\Models;
 
+use Laravel\Scout\Searchable;
 use App\Http\Traits\CartTrait;
 use App\Models\{Order, Product};
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 
 class ProductCommodity extends Model implements Buyable
 {
-	use CartTrait;
+	use CartTrait, Searchable;
 	
 	/**
      * The table associated with the model.
@@ -128,6 +129,23 @@ class ProductCommodity extends Model implements Buyable
 	public function getBuyablePrice($options = null) : float
 	{
 		return $this->price;
+	}
+	
+	/**
+	 * Get the indexable data array for the model.
+	 *
+	 * @return array
+	 */
+	public function toSearchableArray() : array
+	{
+		return [
+			'id' => $this->id,
+			'title' => $this->title,
+			'weight' => $this->weight,
+			'weight_per' => $this->weight_per,
+			'code' => $this->code,
+			'short_description' => $this->short_description,
+		];
 	}
 	
 	/**

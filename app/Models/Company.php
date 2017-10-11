@@ -31,6 +31,7 @@ class Company extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'solution_id',
 		'title',
 		'default_location_id',
 	];

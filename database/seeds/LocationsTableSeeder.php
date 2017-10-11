@@ -16,6 +16,7 @@ class LocationsTableSeeder extends Seeder
 		
 		$locations = [
 			[
+				'solution_id' => null,
 				'title' => 'Dyce, Aberdeen',
 				'unit' => '',
 				'building' => 'Grampian House',
@@ -34,6 +35,7 @@ class LocationsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[	
+				'solution_id' => null,
 				'title' => 'Westhill',
 				'unit' => '',
 				'building' => '',
@@ -52,6 +54,7 @@ class LocationsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[	
+				'solution_id' => null,
 				'title' => 'Test Office 1',
 				'unit' => '1',
 				'building' => '1',
@@ -70,6 +73,7 @@ class LocationsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[	
+				'solution_id' => null,
 				'title' => 'Test Office 2',
 				'unit' => '2',
 				'building' => '2',
@@ -88,6 +92,7 @@ class LocationsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[	
+				'solution_id' => null,
 				'title' => 'Test Office 3',
 				'unit' => '3',
 				'building' => '3',
@@ -106,6 +111,7 @@ class LocationsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[	
+				'solution_id' => null,
 				'title' => 'Test Office 4',
 				'unit' => '4',
 				'building' => '4',
@@ -124,6 +130,7 @@ class LocationsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[	
+				'solution_id' => null,
 				'title' => 'Test Office 5',
 				'unit' => '5',
 				'building' => '5',
@@ -142,6 +149,7 @@ class LocationsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[	
+				'solution_id' => null,
 				'title' => 'Test Office 6',
 				'unit' => '6',
 				'building' => '6',

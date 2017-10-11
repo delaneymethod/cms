@@ -14495,6 +14495,10 @@ a,
   margin: 0;
 }
 
+.blank {
+  height: 0;
+}
+
 .tall {
   height: 25px;
 }
@@ -14838,6 +14842,10 @@ html, body {
 
 .main .content form .form-buttons {
   margin-top: 30px;
+}
+
+.main .content form .form-buttons:first-of-type {
+  margin-top: 0;
 }
 
 .main .content table a {

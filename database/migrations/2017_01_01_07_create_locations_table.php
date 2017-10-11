@@ -19,6 +19,8 @@ class CreateLocationsTable extends Migration
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
 			$table->increments('id');
+			
+			$table->unsignedBigInteger('solution_id')->nullable();
 
 			$table->string('title')->index();
 			$table->string('unit')->nullable();

@@ -24,13 +24,13 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">	
+					<div class="spacer"></div>
 					<table id="datatable" class="table table-striped table-bordered table-hover table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="align-middle no-sort">Identifier</th>
 								<th class="align-middle">Instance</th>
 								<th class="align-middle">User</th>
-								<th class="align-middle">Company</th>
+								<th class="align-middle">Location</th>
 								<th class="align-middle text-center">Saved</th>
 								<th class="align-middle text-center">Items</th>
 								<th class="align-middle no-sort">&nbsp;</th>
@@ -39,10 +39,9 @@
 						<tbody>
 							@foreach ($carts as $cart)
 								<tr>
-									<td class="align-middle">{{ $cart->identifier }}</td>
 									<td class="align-middle">{{ $cart->instance }}</td>
 									<td class="align-middle">{{ $cart->user->first_name }} {{ $cart->user->last_name }}</td>
-									<td class="align-middle">{{ $cart->user->company->title }}</td>
+									<td class="align-middle">{{ str_replace('<br>', ', ', $cart->user->location->postal_address) }}</td>
 									<td class="align-middle text-center">{{ $cart->created_at }}</td>
 									<td class="align-middle text-center">{{ $cart->count() }}</td>
 									<td class="align-middle actions dropdown text-center" id="submenu">

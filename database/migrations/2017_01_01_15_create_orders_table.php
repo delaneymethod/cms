@@ -20,6 +20,8 @@ class CreateOrdersTable extends Migration
 			
 			$table->increments('id');
 			
+			$table->unsignedBigInteger('solution_id')->nullable();
+			
 			$table->string('order_number')->index();
 			$table->string('po_number')->index();
 			

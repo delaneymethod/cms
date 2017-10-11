@@ -54,4 +54,14 @@ trait ProductTrait
 	{
 		return Product::all();
 	}
+	
+	/**
+	 * Get the total product count
+	 *
+	 * @return 	int
+	 */
+	public function getProductCount() : int
+	{
+		return Product::count();
+	}
 }

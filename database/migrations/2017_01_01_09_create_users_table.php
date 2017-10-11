@@ -20,6 +20,8 @@ class CreateUsersTable extends Migration
 			
 			$table->increments('id');
 			
+			$table->unsignedBigInteger('solution_id')->nullable();
+			
 			$table->string('first_name')->index();
 			$table->string('last_name')->index();
 			$table->string('slug')->unique()->index();

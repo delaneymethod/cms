@@ -11697,6 +11697,10 @@ a,
   margin: 0;
 }
 
+.blank {
+  height: 0;
+}
+
 .tall {
   height: 25px;
 }
@@ -11836,6 +11840,15 @@ main .article-content img {
 main .search {
   border-top: 1px solid #ECECEC;
   background-color: #EFEFEF;
+}
+
+main .dataTables_filter label {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+main .dataTables_filter label input {
+  width: 100%;
 }
 
 footer {

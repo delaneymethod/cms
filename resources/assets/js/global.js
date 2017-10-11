@@ -28,4 +28,8 @@ require('jquery-inview');
 
 require('bootstrap');
 
+require('../plugins/datatables/datatables');
+
+require('../plugins/datatables/datatables-bootstrap');
+
 require('../plugins/delaneymethod/cms');

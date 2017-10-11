@@ -29,6 +29,7 @@
 					<form name="removeCompany" id="removeCompany" class="removeCompany" role="form" method="POST" action="/cp/companies/{{ $company->id }}">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
+						<div class="spacer blank"></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_companies'))
 								<a href="/cp/companies" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>

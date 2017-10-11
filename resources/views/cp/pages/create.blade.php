@@ -16,6 +16,15 @@
 	@include('cp._partials.listeners')
 @endpush
 
+@section('formButtons')
+	<div class="form-buttons">
+		@if ($currentUser->hasPermission('view_pages'))
+			<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+		@endif
+		<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+	</div>
+@endsection
+
 @section('content')
 	<div class="container-fluid">
 		<div class="row">
@@ -24,9 +33,12 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
-					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="createPage" id="createPage" class="createPage" role="form" method="POST" action="/cp/pages">
 						{{ csrf_field() }}
+						@yield('formButtons')
+						<div class="spacer"></div>
+						<div class="spacer"></div>
+						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
 							<input type="text" name="title" id="title" class="form-control" value="{{ old('title') }}" placeholder="e.g New Page" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
@@ -35,6 +47,7 @@
 							@endif
 							<span id="helpBlockTitle" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="slug" class="control-label font-weight-bold">Slug <span class="text-danger">&#42;</span></label>
 							<input type="text" name="slug" id="slug" class="form-control" value="{{ old('slug') }}" placeholder="e.g new-page" tabindex="2" autocomplete="off" aria-describedby="helpBlockSlug" required>
@@ -43,6 +56,7 @@
 							@endif
 							<span id="helpBlockSlug" class="form-control-feedback form-text text-muted">- The slug is auto-generated based on the title but feel free to edit it.</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="description" class="control-label font-weight-bold">Meta Description</label>
 							<input type="text" name="description" id="description" class="form-control" value="{{ old('description') }}" placeholder="e.g New Page Description" tabindex="3" autocomplete="off" aria-describedby="helpBlockDescription">
@@ -51,6 +65,7 @@
 							@endif
 							<span id="helpBlockDescription" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="keywords" class="control-label font-weight-bold">Meta Keywords</label>
 							<input type="text" name="keywords" id="keywords" class="form-control" value="{{ old('keywords') }}" placeholder="e.g New Page, Keywords" tabindex="4" autocomplete="off" aria-describedby="helpBlockKeywords">
@@ -59,6 +74,7 @@
 							@endif
 							<span id="helpBlockKeywords" class="form-control-feedback form-text text-muted">- Separate your keywords by commas.</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
 							@foreach ($statuses as $status)
@@ -73,6 +89,7 @@
 							@endif
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="parent_id" class="control-label font-weight-bold">Parent</label>
 							<select name="parent_id" id="parent_id" class="form-control" tabindex="6" aria-describedby="helpBlockParentId" required>
@@ -95,6 +112,7 @@
 							@endif
 							<span id="helpBlockParentId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Hide from Nav</label>
 							<div class="form-check">
@@ -108,6 +126,7 @@
 							@endif
 							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Ticking this box will hide the page from the navigation.</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="template_id" class="control-label font-weight-bold">Template</label>
 							<select name="template_id" id="template_id" class="form-control" tabindex="8" aria-describedby="helpBlockTemplateId" required disabled>
@@ -122,12 +141,7 @@
 							<span id="helpBlockTemplateIdWarning" class="form-control-feedback form-text text-warning">- This field is disabled until you enter a title and slug.</span>
 							<span id="helpBlockTemplateId" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						<div class="form-buttons">
-							@if ($currentUser->hasPermission('view_pages'))
-								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
-							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
-						</div>
+						@yield('formButtons')
 					</form>
 				</div>
 				@include('cp._partials.footer')

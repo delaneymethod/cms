@@ -163,6 +163,17 @@ main {
 		border-top: 1px solid #ECECEC;
 		background-color: #EFEFEF;
 	}
+	
+	.dataTables_filter {
+		label {
+			width: 100%;
+			margin-bottom: 1rem;
+			
+			input {
+				width: 100%;
+			}
+		}
+	}
 }
 
 footer {

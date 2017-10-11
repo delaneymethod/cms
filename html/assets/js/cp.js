@@ -75673,7 +75673,7 @@ __webpack_require__("./resources/assets/plugins/datatables/datatables-bootstrap.
 
 __webpack_require__("./resources/assets/plugins/delaneymethod/browse/browse.js");
 
-__webpack_require__("./resources/assets/plugins/delaneymethod/cms/cp/index.js");
+__webpack_require__("./resources/assets/plugins/delaneymethod/cms/cp/cp.js");
 
 /***/ }),
 
@@ -104174,10 +104174,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof = ty
 
 /***/ }),
 
-/***/ "./resources/assets/plugins/delaneymethod/cms/cp/index.js":
+/***/ "./resources/assets/plugins/delaneymethod/cms/cp/cp.js":
 /***/ (function(module, exports) {
 
 var _this = this;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /**
  * @link	  https://www.delaneymethod.com/cms
@@ -104465,7 +104467,7 @@ var _this = this;
 
 		_this.attachDataTable = function (element) {
 			if ($(element).length) {
-				$(element).dataTable({
+				$(element).dataTable(_defineProperty({
 					'order': [],
 					'deferRender': true,
 					'oLanguage': {
@@ -104482,8 +104484,9 @@ var _this = this;
 						'info': 'Showing page _PAGE_ of _PAGES_',
 						'infoEmpty': 'No records available',
 						'infoFiltered': '(filtered from _MAX_ total records)'
-					}
-				});
+					},
+					'retrieve': true
+				}, 'deferRender', true));
 			}
 		};
 

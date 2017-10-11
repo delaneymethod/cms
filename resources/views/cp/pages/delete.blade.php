@@ -29,6 +29,7 @@
 					<form name="removePage" id="removePage" class="removePage" role="form" method="POST" action="/cp/pages/{{ $page->id }}">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
+						<div class="spacer blank"></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_pages'))
 								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>

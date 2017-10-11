@@ -88,10 +88,12 @@ return [
 			'parent_id' => 'required|integer',
 		],
 		'company' => [
+			'solution_id' => 'nullable|numeric',
 			'title' => 'required|string|max:255',
 			'default_location_id' => 'required|integer',
 		],
 		'order' => [
+			'solution_id' => 'nullable|numeric',
 			'order_number' => 'required|string|max:255',
 			'po_number' => 'required|string|max:255',
 			'notes' => 'nullable|string',
@@ -116,6 +118,7 @@ return [
 			'published_at' => 'nullable|date',
 		],
 		'location' => [
+			'solution_id' => 'nullable|numeric',
 			'title' => 'required|string|max:255',
 			'unit' => 'nullable|string|max:255',
 			'building' => 'nullable|string|max:255',
@@ -158,6 +161,7 @@ return [
 			'country_id' => 'required|integer',
 		],
 		'user' => [
+			'solution_id' => 'nullable|numeric',
 			'first_name' => 'required|string|max:255',
 			'last_name' => 'required|string|max:255',
 			'email' => 'required|email|unique:users,email|max:255',

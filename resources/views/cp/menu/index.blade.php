@@ -32,6 +32,7 @@
 						</div>
 					</div>
 					<div class="content padding bg-white">
+						<div class="spacer"></div>
 						<ol class="sortable list-unstyled" id="nestedSortable">
 							@foreach ($pagesHierarchy as $page)
 								@component ('cp._components.renderPage', [

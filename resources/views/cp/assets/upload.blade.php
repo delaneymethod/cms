@@ -16,6 +16,15 @@
 	@include('cp._partials.listeners')
 @endpush
 
+@section('formButtons')
+	<div class="form-buttons">
+		@if ($currentUser->hasPermission('view_assets'))
+			<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+		@endif
+		<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Upload">Upload</button>
+	</div>
+@endsection
+
 @section('content')
 	<div class="container-fluid">
 		<div class="row">
@@ -24,14 +33,18 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
-					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="uploadAsset" id="uploadAsset" class="uploadAsset" role="form" method="POST" action="/cp/assets" enctype="multipart/form-data">
 						{{ csrf_field() }}
 						<input type="hidden" name="directory" value="{{ $directory }}">
+						@yield('formButtons')
+						<div class="spacer"></div>
+						<div class="spacer"></div>
+						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Directory</label>
 							<input type="text" class="form-control" value="{{ $directory }}" tabindex="1" aria-describedby="helpBlockDirectory" readonly>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="files" class="control-label font-weight-bold">Files <span class="text-danger">&#42;</span></label>
 							<input type="file" name="files[]" id="files" class="form-control-file" tabindex="2" autocomplete="off" aria-describedby="helpBlockFiles" required multiple>
@@ -40,10 +53,7 @@
 							@endif
 							<span id="helpBlockFiles" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						@if ($currentUser->hasPermission('view_assets'))
-							<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
-						@endif
-						<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Upload">Upload</button>
+						@yield('formButtons')
 					</form>
 				</div>
 				@include('cp._partials.footer')

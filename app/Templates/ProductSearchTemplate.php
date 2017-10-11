@@ -7,8 +7,8 @@
 	
 namespace App\Templates;
 
-use App\Models\Product;
 use Illuminate\View\View;
+use App\Models\{Product, ProductCommodity};
 use App\Http\Traits\{ContentTrait, ProductCategoryTrait};
 
 class ProductSearchTemplate extends Template
@@ -30,10 +30,14 @@ class ProductSearchTemplate extends Template
 		$keywords = $parameters['keywords'];
 		
 		if (!empty($keywords)) {
+			$productCommodities = ProductCommodity::search($keywords)->get();
+			
 			$products = Product::search($keywords)->get();
 			
 			$productCategories = collect([]);
 		} else {
+			$productCommodities = collect([]);
+			
 			$products = collect([]);
 			
 			$productCategories = $this->getProductCategories();
@@ -48,7 +52,15 @@ class ProductSearchTemplate extends Template
 			$productCategories = $productCategories->whereStrict('parent_id', 0)->whereStrict('publish_to_web', 1)->sortBy('sort_order');
 		}
 		
-		$totalProducts = number_format(Product::count(), 0, '.', ',');
+		$totalFound = $products->count() + $productCommodities->count();
+		
+		$totalFoundPretty = number_format($totalFound, 0, '.', ',');
+		
+		$totalProducts = Product::count();
+		
+		$totalProductCommodities = ProductCommodity::count();
+		
+		$totalProducts = number_format($totalProducts + $totalProductCommodities, 0, '.', ',');
 		
 		$page->breadcrumbs = collect([]);
 		
@@ -71,6 +83,6 @@ class ProductSearchTemplate extends Template
 		
 		$page->title = 'Search - '.$page->title;
 		
-		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategories', 'products', 'keywords', 'totalProducts'));
+		$view->with(compact('currentUser', 'page', 'cart', 'wishlistCart', 'productCategories', 'productCommodities', 'products', 'keywords', 'totalFound', 'totalFoundPretty', 'totalProducts'));
 	}
 }

@@ -140,6 +140,7 @@ class LocationController extends Controller
 				$location = new Location;
 	
 				// Set our field data
+				$location->solution_id = $cleanedLocation['solution_id'];
 				$location->title = $cleanedLocation['title'];
 				$location->unit = $cleanedLocation['unit'];
 				$location->building = $cleanedLocation['building'];
@@ -264,6 +265,7 @@ class LocationController extends Controller
 				$this->authorize('userOwnsThis', $location);
 		
 				// Set our field data
+				$location->solution_id = $cleanedLocation['solution_id'];
 				$location->title = $cleanedLocation['title'];
 				$location->unit = $cleanedLocation['unit'];
 				$location->building = $cleanedLocation['building'];

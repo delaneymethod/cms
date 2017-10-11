@@ -12,13 +12,6 @@
 				@if ($currentUser->hasPermission('view_locations'))
 					<li class="{{ setActive('cp/locations') }}"><a href="/cp/locations" title="Locations"><i class="text-center icon fa fa-map-marker" aria-hidden="true"></i>Locations</a></li>
 				@endif
-				
-				{{--
-				@if ($currentUser->hasPermission('view_products'))
-					<li class="{{ setActive('cp/products') }}"><a href="/cp/products" title="Products"><i class="text-center icon fa fa-tags" aria-hidden="true"></i>Products</a></li>
-				@endif
-				--}}
-				
 				@if ($currentUser->hasPermission('view_orders'))
 					<li class="{{ setActive('cp/orders') }}"><a href="/cp/orders" title="Orders"><i class="text-center icon fa fa-shopping-cart" aria-hidden="true"></i>Orders</a></li>
 				@endif

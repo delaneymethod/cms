@@ -25,6 +25,16 @@
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
 					<div class="row">
+						@if ($currentUser->isSuperAdmin())
+							<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+								<h5>Order ID</h5>
+								<p class="text-muted">{{ $order->id }}</p>
+							</div>
+							<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+								<h5>Order Solution ID</h5>
+								<p class="text-muted">{{ $order->solution_id }}</p>
+							</div>
+						@endif
 						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 							<h5>Order Type</h5>
 							<p class="text-muted">{{ $order->order_type->title }}</p>
@@ -45,22 +55,43 @@
 							<h5>Order Date</h5>
 							<p class="text-muted">{{ $order->created_at }}</p>
 						</div>
-						<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 							<h5>Originator</h5>
-							<p class="text-muted">{{ $order->user->first_name }} {{ $order->user->last_name }}<br><a href="mailto:{{ $order->user->email }}" title="Email {{ $order->user->first_name }}" class="text-gf-red">{{ $order->user->email }}</a><br>@if (!empty($order->user->telephone) && !empty($order->user->mobile)){{ $order->user->telephone }} / {{ $order->user->mobile }}@elseif (!empty($order->user->telephone)){{ $order->user->telephone }}@elseif (!empty($order->user->mobile)){{ $order->user->mobile }}@endif<br>{{ $order->user->company->title }}</p>
+							<p class="text-muted">{{ $order->user->first_name }} {{ $order->user->last_name }}<br><a href="mailto:{{ $order->user->email }}" title="Email {{ $order->user->first_name }}" class="text-gf-red">{{ $order->user->email }}</a><br>@if (!empty($order->user->telephone) && !empty($order->user->mobile)){{ $order->user->telephone }} / {{ $order->user->mobile }}@elseif (!empty($order->user->telephone)){{ $order->user->telephone }}@elseif (!empty($order->user->mobile)){{ $order->user->mobile }}@endif</p>
 						</div>
-						<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+							<h5>Company</h5>
+							<p class="text-muted">{{ $order->user->company->title }}</p>
+						</div>
+					</div>
+					<div class="row">
+						<div class="spacer"></div>
+					</div>
+					<div class="row">
+						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+							<h5>Order Billing Location</h5>
+							<p class="text-muted">{!! nl2br($order->user->location_postal_address) !!}</p>
+						</div>
+						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+							<h5>Order Shipping Location</h5>
+							<p class="text-muted">{!! nl2br($order->postal_address) !!}</p>
+						</div>
+						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 							<h5>Order Shipping Method</h5>
 							<p class="text-muted">{{ $order->shipping_method->title }}</p>
 						</div>
-						<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-							<h5>Order Shipping Location</h5>
-							<p class="text-muted">{!! nl2br($order->postal_address) !!}<br>{{ $order->user->telephone }}</p>
-						</div>
+					</div>
+					<div class="row">
+						<div class="spacer"></div>
+					</div>
+					<div class="row">
 						<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 							<h5>Order Notes</h5>
-							<p class="text-muted">{{ $order->notes }}</p>
+							<p class="text-muted">{{ $order->notes ?? 'N/A' }}</p>
 						</div>
+					</div>
+					<div class="row">
+						<div class="spacer"></div>
 					</div>
 					<div class="row">
 						<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">

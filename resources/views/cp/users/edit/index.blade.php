@@ -16,6 +16,21 @@
 	@include('cp._partials.listeners')
 @endpush
 
+@section('formButtons')
+	<div class="form-buttons">
+		@if ($currentUser->hasPermission('view_users'))
+			<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
+		@endif
+		<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="11" title="Save Changes">Save Changes</button>
+		@if ($currentUser->hasPermission('delete_users') && $user->id != $currentUser->id)
+			<a href="/cp/users/{{ $user->id }}/delete" title="Delete User" class="pull-right btn btn-outline-danger">Delete User</a>
+		@endif
+		@if ($currentUser->hasPermission('edit_passwords_users') || $user->id == $currentUser->id)
+			<a href="/cp/users/{{ $user->id }}/edit/password" title="Change Password" class="pull-right btn btn-outline-secondary {{ ($user->id != $currentUser->id) ? 'cancel-button' : '' }}">Change Password</a>
+		@endif
+	</div>
+@endsection
+
 @section('content')
 	<div class="container-fluid">
 		<div class="row">
@@ -24,7 +39,6 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
-					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="editUser" id="editUser" class="editUser" role="form" method="POST" action="/cp/users/{{ $user->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
@@ -37,7 +51,12 @@
 							<input type="hidden" name="role_id" value="{{ $user->role_id }}">
 							<input type="hidden" name="status_id" value="{{ $user->status_id }}">
 						@endif
+						<input type="hidden" name="solution_id" value="{{ $user->solution_id }}">
 						<input type="hidden" name="password" value="{{ $user->password }}">
+						@yield('formButtons')
+						<div class="spacer"></div>
+						<div class="spacer"></div>
+						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
 							<label for="first_name" class="control-label font-weight-bold">First Name <span class="text-danger">&#42;</span></label>
 							<input type="text" name="first_name" id="first_name" class="form-control" value="{{ old('first_name', optional($user)->first_name) }}" placeholder="e.g Joe" tabindex="1" autocomplete="off" aria-describedby="helpBlockFirstName" required autofocus>
@@ -46,6 +65,7 @@
 							@endif
 							<span id="helpBlockFirstName" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="last_name" class="control-label font-weight-bold">Last Name <span class="text-danger">&#42;</span></label>
 							<input type="text" name="last_name" id="last_name" class="form-control" value="{{ old('last_name', optional($user)->last_name) }}" placeholder="e.g Bloggs" tabindex="2" autocomplete="off" aria-describedby="helpBlockLastName" required>
@@ -54,6 +74,7 @@
 							@endif
 							<span id="helpBlockLastName" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="email" class="control-label font-weight-bold">Email Address <span class="text-danger">&#42;</span></label>
 							<input type="email" name="email" id="email" class="form-control" value="{{ old('email', optional($user)->email) }}" placeholder="e.g joe@bloggs.com" tabindex="3" autocomplete="off" aria-describedby="helpBlockEmailAddress" required>
@@ -62,6 +83,7 @@
 							@endif
 							<span id="helpBlockEmailAddress" class="form-control-feedback form-text text-muted">- Please enter the email address in lowercase.</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="job_title" class="control-label font-weight-bold">Job Title <span class="text-danger">&#42;</span></label>
 							<input type="text" name="job_title" id="job_title" class="form-control" value="{{ old('job_title', optional($user)->job_title) }}" placeholder="e.g Manager" tabindex="4" autocomplete="off" aria-describedby="helpBlockJobTitle" required>
@@ -70,6 +92,7 @@
 							@endif
 							<span id="helpBlockJobTitle" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="telephone" class="control-label font-weight-bold">Telephone <span class="text-danger">&#42;</span></label>
 							<input type="tel" name="telephone" id="telephone" class="form-control" value="{{ old('telephone', optional($user)->telephone) }}" placeholder="E.g: &#43;44 1224 123456" tabindex="5" autocomplete="off" aria-describedby="helpBlockTelephone" required>
@@ -78,6 +101,7 @@
 							@endif
 							<span id="helpBlockTelephone" class="form-control-feedback form-text text-muted">- Please enter the telephone number in the international format starting with a plus sign (&#43;).</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="mobile" class="control-label font-weight-bold">Mobile</label>
 							<input type="tel" name="mobile" id="mobile" class="form-control" value="{{ old('mobile', optional($user)->mobile) }}" placeholder="E.g: &#43;44 7700 123 456" tabindex="6" autocomplete="off" aria-describedby="helpBlockMobile">
@@ -86,6 +110,7 @@
 							@endif
 							<span id="helpBlockMobile" class="form-control-feedback form-text text-muted">- Please enter the mobile number in the international format starting with a plus sign (&#43;).</span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="company_id" class="control-label font-weight-bold">Company</label>
 							<select name="company_id" id="company_id" class="form-control {{ ($user->id == $currentUser->id) ? 'text-disabled' : '' }}" tabindex="7" aria-describedby="helpBlockCompanyId" required>
@@ -101,6 +126,7 @@
 							@endif
 							<span id="helpBlockCompanyId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="location_id" class="control-label font-weight-bold">Location</label>
 							<select name="location_id" id="location_id" class="form-control" tabindex="8" aria-describedby="helpBlockLocationId" required>
@@ -113,6 +139,7 @@
 							@endif
 							<span id="helpBlockLocationId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Role</label>
 							@foreach ($roles as $role)
@@ -130,6 +157,7 @@
 							@endif
 							<span id="helpBlockRoleId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Status</label>
 							@foreach ($statuses as $status)
@@ -147,18 +175,7 @@
 							@endif
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						<div class="form-buttons">
-							@if ($currentUser->hasPermission('view_users'))
-								<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
-							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="11" title="Save Changes">Save Changes</button>
-							@if ($currentUser->hasPermission('delete_users') && $user->id != $currentUser->id)
-								<a href="/cp/users/{{ $user->id }}/delete" title="Delete User" class="pull-right btn btn-outline-danger">Delete User</a>
-							@endif
-							@if ($currentUser->hasPermission('edit_passwords_users') || $user->id == $currentUser->id)
-								<a href="/cp/users/{{ $user->id }}/edit/password" title="Change Password" class="pull-right btn btn-outline-secondary {{ ($user->id != $currentUser->id) ? 'cancel-button' : '' }}">Change Password</a>
-							@endif
-						</div>
+						@yield('formButtons')
 					</form>
 				</div>
 				@include('cp._partials.footer')

@@ -32,4 +32,14 @@ trait ProductCommodityTrait
 	{
 		return ProductCommodity::all();
 	}
+	
+	/**
+	 * Get the total product commodity count
+	 *
+	 * @return 	int
+	 */
+	public function getProductCommodityCount() : int
+	{
+		return ProductCommodity::count();
+	}
 }

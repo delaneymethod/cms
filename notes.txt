@@ -1,5 +1,7 @@
 
-add filter on product commodity page
+add PO to session when navigation cart/checkout
+
+show users to update own details
 
 after add to cart, take user back to same position on page
 
@@ -7,35 +9,33 @@ after quantity update, take user back to same position on page
 
 add box to allow quantity value at add to cart
 
+
+
 when customer, location and company updates, ping the API
 
-locations have shipping methods defined
-
-new field to store solution ID for user, companies, locations
 
 add pagination to articles
 
-allow more than 1 banner image
 
-add PO to session when navigation cart/checkout
-
-email preferences options - receive order update
-
-show users to update own details
-
-carousel on homepage
-
-update cart list to show location instead of company
 
 update email confirmation to include PDF version
 
-fix order pdf
+email preferences options - receive order update
 
-order coms by product code
+locations have shipping methods defined
 
-search commmodity first and then products
+allow more than 1 banner image
 
-track terms user searches for
+carousel on homepage
+
+
+
+
+
+
+
+
+
 
 
 
@@ -90,8 +90,9 @@ php artisan queue:work --queue=users &
 php artisan queue:work --queue=locations &
 php artisan queue:work --queue=products &
 php artisan queue:work --queue=default &
+php artisan queue:work --queue=keywords &
 
-php artisan queue:work --queue=orders.jobs,orders.events,orders.notifications,orders.broadcasts,users,locations,products,default
+php artisan queue:work --queue=orders.jobs,orders.events,orders.notifications,orders.broadcasts,users,locations,products,keywords,default
 
 
 Setup cron for scheduled tasks
@@ -190,6 +191,28 @@ if ($cachingEnabled) {
 } else {
 	$articles = $this->getArticles();
 }
+
+@component('_components.cart.addProductCommodity', [
+	'id' => $productCommodity->id,
+	'instance' => 'cart', 
+	'action' => 'secret',
+	'extraClasses' => 'btn btn-outline-success',
+	'redirectTo' => $redirectTo
+])
+@endcomponent
+				
+@if (!$wishlistCartProductCommodityIds->contains($productCommodity->id))
+	<div style="margin-top: 10px;font-size: 12px;">
+		@component('_components.cart.addProductCommodity', [
+			'id' => $productCommodity->id, 
+			'instance' => 'wishlist', 
+			'action' => 'secret',
+			'extraClasses' => 'btn-unstyled-gf-blue-gray',
+			'redirectTo' => $redirectTo
+		])
+		@endcomponent
+	</div>
+@endif
 
 
 Node installation Steps on Ubuntu 16.4

@@ -16,6 +16,7 @@ class UsersTableSeeder extends Seeder
 		
 		$users = [
 			[
+				'solution_id' => null,
 				'first_name' => 'Sean',
 				'last_name' => 'Delaney',
 				'slug' => 'sean-delaney',
@@ -34,6 +35,7 @@ class UsersTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'solution_id' => null,
 				'first_name' => 'Zara',
 				'last_name' => 'Vaughan',
 				'slug' => 'zara-vaughan',
@@ -52,6 +54,7 @@ class UsersTableSeeder extends Seeder
 				'updated_at' => '2017-09-06 14:34:00',
 			],
 			[ 
+				'solution_id' => null,
 				'first_name' => 'Test',
 				'last_name' => 'User 1',
 				'slug' => 'test-user-1',
@@ -70,6 +73,7 @@ class UsersTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'solution_id' => null,
 				'first_name' => 'Test',
 				'last_name' => 'User 2',
 				'slug' => 'test-user-2',
@@ -88,6 +92,7 @@ class UsersTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'solution_id' => null,
 				'first_name' => 'Test',
 				'last_name' => 'User 3',
 				'slug' => 'test-user-3',
@@ -106,6 +111,7 @@ class UsersTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'solution_id' => null,
 				'first_name' => 'Test',
 				'last_name' => 'User 4',
 				'slug' => 'test-user-4',
@@ -124,6 +130,7 @@ class UsersTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'solution_id' => null,
 				'first_name' => 'Test',
 				'last_name' => 'User 5',
 				'slug' => 'test-user-5',

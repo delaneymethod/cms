@@ -170,6 +170,7 @@ class OrderController extends Controller
 				$status = $this->getStatusByTitle('Pending');
 				
 				// Set our field data
+				$order->solution_id = $cleanedOrder['solution_id'];
 				$order->order_number = time();
 				$order->order_type_id = $orderType->id;
 				$order->po_number = $cleanedOrder['po_number'];
@@ -239,7 +240,7 @@ class OrderController extends Controller
 		if ($currentUser->hasPermission('view_orders')) {
 			$order = $this->getOrder($id);
 			
-			$this->authorize('userOwnsThis', $user);
+			$this->authorize('userOwnsThis', $order);
 			
 			$pdf = app()->make('snappy.pdf.wrapper');
 			
@@ -249,8 +250,24 @@ class OrderController extends Controller
 			$template .= '<head>';
 			$template .= '	<meta charset="utf-8">';
 			$template .= '	<title>'.$order->order_number.' Order Details</title>';
+			$template .= '	<style>';
+			$template .= '		.page { overflow: hidden; page-break-after: always; page-break-inside: avoid; }';
+			$template .= '		.page.last { overflow: hidden; page-break-after: avoid; page-break-inside: avoid; }';
+			$template .= '		thead { display: table-header-group; }';
+			$template .= '		tfoot { display: table-row-group; }';
+			$template .= '		tr { page-break-inside: avoid; }';
+			$template .= '	</style>';
 			$template .= '</head>';
 			$template .= '<body>';
+			$template .= '	<div class="page">';
+			
+			if ($currentUser->isSuperAdmin()) {
+				$template .= '	<p><strong>Order ID</strong></p>';
+				$template .= '	<p>'.$order->id.'</p>';
+				$template .= '	<p><strong>Order Solution ID</strong></p>';
+				$template .= '	<p>'.$order->solution_id.'</p>';
+			}
+			
 			$template .= '	<p><strong>Order Type</strong></p>';
 			$template .= '	<p>'.$order->order_type->title.'</p>';
 			$template .= '	<p><strong>Order Number</strong></p>';
@@ -268,32 +285,37 @@ class OrderController extends Controller
 			$template .= '	<p><strong>Order Shipping Location</strong></p>';
 			$template .= '	<p>'.nl2br($order->postal_address).'<br>'.$order->user->telephone.'</p>';
 			$template .= '	<p><strong>Order Notes</strong></p>';
-			$template .= '	<p>'.$order->notes.'</p>';
-			$template .= '	<p><strong>Order Items</strong></p>';
-			$template .= '	<table cellspacing="0" border="1" cellpadding="10" width="100%">';
-			$template .= '		<thead>';
-			$template .= '			<tr">';
-			$template .= '				<th align="left">Title</th>';
-			$template .= '				<th>Qty</th>';
-			$template .= '				<th align="right">Tax</th>';
-			$template .= '				<th align="right">Price</th>';
-			$template .= '				<th align="right">Total</th>';
-			$template .= '			</tr>';
-			$template .= '		</thead>';
-			$template .= '		<tbody>';
+			$template .= '	<p>'.($order->notes ?? 'N/A').'</p>';
+			$template .= '	</div>';
+			$template .= '	<div class="page last">';
+			$template .= '		<p><strong>Order Items</strong></p>';
+			$template .= '		<table cellspacing="0" border="1" cellpadding="10" width="100%">';
+			$template .= '			<thead>';
+			$template .= '				<tr">';
+			$template .= '					<th align="center">&nbsp;</th>';
+			$template .= '					<th align="left">Title</th>';
+			$template .= '					<th align="center">Qty</th>';
+			$template .= '					<th align="right">Tax</th>';
+			$template .= '					<th align="right">Price</th>';
+			$template .= '					<th align="right">Total</th>';
+			$template .= '				</tr>';
+			$template .= '			</thead>';
+			$template .= '			<tbody>';
 					
 			foreach ($order->product_commodities as $productCommodity) {
-				$template .= '			<tr>';
-				$template .= '				<td>'.$productCommodity->title.'</td>';
-				$template .= '				<td align="center">'.$productCommodity->pivot->quantity.'</td>';
-				$template .= '				<td align="right">'.$productCommodity->pivot->tax_rate.'&#37;</td>';
-				$template .= '				<td align="right">'.$order->currency.number_format($productCommodity->pivot->price, 2, '.', ',').'</td>';
-				$template .= '				<td align="right">'.$order->currency.number_format($productCommodity->pivot->price_tax, 2, '.', ',').'</td>';
-				$template .= '			</tr>';
+				$template .= '				<tr>';
+				$template .= '					<td align="center"><img src="'.$productCommodity->product->image_url.'" width="100px"></td>';
+				$template .= '					<td>'.$productCommodity->title.'</td>';
+				$template .= '					<td align="center">'.$productCommodity->pivot->quantity.'</td>';
+				$template .= '					<td align="right">'.$productCommodity->pivot->tax_rate.'&#37;</td>';
+				$template .= '					<td align="right">'.$order->currency.number_format($productCommodity->pivot->price, 2, '.', ',').'</td>';
+				$template .= '					<td align="right">'.$order->currency.number_format($productCommodity->pivot->price_tax, 2, '.', ',').'</td>';
+				$template .= '				</tr>';
 			}
 				
-			$template .= '		</tbody>';
-			$template .= '	</table>';
+			$template .= '			</tbody>';
+			$template .= '		</table>';
+			$template .= '	</div>';
 			$template .= '</body>';
 			$template .= '</html>';
 			

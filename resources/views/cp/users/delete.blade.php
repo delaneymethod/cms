@@ -29,6 +29,7 @@
 					<form name="removeUser" id="removeUser" class="removeUser" role="form" method="POST" action="/cp/users/{{ $user->id }}">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
+						<div class="spacer blank"></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_users'))
 								<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>

@@ -16,6 +16,15 @@
 	@include('cp._partials.listeners')
 @endpush
 
+@section('formButtons')
+	<div class="form-buttons">
+		@if ($currentUser->hasPermission('view_users'))
+			<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
+		@endif
+		<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
+	</div>
+@endsection
+
 @section('content')
 	<div class="container-fluid">
 		<div class="row">
@@ -24,7 +33,6 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
-					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="editUser" id="editUser" class="editUser" role="form" method="POST" action="/cp/users/{{ $user->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
@@ -38,11 +46,16 @@
 						<input type="hidden" name="location_id" value="{{ $user->location_id }}">
 						<input type="hidden" name="role_id" value="{{ $user->role_id }}">
 						<input type="hidden" name="status_id" value="{{ $user->status_id }}">
+						@yield('formButtons')
+						<div class="spacer"></div>
+						<div class="spacer"></div>
+						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						@if ($user->id != $currentUser->id)
 							<div class="form-group">
 								<label class="control-label font-weight-bold">User Account</label>
 								<input type="text" class="form-control text-disabled" value="{{ $user->first_name }} {{ $user->last_name }}" disabled>
 							</div>
+							<div class="spacer"></div>
 						@endif
 						<div class="form-group">
 							<label for="password" class="control-label font-weight-bold">Password <span class="text-danger">&#42;</span></label>
@@ -52,6 +65,7 @@
 							@endif
 							<span id="helpBlockPassword" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="password_confirmation" class="control-label font-weight-bold">Password Confirmation <span class="text-danger">&#42;</span></label>
 							<input type="password" name="password_confirmation" id="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}" placeholder="e.g y1Fwc]_C" tabindex="2" autocomplete="off" aria-describedby="helpBlockPasswordConfirmation" required>
@@ -60,12 +74,7 @@
 							@endif
 							<span id="helpBlockPasswordConfirmation" class="form-control-feedback form-text text-muted"></span>
 						</div>
-						<div class="form-buttons">
-							@if ($currentUser->hasPermission('view_users'))
-								<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
-							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
-						</div>
+						@yield('formButtons')
 					</form>
 				</div>
 				@include('cp._partials.footer')

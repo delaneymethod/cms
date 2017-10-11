@@ -17,7 +17,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use App\Http\Transformers\ProductTransformer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Events\{ProductCreatedEvent, ProductUpdatedEvent, ProductDeletedEvent};
+use App\Events\{KeywordEvent, ProductCreatedEvent, ProductUpdatedEvent, ProductDeletedEvent};
 use App\Http\Traits\{CartTrait, PageTrait, ProductTrait, TemplateTrait, ProductCategoryTrait};
 use App\Events\{ProductVatRatesCreatedEvent, ProductVatRatesUpdatedEvent, ProductVatRatesDeletedEvent};
 use App\Events\{ProductStandardsCreatedEvent, ProductStandardsUpdatedEvent, ProductStandardsDeletedEvent};
@@ -201,6 +201,10 @@ class ProductController extends Controller
 		$parameters['search'] = true;
 		
 		$parameters['keywords'] = $request->get('keywords');
+		
+		if (!empty($parameters['keywords'])) {
+			KeywordEvent::dispatch($parameters['keywords']);
+		}
 		
 		// Selects the page template and injects any data required
 		$this->preparePageTemplate($page, $parameters);

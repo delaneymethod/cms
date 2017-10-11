@@ -84,4 +84,4 @@ require('../plugins/datatables/datatables-bootstrap');
 
 require('../plugins/delaneymethod/browse/browse');
 
-require('../plugins/delaneymethod/cms/cp');
+require('../plugins/delaneymethod/cms/cp/cp');

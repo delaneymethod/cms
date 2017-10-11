@@ -152,6 +152,7 @@ class UserController extends Controller
 				$user = new User;
 	
 				// Set our field data
+				$user->solution_id = $cleanedUser['solution_id'];
 				$user->first_name = $cleanedUser['first_name'];
 				$user->last_name = $cleanedUser['last_name'];
 				$user->email = $cleanedUser['email'];
@@ -397,6 +398,7 @@ class UserController extends Controller
 				$this->authorize('userOwnsThis', $user);
 		
 				// Set our field data
+				$user->solution_id = $cleanedUser['solution_id'];
 				$user->first_name = $cleanedUser['first_name'];
 				$user->last_name = $cleanedUser['last_name'];
 				$user->email = $cleanedUser['email'];

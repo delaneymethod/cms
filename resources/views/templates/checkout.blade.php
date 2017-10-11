@@ -160,6 +160,7 @@
 							@elseif ($step == 'step-3')
 								<form name="checkoutStep3" id="checkoutStep3" class="checkoutStep3" role="form" method="POST" action="/orders">
 									{{ csrf_field() }}
+									<input type="hidden" name="solution_id" value="">
 									<div class="row">
 										<div class="col-12">
 											<h4>Step 3 - Review your Cart</h4>

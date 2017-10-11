@@ -47,6 +47,18 @@
 	</script>
 @endpush
 
+@section('formButtons')
+	<div class="form-buttons">
+		@if ($currentUser->hasPermission('view_articles'))
+			<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+		@endif
+		<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+		@if ($currentUser->hasPermission('delete_articles'))
+			<a href="/cp/articles/{{ $article->id }}/delete" title="Delete Article" class="pull-right btn btn-outline-danger">Delete Article</a>
+		@endif
+	</div>
+@endsection
+
 @section('content')
 	<div class="container-fluid">
 		<div class="row">
@@ -55,23 +67,15 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
-					<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 					<form name="editArticle" id="editArticle" class="editArticle" role="form" method="POST" action="/cp/articles/{{ $article->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
 						<input type="hidden" name="template_id" value="{{ $article->template_id }}">
 						<input type="hidden" name="article_category_ids[]" value="1">
-						<div class="form-buttons">
-							@if ($currentUser->hasPermission('view_articles'))
-								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
-							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
-							@if ($currentUser->hasPermission('delete_articles'))
-								<a href="/cp/articles/{{ $article->id }}/delete" title="Delete Article" class="pull-right btn btn-outline-danger">Delete Article</a>
-							@endif
-						</div>
+						@yield('formButtons')
 						<div class="spacer"></div>
 						<div class="spacer"></div>
+						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
 							<label for="title" class="control-label font-weight-bold">Title <span class="text-danger">&#42;</span></label>
 							<input type="text" name="title" id="title" class="form-control" value="{{ old('title', optional($article)->title) }}" placeholder="e.g Blog Post Title" tabindex="1" autocomplete="off" aria-describedby="helpBlockTitle" required autofocus>
@@ -182,16 +186,7 @@
 								@endif
 							</div>
 						@endforeach
-						<div class="spacer"></div>
-						<div class="form-buttons">
-							@if ($currentUser->hasPermission('view_articles'))
-								<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
-							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
-							@if ($currentUser->hasPermission('delete_articles'))
-								<a href="/cp/articles/{{ $article->id }}/delete" title="Delete Article" class="pull-right btn btn-outline-danger">Delete Article</a>
-							@endif
-						</div>
+						@yield('formButtons')
 					</form>
 				</div>
 				@include('cp._partials.footer')

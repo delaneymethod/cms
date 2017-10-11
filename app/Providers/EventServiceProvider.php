@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
 		'App\Events\OrderUpdatedEvent' => [
 			'App\Listeners\OrderUpdatedListener',
 		],
+		'App\Events\KeywordEvent' => [
+			'App\Listeners\KeywordListener',
+		],
 		'Illuminate\Auth\Events\Login' => [
 			'App\Listeners\UserLoginListener',
 		],

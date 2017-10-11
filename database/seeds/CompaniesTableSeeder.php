@@ -16,12 +16,14 @@ class CompaniesTableSeeder extends Seeder
 
 		$companies = [
 			[
+				'solution_id' => null,
 				'title' => 'DelaneyMethod Web Development Ltd',
 				'default_location_id' => 2,
 				'created_at' => '2017-08-01 09:19:39',
 				'updated_at' => '2017-08-02 13:03:22',
 			],
 			[	 
+				'solution_id' => null,
 				'title' => 'Grampian Fasteners',
 				'default_location_id' => 1,
 				'created_at' => '2017-08-01 12:01:53',

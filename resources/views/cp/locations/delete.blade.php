@@ -29,6 +29,7 @@
 					<form name="removeLocation" id="removeLocation" class="removeLocation" role="form" method="POST" action="/cp/locations/{{ $location->id }}">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
+						<div class="spacer blank"></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_locations'))
 								<a href="/cp/locations" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>

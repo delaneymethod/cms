@@ -119,6 +119,7 @@ class CompanyController extends Controller
 				$company = new Company;
 	
 				// Set our field data
+				$company->solution_id = $cleanedCompany['solution_id'];
 				$company->title = $cleanedCompany['title'];
 				$company->default_location_id = $cleanedCompany['default_location_id'];
 				
@@ -215,6 +216,7 @@ class CompanyController extends Controller
 				$this->authorize('userOwnsThis', $company);
 				
 				// Set our field data
+				$company->solution_id = $cleanedCompany['solution_id'];
 				$company->title = $cleanedCompany['title'];
 				$company->default_location_id = $cleanedCompany['default_location_id'];
 				$company->updated_at = $this->datetime;
