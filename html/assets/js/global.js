@@ -51922,7 +51922,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 ;(function ($) {
 	$.delaneyMethodCMS = function (options) {
-		// Support multiple elements
+		/* Support multiple elements */
 		if (_this.length > 1) {
 			_this.each(function () {
 				$(_this).delaneyMethodCMS(options);
@@ -51955,6 +51955,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 			lazyload();
 		};
 
+		_this.highlight = function (id) {
+			var hash = window.location.hash.substring(1);
+
+			if ($('[id="' + hash + '"]').length) {
+				$('[id="' + hash + '"]').find('td').addClass('table-active text-danger');
+
+				$('[id="' + hash + '"]').hover(function () {
+					$('[id="' + hash + '"]').find('td').removeClass('table-active text-danger');
+				}, function () {});
+			}
+		};
+
 		_this.loadPagination = function () {};
 
 		_this.loadMap = function () {
@@ -51982,15 +51994,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 			}
 		};
 
-		_this.loadProductCommodityPriceQuantity = function (element) {
+		_this.loadProductCommodity = function (element, code) {
 			$(element).on('inview', function (event, visible) {
 				if (visible && !$(element).hasClass('loaded')) {
-					var id = element.replace('#product_commodity_', '');
+					var endpoint = window.API.url + window.API.endpoints.product_commodities.pricing + '/' + code;
 
-					var endpoint = 'product-commodities/' + id + '/pricing';
-
-					// Make API call to get price and quantity
-					axios.get(window.API.url + endpoint, {
+					/* Make API call to get price and quantity */
+					axios.get(endpoint, {
 						requestId: endpoint
 					}).then(function (response) {
 						$(element).find('.price').html(response.data.price);
@@ -52006,15 +52016,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 						if (axios.isCancel(error)) {
 							console.log('Request canceled', error.message);
 						} else if (error.response) {
-							// The request was made and the server responded with a status code that falls out of the range of 2xx
+							/* The request was made and the server responded with a status code that falls out of the range of 2xx */
 							console.log(error.response.data);
 							console.log(error.response.status);
 							console.log(error.response.headers);
 						} else if (error.request) {
-							// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
+							/* The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js */
 							console.log(error.request);
 						} else {
-							// Something happened in setting up the request that triggered an Error
+							/* Something happened in setting up the request that triggered an Error */
 							console.log('Error', error.message);
 						}
 
@@ -52028,7 +52038,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 		_this.attachDataTable = function (element) {
 			if ($(element).length) {
-				// If we're on the product page, hide pagination and x of y records information, change the layout too!
+				/* If we're on the product page, hide pagination and x of y records information, change the layout too! */
 				if ($(element).hasClass('product-commodities')) {
 					$.extend(true, $.fn.dataTable.defaults, _defineProperty({
 						'bPaginate': false,
@@ -52115,7 +52125,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 			}
 
-			// IE10 viewport hack for Surface/desktop Windows 8 bug
+			/* IE10 viewport hack for Surface/desktop Windows 8 bug */
 			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 				var msViewportStyle = document.createElement('style');
 
@@ -52123,6 +52133,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 				document.head.appendChild(msViewportStyle);
 			}
+
+			if (window.location.hash) {
+				_this.highlight();
+			}
+
+			window.addEventListener('hashchange', function () {
+				_this.highlight();
+			}, false);
 
 			_this.loadAnimations();
 

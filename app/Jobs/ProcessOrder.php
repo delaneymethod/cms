@@ -70,7 +70,7 @@ class ProcessOrderJob implements ShouldQueue
 		
 		$this->apiUrl = config('cms.api.url');
 		
-		$this->endpoint = config('cms.api.endpoints.orders.process');
+		$this->endpoint = config('cms.api.endpoints.orders');
 		
 		$this->superAdmin = $this->getUserById(1);
 	}

@@ -18,11 +18,11 @@ use App\Jobs\ProcessOrderJob;
 use App\Events\OrderUpdatedEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
-use App\Http\Traits\{CartTrait, OrderTrait, StatusTrait, OrderTypeTrait, ShippingMethodTrait};
+use App\Http\Traits\{CartTrait, OrderTrait, StatusTrait, LocationTrait, OrderTypeTrait, ShippingMethodTrait};
 
 class OrderController extends Controller
 {
-	use CartTrait, OrderTrait, StatusTrait, OrderTypeTrait, ShippingMethodTrait;
+	use CartTrait, OrderTrait, StatusTrait, LocationTrait, OrderTypeTrait, ShippingMethodTrait;
 	
 	/**
 	 * Create a new controller instance.
@@ -105,123 +105,158 @@ class OrderController extends Controller
 			// Remove any Cross-site scripting (XSS)
 			$cleanedOrder = $this->sanitizerInput($request->all());
 			
-			// Get the cart instance
-			$cart = $this->getCartInstance('cart');
+			$locationId = $request->get('location_id');
+				
+			$shippingMethodId = $request->get('shipping_method_id');
+				
+			session()->put('cart.user_id', $request->get('user_id'));
 			
-			$cleanedOrder['user_id'] = $request->session()->get('cart.user_id');
+			session()->put('cart.location_id', $locationId);
 			
-			$cleanedOrder['location_id'] = $request->session()->get('cart.location_id');
+			session()->put('cart.shipping_method_id', $shippingMethodId);
 			
-			$cleanedOrder['shipping_method_id'] = $request->session()->get('cart.shipping_method_id');
+			session()->put('cart.notes', $request->get('notes'));
+		
+			session()->put('cart.po_number', $request->get('po_number'));
 			
-			$cleanedOrder['notes'] = $request->session()->get('cart.notes');
-			
-			// Create our order based on cart content
-			$cleanedOrder['product_commodities'] = [];
-			
-			foreach ($cart->product_commodities as $productCommodity) {
-				array_push($cleanedOrder['product_commodities'], [
-					'product_commodity_id' => $productCommodity->id,
-					'quantity' => $productCommodity->qty,
-					'price' => $productCommodity->price,
-					'price_tax' => $productCommodity->priceTax,
-					'tax_rate' => $productCommodity->taxRate,
-				]);
+			// Grab shipping location
+			if (!empty($locationId)) {
+				session()->put('cart.location', $this->getLocation($locationId));
 			}
 			
-			$cleanedOrder['count'] = $cart->count;
-			$cleanedOrder['tax'] = $cart->tax;
-			$cleanedOrder['subtotal'] = $cart->subtotal;
-			$cleanedOrder['total'] = $cart->total;
-			
-			$productCommodities = count($cart->product_commodities) - 1;
-			
-			// Set some dynamic rules to valid our order
-			$rules = [];
-			
-			foreach (range(0, $productCommodities) as $index) {
-				$rules['product_commodities.'.$index.'.product_commodity_id'] = 'required|integer';
-				$rules['product_commodities.'.$index.'.quantity'] = 'required|integer';
-				$rules['product_commodities.'.$index.'.price'] = 'required|numeric';
-				$rules['product_commodities.'.$index.'.price_tax'] = 'required|numeric';
-				$rules['product_commodities.'.$index.'.tax_rate'] = 'required|numeric';
+			// Grab shipping method 
+			if (!empty($shippingMethodId)) {
+				session()->put('cart.shipping_method', $this->getShippingMethod($shippingMethodId));
 			}
 			
-			$rules['count'] = 'required|integer';
-			$rules['tax'] = 'required|numeric';
-			$rules['subtotal'] = 'required|numeric';
-			$rules['total'] = 'required|numeric';
-			
-			// Make sure all the input data is what we actually save
-			$validator = $this->validatorInput($cleanedOrder, $rules);
-
-			if ($validator->fails()) {
-				return back()->withErrors($validator)->withInput();
+			// Since user can go back to checkout step 2 from step 3 (which hits this route), we need to check if the request contains a action to go back to step 2.
+			if (!empty($cleanedOrder['goToStep1'])) {
+				return redirect('/cart/checkout/step-1');
+			} else if (!empty($cleanedOrder['goToStep2'])) {
+				return redirect('/cart/checkout/step-2');
+			} else {
+				// Get the cart instance
+				$cart = $this->getCartInstance('cart');
+				
+				$cleanedOrder['user_id'] = session()->get('cart.user_id');
+				
+				$cleanedOrder['location_id'] = session()->get('cart.location_id');
+				
+				$cleanedOrder['shipping_method_id'] = session()->get('cart.shipping_method_id');
+				
+				$cleanedOrder['notes'] = session()->get('cart.notes');
+				
+				$cleanedOrder['po_number'] = session()->get('cart.po_number');
+				
+				// Create our order based on cart content
+				$cleanedOrder['product_commodities'] = [];
+				
+				foreach ($cart->product_commodities as $productCommodity) {
+					array_push($cleanedOrder['product_commodities'], [
+						'product_commodity_id' => $productCommodity->id,
+						'quantity' => $productCommodity->qty,
+						'price' => $productCommodity->price,
+						'price_tax' => $productCommodity->priceTax,
+						'tax_rate' => $productCommodity->taxRate,
+					]);
+				}
+				
+				$cleanedOrder['count'] = $cart->count;
+				$cleanedOrder['tax'] = $cart->tax;
+				$cleanedOrder['subtotal'] = $cart->subtotal;
+				$cleanedOrder['total'] = $cart->total;
+				
+				$productCommodities = count($cart->product_commodities) - 1;
+				
+				// Set some dynamic rules to valid our order
+				$rules = [];
+				
+				foreach (range(0, $productCommodities) as $index) {
+					$rules['product_commodities.'.$index.'.product_commodity_id'] = 'required|integer';
+					$rules['product_commodities.'.$index.'.quantity'] = 'required|integer';
+					$rules['product_commodities.'.$index.'.price'] = 'required|numeric';
+					$rules['product_commodities.'.$index.'.price_tax'] = 'required|numeric';
+					$rules['product_commodities.'.$index.'.tax_rate'] = 'required|numeric';
+				}
+				
+				$rules['count'] = 'required|integer';
+				$rules['tax'] = 'required|numeric';
+				$rules['subtotal'] = 'required|numeric';
+				$rules['total'] = 'required|numeric';
+				
+				// Make sure all the input data is what we actually save
+				$validator = $this->validatorInput($cleanedOrder, $rules);
+	
+				if ($validator->fails()) {
+					return back()->withErrors($validator)->withInput();
+				}
+				
+				DB::beginTransaction();
+				
+				try {
+					// Create new model
+					$order = new Order;
+					
+					$orderType = $this->getOrderTypeBySlug('web');
+					
+					$status = $this->getStatusByTitle('Pending');
+					
+					// Set our field data
+					$order->solution_id = $cleanedOrder['solution_id'];
+					$order->order_number = time();
+					$order->order_type_id = $orderType->id;
+					$order->po_number = $cleanedOrder['po_number'];
+					$order->shipping_method_id = $cleanedOrder['shipping_method_id'];
+					$order->user_id = $cleanedOrder['user_id'];
+					$order->location_id = $cleanedOrder['location_id'];
+					$order->status_id = $status->id;
+					$order->notes = $cleanedOrder['notes'];
+					$order->count = $cleanedOrder['count'];
+					$order->tax = $cleanedOrder['tax'];
+					$order->subtotal = $cleanedOrder['subtotal'];
+					$order->total = $cleanedOrder['total'];
+					
+					$order->save();
+					
+					$order->setProductCommodities($cleanedOrder['product_commodities']);
+					
+					session()->forget('cart.user_id');
+				
+					session()->forget('cart.location_id');
+					
+					session()->forget('cart.shipping_method_id');
+					
+					session()->forget('cart.notes');
+					
+					session()->forget('cart.po_number');
+				
+					// finally empty the cart instance
+					$this->destroyCart();
+					
+					$minutes = config('cms.delays.jobs');
+					
+					$time = Carbon::now()->addMinutes($minutes);
+					
+					// Dispatches a new job to process the order. Sticks the job in the "orders" queue to run in 10 minutes.
+					ProcessOrderJob::dispatch($order)->delay($time)->onQueue('orders.jobs');
+				} catch (QueryException $queryException) {
+					DB::rollback();
+				
+					Log::info('SQL: '.$queryException->getSql());
+	
+					Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
+	
+					abort(500, $queryException);
+				} catch (Exception $exception) {
+					DB::rollback();
+	
+					abort(500, $exception);
+				}
+	
+				DB::commit();
+	
+				return redirect('/cart/checkout/confirmation');
 			}
-			
-			DB::beginTransaction();
-			
-			try {
-				// Create new model
-				$order = new Order;
-				
-				$orderType = $this->getOrderTypeBySlug('web');
-				
-				$status = $this->getStatusByTitle('Pending');
-				
-				// Set our field data
-				$order->solution_id = $cleanedOrder['solution_id'];
-				$order->order_number = time();
-				$order->order_type_id = $orderType->id;
-				$order->po_number = $cleanedOrder['po_number'];
-				$order->shipping_method_id = $cleanedOrder['shipping_method_id'];
-				$order->user_id = $cleanedOrder['user_id'];
-				$order->location_id = $cleanedOrder['location_id'];
-				$order->status_id = $status->id;
-				$order->notes = $cleanedOrder['notes'];
-				$order->count = $cleanedOrder['count'];
-				$order->tax = $cleanedOrder['tax'];
-				$order->subtotal = $cleanedOrder['subtotal'];
-				$order->total = $cleanedOrder['total'];
-				
-				$order->save();
-				
-				$order->setProductCommodities($cleanedOrder['product_commodities']);
-				
-				$request->session()->forget('cart.user_id');
-			
-				$request->session()->forget('cart.location_id');
-				
-				$request->session()->forget('cart.shipping_method_id');
-				
-				$request->session()->forget('cart.notes');
-			
-				// finally empty the cart instance
-				$this->destroyCart();
-				
-				$minutes = config('cms.delays.jobs');
-				
-				$time = Carbon::now()->addMinutes($minutes);
-				
-				// Dispatches a new job to process the order. Sticks the job in the "orders" queue to run in 10 minutes.
-				ProcessOrderJob::dispatch($order)->delay($time)->onQueue('orders.jobs');
-			} catch (QueryException $queryException) {
-				DB::rollback();
-			
-				Log::info('SQL: '.$queryException->getSql());
-
-				Log::info('Bindings: '.implode(', ', $queryException->getBindings()));
-
-				abort(500, $queryException);
-			} catch (Exception $exception) {
-				DB::rollback();
-
-				abort(500, $exception);
-			}
-
-			DB::commit();
-
-			return redirect('/cart/checkout/confirmation');
 		}
 
 		abort(403, 'Unauthorised action');
@@ -279,11 +314,15 @@ class OrderController extends Controller
 			$template .= '	<p><strong>Order Date</strong></p>';
 			$template .= '	<p>'.$order->created_at.'</p>';
 			$template .= '	<p><strong>Originator</strong></p>';
-			$template .= '	<p>'.$order->user->first_name.' '.$order->user->last_name.'<br>'.$order->user->email.'<br>'.$order->user->telephone.' / '.$order->user->mobile.'<br>'.$order->user->company->title.'</p>';
+			$template .= '	<p>'.$order->user->first_name.' '.$order->user->last_name.'<br>'.$order->user->email.'<br>'.$order->user->telephone.' / '.$order->user->mobile.'</p>';
+			$template .= '	<p><strong>Company</strong></p>';
+			$template .= '	<p>'.$order->user->company->title.'</p>';
 			$template .= '	<p><strong>Order Shipping Method</strong></p>';
 			$template .= '	<p>'.$order->shipping_method->title.'</p>';
+			$template .= '	<p><strong>Order Billing Location</strong></p>';
+			$template .= '	<p>'.$order->user->location->title.'<br>'.nl2br($order->user->location_postal_address).'</p>';
 			$template .= '	<p><strong>Order Shipping Location</strong></p>';
-			$template .= '	<p>'.nl2br($order->postal_address).'<br>'.$order->user->telephone.'</p>';
+			$template .= '	<p>'.nl2br($order->postal_address).'</p>';
 			$template .= '	<p><strong>Order Notes</strong></p>';
 			$template .= '	<p>'.($order->notes ?? 'N/A').'</p>';
 			$template .= '	</div>';

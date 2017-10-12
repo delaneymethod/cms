@@ -137,7 +137,7 @@
 							@if ($errors->has('location_id'))
 								<span id="helpBlockLocationId" class="form-control-feedback form-text gf-red">- {{ $errors->first('location_id') }}</span>
 							@endif
-							<span id="helpBlockLocationId" class="form-control-feedback form-text text-muted"></span>
+							<span id="helpBlockLocationId" class="form-control-feedback form-text text-muted">- Used as your default location and billing address.</span>
 						</div>
 						<div class="spacer"></div>
 						<div class="form-group">

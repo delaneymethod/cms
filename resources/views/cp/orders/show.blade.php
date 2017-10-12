@@ -70,7 +70,7 @@
 					<div class="row">
 						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 							<h5>Order Billing Location</h5>
-							<p class="text-muted">{!! nl2br($order->user->location_postal_address) !!}</p>
+							<p class="text-muted">{{ $order->user->location->title }}<br>{!! nl2br($order->user->location_postal_address) !!}</p>
 						</div>
 						<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 							<h5>Order Shipping Location</h5>

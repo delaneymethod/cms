@@ -18,7 +18,7 @@ class CreateKeywordsTable extends Migration
 		Schema::create('keywords', function (Blueprint $table) {
 			$table->engine = 'InnoDB ROW_FORMAT=DYNAMIC';
 
-			$table->increments('id');
+			$table->bigIncrements('id');
 			
 			$table->string('title')->index();
 			

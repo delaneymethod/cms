@@ -29,7 +29,13 @@
 	
 	@if ($authenticated)
 	window.API = {
-		'url': '{{ config('cms.api.url') }}'
+		'url': '{{ config('cms.api.url') }}',
+		'endpoints': {
+			'orders': '{{ config('cms.api.endpoints.orders') }}',
+			'product_commodities': {
+				'pricing': '{{ config('cms.api.endpoints.product_commodities.pricing') }}'
+			}
+		}
 	};
 	@endif
 	

@@ -7,13 +7,11 @@
 
 namespace App\Events;
 
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
-use Illuminate\Broadcasting\InteractsWithSockets;
 
 class KeywordEvent
 {
-	use Dispatchable, InteractsWithSockets, SerializesModels;
+	use Dispatchable;
 	
 	/**
 	 * Information about the keywords.

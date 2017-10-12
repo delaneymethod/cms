@@ -6,7 +6,7 @@
  
  ;($ => {
 	$.delaneyMethodCMS = options => {
-		// Support multiple elements
+		/* Support multiple elements */
 		if (this.length > 1){
 			this.each(() => { 
 				$(this).delaneyMethodCMS(options);
@@ -35,8 +35,20 @@
 			});
 		
 			$('[data-toggle="tooltip"]').tooltip();
-			
+				
 			lazyload();
+		};
+		
+		this.highlight = id => {
+			const hash = window.location.hash.substring(1);
+			
+			if ($('[id="' + hash + '"]').length) {
+				$('[id="' + hash + '"]').find('td').addClass('table-active text-danger');
+				
+				$('[id="' + hash + '"]').hover(() => {
+					$('[id="' + hash + '"]').find('td').removeClass('table-active text-danger');	
+				}, () => {});
+			}
 		};
 		
 		this.loadPagination = () => {
@@ -67,15 +79,13 @@
 			}
 		};
 		
-		this.loadProductCommodityPriceQuantity = element => {
+		this.loadProductCommodity = (element, code) => {
 			$(element).on('inview', (event, visible) => {
 				if (visible && !$(element).hasClass('loaded')) {
-					const id = element.replace('#product_commodity_', '');
+					const endpoint = window.API.url + window.API.endpoints.product_commodities.pricing + '/' + code;
 					
-					const endpoint = 'product-commodities/' + id + '/pricing';
-					
-					// Make API call to get price and quantity
-					axios.get(window.API.url + endpoint, {
+					/* Make API call to get price and quantity */
+					axios.get(endpoint, {
 						requestId: endpoint
 					}).then(response => {
 						$(element).find('.price').html(response.data.price);
@@ -91,15 +101,15 @@
 						if (axios.isCancel(error)) {
 							console.log('Request canceled', error.message);
 						} else if (error.response) {
-							// The request was made and the server responded with a status code that falls out of the range of 2xx
+							/* The request was made and the server responded with a status code that falls out of the range of 2xx */
 							console.log(error.response.data);
 							console.log(error.response.status);
 							console.log(error.response.headers);
 						} else if (error.request) {
-							// The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js
+							/* The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the browser and an instance of http.ClientRequest in node.js */
 							console.log(error.request);
 						} else {
-							// Something happened in setting up the request that triggered an Error
+							/* Something happened in setting up the request that triggered an Error */
 							console.log('Error', error.message);
 						}
 						
@@ -113,7 +123,7 @@
 		
 		this.attachDataTable = element => {
 			if ($(element).length) {
-				// If we're on the product page, hide pagination and x of y records information, change the layout too!
+				/* If we're on the product page, hide pagination and x of y records information, change the layout too! */
 				if ($(element).hasClass('product-commodities')) {
 					$.extend(true, $.fn.dataTable.defaults, {
 						'bPaginate': false,
@@ -202,7 +212,7 @@
 			    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 			}
 			
-			// IE10 viewport hack for Surface/desktop Windows 8 bug
+			/* IE10 viewport hack for Surface/desktop Windows 8 bug */
 			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 				let msViewportStyle = document.createElement('style');
 				
@@ -210,6 +220,14 @@
 				
 				document.head.appendChild(msViewportStyle);
 			}
+			
+			if (window.location.hash) {
+				this.highlight();
+			}
+				
+			window.addEventListener('hashchange', () => {
+				this.highlight();
+			}, false);
 			
 			this.loadAnimations();
 			

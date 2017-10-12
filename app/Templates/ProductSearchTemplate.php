@@ -8,6 +8,7 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
+use App\Events\KeywordEvent;
 use App\Models\{Product, ProductCommodity};
 use App\Http\Traits\{ContentTrait, ProductCategoryTrait};
 
@@ -30,6 +31,8 @@ class ProductSearchTemplate extends Template
 		$keywords = $parameters['keywords'];
 		
 		if (!empty($keywords)) {
+			KeywordEvent::dispatch($keywords);
+			
 			$productCommodities = ProductCommodity::search($keywords)->get();
 			
 			$products = Product::search($keywords)->get();

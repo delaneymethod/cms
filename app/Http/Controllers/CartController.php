@@ -9,11 +9,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Traits\{UserTrait, CartTrait, PageTrait, ProductCommodityTrait};
+use App\Http\Traits\{UserTrait, CartTrait, PageTrait, LocationTrait, ShippingMethodTrait, ProductCommodityTrait};
 
 class CartController extends Controller
 {
-	use UserTrait, CartTrait, PageTrait, ProductCommodityTrait;
+	use UserTrait, CartTrait, PageTrait, LocationTrait, ShippingMethodTrait, ProductCommodityTrait;
 
 	/**
 	 * Create a new controller instance.
@@ -180,7 +180,8 @@ class CartController extends Controller
 			$redirectTo = $request->get('redirectTo');
 			
 			if (!empty($redirectTo)) {
-				return redirect($redirectTo);	
+				// Commented out to improve UX
+				// return redirect($redirectTo);	
 			}
 			
 			return redirect('/cart');
@@ -398,8 +399,34 @@ class CartController extends Controller
 		$currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('create_orders')) {
-			$request->session()->put('cart.user_id', $request->get('user_id'));
+			$locationId = $request->get('location_id');
 			
+			$shippingMethodId = $request->get('shipping_method_id');
+			
+			session()->put('cart.user_id', $request->get('user_id'));
+			
+			session()->put('cart.location_id', $locationId);
+				
+			session()->put('cart.shipping_method_id', $shippingMethodId);
+				
+			session()->put('cart.notes', $request->get('notes'));
+			
+			session()->put('cart.po_number', $request->get('po_number'));
+			
+			// Grab shipping location
+			if (!empty($locationId)) {
+				session()->put('cart.location', $this->getLocation($locationId));
+			}
+			
+			// Grab shipping method 
+			if (!empty($shippingMethodId)) {
+				session()->put('cart.shipping_method', $this->getShippingMethod($shippingMethodId));
+			}
+				
+			if (!empty($request->get('goToStep3'))) {
+				return redirect('/cart/checkout/step-3');
+			}
+					
 			return redirect('/cart/checkout/step-2');
 		}
 
@@ -417,15 +444,37 @@ class CartController extends Controller
 		$currentUser = $this->getAuthenticatedUser();
 		
 		if ($currentUser->hasPermission('create_orders')) {
-			$userId = $request->session()->get('cart.user_id');
+			$userId = $request->get('user_id');
 			
 			// Make sure step 2's user id is the same as step 1's user id
 			if ($userId == $currentUser->id) {
-				$request->session()->put('cart.location_id', $request->get('location_id'));
+				$locationId = $request->get('location_id');
 				
-				$request->session()->put('cart.shipping_method_id', $request->get('shipping_method_id'));
+				$shippingMethodId = $request->get('shipping_method_id');
 				
-				$request->session()->put('cart.notes', $request->get('notes'));
+				session()->put('cart.user_id', $userId);
+			
+				session()->put('cart.location_id', $locationId);
+					
+				session()->put('cart.shipping_method_id', $shippingMethodId);
+					
+				session()->put('cart.notes', $request->get('notes'));
+				
+				session()->put('cart.po_number', $request->get('po_number'));
+				
+				// Grab shipping location
+				if (!empty($locationId)) {
+					session()->put('cart.location', $this->getLocation($locationId));
+				}
+				
+				// Grab shipping method 
+				if (!empty($shippingMethodId)) {
+					session()->put('cart.shipping_method', $this->getShippingMethod($shippingMethodId));
+				}
+				
+				if (!empty($request->get('goToStep1'))) {
+					return redirect('/cart/checkout/step-1');
+				}
 				
 				return redirect('/cart/checkout/step-3');
 			}

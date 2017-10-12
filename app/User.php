@@ -69,7 +69,7 @@ class User extends Authenticatable
 		
 		$locationPostalAddress = array_map('trim', $locationPostalAddress);
 		
-		$locationPostalAddress = array_merge([], [$this->location->title], $locationPostalAddress);
+		// $locationPostalAddress = array_merge([], [$this->location->title], $locationPostalAddress);
 		
 		return implode('<br>', $locationPostalAddress);
 	}

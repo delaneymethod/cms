@@ -78,22 +78,21 @@
 						</thead>
 						<tbody>
 							@foreach ($product->product_commodities->sortBy('code') as $productCommodity)
-								<tr id="product_commodity_{{ $productCommodity->id }}">
+								<tr class="{{ $productCommodity->id }}" id="{{ $productCommodity->code }}">
 									<td class="align-middle text-center">{{ $productCommodity->short_description }}</td>
 									<td class="align-middle text-center">{{ $productCommodity->code }}</td>
 									@if ($authenticated)
 										<td class="align-middle text-center price text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
 										<td class="align-middle text-center price-per text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
-										<td class="align-middle text-center quantity-available text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
 									@else	
 										<td class="align-middle text-center price text-muted">-</td>
 										<td class="align-middle text-center price-per text-muted">-</td>
-										<td class="align-middle text-center quantity-available text-muted">-</td>
 									@endauth
+									<td class="align-middle text-center quantity-available">{{ $productCommodity->quantity_available }}</td>
 									<td class="align-middle text-center">
 										@if ($authenticated)
 											@if ($currentUserCanCreateOrders)
-												<form name="addProductCommodity{{ $productCommodity->id }}" id="addProductCommodity{{ $productCommodity->id }}" class="addProductCommodityToCart" role="form" method="POST" action="/cart{{ $redirectTo }}">
+												<form name="addProductCommodity{{ $productCommodity->id }}" id="addProductCommodity{{ $productCommodity->id }}" class="addProductCommodityToCart" role="form" method="POST" action="/cart{{-- $redirectTo }}#{{ $productCommodity->code --}}">
 													{{ csrf_field() }}
 													<input type="hidden" name="id" value="{{ $productCommodity->id }}">
 													<input type="hidden" name="instance" value="cart">
@@ -101,7 +100,7 @@
 													<button type="submit" name="submit_add_product_commodity_{{ $productCommodity->id }}" id="submit_add_product_commodity_{{ $productCommodity->id }}" title="Add to Cart" class="btn btn-outline-success">Add To Cart</button>
 												</form>
 												<div style="margin-top: 10px;font-size: 12px;">
-													<form name="addProductCommodity{{ $productCommodity->id }}" id="addProductCommodity{{ $productCommodity->id }}" class="addProductCommodityToCart" role="form" method="POST" action="/cart{{ $redirectTo }}">
+													<form name="addProductCommodity{{ $productCommodity->id }}" id="addProductCommodity{{ $productCommodity->id }}" class="addProductCommodityToCart" role="form" method="POST" action="/cart{{-- $redirectTo }}#{{ $productCommodity->code --}}">
 														{{ csrf_field() }}
 														<input type="hidden" name="id" value="{{ $productCommodity->id }}">
 														<input type="hidden" name="instance" value="wishlist">
@@ -111,7 +110,7 @@
 												</div>	
 											@endif
 										@else
-											<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-sucess disabled">Add to Cart</a><br><a href="/login{{ $redirectTo }}" title="Login" class="text-gf-blue-gray">Please login first</a> 
+											<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-success disabled">Add to Cart</a><br><a href="/login{{ $redirectTo }}#{{ $productCommodity->code }}" title="Login" class="text-gf-blue-gray">Please login first</a> 
 										@endauth
 									</td>
 								</tr>
@@ -127,7 +126,9 @@
 				window.onload = () => {
 					const productCommodityIds = @json($product->product_commodities->pluck('id'));
 					
-					productCommodityIds.map(productCommodityId => window.CMS.loadProductCommodityPriceQuantity(`#product_commodity_${productCommodityId}`));
+					const productCommodityCodes = @json($product->product_commodities->pluck('code'));
+					
+					productCommodityIds.map((productCommodityId, index) => window.CMS.loadProductCommodity('.' + productCommodityId, productCommodityCodes[index]));
 				};
 				</script>
 			@endif

@@ -104189,7 +104189,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 ;(function ($) {
 	$.delaneyMethodCMSControlPanel = function (options) {
-		// Support multiple elements
+		/* Support multiple elements */
 		if (_this.length > 1) {
 			_this.each(function () {
 				$(_this).delaneyMethodCMSControlPanel(options);
@@ -104206,14 +104206,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 		_this.defaults = {};
 
-		_this.colours = ['#222D32', // gray
-		'#5DA5DA', // blue
-		'#FAA43A', // orange
-		'#60BD68', // green
-		'#F17CB0', // pink
-		'#B2912F', // brown
-		'#B276B2', // purple
-		'#DECF3F', // yellow
+		_this.colours = ['#222D32', /* gray */
+		'#5DA5DA', /* blue */
+		'#FAA43A', /* orange */
+		'#60BD68', /* green */
+		'#F17CB0', /* pink */
+		'#B2912F', /* brown */
+		'#B276B2', /* purple */
+		'#DECF3F', /* yellow */
 		'#F15854'];
 
 		_this.loadOrderStats = function () {
@@ -104528,10 +104528,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		_this.convertTitleToSlug = function (element, targetElement) {
 			if ($(element).length) {
 				$(element).on('keyup change', function (event) {
-					var slug = $(event.target).val().toString().toLowerCase().trim().replace(/\s+/g, '-') // Replace spaces with -
-					.replace(/&/g, '-and-') // Replace & with 'and'
-					.replace(/[^\w\-]+/g, '') // Remove all non-word chars
-					.replace(/\-\-+/g, '-'); // Replace multiple - with single -
+					var slug = $(event.target).val().toString().toLowerCase().trim().replace(/\s+/g, '-') /* Replace spaces with - */
+					.replace(/&/g, '-and-') /* Replace & with 'and' */
+					.replace(/[^\w\-]+/g, '') /* Remove all non-word chars */
+					.replace(/\-\-+/g, '-'); /* Replace multiple - with single - */
 
 					$(targetElement).val(slug);
 
@@ -104561,10 +104561,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		_this.convertFolderToSlug = function (element) {
 			if ($(element).length) {
 				$(element).on('keyup change', function (event) {
-					var slug = $(event.target).val().toString().toLowerCase().trim().replace(/\s+/g, '--') // Replace spaces with -
-					.replace(/&/g, '-and-') // Replace & with 'and'
-					.replace(/[^\w\-]+/g, '') // Remove all non-word chars
-					.replace(/\-\-+/g, '-'); // Replace multiple - with single -
+					var slug = $(event.target).val().toString().toLowerCase().trim().replace(/\s+/g, '--') /* Replace spaces with - */
+					.replace(/&/g, '-and-') /* Replace & with 'and' */
+					.replace(/[^\w\-]+/g, '') /* Remove all non-word chars */
+					.replace(/\-\-+/g, '-'); /* Replace multiple - with single - */
 
 					$(element).val(slug);
 				});
@@ -104588,13 +104588,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 					var form = $(element).closest('form');
 
-					// Set action URL
+					/* Set action URL */
 					$(form).attr('action', '/cp/pages/reload');
 
-					// If there is a method field, make sure to remove it - used when in edit mode
+					/* If there is a method field, make sure to remove it - used when in edit mode */
 					$(form).find('input[name="_method"]').remove();
 
-					// Submit form
+					/* Submit form */
 					$('#submit').trigger('click');
 				});
 			}
@@ -104613,14 +104613,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		};
 
 		_this.orderUpdated = function (order) {
-			// In this particular case, we're only updatig the order status column but we have the full order details so anything could be updated in the UI.
+			/* In this particular case, we're only updatig the order status column but we have the full order details so anything could be updated in the UI. */
 			var element = $('#order-' + order.id + '-status');
 
 			element.fadeOut(function () {
 				element.attr('class', 'text-center status_id-' + order.status.id).html(order.status.title);
 			}).fadeIn();
 
-			// This is for the Orders view, where an icon is used to show the status
+			/* This is for the Orders view, where an icon is used to show the status */
 			var elementIcon = $('#order-' + order.id + '-status-icon');
 
 			elementIcon.fadeOut(function () {
@@ -104630,9 +104630,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 					'data-original-title': order.status.title
 				});
 
-				// If the status is no longer pending, hide the badge
+				/* If the status is no longer pending, hide the badge */
 				if (order.status.id != 2) {
-					// This is for the Orders view, where an icon is used to show the status
+					/* This is for the Orders view, where an icon is used to show the status */
 					$('#order-' + order.id + '-status-badge').fadeOut();
 				} else {
 					$('#order-' + order.id + '-status-badge').fadeIn();
@@ -104641,7 +104641,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		};
 
 		_this.showNotification = function (notification) {
-			// Updates the Notifications view
+			/* Updates the Notifications view */
 			var subject = _.replace(notification.type, 'OrderUpdated', 'Order Updated');
 
 			subject = _.replace(subject, 'OrderPlaced', 'Order Placed');
@@ -104664,7 +104664,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 			element.prepend(newNotification);
 
-			// Updates counter in the sidebar
+			/* Updates counter in the sidebar */
 			var elementIcon = $('#notifications-unread');
 
 			var unread = 0;
@@ -104677,7 +104677,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				elementIcon.html(unread);
 			}).fadeIn();
 
-			// Updates the stats card on the dashboard
+			/* Updates the stats card on the dashboard */
 			var elementCardCounter = $('#messages-card').find('p');
 
 			unread = 0;
@@ -104690,7 +104690,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				elementCardCounter.html(unread);
 			}).fadeIn();
 
-			// Reloads the table data again
+			/* Reloads the table data again */
 			_this.attachDataTable('#datatable');
 		};
 
@@ -104731,21 +104731,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				$('#' + id + '-selected-asset-preview').html('');
 			}
 
-			// Loads assets into modal window body
+			/* Loads assets into modal window body */
 			$(element).browse({
 				root: '/uploads/',
 				script: '/cp/assets/browse'
 			}, function (file) {
 				$('#' + id + '-selected-asset').html('<strong>Asset</strong> ' + file + '<div class="spacer d-sm-block d-md-block d-lg-none d-xl-none"></div>');
 
-				// Show preview
+				/* Show preview */
 				$('#' + id + '-selected-asset-preview').html('<div class="spacer d-sm-block d-md-block d-lg-none d-xl-none"></div><img src="' + file + '" class="img-fluid" width="100%">');
 
-				// Close modal when user clicks select button and set the file URL in the Banner image URL field on the form.
+				/* Close modal when user clicks select button and set the file URL in the Banner image URL field on the form. */
 				$('#' + id + '-select-asset').on('click', function () {
 					$('#' + id + '-browse-modal').modal('hide');
 
-					// Update the form field and remove focus
+					/* Update the form field and remove focus */
 					$('#' + id).val(window.location.origin + file).blur();
 
 					$('a[data-target="#' + id + '-browse-modal"]').data('value', file);
@@ -104766,7 +104766,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 			}
 
-			// IE10 viewport hack for Surface/desktop Windows 8 bug
+			/* IE10 viewport hack for Surface/desktop Windows 8 bug */
 			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 				var msViewportStyle = document.createElement('style');
 

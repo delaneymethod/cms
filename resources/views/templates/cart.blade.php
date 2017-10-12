@@ -51,6 +51,7 @@
 				</div>	
 				<div class="row">
 					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
+						<p class="d-block d-sm-none d-md-none d-lg-none d-xl-none text-center font-weight-bold">Tip: You can slide / scroll to the table below.</p>
 						<table class="table table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
 							<thead>
 								<tr class="bg-default text-white very-tall">
@@ -59,14 +60,14 @@
 									<th colspan="3" class="align-middle text-center">Qty</th>
 									<th class="align-middle text-right">Price</th>
 									<th class="align-middle text-right">Subtotal</th>
-									<th class="align-middle d-none d-sm-none d-md-block d-lg-block d-xl-block">&nbsp;</th>
+									<th class="align-middle">&nbsp;</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach ($cart->product_commodities as $productCommodity)
 									<tr>
-										<td class="align-middle d-none d-sm-none d-md-block d-lg-block d-xl-block text-center"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-blue-gray"><img src="/assets/img/loading.svg" data-src="{{ $productCommodity->model->product->image_url }}" class="lazyload img-fluid" width="100px" alt="{{ $productCommodity->model->product->title }}"></a></td>
-										<td class="align-middle"><a href="{{ $productCommodity->model->product->url }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-blue-gray">{{ $productCommodity->name }}</a></td>
+										<td class="align-middle d-none d-sm-none d-md-block d-lg-block d-xl-block text-center" style="height: 122px;"><a href="{{ $productCommodity->model->product->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-blue-gray d-flex h-100 justify-content-center"><img src="/assets/img/loading.svg" data-src="{{ $productCommodity->model->product->image_url }}" class="lazyload img-fluid align-self-center" width="100px" alt="{{ $productCommodity->model->product->title }}"></a></td>
+										<td class="align-middle"><a href="{{ $productCommodity->model->product->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-blue-gray">{{ $productCommodity->name }}</a><br>Code: <span class="font-italic">{{ $productCommodity->model->code }}</span></td>
 										<td class="align-middle text-center">
 											@component('_components.cart.updateProductCommodity', [
 												'id' => $productCommodity->id, 
@@ -92,7 +93,7 @@
 										</td>
 										<td class="align-middle text-right">{{ $productCommodity->price() }}</td>
 										<td class="align-middle text-right">{{ $productCommodity->total() }}</td>
-										<td class="align-middle d-none d-sm-none d-md-block d-lg-block d-xl-block text-center">
+										<td class="align-middle text-center">
 											@component('_components.cart.removeProductCommodity', [
 												'id' => $productCommodity->id,
 												'rowId' => $productCommodity->rowId,
@@ -221,8 +222,8 @@
 								@foreach ($wishlistCart->product_commodities as $productCommodity)
 									@php ($productCommodityProduct = $productCommodity->model->product)
 									<tr>
-										<td class="align-middle text-center d-none d-sm-none d-md-block d-lg-block d-xl-block"><a href="{{ $productCommodityProduct->url }}" title="{{ $productCommodityProduct->title }}" class="text-gf-blue-gray"><img data-src="{{ $productCommodityProduct->image_url }}" class="lazyload img-fluid" width="100px" alt="{{ $productCommodityProduct->title }}"></a></td>
-										<td class="align-middle text-left"><a href="{{ $productCommodityProduct->url }}" title="{{ $productCommodityProduct->title }}" class="text-gf-blue-gray">{{ $productCommodity->name }}</a></td>
+										<td class="align-middle text-center d-none d-sm-none d-md-block d-lg-block d-xl-block" style="height: 122px;"><a href="{{ $productCommodityProduct->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodityProduct->title }}" class="text-gf-blue-gray d-flex h-100 justify-content-center"><img data-src="{{ $productCommodityProduct->image_url }}" class="lazyload img-fluid align-self-center" width="100px" alt="{{ $productCommodityProduct->title }}"></a></td>
+										<td class="align-middle text-left"><a href="{{ $productCommodityProduct->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodityProduct->title }}" class="text-gf-blue-gray">{{ $productCommodity->name }}</a><br>Code: <span class="font-italic">{{ $productCommodity->model->code }}</span></td>
 										<td class="align-middle text-center">	
 											@component('_components.cart.addProductCommodity', [
 												'id' => $productCommodity->id, 

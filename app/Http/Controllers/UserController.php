@@ -282,70 +282,6 @@ class UserController extends Controller
 	}
 	
 	/**
-	 * Gets notifications view for current user.
-	 *
-	 * @params	Request 	$request
-	 * @param	int			$id
-	 * @return 	Response
-	 */
-   	public function notifications(Request $request, int $id)
-	{
-		$currentUser = $this->getAuthenticatedUser();
-		
-		if ($currentUser->id == $id) {
-			$title = 'Messages';
-			
-			$subTitle = $currentUser->company->title;
-			
-			$notifications = $currentUser->notifications;
-			
-			foreach ($notifications as $notification) {
-				$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderPlacedNotification'], ['Order Updated', 'Order Placed'], $notification->type);
-			}
-			
-			return view('cp.users.notifications.index', compact('currentUser', 'title', 'subTitle', 'notifications'));
-		}
-
-		abort(403, 'Unauthorised action');
-	}
-	
-	/**
-	 * Gets specified notification view for current user.
-	 *
-	 * @params	Request 	$request
-	 * @param	int			$id
-	 * @return 	Response
-	 */
-   	public function notification(Request $request, int $id, string $uuid)
-	{
-		$currentUser = $this->getAuthenticatedUser();
-		
-		if ($currentUser->id == $id) {
-			$notification = $this->getNotification($uuid);
-			
-			// Set a subject
-			$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderPlacedNotification'], ['Order Updated', 'Order Placed'], $notification->type);
-			
-			$title = $notification->subject;
-			
-			$subTitle = 'Messages';
-			
-			// Mark it as read...
-			$currentUser->notifications->each(function ($note, $key) use ($uuid) {
-				if ($note->id === $uuid) {
-					$note->markAsRead();
-				}
-			});
-			
-			$notification->read_at = Carbon::parse($notification->read_at)->format('jS M Y H:i');
-				
-			return view('cp.users.notifications.show', compact('currentUser', 'title', 'subTitle', 'notification'));
-		}
-
-		abort(403, 'Unauthorised action');
-	}
-	
-	/**
 	 * Updates a specific user.
 	 *
 	 * @params	Request 	$request
@@ -600,6 +536,70 @@ class UserController extends Controller
 			flash('User deleted successfully.', $level = 'info');
 
 			return redirect('/cp/users');
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Gets notifications view for current user.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function notifications(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->id == $id) {
+			$title = 'Messages';
+			
+			$subTitle = $currentUser->company->title;
+			
+			$notifications = $currentUser->notifications;
+			
+			foreach ($notifications as $notification) {
+				$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderPlacedNotification'], ['Order Updated', 'Order Placed'], $notification->type);
+			}
+			
+			return view('cp.users.notifications.index', compact('currentUser', 'title', 'subTitle', 'notifications'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
+	 * Gets specified notification view for current user.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function notification(Request $request, int $id, string $uuid)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->id == $id) {
+			$notification = $this->getNotification($uuid);
+			
+			// Set a subject
+			$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderPlacedNotification'], ['Order Updated', 'Order Placed'], $notification->type);
+			
+			$title = $notification->subject;
+			
+			$subTitle = 'Messages';
+			
+			// Mark it as read...
+			$currentUser->notifications->each(function ($note, $key) use ($uuid) {
+				if ($note->id === $uuid) {
+					$note->markAsRead();
+				}
+			});
+			
+			$notification->read_at = Carbon::parse($notification->read_at)->format('jS M Y H:i');
+				
+			return view('cp.users.notifications.show', compact('currentUser', 'title', 'subTitle', 'notification'));
 		}
 
 		abort(403, 'Unauthorised action');
