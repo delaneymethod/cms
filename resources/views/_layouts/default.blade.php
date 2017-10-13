@@ -32,6 +32,7 @@
 		'url': '{{ config('cms.api.url') }}',
 		'endpoints': {
 			'orders': '{{ config('cms.api.endpoints.orders') }}',
+			'companies': '{{ config('cms.api.endpoints.companies') }}',
 			'product_commodities': {
 				'pricing': '{{ config('cms.api.endpoints.product_commodities.pricing') }}'
 			}

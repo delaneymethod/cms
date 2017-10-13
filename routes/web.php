@@ -37,6 +37,9 @@ Route::redirect('/articles/author', '/articles', 301);
 Route::redirect('/articles/category', '/articles', 301);
 Route::get('/articles/{slug}', 'ArticleController@show');
 
+// Manufacturers routes
+Route::get('/manufacturers/{slug}', 'ProductManufacturerController@show');
+
 // Order routes
 Route::get('/orders/{id}/pdf', 'OrderController@pdf');
 Route::post('/orders', 'OrderController@store');

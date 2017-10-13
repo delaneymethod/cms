@@ -105,7 +105,7 @@ class LoginController extends Controller
 		
 		Session::regenerate(true);
 		
-		flash('You have logged out!', $level = 'success');
+		flash('You have been logged out!', $level = 'success');
         
 		return redirect($this->redirectTo);
 	}

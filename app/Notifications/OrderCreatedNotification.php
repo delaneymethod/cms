@@ -13,9 +13,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
-use App\Mail\{OrderPlacedMailCustomer, OrderPlacedMailSuperAdmin};
+use App\Mail\{OrderCreatedMailCustomer, OrderCreatedMailSuperAdmin};
 
-class OrderPlacedNotification extends Notification implements ShouldQueue
+class OrderCreatedNotification extends Notification implements ShouldQueue
 {
 	use Queueable;
 	
@@ -41,18 +41,18 @@ class OrderPlacedNotification extends Notification implements ShouldQueue
 	protected $subject;
 	
 	/**
-	 * Information about the order placed email template.
+	 * Information about the order created email template.
 	 *
 	 * @var mixed
 	 */
-	protected $orderPlacedMail;
+	protected $orderCreatedMail;
 	
 	/**
 	 * Create a new notification instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(Order $order, User $user, string $subject = 'Order Placed')
+	public function __construct(Order $order, User $user, string $subject = 'Order Created')
 	{
 		$this->order = $order;
 		
@@ -80,13 +80,13 @@ class OrderPlacedNotification extends Notification implements ShouldQueue
 	 */
 	public function toMail($notifiable)
 	{
-		$this->orderPlacedMail = new OrderPlacedMailCustomer($this->order, $this->user);
+		$this->orderCreatedMail = new OrderCreatedMailCustomer($this->order, $this->user);
 		
 		if ($this->user->isSuperAdmin()) {
-			$this->orderPlacedMail = new OrderPlacedMailSuperAdmin($this->order, $this->user);
+			$this->orderCreatedMail = new OrderCreatedMailSuperAdmin($this->order, $this->user);
 		}
 			
-		return ($this->orderPlacedMail)->to($this->user->email)->subject($this->subject);
+		return ($this->orderCreatedMail)->to($this->user->email)->subject($this->subject);
 	}
 	
 	/**

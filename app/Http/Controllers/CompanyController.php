@@ -9,8 +9,10 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use Carbon\Carbon;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use App\Jobs\ProcessCompanyJob;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\{CompanyTrait, LocationTrait};
 
@@ -130,6 +132,13 @@ class CompanyController extends Controller
 				$companies = $this->filterCompanies($companies);
 			
 				$this->setCache($this->cacheKey, $companies);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the company. Sticks the job in the "companies" queue to run in 10 minutes.
+				ProcessCompanyJob::dispatch($company, 'companies.created')->delay($time)->onQueue('companies.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -228,6 +237,13 @@ class CompanyController extends Controller
 				$companies = $this->filterCompanies($companies);
 			
 				$this->setCache($this->cacheKey, $companies);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+					
+				// Dispatches a new job to process the company. Sticks the job in the "companies" queue to run in 10 minutes.
+				ProcessCompanyJob::dispatch($company, 'companies.updated')->delay($time)->onQueue('companies.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -311,6 +327,13 @@ class CompanyController extends Controller
 			DB::beginTransaction();
 
 			try {
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+					
+				// Dispatches a new job to process the company. Sticks the job in the "companies" queue to run in 10 minutes.
+				ProcessCompanyJob::dispatch($company, 'companies.deleted')->delay($time)->onQueue('companies.jobs');
+			
 				$company->delete();
 				
 				$companies = $this->getCompanies();

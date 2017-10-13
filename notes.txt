@@ -1,21 +1,10 @@
 
 
-add box to allow quantity value at add to cart
-
-after quantity update, take user back to same position on page
-
-
-
-
-
 
 
 when customer, location and company updates, ping the API
 
-
-
-
-
+fix queues for users and locations
 
 allow end users to update own details
 
@@ -25,11 +14,9 @@ update email confirmation to include PDF version
 
 settings tab - email preferences, notifications options - tick to receive
 
-globals tab - saved linledin, twitter, facebook, google analytic 
+globals tab - saved linkedin, twitter, facebook, google analytic 
 
 setup permissions for settings and globals
-
-https://www.facebook.com/GrampianFasteners92/
 
 add pagination to articles
 
@@ -93,17 +80,24 @@ Look into: https://github.com/spatie/laravel-activitylog
 
 Setup daemon's for 
 
+php artisan queue:work --queue=users.jobs &
+php artisan queue:work --queue=users &
+
+php artisan queue:work --queue=locations.jobs &
+php artisan queue:work --queue=locations &
+
+php artisan queue:work --queue=companies.jobs &
+
 php artisan queue:work --queue=orders.jobs &
 php artisan queue:work --queue=orders.events &
 php artisan queue:work --queue=orders.notifications &
 php artisan queue:work --queue=orders.broadcasts &
-php artisan queue:work --queue=users &
-php artisan queue:work --queue=locations &
-php artisan queue:work --queue=products &
-php artisan queue:work --queue=default &
-php artisan queue:work --queue=keywords &
 
-php artisan queue:work --queue=orders.jobs,orders.events,orders.notifications,orders.broadcasts,users,locations,products,keywords,default
+php artisan queue:work --queue=products &
+php artisan queue:work --queue=keywords &
+php artisan queue:work --queue=default &
+
+php artisan queue:work --queue=users.jobs,locations.jobs,companies.jobs,orders.jobs,orders.events,orders.notifications,orders.broadcasts,users,locations,products,keywords,default
 
 
 Setup cron for scheduled tasks

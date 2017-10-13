@@ -24,6 +24,17 @@ trait ProductManufacturerTrait
 	}
 	
 	/**
+	 * Get the specified product manufacturer based on slug.
+	 *
+	 * @param 	string 		$slug
+	 * @return 	Object
+	 */
+	public function getProductManufacturerBySlug(string $slug) : ProductManufacturer
+	{
+		return ProductManufacturer::where('slug', $slug)->firstOrFail();
+	}
+	
+	/**
 	 * Get all the product manufacturers.
 	 *
 	 * @return 	Response

@@ -14,7 +14,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class OrderPlacedMailCustomer extends Mailable implements ShouldQueue
+class OrderCreatedMailCustomer extends Mailable implements ShouldQueue
 {
 	use Queueable, SerializesModels;
 	
@@ -51,6 +51,6 @@ class OrderPlacedMailCustomer extends Mailable implements ShouldQueue
 	 */
 	public function build()
 	{
-		return $this->view('emails.orders.placed.customer');
+		return $this->view('emails.orders.created.customer');
 	}
 }

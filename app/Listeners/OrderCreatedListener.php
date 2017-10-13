@@ -8,12 +8,12 @@
 namespace App\Listeners;
 
 use Carbon\Carbon;
-use App\Events\OrderPlacedEvent;
+use App\Events\OrderCreatedEvent;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\Notifications\OrderPlacedNotification;
+use App\Notifications\OrderCreatedNotification;
 
-class OrderPlacedListener implements ShouldQueue
+class OrderCreatedListener implements ShouldQueue
 {
 	/**
      * The number of minutes the job is delayed.
@@ -35,15 +35,15 @@ class OrderPlacedListener implements ShouldQueue
 	/**
 	 * Handle the event.
 	 *
-	 * @param 	OrderPlaced 	$event
+	 * @param 	OrderCreated 	$event
 	 * @return 	void
 	 */
-	public function handle(OrderPlacedEvent $event)
+	public function handle(OrderCreatedEvent $event)
 	{
 		// We could send out a notification here that sends an email, saved to database, updates slack, send a text message etc etc
 		$time = Carbon::now()->addMinutes($this->minutes);
 			
-		// User - Sends an order placed notification to the user. Stick the notification in the "orders" queue to run in 5 minutes.
-		$event->user->notify((new OrderPlacedNotification($event->order, $event->user))->delay($time)->onQueue('orders.notifications'));
+		// User - Sends an order created notification to the user. Stick the notification in the "orders" queue to run in 5 minutes.
+		$event->user->notify((new OrderCreatedNotification($event->order, $event->user))->delay($time)->onQueue('orders.notifications'));
 	}
 }

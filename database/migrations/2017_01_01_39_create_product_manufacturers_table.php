@@ -20,7 +20,8 @@ class CreateProductManufacturersTable extends Migration
 
 			$table->unsignedInteger('id')->primary();
 			
-			$table->string('title')->nullable()->index();
+			$table->string('title')->index();
+			$table->string('slug')->index();
 			$table->string('website')->nullable()->index();
 			$table->string('logo_image')->nullable();
 			$table->string('cms_page_name')->nullable();

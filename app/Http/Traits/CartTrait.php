@@ -141,9 +141,9 @@ trait CartTrait
 	 * @param 	float 		$price
 	 * @return 	Object
 	 */
-	public function addCartProductCommodity(int $id, string $title, float $price) : CartItem
+	public function addCartProductCommodity(int $id, string $title, int $quantity, float $price) : CartItem
 	{
-		return Cart::add($id, $title, 1, $price);
+		return Cart::add($id, $title, $quantity, $price);
 	}
 	
 	/**

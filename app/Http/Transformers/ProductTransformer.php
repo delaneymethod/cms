@@ -415,6 +415,8 @@ class ProductTransformer
 			
 			if (array_key_exists('Name', $productManufacturer)) {
 				$productManufacturer['title'] = $productManufacturer['Name'];
+				
+				$productManufacturer['slug'] = str_slug($productManufacturer['Name']);
 			
 				unset($productManufacturer['Name']);
 			}

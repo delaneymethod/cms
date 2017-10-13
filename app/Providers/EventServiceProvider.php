@@ -18,8 +18,8 @@ class EventServiceProvider extends ServiceProvider
 	 * @var array
 	 */
 	protected $listen = [
-		'App\Events\OrderPlacedEvent' => [
-			'App\Listeners\OrderPlacedListener',
+		'App\Events\OrderCreatedEvent' => [
+			'App\Listeners\OrderCreatedListener',
 		],
 		'App\Events\OrderUpdatedEvent' => [
 			'App\Listeners\OrderUpdatedListener',

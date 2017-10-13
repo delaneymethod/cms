@@ -9,18 +9,17 @@ namespace App\Jobs;
 
 use Log;
 use Exception;
-use App\Models\Order;
+use App\Models\Company;
 use Illuminate\Bus\Queueable;
 use GuzzleHttp\{Psr7, Client};
 use App\Http\Traits\UserTrait;
-use App\Events\OrderPlacedEvent;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Notifications\FailedJobNotification;
 use Illuminate\Queue\{SerializesModels, InteractsWithQueue};
 
-class ProcessOrderJob implements ShouldQueue
+class ProcessCompanyJob implements ShouldQueue
 {
 	use UserTrait, Queueable, Dispatchable, SerializesModels, InteractsWithQueue;
 	
@@ -32,11 +31,18 @@ class ProcessOrderJob implements ShouldQueue
     public $tries = 5;
     
 	/**
-	 * Information about the order.
+	 * Information about the company.
 	 *
 	 * @var string
 	 */
-	protected $order;
+	protected $company;
+	
+	/**
+	 * Information about the event.
+	 *
+	 * @var string
+	 */
+	protected $event;
     
     /**
 	 * Information about the api url.
@@ -64,13 +70,15 @@ class ProcessOrderJob implements ShouldQueue
 	 *
 	 * @return void
 	 */
-	public function __construct(Order $order)
+	public function __construct(Company $company, string $event)
 	{
-		$this->order = $order->load('user', 'status', 'location', 'order_type', 'shipping_method');
+		$this->company = $company;
+		
+		$this->event = $event;
 		
 		$this->apiUrl = config('cms.api.url');
 		
-		$this->endpoint = config('cms.api.endpoints.orders');
+		$this->endpoint = config('cms.api.endpoints.companies');
 		
 		$this->superAdmin = $this->getUserById(1);
 	}
@@ -83,14 +91,14 @@ class ProcessOrderJob implements ShouldQueue
 	public function handle()
 	{
 		Log::info('');
-		Log::info('---- Processing Order ----');
+		Log::info('---- Processing Company ----');
 		Log::info('');
-		Log::info('Order:');
-		Log::info($this->order);
+		Log::info('Company:');
+		Log::info($this->company);
 		Log::info('');
 		
 		try {
-			// Send new order details to 3rd party API for processing.
+			// Send company details to 3rd party API for processing.
 			$client = new Client([
 				'base_uri' => $this->apiUrl,
 				'timeout' => 5, // Timeout if a server does not return a response 
@@ -98,7 +106,11 @@ class ProcessOrderJob implements ShouldQueue
 			]);
 			
 			$response = $client->request('POST', $this->endpoint, [
-				'order' => $this->order,
+				'event_id' => uniqid(),
+				'event_type' => $this->event,
+				'data' => [
+					$this->company
+				],
 			]);
 			
 			Log::info('Status Code:');
@@ -107,12 +119,8 @@ class ProcessOrderJob implements ShouldQueue
 			Log::info('Body:');
 			Log::info($response->getBody());
 			
-			// Sends out an order placed event across the system.
+			// No need to send out an company event across the system since nothing is depending on the event.
 			
-			// Listeners will pick up the event and send out notifications to the customer and to the super admin (site owner)
-			OrderPlacedEvent::dispatch($this->order, $this->order->user);
-			
-			OrderPlacedEvent::dispatch($this->order, $this->superAdmin);
 		} catch (RequestException $exception) {
 			Log::critical('');
 			Log::critical('################################');
@@ -122,13 +130,6 @@ class ProcessOrderJob implements ShouldQueue
 			Log::critical('Request: ');
 			Log::critical(Psr7\str($exception->getRequest()));
 			Log::critical('');
-			
-			/*
-			if ($exception->hasResponse()) {
-				Log::critical('Response: ');
-				Log::critical(Psr7\str($exception->getResponse()));
-			}
-			*/
 			
 			throw new Exception($exception);
 		}
@@ -158,6 +159,6 @@ class ProcessOrderJob implements ShouldQueue
 		Log::critical('');
 		
 		// Send notification of failure, setting the message
-		$this->superAdmin->notify(new FailedJobNotification('Process Order Job Failed'));
+		$this->superAdmin->notify(new FailedJobNotification('Process Company Job Failed'));
 	}
 }

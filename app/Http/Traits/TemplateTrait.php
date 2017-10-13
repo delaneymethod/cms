@@ -9,7 +9,7 @@ namespace App\Http\Traits;
 
 use App\Models\{Page, Template};
 use Illuminate\Database\Eloquent\Collection as CollectionResponse;
-use App\Templates\{CartTemplate, PageTemplate, ContactTemplate, ProductTemplate, ProductsTemplate, ArticleTemplate, CheckoutTemplate, ArticlesTemplate, HomepageTemplate, ProductSearchTemplate, ProductCategoryTemplate};
+use App\Templates\{CartTemplate, PageTemplate, ContactTemplate, ProductTemplate, ProductsTemplate, ArticleTemplate, CheckoutTemplate, ArticlesTemplate, HomepageTemplate, ProductSearchTemplate, ProductCategoryTemplate, ProductManufacturerTemplate, ProductManufacturersTemplate};
 
 trait TemplateTrait
 {
@@ -70,6 +70,15 @@ trait TemplateTrait
 			$page->template->filename = 'article';
 		}
 		
+		if ($page->slug == 'manufacturers') {
+			$page->template->filename = 'productManufacturers';
+		}
+		
+		// Since individual product manufacturers do not have pages as such we need to use their parent page.
+		if ($page->slug == 'manufacturers' && !empty($parameters['productManufacturer'])) {
+			$page->template->filename = 'productManufacturer';
+		}
+		
 		// TODO - I WISH THERE WAS A WAY TO DO THIS DYNAMICALLY
 		$templates = [
 			'cart' => CartTemplate::class,
@@ -83,6 +92,8 @@ trait TemplateTrait
 			'homepage' => HomepageTemplate::class,
 			'productSearch' => ProductSearchTemplate::class,
 			'productCategory' => ProductCategoryTemplate::class,
+			'productManufacturer' => ProductManufacturerTemplate::class,
+			'productManufacturers' => ProductManufacturersTemplate::class,
 		];
 		
 		// If no template setup, fall back to default template.

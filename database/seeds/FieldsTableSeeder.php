@@ -482,6 +482,38 @@ class FieldsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			
+			// Manufacturers template fields
+			[	
+				'title' => 'Banner Background Image',
+				'handle' => 'bannerImage',
+				'instructions' => NULL,
+				'options' => NULL,
+				'field_type_id' => 1,
+				'required' => 0,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[	
+				'title' => 'Banner Content',
+				'handle' => 'bannerContent',
+				'instructions' => NULL,
+				'options' => NULL,
+				'field_type_id' => 3,
+				'required' => 0,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'Section 1 Content',
+				'handle' => 'section1Content',
+				'instructions' => NULL,
+				'options' => NULL,
+				'field_type_id' => 3,
+				'required' => 0,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			
 		];
 		
 		DB::table('fields')->delete();

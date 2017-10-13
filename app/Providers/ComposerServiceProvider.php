@@ -38,7 +38,7 @@ class ComposerServiceProvider extends ServiceProvider
 					$page = null;
 			
 					// Used to build footer links in the 1st column
-					$slugs = collect(['contact', 'our-brands', 'services', 'awards']);
+					$slugs = collect(['contact', 'manufacturers', 'services', 'awards']);
 				
 					// Gets Terms and Conditions PDF - 2 matches asset id
 					$asset = $this->getAsset(2);

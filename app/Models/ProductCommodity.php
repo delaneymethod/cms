@@ -1,8 +1,8 @@
 <?php
 /**
- * @link      https://www.delaneymethod.com/cms
+ * @link	  https://www.delaneymethod.com/cms
  * @copyright Copyright (c) DelaneyMethod
- * @license   https://www.delaneymethod.com/cms/license
+ * @license	  https://www.delaneymethod.com/cms/license
  */
  
 namespace App\Models;
@@ -19,32 +19,32 @@ class ProductCommodity extends Model implements Buyable
 	use CartTrait, Searchable;
 	
 	/**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'product_commodities';
-    
+	 * The table associated with the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'product_commodities';
+	
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;
 	
-	private $defaultPrice = 0.01;
+	private $defaultPrice = 1;
 	
 	/**
-     * @var int|string
-     */
-    private $id;
-    
-    /**
-     * @var string
-     */
-    private $name;
-    
-    /**
-     * @var float
-     */
-    private $price;
+	 * @var int|string
+	 */
+	private $id;
+	
+	/**
+	 * @var string
+	 */
+	private $name;
+	
+	/**
+	 * @var float
+	 */
+	private $price;
 	
 	/**
 	 * The attributes that are mass assignable.
@@ -76,30 +76,30 @@ class ProductCommodity extends Model implements Buyable
 	];
 	
 	/**
-     * Attributes that get appended on serialization
-     *
-     * @var array
-     */
+	 * Attributes that get appended on serialization
+	 *
+	 * @var array
+	 */
 	protected $appends = [
 		'currency',
 	];
 	
 	/**
-     * BuyableProduct constructor.
-     *
-     * @param int|string 	$id
-     * @param string     	$title
-     * @param string     	$slug
-     * @param float      	$price
-     */
-    public function __construct($id = 1, $name = 'Product Commodity', $price = 0.01)
-    {
-        $this->id = $id;
-        
-        $this->name = $name;
-        
-        $this->price = $price;
-    }
+	 * BuyableProduct constructor.
+	 *
+	 * @param int|string 	$id
+	 * @param string	 	$title
+	 * @param string	 	$slug
+	 * @param float		 	$price
+	 */
+	public function __construct($id = 1, $name = 'Product Commodity', $price = 1)
+	{
+		$this->id = $id;
+		
+		$this->name = $name;
+		
+		$this->price = $price;
+	}
 	
 	/**
 	 * Get the identifier of the Buyable item.
@@ -161,8 +161,8 @@ class ProductCommodity extends Model implements Buyable
 	/**
 	 * Gets the total formatted with 2 decimal places.
 	 */
-    public function getPriceAttribute($value) : float
-    {
+	public function getPriceAttribute($value) : float
+	{
 		if (!empty($value)) {
 			return $this->format2decimals($value);
 		} else {

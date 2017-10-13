@@ -15,7 +15,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class OrderPlacedEvent implements ShouldBroadcast
+class OrderCreatedEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
     
@@ -59,7 +59,7 @@ class OrderPlacedEvent implements ShouldBroadcast
 	 */
 	public function broadcastAs() : string
 	{
-		return 'order.placed';
+		return 'order.created';
 	}
 	
 	/**

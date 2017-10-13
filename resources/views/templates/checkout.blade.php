@@ -298,8 +298,8 @@
 															<th class="align-middle d-none d-sm-none d-md-none d-lg-block d-xl-block">&nbsp;</th>
 															<th class="align-middle">Product</th>
 															<th class="align-middle text-center">Qty</th>
-															<th class="align-middle text-center">Price</th>
-															<th class="align-middle text-right">Subtotal</th>
+															<th class="align-middle text-center">Price&nbsp;<i class="fa fa-lg fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Prices are shown in British Pound (GBP)" aria-hidden="true"></i></th>
+															<th class="align-middle text-right">Subtotal&nbsp;<i class="fa fa-lg fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Prices are shown in British Pound (GBP)" aria-hidden="true"></i></th>
 														</tr>
 													</thead>
 													<tbody>
@@ -307,10 +307,10 @@
 															@php ($productCommodityProduct = $productCommodity->model->product)
 															<tr>
 																<td class="align-middle d-none d-sm-none d-md-none d-lg-block d-xl-block" style="height: 122px;"><a href="{{ $productCommodityProduct->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodityProduct->title }}" target="_blank" class="text-gf-info d-flex h-100 justify-content-center"><img src="/assets/img/loading.svg" data-src="{{ $productCommodityProduct->image_url }}" class="lazyload img-fluid align-self-center" width="100px" alt="{{ $productCommodityProduct->title }}"></a></td>
-																<td class="align-middle"><a href="{{ $productCommodityProduct->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodityProduct->title }}" target="_blank">{{ $productCommodity->name }}</a><br>Code: <span class="font-italic">{{ $productCommodity->model->code }}</span></td>
+																<td class="align-middle"><a href="{{ $productCommodityProduct->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodityProduct->title }}">{{ $productCommodity->name }}</a><br>Code: <span class="font-italic">{{ $productCommodity->model->code }}</span></td>
 																<td class="align-middle text-center">{{ $productCommodity->qty }}</td>
 																<td class="align-middle text-right">{{ $productCommodity->price() }}</td>
-																<td class="align-middle text-right">{{ $productCommodity->total() }}</td>
+																<td class="align-middle text-right">{{ $productCommodity->subtotal() }}</td>
 															</tr>
 														@endforeach
 													</tbody>

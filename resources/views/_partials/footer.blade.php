@@ -51,6 +51,7 @@
 								<li class="list-inline-item"><a href="https://www.linkedin.com/company/grampian-fasteners" title="LinkedIn"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
 								<li class="list-inline-item"><a href="/contact" title="Contact"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
 								<li class="list-inline-item"><a href="https://twitter.com/fastenerpeople" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+								<li class="list-inline-item"><a href="https://www.facebook.com/GrampianFasteners92" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
 							</ul>
 						</div>
 					</div>

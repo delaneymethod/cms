@@ -52,6 +52,7 @@ return [
 		'url' => env('API_URL', 'https://www.delaneymethod.com/cms/api/v1/'),
 		'endpoints' => [
 			'orders' => env('API_ENDPOINT_ORDERS', ''),
+			'companies' => env('API_ENDPOINT_COMPANIES', ''),
 			'product_commodities' => [
 				'pricing' => env('API_ENDPOINT_PRODUCT_COMMODITIES_PRICING', ''),
 			],

@@ -37,6 +37,16 @@ Route::prefix('v1')->group(function () {
 	
 	
 	
+	
+	// TEST COMPANIES ENDPOINT - REMOVE ONCE REAL API IS READY
+	Route::post('/companies', function (Illuminate\Http\Request $request) {
+		Log::info('');
+		Log::info('---- Processed Company ----');
+		Log::info('');
+		
+		return response()->json(['message' => 'Processed Company'], 200, []);
+	});
+	
 	// TEST ORDERS ENDPOINT - REMOVE ONCE REAL API IS READY
 	Route::post('/orders', function (Illuminate\Http\Request $request) {
 		Log::info('');

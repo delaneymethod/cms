@@ -256,6 +256,23 @@ class TemplateFieldTableSeeder extends Seeder
 				'field_id' => 45,
 				'order' => 5,
 			],
+			
+			// Manufacturers template fields
+			[
+				'template_id' => 11,
+				'field_id' => 46,
+				'order' => 1,
+			],
+			[
+				'template_id' => 11,
+				'field_id' => 47,
+				'order' => 2,
+			],
+			[
+				'template_id' => 11,
+				'field_id' => 48,
+				'order' => 3,
+			],
 		
 		];
 		

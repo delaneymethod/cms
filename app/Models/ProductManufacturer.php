@@ -8,11 +8,14 @@
 namespace App\Models;
 
 use App\Models\Product;
+use App\Http\Traits\PageTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProductManufacturer extends Model
 {
+	use PageTrait;
+	
 	/**
      * The table associated with the model.
      *
@@ -34,6 +37,7 @@ class ProductManufacturer extends Model
 	protected $fillable = [
 		'id',
 		'title',
+		'slug',
 		'website',
 		'logo_image',
 		'cms_page_name',
@@ -45,8 +49,22 @@ class ProductManufacturer extends Model
      * @var array
      */
 	protected $appends = [
+		'url',
 		'image_url',
 	];
+	
+	/**
+	 * Gets the url.
+	 *
+	 * @return string
+	 */
+	public function getUrlAttribute() : string
+	{
+		// Grab manufacturers page
+		$page = $this->getPage(18);
+		
+		return $page->url.DIRECTORY_SEPARATOR.$this->slug;
+	}
 	
 	/**
 	 * Gets full image url.

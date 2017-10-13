@@ -75,6 +75,13 @@ class TemplatesTableSeeder extends Seeder
 				'created_at' => $now,
 				'updated_at' => $now,
 			],
+			[
+				'title' => 'Manufacturers',
+				'filename' => 'manufacturers',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			
 		];
 		
 		DB::table('templates')->delete();

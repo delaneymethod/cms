@@ -104,6 +104,7 @@ class CartController extends Controller
 			// Add some dynamic rules
 			$rules['id'] = 'required|integer';
 			$rules['action'] = 'required|string';
+			$rules['quantity'] = 'required|integer';
 			
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedProductCommodity, $rules);
@@ -135,7 +136,7 @@ class CartController extends Controller
 			}
 			
 			// Note - You can pass a 3rd option with extra info ['size' => 'large']
-			$cartProductCommodity = $this->addCartProductCommodity($productCommodity->id, $productCommodity->title, $productCommodity->price);
+			$cartProductCommodity = $this->addCartProductCommodity($productCommodity->id, $productCommodity->title, $cleanedProductCommodity['quantity'], $productCommodity->price);
 			
 			// Link it to the Product Commodity model
 			$this->associateCartProductCommodityWithModel($cartProductCommodity->rowId);
@@ -174,7 +175,7 @@ class CartController extends Controller
 				$this->setCartInstance('cart');
 			}
 			
-			flash('Item was added to your '.$cleanedProductCommodity['instance'].'!', $level = 'success');
+			flash('Product Commodity was added to your '.$cleanedProductCommodity['instance'].'!', $level = 'success');
 			
 			// If we are redirecting user back to previous page, then we set the new route here
 			$redirectTo = $request->get('redirectTo');
@@ -239,7 +240,7 @@ class CartController extends Controller
 			if ($cleanedProductCommodity['quantity'] == 0) {
 				$this->removeCartProductCommodity($cartProductCommodity->rowId);
 				
-				flash('Item was removed from your '.$cleanedProductCommodity['instance'].'!', $level = 'info');
+				flash('Product Commodity was removed from your '.$cleanedProductCommodity['instance'].'!', $level = 'info');
 			} else {
 				// Pass in row id and quantity
 				$this->updateCartProductCommodityQuantity($cartProductCommodity->rowId, $cleanedProductCommodity['quantity']);
@@ -319,7 +320,7 @@ class CartController extends Controller
 					$this->storeCartInstance('wishlist_'.$currentUser->id, $currentUser->id);
 				}
 				
-				flash('Item was removed from your '.$cleanedProductCommodity['instance'].'!', $level = 'info');
+				flash('Product Commodity was removed from your '.$cleanedProductCommodity['instance'].'!', $level = 'info');
 				
 				return back();
 			} else {

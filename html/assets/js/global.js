@@ -51955,6 +51955,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 			lazyload();
 		};
 
+		_this.validateProductCommodityQuantity = function (event) {
+			/* Make sure only positive numbers are entered into quantity fields */
+			if (!(event.keyCode > 95 && event.keyCode < 106 || event.keyCode > 47 && event.keyCode < 58 || event.keyCode == 8)) {
+				event.target.value = 1;
+			}
+
+			if (event.target.value == '' || event.target.value == 0 || event.target.value < 0) {
+				event.target.value = 1;
+			}
+
+			var productCommodityId = $(event.target).data('id');
+
+			$('#addProductCommodity' + productCommodityId).find('input[name="quantity"]').val(event.target.value);
+
+			return true;
+		};
+
 		_this.highlight = function (id) {
 			var hash = window.location.hash.substring(1);
 
