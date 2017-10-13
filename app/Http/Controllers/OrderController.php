@@ -229,6 +229,10 @@ class OrderController extends Controller
 					session()->forget('cart.notes');
 					
 					session()->forget('cart.po_number');
+					
+					session()->forget('cart.location');
+				
+					session()->forget('cart.shipping_method');
 				
 					// finally empty the cart instance
 					$this->destroyCart();

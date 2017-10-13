@@ -8,8 +8,8 @@
 namespace App\Jobs;
 
 use Log;
+use App\User;
 use Exception;
-use App\Models\Company;
 use Illuminate\Bus\Queueable;
 use GuzzleHttp\{Psr7, Client};
 use App\Http\Traits\UserTrait;
@@ -19,7 +19,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Notifications\FailedJobNotification;
 use Illuminate\Queue\{SerializesModels, InteractsWithQueue};
 
-class ProcessCompanyJob implements ShouldQueue
+class ProcessUserJob implements ShouldQueue
 {
 	use UserTrait, Queueable, Dispatchable, SerializesModels, InteractsWithQueue;
 	
@@ -31,11 +31,11 @@ class ProcessCompanyJob implements ShouldQueue
     public $tries = 5;
     
 	/**
-	 * Information about the company.
+	 * Information about the user.
 	 *
 	 * @var string
 	 */
-	protected $company;
+	protected $user;
 	
 	/**
 	 * Information about the event type.
@@ -70,15 +70,15 @@ class ProcessCompanyJob implements ShouldQueue
 	 *
 	 * @return void
 	 */
-	public function __construct(Company $company, string $eventType)
+	public function __construct(User $user, string $eventType)
 	{
-		$this->company = $company;
+		$this->user = $user;
 		
 		$this->eventType = $eventType;
 		
 		$this->apiUrl = config('cms.api.url');
 		
-		$this->endpoint = config('cms.api.endpoints.companies');
+		$this->endpoint = config('cms.api.endpoints.users');
 		
 		$this->superAdmin = $this->getUserById(1);
 	}
@@ -91,14 +91,14 @@ class ProcessCompanyJob implements ShouldQueue
 	public function handle()
 	{
 		Log::info('');
-		Log::info('---- Processing Company ----');
+		Log::info('---- Processing User ----');
 		Log::info('');
-		Log::info('Company:');
-		Log::info($this->company);
+		Log::info('User:');
+		Log::info($this->user);
 		Log::info('');
 		
 		try {
-			// Send company details to 3rd party API for processing.
+			// Send user details to 3rd party API for processing.
 			$client = new Client([
 				'base_uri' => $this->apiUrl,
 				'timeout' => 5, // Timeout if a server does not return a response 
@@ -109,7 +109,7 @@ class ProcessCompanyJob implements ShouldQueue
 				'event_id' => uniqid(),
 				'event_type' => $this->eventType,
 				'data' => [
-					$this->company
+					$this->user
 				],
 			]);
 			
@@ -119,7 +119,7 @@ class ProcessCompanyJob implements ShouldQueue
 			Log::info('Body:');
 			Log::info($response->getBody());
 			
-			// No need to send out an company event across the system since nothing is depending on the event.
+			// No need to send out an user event across the system since nothing is depending on the event.
 			
 		} catch (RequestException $exception) {
 			Log::critical('');

@@ -591,11 +591,31 @@ class Controller extends BaseController
 		if ($currentUser->isSuperAdmin()) {
 			return collect($users);
 		} else {
+			$allowedUserIds = [];
+			
+			$_users = [];
+			
+			// Load Admin orders and End User orders
+			if ($currentUser->isAdmin()) {
+				$_users = $currentUser->company->users->filter(function ($user) {
+					return !$user->isSuperAdmin();
+				});
+				
+				// Run over all users and grab ids
+				foreach ($_users as $_user) {
+					$allowedUserIds = array_merge($allowedUserIds, $_user->id);
+				}
+			} else if ($currentUser->isEndUser()) {
+				$allowedUserIds[] = $currentUser->id;
+			}
+			
 			$filteredUsers = [];
 			
-			foreach ($users as $user) {
-				if ($user->company_id == $currentUser->company_id) {
-					array_push($filteredUsers, $user);
+			if (count($allowedUserIds) > 0) {
+				foreach ($users as $user) {
+					if (in_array($user->id, $allowedUserIds)) {
+						array_push($filteredUsers, $user);
+					}
 				}
 			}
 			

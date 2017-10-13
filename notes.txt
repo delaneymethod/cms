@@ -1,14 +1,4 @@
-
-
-
-
-when customer, location and company updates, ping the API
-
-fix queues for users and locations
-
-allow end users to update own details
-
-prevent end users managing other users
+make all fa- fa-lg
 
 update email confirmation to include PDF version
 
@@ -80,24 +70,28 @@ Look into: https://github.com/spatie/laravel-activitylog
 
 Setup daemon's for 
 
-php artisan queue:work --queue=users.jobs &
-php artisan queue:work --queue=users &
+php artisan queue:work --queue=users.jobs
+php artisan queue:work --queue=users.events
 
-php artisan queue:work --queue=locations.jobs &
-php artisan queue:work --queue=locations &
+php artisan queue:work --queue=locations.jobs
+php artisan queue:work --queue=locations.events
 
-php artisan queue:work --queue=companies.jobs &
+php artisan queue:work --queue=companies.jobs
 
-php artisan queue:work --queue=orders.jobs &
-php artisan queue:work --queue=orders.events &
-php artisan queue:work --queue=orders.notifications &
-php artisan queue:work --queue=orders.broadcasts &
+php artisan queue:work --queue=orders.jobs
+php artisan queue:work --queue=orders.events
+php artisan queue:work --queue=orders.notifications
+php artisan queue:work --queue=orders.broadcasts
 
-php artisan queue:work --queue=products &
-php artisan queue:work --queue=keywords &
-php artisan queue:work --queue=default &
+php artisan queue:work --queue=products.events
 
-php artisan queue:work --queue=users.jobs,locations.jobs,companies.jobs,orders.jobs,orders.events,orders.notifications,orders.broadcasts,users,locations,products,keywords,default
+php artisan queue:work --queue=keywords.events
+
+php artisan queue:work --queue=default
+
+
+
+php artisan queue:work --queue=users.jobs,users.events,locations.jobs,locations.events,orders.jobs,orders.events,orders.notifications,orders.broadcasts,companies.jobs,products.events,keywords.events,default
 
 
 Setup cron for scheduled tasks

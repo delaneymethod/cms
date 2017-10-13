@@ -19,7 +19,7 @@ class KeywordListener implements ShouldQueue
 	 *
 	 * @var string|null
 	 */
-	public $queue = 'keywords';
+	public $queue = 'keywords.events';
     
 	/**
 	 * Create the event listener.

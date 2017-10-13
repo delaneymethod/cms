@@ -16,8 +16,6 @@ window.Pusher = require('pusher-js');
 
 window.Popper = require('popper.js').default;
 
-window.Clipboard = require('clipboard');
-
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -27,6 +25,8 @@ window.axiosCancel = require('axios-cancel').default;
 window.axiosCancel(window.axios, {
 	debug: false
 });
+
+window.Clipboard = require('clipboard');
 
 require('lazyload');
 

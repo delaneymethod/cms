@@ -53,6 +53,8 @@ return [
 		'endpoints' => [
 			'orders' => env('API_ENDPOINT_ORDERS', ''),
 			'companies' => env('API_ENDPOINT_COMPANIES', ''),
+			'locations' => env('API_ENDPOINT_LOCATIONS', ''),
+			'users' => env('API_ENDPOINT_USERS', ''),
 			'product_commodities' => [
 				'pricing' => env('API_ENDPOINT_PRODUCT_COMMODITIES_PRICING', ''),
 			],

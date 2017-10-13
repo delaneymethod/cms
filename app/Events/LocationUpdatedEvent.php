@@ -30,7 +30,7 @@ class LocationUpdatedEvent implements ShouldBroadcast
 	 *
 	 * @var string
 	 */
-	public $broadcastQueue = 'locations';
+	public $broadcastQueue = 'locations.events';
 
 	/**
 	 * Create a new event instance.

@@ -466,9 +466,12 @@
 				</div>
 			@else
 				<div class="row">
+					<div class="col-12 spacer tall"></div>
+				</div>
+				<div class="row">
 					<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 						<p>There are currently no items in your cart!</p>
-						<p><a href="/products" title="Browse our Products">Browse our Products</a></p>
+						<p><a href="/products" title="Browse our Products" class="btn btn-danger">Browse Products</a></p>
 					</div>
 				</div>
 			@endif

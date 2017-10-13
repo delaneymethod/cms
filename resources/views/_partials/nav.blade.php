@@ -12,7 +12,7 @@
 							@endif
 						@endforeach
 						@if ($authenticated)
-							<li class="list-inline-item"><a href="/cp/dashboard" title="My Account">My Account</a></li>
+							<li class="list-inline-item"><a href="/cp/dashboard" id="my-account" data-toggle="tooltip" data-html="true" title="<p style='margin-top: 10px;'>Welcome back {{ optional($currentUser)->first_name }}!</p><p>Click here to access your Account and the Customer Dashboard.</p>" data-placement="bottom">My Account</a></li>
 						@else
 							<li class="list-inline-item {{ setActive('login') }}"><a href="/login" title="Login">Login</a></li>
 						@endif

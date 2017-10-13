@@ -194,6 +194,31 @@
 			}
 		};
 		
+		this.loadListeners = () => {
+			window.Pusher.logToConsole = false;
+			
+			window.Echo = new Echo({
+				broadcaster: 'pusher',
+				key: '7659ca498a8f30edbbc3',
+				cluster: 'eu',
+				encrypted: false
+			});
+		};
+		
+		this.showWelcomeBackMessage = user => {
+			$('#my-account').tooltip('show');
+			
+			$('#my-account').on('shown.bs.tooltip', () => {
+				setTimeout(() => {
+					$('#my-account').tooltip('hide');
+				}, 5000);
+			});
+			
+			$('#my-account').on('hidden.bs.tooltip', () => {
+				$('#my-account').attr('data-original-title', '<p style="margin-top: 10px;">Click here to access your Account and the Customer Dashboard.</p>');
+			});
+		};
+		
 		this.waitForGoogleMaps = () => {
 			/*
 			if (typeof window.google.maps !== 'undefined') {
@@ -247,6 +272,8 @@
 			}, false);
 			
 			this.loadAnimations();
+			
+			this.loadListeners();
 			
 			this.loadPagination();
 			

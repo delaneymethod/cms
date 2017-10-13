@@ -10,8 +10,10 @@ namespace App\Http\Controllers;
 use DB;
 use Log;
 use Exception;
+use Carbon\Carbon;
 use App\Models\Location;
 use Illuminate\Http\Request;
+use App\Jobs\ProcessLocationJob;
 use App\Events\LocationUpdatedEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
@@ -163,6 +165,13 @@ class LocationController extends Controller
 				$locations = $this->filterLocations($locations);
 		
 				$this->setCache($this->cacheKey, $locations);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the location. Sticks the job in the "locations" queue to run in 10 minutes.
+				ProcessLocationJob::dispatch($location, 'locations.created')->delay($time)->onQueue('locations.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -290,6 +299,13 @@ class LocationController extends Controller
 				$locations = $this->filterLocations($locations);
 				
 				$this->setCache($this->cacheKey, $locations);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the location. Sticks the job in the "locations" queue to run in 10 minutes.
+				ProcessLocationJob::dispatch($location, 'locations.updated')->delay($time)->onQueue('locations.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -353,6 +369,13 @@ class LocationController extends Controller
 				$locations = $this->filterLocations($locations);
 				
 				$this->setCache($this->cacheKey, $locations);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the location. Sticks the job in the "locations" queue to run in 10 minutes.
+				ProcessLocationJob::dispatch($location, 'locations.updated')->delay($time)->onQueue('locations.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -408,6 +431,13 @@ class LocationController extends Controller
 				$locations = $this->filterLocations($locations);
 				
 				$this->setCache($this->cacheKey, $locations);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the location. Sticks the job in the "locations" queue to run in 10 minutes.
+				ProcessLocationJob::dispatch($location, 'locations.updated')->delay($time)->onQueue('locations.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -493,6 +523,13 @@ class LocationController extends Controller
 			DB::beginTransaction();
 
 			try {
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the location. Sticks the job in the "locations" queue to run in 10 minutes.
+				ProcessLocationJob::dispatch($location, 'locations.deleted')->delay($time)->onQueue('locations.jobs');
+			
 				$location->delete();
 				
 				$locations = $this->getLocations();

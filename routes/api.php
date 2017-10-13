@@ -47,6 +47,24 @@ Route::prefix('v1')->group(function () {
 		return response()->json(['message' => 'Processed Company'], 200, []);
 	});
 	
+	// TEST LOCATIONS ENDPOINT - REMOVE ONCE REAL API IS READY
+	Route::post('/locations', function (Illuminate\Http\Request $request) {
+		Log::info('');
+		Log::info('---- Processed Location ----');
+		Log::info('');
+		
+		return response()->json(['message' => 'Processed Location'], 200, []);
+	});
+	
+	// TEST USERS ENDPOINT - REMOVE ONCE REAL API IS READY
+	Route::post('/users', function (Illuminate\Http\Request $request) {
+		Log::info('');
+		Log::info('---- Processed User ----');
+		Log::info('');
+		
+		return response()->json(['message' => 'Processed User'], 200, []);
+	});
+	
 	// TEST ORDERS ENDPOINT - REMOVE ONCE REAL API IS READY
 	Route::post('/orders', function (Illuminate\Http\Request $request) {
 		Log::info('');

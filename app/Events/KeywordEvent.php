@@ -21,6 +21,13 @@ class KeywordEvent
 	public $keywords;
 	
 	/**
+	 * The name of the queue on which to place the event.
+	 *
+	 * @var string
+	 */
+	public $broadcastQueue = 'keywords.events';
+	
+	/**
 	 * Create a new event instance.
 	 *
 	 * @return void

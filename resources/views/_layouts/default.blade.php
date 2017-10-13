@@ -33,6 +33,8 @@
 		'endpoints': {
 			'orders': '{{ config('cms.api.endpoints.orders') }}',
 			'companies': '{{ config('cms.api.endpoints.companies') }}',
+			'locations': '{{ config('cms.api.endpoints.locations') }}',
+			'users': '{{ config('cms.api.endpoints.users') }}',
 			'product_commodities': {
 				'pricing': '{{ config('cms.api.endpoints.product_commodities.pricing') }}'
 			}

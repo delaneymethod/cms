@@ -43,7 +43,7 @@ class RolePermissionTableSeeder extends Seeder
 			DB::table('role_permission')->insert($rolePermission);
 		});
 		
-		$permissionIds = collect([1, 3, 24, 25, 56]);
+		$permissionIds = collect([1, 24, 25, 38, 56]);
 		
 		// User Permissions
 		$permissionIds->each(function ($permissionId) {

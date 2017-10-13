@@ -135,7 +135,7 @@
 												<form name="addProductCommodity{{ $productCommodity->id }}" id="addProductCommodity{{ $productCommodity->id }}" class="addProductCommodityToCart" role="form" method="POST" action="/cart{{-- $redirectTo }}#{{ $productCommodity->code --}}">
 													{{ csrf_field() }}
 													<input type="hidden" name="id" value="{{ $productCommodity->id }}">
-													<input type="hidden" name="quantity" value="">
+													<input type="hidden" name="quantity" value="1">
 													<input type="hidden" name="instance" value="cart">
 													<input type="hidden" name="action" value="secret">
 													<button type="submit" name="submit_add_product_commodity_{{ $productCommodity->id }}" id="submit_add_product_commodity_{{ $productCommodity->id }}" title="Add to Cart" class="btn btn-outline-success btn-sm">Add To Cart</button>

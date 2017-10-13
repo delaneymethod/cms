@@ -10,6 +10,10 @@ window.$ = window.jQuery = require('jquery');
 
 window.Tether = require('tether');
 
+window.Echo = require('laravel-echo');
+
+window.Pusher = require('pusher-js');
+
 window.Popper = require('popper.js').default;
 
 window.axios = require('axios');

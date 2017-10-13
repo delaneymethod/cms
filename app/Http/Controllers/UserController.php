@@ -12,6 +12,7 @@ use Log;
 use App\User;
 use Exception;
 use Carbon\Carbon;
+use App\Jobs\ProcessUserJob;
 use Illuminate\Http\Request;
 use App\Events\UserUpdatedEvent;
 use App\Http\Controllers\Controller;
@@ -175,6 +176,13 @@ class UserController extends Controller
 				$users = $this->filterUsers($users);
 				
 				$this->setCache($this->cacheKey, $users);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the user. Sticks the job in the "users" queue to run in 10 minutes.
+				ProcessUserJob::dispatch($user, 'users.created')->delay($time)->onQueue('users.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -246,6 +254,11 @@ class UserController extends Controller
 			} else {
 				$locations = $companies->first()->locations;
 			}
+			
+			
+				//dd($locations);
+				
+				
 			
 			$defaultLocationIds = $this->getDefaultLocationIds();
 			
@@ -361,6 +374,13 @@ class UserController extends Controller
 				$users = $this->filterUsers($users);
 				
 				$this->setCache($this->cacheKey, $users);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the user. Sticks the job in the "users" queue to run in 10 minutes.
+				ProcessUserJob::dispatch($user, 'users.updated')->delay($time)->onQueue('users.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -429,6 +449,13 @@ class UserController extends Controller
 				$users = $this->filterUsers($users);
 				
 				$this->setCache($this->cacheKey, $users);
+				
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the user. Sticks the job in the "users" queue to run in 10 minutes.
+				ProcessUserJob::dispatch($user, 'users.updated')->delay($time)->onQueue('users.jobs');
 			} catch (QueryException $queryException) {
 				DB::rollback();
 			
@@ -510,6 +537,13 @@ class UserController extends Controller
 			DB::beginTransaction();
 
 			try {
+				$minutes = config('cms.delays.jobs');
+					
+				$time = Carbon::now()->addMinutes($minutes);
+				
+				// Dispatches a new job to process the user. Sticks the job in the "users" queue to run in 10 minutes.
+				ProcessUserJob::dispatch($user, 'users.deleted')->delay($time)->onQueue('users.jobs');
+				
 				$user->delete();
 				
 				$users = $this->getUsers();
@@ -560,7 +594,7 @@ class UserController extends Controller
 			$notifications = $currentUser->notifications;
 			
 			foreach ($notifications as $notification) {
-				$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderPlacedNotification'], ['Order Updated', 'Order Placed'], $notification->type);
+				$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderCreatedNotification'], ['Order Updated', 'Order Created'], $notification->type);
 			}
 			
 			return view('cp.users.notifications.index', compact('currentUser', 'title', 'subTitle', 'notifications'));
@@ -584,7 +618,7 @@ class UserController extends Controller
 			$notification = $this->getNotification($uuid);
 			
 			// Set a subject
-			$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderPlacedNotification'], ['Order Updated', 'Order Placed'], $notification->type);
+			$notification->subject = str_replace(['App\Notifications\OrderUpdatedNotification', 'App\Notifications\OrderCreatedNotification'], ['Order Updated', 'Order Created'], $notification->type);
 			
 			$title = $notification->subject;
 			

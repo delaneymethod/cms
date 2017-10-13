@@ -131,7 +131,7 @@
 							<label for="location_id" class="control-label font-weight-bold">Location</label>
 							<select name="location_id" id="location_id" class="form-control" tabindex="8" aria-describedby="helpBlockLocationId" required>
 								@foreach ($locations as $location)
-									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id || $user->location_id == $location->id) ? 'selected' : '' }}>{{ $location->title }}{{ ($location->status->id == 2 || $location->status->id == 3) ? '&nbsp;('.$location->status->title.')' : '' }}{{ ($currentUser->isSuperAdmin() && $companies->count() > 1) ? '&nbsp;('.$location->company->title.')' : '' }}</option>
+									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id || $user->location_id == $location->id) ? 'selected' : '' }}>{{ $location->title }} ({{ $location->postal_address }}){{ ($location->status->id == 2 || $location->status->id == 3) ? '&nbsp;('.$location->status->title.')' : '' }}{{ ($currentUser->isSuperAdmin() && $companies->count() > 1) ? '&nbsp;('.$location->company->title.')' : '' }}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('location_id'))
@@ -163,7 +163,7 @@
 							@foreach ($statuses as $status)
 								<div class="form-check status_id-{{ $status->id }}">
 									<label for="status_id-{{ str_slug($status->title) }}" class="form-check-label {{ ($user->id == $currentUser->id) ? 'text-disabled' : '' }}">
-										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="10" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $user->status_id == $status->id) ? 'checked' : '' }} {{ ($user->id == $currentUser->id) ? 'disabled' : '' }}>{{ $status->title }}@if (!empty($status->description))&nbsp;<i class="fa fa-info-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{ $status->description }}" aria-hidden="true"></i>@endif
+										<input type="radio" name="status_id" id="status_id-{{ str_slug($status->title) }}" class="form-check-input" value="{{ $status->id }}" tabindex="10" aria-describedby="helpBlockStatusId" {{ (old('status_id') == $status->id || $user->status_id == $status->id) ? 'checked' : '' }} {{ ($user->id == $currentUser->id) ? 'disabled' : '' }}>{{ $status->title }}@if (!empty($status->description))&nbsp;<i class="fa fa-lg fa-info-circle text-muted" data-toggle="tooltip" data-placement="top" title="{{ $status->description }}" aria-hidden="true"></i>@endif
 									</label>
 								</div>
 							@endforeach

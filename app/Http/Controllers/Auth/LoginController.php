@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Auth;
 
 use Cart;
 use Illuminate\Http\Request;
+use App\Events\UserLoginEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\{Auth, Session};
@@ -64,6 +65,9 @@ class LoginController extends Controller
 		if (count($passwordResets) > 0) {
 			$this->deletePasswordReset($user->email);
 		}
+		
+		// Used to update the frontend / backend UI's
+		UserLoginEvent::dispatch($user);
 		
 		// If we are redirecting user back to previous page, then we set the new route here
 		$redirectTo = $request->get('redirectTo');

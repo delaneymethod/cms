@@ -75605,8 +75605,6 @@ window.Pusher = __webpack_require__("./node_modules/pusher-js/dist/web/pusher.js
 
 window.Popper = __webpack_require__("./node_modules/popper.js/dist/esm/popper.js").default;
 
-window.Clipboard = __webpack_require__("./node_modules/clipboard/lib/clipboard.js");
-
 window.axios = __webpack_require__("./node_modules/axios/index.js");
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -75616,6 +75614,8 @@ window.axiosCancel = __webpack_require__("./node_modules/axios-cancel/dist/index
 window.axiosCancel(window.axios, {
   debug: false
 });
+
+window.Clipboard = __webpack_require__("./node_modules/clipboard/lib/clipboard.js");
 
 __webpack_require__("./node_modules/lazyload/lazyload.js");
 

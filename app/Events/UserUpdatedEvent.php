@@ -30,7 +30,7 @@ class UserUpdatedEvent implements ShouldBroadcast
 	 *
 	 * @var string
 	 */
-	public $broadcastQueue = 'users';
+	public $broadcastQueue = 'users.events';
 
 	/**
 	 * Create a new event instance.

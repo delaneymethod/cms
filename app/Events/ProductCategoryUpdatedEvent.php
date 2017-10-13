@@ -30,7 +30,7 @@ class ProductCategoryUpdatedEvent implements ShouldBroadcast
 	 *
 	 * @var string
 	 */
-	public $broadcastQueue = 'products';
+	public $broadcastQueue = 'products.events';
 
 	/**
 	 * Create a new event instance.

@@ -112,7 +112,7 @@
 							<label for="location_id" class="control-label font-weight-bold">Location</label>
 								<select name="location_id" id="location_id" class="form-control" tabindex="8" aria-describedby="helpBlockLocationId" required>
 								@foreach ($locations as $location)
-									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id || in_array($location->id, $defaultLocationIds)) ? 'selected' : '' }}>{{ $location->title }}{{ ($location->status->id == 2 || $location->status->id == 3) ? '&nbsp;('.$location->status->title.')' : '' }}{{ ($currentUser->isSuperAdmin() && $companies->count() > 1) ? '&nbsp;('.$location->company->title.')' : '' }}</option>
+									<option value="{{ $location->id }}" {{ (old('location_id') == $location->id || in_array($location->id, $defaultLocationIds)) ? 'selected' : '' }}>{{ $location->title }} ({{ $location->postal_address }}){{ ($location->status->id == 2 || $location->status->id == 3) ? '&nbsp;('.$location->status->title.')' : '' }}{{ ($currentUser->isSuperAdmin() && $companies->count() > 1) ? '&nbsp;('.$location->company->title.')' : '' }}</option>
 								@endforeach
 							</select>
 							@if ($errors->has('location_id'))
