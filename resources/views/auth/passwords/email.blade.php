@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Reset Password - '.config('cms.site.name'))
-@section('description', 'Reset Password - '.config('cms.site.name'))
-@section('keywords', 'Reset, Password, '.config('cms.site.name'))
+@section('title', 'Reset Password - '.$siteName)
+@section('description', 'Reset Password - '.$siteName)
+@section('keywords', 'Reset, Password, '.$siteName)
 
 @php ($page->content = '<p>Please type in the email address you use to login with. We'll email you a link to create a new password.</p>')
 

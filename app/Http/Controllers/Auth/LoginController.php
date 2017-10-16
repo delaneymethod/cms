@@ -73,7 +73,13 @@ class LoginController extends Controller
 		$redirectTo = $request->get('redirectTo');
 		
 		if (!empty($redirectTo)) {
-			$this->redirectTo = $redirectTo;	
+			$this->redirectTo = $redirectTo;
+			
+			$code = $request->get('code');
+		
+			if (!empty($code)) {
+				$this->redirectTo = $this->redirectTo.'#'.$code;
+			}
 		}
 		
 		return redirect($this->redirectTo);

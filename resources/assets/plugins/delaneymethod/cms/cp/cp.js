@@ -353,16 +353,17 @@
 			});
 		};
 		
-		this.convertTitleToSlug = (element, targetElement) => {
+		this.convertTitleToSlug = (element, targetElement, separator = '-') => {
 			if ($(element).length) {
 				$(element).on('keyup change', event => {
 					let slug = $(event.target).val().toString()
 						.toLowerCase()
 						.trim()
-						.replace(/\s+/g, '-') /* Replace spaces with - */
-						.replace(/&/g, '-and-') /* Replace & with 'and' */
+						.replace(/\s+/g, separator) /* Replace spaces with separator */
+						.replace(/&/g, separator + 'and' + separator) /* Replace & with 'and' */
 						.replace(/[^\w\-]+/g, '') /* Remove all non-word chars */
-						.replace(/\-\-+/g, '-'); /* Replace multiple - with single - */
+						.replace(/\-\-+/g, separator) /* Replace multiple - with single separator */
+						.replace(/\_\_+/g, separator); /* Replace multiple _ with single separator */
 					
 					$(targetElement).val(slug);
 					
@@ -632,6 +633,14 @@
 			this.attachNestedSortable('#nestedSortable');
 			
 			this.attachClipboard();
+			
+			this.convertTitleToSlug('#createGlobal #title', '#createGlobal #handle', '_');
+			
+			this.convertTitleToSlug('#createGlobal #handle', '#createGlobal #handle', '_');
+			
+			this.convertTitleToSlug('#editGlobal #title', '#editGlobal #handle', '_');
+			
+			this.convertTitleToSlug('#editGlobal #handle', '#editGlobal #handle', '_');
 			
 			this.convertTitleToSlug('#createPage #title', '#createPage #slug');
 			

@@ -301,24 +301,16 @@ class OrderController extends Controller
 			$template .= '	<div class="page">';
 			
 			if ($currentUser->isSuperAdmin()) {
-				$template .= '	<p><strong>Order ID</strong></p>';
-				$template .= '	<p>'.$order->id.'</p>';
-				$template .= '	<p><strong>Order Solution ID</strong></p>';
-				$template .= '	<p>'.$order->solution_id.'</p>';
+				$template .= '	<p><strong>Order ID:</strong> '.$order->id.'</p>';
+				$template .= '	<p><strong>Order Solution ID:</strong> '.$order->solution_id.'</p>';
+				$template .= '	<p><strong>Order Type:</strong> '.$order->order_type->title.'</p>';
 			}
 			
-			$template .= '	<p><strong>Order Type</strong></p>';
-			$template .= '	<p>'.$order->order_type->title.'</p>';
-			$template .= '	<p><strong>Order Number</strong></p>';
-			$template .= '	<p>'.$order->order_number.'</p>';
-			$template .= '	<p><strong>PO Number</strong></p>';
-			$template .= '	<p>'.$order->po_number.'</p>';
-			$template .= '	<p><strong>Order Status</strong></p>';
-			$template .= '	<p>'.$order->status->title.'</p>';
-			$template .= '	<p><strong>Order Date</strong></p>';
-			$template .= '	<p>'.$order->created_at.'</p>';
-			$template .= '	<p><strong>Originator</strong></p>';
-			$template .= '	<p>'.$order->user->first_name.' '.$order->user->last_name.'<br>'.$order->user->email.'<br>'.$order->user->telephone.' / '.$order->user->mobile.'</p>';
+			$template .= '	<p><strong>Order Number: </strong> #'.$order->order_number.'</p>';
+			$template .= '	<p><strong>PO Number:</strong> '.$order->po_number.'</p>';
+			$template .= '	<p><strong>Order Date:</strong> '.$order->created_at.'</p>';
+			$template .= '	<p><strong>Customer</strong></p>';
+			$template .= '	<p>Full Name: '.$order->user->first_name.' '.$order->user->last_name.'<br>Email: '.$order->user->email.'<br>Tel: '.$order->user->telephone.'<br>Mob: '.$order->user->mobile.'</p>';
 			$template .= '	<p><strong>Company</strong></p>';
 			$template .= '	<p>'.$order->user->company->title.'</p>';
 			$template .= '	<p><strong>Order Shipping Method</strong></p>';
@@ -336,7 +328,7 @@ class OrderController extends Controller
 			$template .= '			<thead>';
 			$template .= '				<tr">';
 			$template .= '					<th align="center">&nbsp;</th>';
-			$template .= '					<th align="left">Title</th>';
+			$template .= '					<th align="left">Product</th>';
 			$template .= '					<th align="center">Qty</th>';
 			$template .= '					<th align="right">Tax</th>';
 			$template .= '					<th align="right">Price</th>';
@@ -347,8 +339,8 @@ class OrderController extends Controller
 					
 			foreach ($order->product_commodities as $productCommodity) {
 				$template .= '				<tr>';
-				$template .= '					<td align="center"><img src="'.$productCommodity->product->image_url.'" width="100px"></td>';
-				$template .= '					<td>'.$productCommodity->title.'</td>';
+				$template .= '					<td align="center"><img src="'.$productCommodity->product->image_url.'" style="width: 60px;height: 60px;"></td>';
+				$template .= '					<td>'.$productCommodity->title.'<br>Code: '.$productCommodity->code.'</td>';
 				$template .= '					<td align="center">'.$productCommodity->pivot->quantity.'</td>';
 				$template .= '					<td align="right">'.$productCommodity->pivot->tax_rate.'&#37;</td>';
 				$template .= '					<td align="right">'.$order->currency.number_format($productCommodity->pivot->price, 2, '.', ',').'</td>';

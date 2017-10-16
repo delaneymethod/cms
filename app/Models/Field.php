@@ -30,6 +30,7 @@ class Field extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'handle',
 		'field_type_id',

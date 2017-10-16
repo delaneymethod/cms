@@ -30,6 +30,7 @@ class ShippingMethod extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'free_threshold',
 	];

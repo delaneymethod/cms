@@ -35,6 +35,8 @@ class CreateUsersTable extends Migration
 			$table->unsignedInteger('location_id')->nullable()->index()->comment('Foreign key to the locations table');
 			$table->unsignedInteger('status_id')->nullable()->index()->comment('Foreign key to the statuses table');
 			$table->unsignedInteger('role_id')->nullable()->index()->comment('Foreign key to the roles table');
+			$table->unsignedInteger('receive_emails');
+			$table->unsignedInteger('receive_notifications');
 			
 			$table->rememberToken();
 			

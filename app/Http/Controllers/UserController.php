@@ -165,6 +165,8 @@ class UserController extends Controller
 				$user->location_id = $cleanedUser['location_id'];
 				$user->status_id = $cleanedUser['status_id'];
 				$user->role_id = $cleanedUser['role_id'];
+				$user->receive_emails = (isset($cleanedUser['receive_emails'])) ? $cleanedUser['receive_emails'] : 0;
+				$user->receive_notifications = (isset($cleanedUser['receive_notifications'])) ? $cleanedUser['receive_notifications'] : 0;
 				
 				$user->save();
 				
@@ -255,11 +257,6 @@ class UserController extends Controller
 				$locations = $companies->first()->locations;
 			}
 			
-			
-				//dd($locations);
-				
-				
-			
 			$defaultLocationIds = $this->getDefaultLocationIds();
 			
 			return view('cp.users.edit.index', compact('currentUser', 'title', 'subTitle', 'user', 'companies', 'roles', 'statuses', 'locations'));
@@ -269,7 +266,7 @@ class UserController extends Controller
 	}
 	
 	/**
-	 * Shows a form for editing a user password.
+	 * Shows a form for editing a users password.
 	 *
 	 * @params	Request 	$request
 	 * @param	int			$id
@@ -295,6 +292,32 @@ class UserController extends Controller
 	}
 	
 	/**
+	 * Shows a form for editing a users settings.
+	 *
+	 * @params	Request 	$request
+	 * @param	int			$id
+	 * @return 	Response
+	 */
+   	public function editSettings(Request $request, int $id)
+	{
+		$currentUser = $this->getAuthenticatedUser();
+		
+		if ($currentUser->hasPermission('edit_settings_users') || $currentUser->id == $id) {
+			$title = 'Settings';
+			
+			$subTitle = $currentUser->company->title;
+			
+			$user = $this->getUser($id);
+			
+			$this->authorize('userOwnsThis', $user);
+			
+			return view('cp.users.edit.settings', compact('currentUser', 'title', 'subTitle', 'user'));
+		}
+
+		abort(403, 'Unauthorised action');
+	}
+	
+	/**
 	 * Updates a specific user.
 	 *
 	 * @params	Request 	$request
@@ -307,39 +330,57 @@ class UserController extends Controller
 		
 		$updatePassword = false;
 		
+		$updateSettings = false;
+		
 		if ($request->get('password_confirmation')) {
 			$updatePassword = true;
+		}
+		
+		if ($request->get('settings')) {
+			$updateSettings = true;
 		}
 		
 		// User is changing password so add "on the fly" permissions
 		if ($updatePassword) {
 			$permission = 'edit_passwords_users';
 		}
+		
+		// User is changing password so add "on the fly" permissions
+		if ($updateSettings) {
+			$permission = 'edit_settings_users';
+		}
 			
 		$currentUser = $this->getAuthenticatedUser();
-
+		
 		if ($currentUser->hasPermission($permission) || $currentUser->id == $id) {
 			// Remove any Cross-site scripting (XSS)
 			$cleanedUser = $this->sanitizerInput($request->all());
-
-			$rules = $this->getRules('user');
 			
-			$rules['email'] = 'required|email|unique:users,email,'.$id.'|max:255';
+			$rules = $this->getRules('user');
 			
 			// User is changing password so add "on the fly" rule
 			if ($updatePassword) {
+				$rules = [];
+				
 				$rules['password_confirmation'] = 'required|string|same:password|max:255';
+			} else if ($updateSettings) {
+				$rules = [];
+				
+				$rules['receive_emails'] = 'integer';
+				$rules['receive_notifications'] = 'integer';	
+			} else {
+				$rules['email'] = 'required|email|unique:users,email,'.$id.'|max:255';
 			}
 			
 			// Make sure all the input data is what we actually save
 			$validator = $this->validatorInput($cleanedUser, $rules);
-
+			
 			if ($validator->fails()) {
 				return back()->withErrors($validator)->withInput();
 			}
 			
 			DB::beginTransaction();
-
+			
 			try {
 				// Create new model
 				$user = $this->getUser($id);
@@ -347,24 +388,26 @@ class UserController extends Controller
 				$this->authorize('userOwnsThis', $user);
 		
 				// Set our field data
-				$user->solution_id = $cleanedUser['solution_id'];
-				$user->first_name = $cleanedUser['first_name'];
-				$user->last_name = $cleanedUser['last_name'];
-				$user->email = $cleanedUser['email'];
-				
 				if ($updatePassword) {
 					$user->password = bcrypt($cleanedUser['password_confirmation']);
+				} else if ($updateSettings) {
+					$user->receive_emails = (isset($cleanedUser['receive_emails'])) ? $cleanedUser['receive_emails'] : 0;
+					$user->receive_notifications = (isset($cleanedUser['receive_notifications'])) ? $cleanedUser['receive_notifications'] : 0;
 				} else {
+					$user->solution_id = $cleanedUser['solution_id'];
+					$user->first_name = $cleanedUser['first_name'];
+					$user->last_name = $cleanedUser['last_name'];
+					$user->email = $cleanedUser['email'];
 					$user->password = $cleanedUser['password'];
+					$user->job_title = $cleanedUser['job_title'];
+					$user->telephone = $cleanedUser['telephone'];
+					$user->mobile = $cleanedUser['mobile'];
+					$user->company_id = $cleanedUser['company_id'];
+					$user->location_id = $cleanedUser['location_id'];
+					$user->status_id = $cleanedUser['status_id'];
+					$user->role_id = $cleanedUser['role_id'];
 				}
-				
-				$user->job_title = $cleanedUser['job_title'];
-				$user->telephone = $cleanedUser['telephone'];
-				$user->mobile = $cleanedUser['mobile'];
-				$user->company_id = $cleanedUser['company_id'];
-				$user->location_id = $cleanedUser['location_id'];
-				$user->status_id = $cleanedUser['status_id'];
-				$user->role_id = $cleanedUser['role_id'];
+								
 				$user->updated_at = $this->datetime;
 				
 				$user->save();

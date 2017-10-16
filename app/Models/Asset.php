@@ -28,6 +28,7 @@ class Asset extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'filename',
 		'extension',
 		'mime_type',

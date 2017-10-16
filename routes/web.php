@@ -67,6 +67,7 @@ Route::group(['prefix' => 'cp'], function () {
 	Route::get('/users/{id}/notifications/{uuid}', 'UserController@notification');
 	Route::get('/users/{id}/edit', 'UserController@edit');
 	Route::get('/users/{id}/edit/password', 'UserController@editPassword');
+	Route::get('/users/{id}/edit/settings', 'UserController@editSettings');
 	Route::get('/users/{id}/retire', 'UserController@retire');
 	Route::get('/users/{id}/delete', 'UserController@confirm');
 	Route::post('/users', 'UserController@store');
@@ -141,6 +142,16 @@ Route::group(['prefix' => 'cp'], function () {
 	
 	// CP > Templates routes
 	Route::get('/templates', 'TemplateController@index');
+	
+	// CP > Globals routes
+	Route::get('/globals', 'GlobalController@index');
+	Route::get('/globals/create', 'GlobalController@create');
+	Route::get('/globals/{id}/edit', 'GlobalController@edit');
+	Route::get('/globals/{id}/delete', 'GlobalController@confirm');
+	Route::post('/globals', 'GlobalController@store');
+	Route::put('/globals/{id}', 'GlobalController@update');
+	Route::patch('/globals/{id}', 'GlobalController@update');
+	Route::delete('/globals/{id}', 'GlobalController@delete');
 	
 	// CP > Pages routes
 	Route::get('/pages', 'PageController@index');

@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '404 Page not found - '.config('cms.site.name'))
-@section('description', '404 Page not found - '.config('cms.site.name'))
-@section('keywords', '404, Page, not, found, '.config('cms.site.name'))
+@section('title', '404 Page not found - '.$siteName)
+@section('description', '404 Page not found - '.$siteName)
+@section('keywords', '404, Page, not, found, '.$siteName)
 
 @php ($page->bannerContent = '<h2>Server Error: 404 (Page not found)</h2>')
 @php ($page->bannerImage = '')

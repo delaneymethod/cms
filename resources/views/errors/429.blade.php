@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '429 Too Many Attempts - '.config('cms.site.name'))
-@section('description', '429 Too Many Attempts - '.config('cms.site.name'))
-@section('keywords', '429, Too, Many, Attempts, '.config('cms.site.name'))
+@section('title', '429 Too Many Attempts - '.$siteName)
+@section('description', '429 Too Many Attempts - '.$siteName)
+@section('keywords', '429, Too, Many, Attempts, '.$siteName)
 
 @php ($page->bannerContent = '<h2>Server Error: 429 (Too Many Attempts)</h2>')
 @php ($page->bannerImage = '')

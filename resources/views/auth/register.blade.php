@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Register - '.config('cms.site.name'))
-@section('description', 'Register - '.config('cms.site.name'))
-@section('keywords', 'Register, '.config('cms.site.name'))
+@section('title', 'Register - '.$siteName)
+@section('description', 'Register - '.$siteName)
+@section('keywords', 'Register, '.$siteName)
 
 @php ($page->content = '')
 

@@ -21,4 +21,17 @@ class Notification extends Model
 	protected $characterSet = 'UTF-8';
 	
 	protected $flags = ENT_QUOTES;
+	
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = [
+		'id',
+		'type',
+		'notifiable_id',
+		'notifiable_type',
+		'data',
+	];
 }

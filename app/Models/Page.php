@@ -32,6 +32,7 @@ class Page extends Node
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'slug',
 		'description',

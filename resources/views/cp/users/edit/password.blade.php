@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Edit User - Users - '.config('app.name'))
-@section('description', 'Edit User - Users - '.config('app.name'))
-@section('keywords', 'Edit, User, Users, '.config('app.name'))
+@section('title', 'Edit Password - Users - '.config('app.name'))
+@section('description', 'Edit Password - Users - '.config('app.name'))
+@section('keywords', 'Edit, Password, Users, '.config('app.name'))
 
 @push('styles')
 	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
@@ -36,16 +36,6 @@
 					<form name="editUser" id="editUser" class="editUser" role="form" method="POST" action="/cp/users/{{ $user->id }}">
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
-						<input type="hidden" name="first_name" value="{{ $user->first_name }}">
-						<input type="hidden" name="last_name" value="{{ $user->last_name }}">
-						<input type="hidden" name="email" value="{{ $user->email }}">
-						<input type="hidden" name="job_title" value="{{ $user->job_title }}">
-						<input type="hidden" name="telephone" value="{{ $user->telephone }}">
-						<input type="hidden" name="mobile" value="{{ $user->mobile }}">
-						<input type="hidden" name="company_id" value="{{ $user->company_id }}">
-						<input type="hidden" name="location_id" value="{{ $user->location_id }}">
-						<input type="hidden" name="role_id" value="{{ $user->role_id }}">
-						<input type="hidden" name="status_id" value="{{ $user->status_id }}">
 						@yield('formButtons')
 						<div class="spacer"></div>
 						<div class="spacer"></div>

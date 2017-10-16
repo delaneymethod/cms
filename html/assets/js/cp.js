@@ -104526,12 +104526,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		};
 
 		_this.convertTitleToSlug = function (element, targetElement) {
+			var separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '-';
+
 			if ($(element).length) {
 				$(element).on('keyup change', function (event) {
-					var slug = $(event.target).val().toString().toLowerCase().trim().replace(/\s+/g, '-') /* Replace spaces with - */
-					.replace(/&/g, '-and-') /* Replace & with 'and' */
+					var slug = $(event.target).val().toString().toLowerCase().trim().replace(/\s+/g, separator) /* Replace spaces with separator */
+					.replace(/&/g, separator + 'and' + separator) /* Replace & with 'and' */
 					.replace(/[^\w\-]+/g, '') /* Remove all non-word chars */
-					.replace(/\-\-+/g, '-'); /* Replace multiple - with single - */
+					.replace(/\-\-+/g, separator) /* Replace multiple - with single separator */
+					.replace(/\_\_+/g, separator); /* Replace multiple _ with single separator */
 
 					$(targetElement).val(slug);
 
@@ -104794,6 +104797,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 			_this.attachNestedSortable('#nestedSortable');
 
 			_this.attachClipboard();
+
+			_this.convertTitleToSlug('#createGlobal #title', '#createGlobal #handle', '_');
+
+			_this.convertTitleToSlug('#createGlobal #handle', '#createGlobal #handle', '_');
+
+			_this.convertTitleToSlug('#editGlobal #title', '#editGlobal #handle', '_');
+
+			_this.convertTitleToSlug('#editGlobal #handle', '#editGlobal #handle', '_');
 
 			_this.convertTitleToSlug('#createPage #title', '#createPage #slug');
 

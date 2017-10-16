@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Scheduled Maintenance - '.config('cms.site.name'))
-@section('description', 'Scheduled Maintenance - '.config('cms.site.name'))
-@section('keywords', 'Scheduled, Maintenance, '.config('cms.site.name'))
+@section('title', 'Scheduled Maintenance - '.$siteName)
+@section('description', 'Scheduled Maintenance - '.$siteName)
+@section('keywords', 'Scheduled, Maintenance, '.$siteName)
 
 @php ($page->bannerContent = '<h2>Scheduled, Maintenance<</h2>')
 @php ($page->bannerImage = '')

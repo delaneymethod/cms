@@ -17,7 +17,7 @@
 	<script async>
 	'use strict';
 	
-	window.onload = () => {	
+	function loadAssetsBrowser() {
 		let assetBrowserElements = [];
 	
 		@foreach ($pageTemplate->fields as $field)
@@ -43,7 +43,15 @@
 				$('a[data-target="#' + assetBrowserElement + '-browse-modal"]').data('value', '');
 			});
 		});
-	};
+	}
+		
+	if (window.attachEvent) {
+		window.attachEvent('onload', loadAssetsBrowser);
+	} else if (window.addEventListener) {
+		window.addEventListener('load', loadAssetsBrowser, false);
+	} else {
+		document.addEventListener('load', loadAssetsBrowser, false);
+	}
 	</script>
 @endpush
 

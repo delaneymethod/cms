@@ -37,6 +37,8 @@ class User extends Authenticatable
 		'location_id',
 		'status_id',
 		'role_id',
+		'receive_emails',
+		'receive_notifications',
 	];
 
 	/**
@@ -207,6 +209,26 @@ class User extends Authenticatable
 	public function isLocationSuspended()
 	{
 		return optional($this->location)->status_id == 7;
+	}
+	
+	/**
+	 * Checks if user can receive emails.
+	 *
+	 * @return bool
+	 */
+	public function canReceiveEmails() : bool
+	{
+		return $this->receive_emails == 1;
+	}
+	
+	/**
+	 * Checks if user can receive notifications.
+	 *
+	 * @return bool
+	 */
+	public function canReceiveNotifications() : bool
+	{
+		return $this->receive_notifications == 1;
 	}
 	
 	/**

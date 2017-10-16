@@ -84,6 +84,11 @@ class PermissionGroupsTableSeeder extends Seeder
 				'title' => 'Carts',
 				'created_at' => $now,
 				'updated_at' => $now,
+			],
+			[
+				'title' => 'Globals',
+				'created_at' => $now,
+				'updated_at' => $now,
 			]
 		];
 		

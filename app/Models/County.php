@@ -30,6 +30,7 @@ class County extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'country_id',
 		'title',
 	];

@@ -19,6 +19,20 @@ class OrderCreatedMailCustomer extends Mailable implements ShouldQueue
 	use Queueable, SerializesModels;
 	
 	/**
+	 * Information about the site name.
+	 *
+	 * @var string
+	 */
+	public $siteName;
+	
+	/**
+	 * Information about the site logo.
+	 *
+	 * @var string
+	 */
+	public $siteLogo;
+	
+	/**
 	 * Information about the user.
 	 *
 	 * @var string
@@ -37,11 +51,15 @@ class OrderCreatedMailCustomer extends Mailable implements ShouldQueue
 	 *
 	 * @return void
 	 */
-	public function __construct(Order $order, User $user)
+	public function __construct(Order $order, User $user, string $siteName, string $siteLogo)
 	{
 		$this->order = $order;
 		
 		$this->user = $user;
+		
+		$this->siteName = $siteName;
+		
+		$this->siteLogo = $siteLogo;
 	}
 
 	/**

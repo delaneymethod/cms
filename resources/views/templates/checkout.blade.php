@@ -298,8 +298,8 @@
 															<th class="align-middle d-none d-sm-none d-md-none d-lg-block d-xl-block">&nbsp;</th>
 															<th class="align-middle">Product</th>
 															<th class="align-middle text-center">Qty</th>
-															<th class="align-middle text-center">Price&nbsp;<i class="fa fa-lg fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Prices are shown in British Pound (GBP)" aria-hidden="true"></i></th>
-															<th class="align-middle text-right">Subtotal&nbsp;<i class="fa fa-lg fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Prices are shown in British Pound (GBP)" aria-hidden="true"></i></th>
+															<th class="align-middle text-center">Price&nbsp;<i class="fa fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Prices are shown in British Pound (GBP)" aria-hidden="true"></i></th>
+															<th class="align-middle text-right">Subtotal&nbsp;<i class="fa fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Prices are shown in British Pound (GBP)" aria-hidden="true"></i></th>
 														</tr>
 													</thead>
 													<tbody>

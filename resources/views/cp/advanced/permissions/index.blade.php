@@ -29,6 +29,7 @@
 					<li><strong>End Users</strong> can only see their data - filtering applied per company.</li>
 				</ul>	
 				<div class="content padding bg-white">
+					<div class="spacer"></div>
 					<form name="createPermissions" id="createPermissions" class="createPermissions" role="form" method="POST" action="/cp/advanced/roles/permissions">
 						{{ csrf_field() }}
 						<table class="permissions table table-hover table-bordered table-striped table-responsive">

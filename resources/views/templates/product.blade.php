@@ -108,8 +108,8 @@
 							<tr class="very-tall bg-default text-white">
 								<th class="align-middle text-center">Option</th>
 								<th class="align-middle text-center">Product Code</th>
-								<th class="align-middle text-center">Price&nbsp;<i class="fa fa-lg fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Prices are shown in British Pound (GBP)" aria-hidden="true"></i></th>
-								<th class="align-middle text-center">Price Per&nbsp;<i class="fa fa-lg fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Pieces in the Pack/Case" aria-hidden="true"></i></th>
+								<th class="align-middle text-center">Price&nbsp;<i class="fa fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Prices are shown in British Pound (GBP)" aria-hidden="true"></i></th>
+								<th class="align-middle text-center">Price Per&nbsp;<i class="fa fa-info-circle d-none d-sm-none d-md-inline d-lg-inline d-xl-inline" data-toggle="tooltip" data-placement="top" title="Pieces in the Pack/Case" aria-hidden="true"></i></th>
 								<th class="align-middle text-center">In Stock</th>
 								<th class="align-middle text-center no-sort">Quantity</th>
 								<th class="align-middle text-center no-sort">&nbsp;</th>
@@ -118,18 +118,18 @@
 						<tbody>
 							@foreach ($product->product_commodities->sortBy('code') as $productCommodity)
 								<tr class="{{ $productCommodity->id }}" id="{{ $productCommodity->code }}">
-									<td data-title="Option" class="align-middle text-center" scope="row">{{ $productCommodity->short_description }}</td>
-									<td data-title="Code" class="align-middle text-center">{{ $productCommodity->code }}</td>
+									<td class="align-middle text-center" scope="row">{{ $productCommodity->short_description }}</td>
+									<td class="align-middle text-center">{{ $productCommodity->code }}</td>
 									@if ($authenticated)
-										<td data-title="Price" class="align-middle text-center price text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
-										<td data-title="Price Per" class="align-middle text-center price-per text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
+										<td class="align-middle text-center price text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
+										<td class="align-middle text-center price-per text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
 									@else	
-										<td data-title="Price" class="align-middle text-center price text-muted">-</td>
-										<td data-title="Price Per" class="align-middle text-center price-per text-muted">-</td>
+										<td class="align-middle text-center price text-muted">-</td>
+										<td class="align-middle text-center price-per text-muted">-</td>
 									@endauth
-									<td data-title="In Stock" class="align-middle text-center quantity-available">{{ $productCommodity->quantity_available }}</td>
-									<td data-title="Quantity" class="align-middle text-center" style="width: 90px;"><input type="number" name="{{ $productCommodity->id }}_quantity" id="{{ $productCommodity->id }}_quantity" class="form-control text-center" value="1" placeholder="e.g 1" autocomplete="off" step="1" min="1" max="99999" onkeyup="return window.CMS.validateProductCommodityQuantity(event);" data-id="{{ $productCommodity->id }}" required></td>
-									<td data-title="Actions" class="align-middle text-center">
+									<td class="align-middle text-center quantity-available">{{ $productCommodity->quantity_available }}</td>
+									<td class="align-middle text-center" style="width: 90px;"><input type="number" name="{{ $productCommodity->id }}_quantity" id="{{ $productCommodity->id }}_quantity" class="form-control text-center" value="1" placeholder="e.g 1" autocomplete="off" step="1" min="1" max="99999" onkeyup="return window.CMS.validateProductCommodityQuantity(event);" data-id="{{ $productCommodity->id }}" required></td>
+									<td class="align-middle text-center">
 										@if ($authenticated)
 											@if ($currentUserCanCreateOrders)
 												<form name="addProductCommodity{{ $productCommodity->id }}" id="addProductCommodity{{ $productCommodity->id }}" class="addProductCommodityToCart" role="form" method="POST" action="/cart{{-- $redirectTo }}#{{ $productCommodity->code --}}">
@@ -146,13 +146,13 @@
 														<input type="hidden" name="id" value="{{ $productCommodity->id }}">
 														<input type="hidden" name="instance" value="wishlist">
 														<input type="hidden" name="action" value="secret">
-														<button type="submit" name="submit_add_product_commodity_{{ $productCommodity->id }}" id="submit_add_product_commodity_{{ $productCommodity->id }}" title="Add to Wishlist" class="btn-unstyled-gf-blue-gray">Add To Wishlist</button>&nbsp;<i class="fa fa-lg fa-info-circle d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block" data-toggle="tooltip" data-placement="top" title="&quot;Add To Wishlist&quot; means you like the product and may consider buying it later but not right now." aria-hidden="true"></i>
+														<button type="submit" name="submit_add_product_commodity_{{ $productCommodity->id }}" id="submit_add_product_commodity_{{ $productCommodity->id }}" title="Add to Wishlist" class="btn-unstyled-gf-blue-gray">Add To Wishlist</button>&nbsp;<i class="fa fa-info-circle d-none d-sm-none d-md-inline-block d-lg-inline-block d-xl-inline-block" data-toggle="tooltip" data-placement="top" title="&quot;Add To Wishlist&quot; means you like the product and may consider buying it later but not right now." aria-hidden="true"></i>
 													</form>
 												</div>	
 											@endif
 										@else
 											<div><a href="javascript:void(0);" title="Add To Cart" class="btn btn-outline-secondary disabled">Add To Cart</a></div>
-											<div style="margin-top: 10px;font-size: 12px;"><a href="/login{{ $redirectTo }}#{{ $productCommodity->code }}" class="text-gf-blue-gray">Please Login</a>&nbsp;<i class="fa fa-lg fa-info-circle" data-toggle="tooltip" data-placement="top" title="Add to Cart is only available to registered customers." aria-hidden="true"></i></div>
+											<div style="margin-top: 10px;font-size: 12px;"><a href="/login{{ $redirectTo }}&code={{ $productCommodity->code }}" class="text-gf-blue-gray">Please Login</a>&nbsp;<i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Add to Cart is only available to registered customers." aria-hidden="true"></i></div>
 										@endauth
 									</td>
 								</tr>
@@ -165,13 +165,21 @@
 				<script async>
 				'use strict';
 					
-				window.onload = () => {
+				function loadProductCommodities() {
 					const productCommodityIds = @json($product->product_commodities->pluck('id'));
 					
 					const productCommodityCodes = @json($product->product_commodities->pluck('code'));
 					
 					productCommodityIds.map((productCommodityId, index) => window.CMS.loadProductCommodity('.' + productCommodityId, productCommodityCodes[index]));
-				};
+				}
+				
+				if (window.attachEvent) {
+					window.attachEvent('onload', loadProductCommodities);
+				} else if (window.addEventListener) {
+					window.addEventListener('load', loadProductCommodities, false);
+				} else {
+					document.addEventListener('load', loadProductCommodities, false);
+				}
 				</script>
 			@endif
 			

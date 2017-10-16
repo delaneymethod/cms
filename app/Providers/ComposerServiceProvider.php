@@ -10,12 +10,12 @@ namespace App\Providers;
 use App;
 use Exception;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Traits\{PageTrait, AssetTrait};
+use App\Http\Traits\{PageTrait, AssetTrait, GlobalTrait};
 use Illuminate\Support\Facades\{Auth, View};
 
 class ComposerServiceProvider extends ServiceProvider
 {
-	use PageTrait, AssetTrait;
+	use PageTrait, AssetTrait, GlobalTrait;
 	
 	/**
 	 * Register bindings in the container.
@@ -117,13 +117,19 @@ class ComposerServiceProvider extends ServiceProvider
 						'footerLinksRight' => $footerLinksRight,
 					]);
 					
-					// Added by Sean
+					$globals = $this->getGlobals();
+					
+					if ($globals->count() > 0) {
+						$globals->each(function ($global) {
+							View::share(camel_case($global->handle), $global->data);
+						});
+					}
+					
 					View::share('sidebarSmCols', config('cms.column_widths.cp.sidebar.sm'));
 					View::share('sidebarMdCols', config('cms.column_widths.cp.sidebar.md'));
 					View::share('sidebarLgCols', config('cms.column_widths.cp.sidebar.lg'));
 					View::share('sidebarXlCols', config('cms.column_widths.cp.sidebar.xl'));
 					
-					// Added by Sean
 					View::share('mainSmCols', config('cms.column_widths.cp.main.sm'));
 					View::share('mainMdCols', config('cms.column_widths.cp.main.md'));
 					View::share('mainLgCols', config('cms.column_widths.cp.main.lg'));

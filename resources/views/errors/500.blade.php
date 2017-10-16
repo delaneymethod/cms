@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '500 Internal Server Error - '.config('cms.site.name'))
-@section('description', '500 Internal Server Error - '.config('cms.site.name'))
-@section('keywords', '500, Internal, Server, Error, '.config('cms.site.name'))
+@section('title', '500 Internal Server Error - '.$siteName)
+@section('description', '500 Internal Server Error - '.$siteName)
+@section('keywords', '500, Internal, Server, Error, '.$siteName)
 
 @php ($page->bannerContent = '<h2>500 Internal Server Error</h2>')
 @php ($page->bannerImage = '')

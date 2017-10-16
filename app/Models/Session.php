@@ -30,6 +30,7 @@ class Session extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'user_id',
 		'ip_address',
 		'user_agent',

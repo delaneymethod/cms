@@ -7,18 +7,16 @@
 
 namespace App\Models;
 
-use App\Models\Field;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class FieldType extends Model
+class Globals extends Model
 {
 	/**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'field_types';
+    protected $table = 'globals';
     
 	protected $characterSet = 'UTF-8';
 	
@@ -32,14 +30,7 @@ class FieldType extends Model
 	protected $fillable = [
 		'id',
 		'title',
-		'type',
+		'handle',
+		'data',
 	];
-
-	/**
-	 * Get the field records associated with the field type.
-	 */
-	public function fields() : HasMany
-	{
-		return $this->hasMany(Field::class);
-	}
 }

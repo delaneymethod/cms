@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>{{ config('cms.site.name') }}</title>
+	<title>{{ $siteName }}</title>
 	<style type="text/css">
 	</style>
 </head>
@@ -11,7 +11,7 @@
 	<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border: 0px solid #cccccc;border-collapse: collapse;">
 		<tr>
 			<td align="left" bgcolor="#ffffff" style="padding: 20px 0 0 0;">
-				<img src="{{ url('/assets/img/logo.png') }}" alt="{{ config('cms.site.name') }} Logo" style="width:40%; height: auto;">
+				<img src="{{ $siteLogo }}" alt="{{ $siteName }} Logo" style="width:40%; height: auto;">
 			</td>
 		</tr>
 		<tr>
@@ -21,7 +21,7 @@
 		</tr>
 		<tr>
 			<td align="center" bgcolor="#ffffff" style="padding: 0 20px 20px 20px;font-family: Arial, sans-serif;font-size: 16px;line-height: 20px;color: #000000;">
-				{{ config('cms.site.name') }} - Powered by {{ config('app.name') }}
+				{{ $siteName }} - Powered by {{ config('app.name') }}
 			</td>
 		</tr>
 	</table>

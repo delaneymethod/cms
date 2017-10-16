@@ -21,30 +21,40 @@
 						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"><strong>PO Number:</strong> {{ $order->po_number }}<br><strong>Date:</strong> {{ $order->created_at }}</td>
 					</tr>
 					<tr>
+						<td align="left" valign="top" style="border-top: 1px solid #f1f3f6;padding: 1px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"></td>
+					</tr>
+					<tr>
+						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 20px;line-height: 20px;font-weight: bold;">Order Items</td>
+					</tr>
+					<tr>
 						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 20px;line-height: 20px;">
 							<table border="1" cellpadding="0" cellspacing="0" width="100%" style="border: 1px solid #f1f3f6;border-collapse: collapse;">
 								<tr>
 									<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: bold;">&nbsp;</td>
 									<td align="left" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: bold;">Product</td>
-									<td align="left" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: bold;">Commodity</td>
-									<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: bold;">Quantity</td>
+									<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: bold;">Qty</td>
+									<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: bold;">Tax</td>
+									<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: bold;">Price</td>
+									<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;font-weight: bold;">Total</td>
 								</tr>
 								@foreach ($order->product_commodities as $productCommodity)
 									<tr>
-										<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;"><a href="{{ $productCommodity->product->url }}" title="{{ $productCommodity->product->title }}" target="_blank"><img src="{{ $productCommodity->product->image_url }}" style="width: 60px;height: 60px;" alt="{{ $productCommodity->product->title }}"></a></td>
-										<td align="left" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;">{{ $productCommodity->product->title }}</td>
-										<td align="left" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;">{{ $productCommodity->title }}</td>
+										<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;"><a href="{{ config('app.url') }}{{ $productCommodity->product->url }}#{{ $productCommodity->code }}" title="{{ $productCommodity->product->title }}" target="_blank"><img src="{{ $productCommodity->product->image_url }}" style="width: 60px;height: 60px;" alt="{{ $productCommodity->product->title }}"></a></td>
+										<td align="left" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;"><a href="{{ config('app.url') }}{{ $productCommodity->product->url }}#{{ $productCommodity->code }}" title="{{ $productCommodity->product->title }}" target="_blank">{{ $productCommodity->title }}</a><br>Code: {{ $productCommodity->code }}</td>
 										<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;">{{ $productCommodity->pivot->quantity }}</td>
+										<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;">{{ $productCommodity->pivot->tax_rate }}&#37;</td>
+										<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;">{{ $order->currency.number_format($productCommodity->pivot->price, 2, '.', ',') }}</td>
+										<td align="center" valign="middle" style="padding: 15px 15px 15px 15px;font-family: Arial, sans-serif;font-size: 12px;line-height: 18px;">{{ $order->currency.number_format($productCommodity->pivot->price_tax, 2, '.', ',') }}</td>
 									</tr>
 								@endforeach
 							</table>
 						</td>
 					</tr>
 					<tr>
-						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 20px;line-height: 20px;font-weight: bold;">Notes</td>
+						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 20px;line-height: 20px;font-weight: bold;">Order Notes</td>
 					</tr>
 					<tr>
-						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">{{ $order->notes }}</td>
+						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">{{ $order->notes ?? 'N/A' }}</td>
 					</tr>
 					<tr>
 						<td align="left" valign="top" style="border-top: 1px solid #f1f3f6;padding: 1px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"></td>
@@ -68,8 +78,8 @@
 									<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 20px;line-height: 20px;font-weight: bold;">Shipping Address</td>
 								</tr>
 								<tr>
-									<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">{!! nl2br($user->location_postal_address) !!}<br>{{ $user->telephone }}</td>
-									<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">{!! nl2br($order->postal_address) !!}<br>{{ $user->telephone }}</td>
+									<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">{{ $user->location->title }}<br>{!! nl2br($user->location_postal_address) !!}</td>
+									<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;">{!! nl2br($order->postal_address) !!}</td>
 								</tr>
 								<tr>
 									<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"></td>
@@ -86,6 +96,15 @@
 								</tr>
 							</table>
 						</td>
+					</tr>
+					<tr>
+						<td align="left" valign="top" style="border-top: 1px solid #f1f3f6;padding: 1px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"></td>
+					</tr>
+					<tr>
+						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 20px;line-height: 20px;font-weight: bold;">Additional Information</td>
+					</tr>
+					<tr>
+						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"><a href="{{ config('app.url') }}/login?redirectTo=/cp/orders/{{ $order->id }}/pdf" title="Download PDF version of your Order">Download PDF version of your Order</a></td>
 					</tr>
 					<tr>
 						<td align="left" valign="top" style="border-top: 1px solid #f1f3f6;padding: 1px;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"></td>

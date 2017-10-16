@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', '403 Forbidden - '.config('cms.site.name'))
-@section('description', '403 Forbidden - '.config('cms.site.name'))
-@section('keywords', '403, Forbidden, '.config('cms.site.name'))
+@section('title', '403 Forbidden - '.$siteName)
+@section('description', '403 Forbidden - '.$siteName)
+@section('keywords', '403, Forbidden, '.$siteName)
 	
 @php ($page->bannerContent = '<h2>Server Error: 403 (Forbidden)</h2>')
 @php ($page->bannerImage = '')

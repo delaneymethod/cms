@@ -30,6 +30,7 @@ class ArticleCategory extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'slug',
 		'status_id',

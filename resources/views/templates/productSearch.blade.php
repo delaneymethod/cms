@@ -45,12 +45,11 @@
 												@if ($authenticated)
 													<td class="align-middle text-center price text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
 													<td class="align-middle text-center price-per text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
-													<td class="align-middle text-center quantity-available text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
 												@else	
 													<td class="align-middle text-center price text-muted">-</td>
 													<td class="align-middle text-center price-per text-muted">-</td>
-													<td class="align-middle text-center quantity-available text-muted">-</td>
 												@endauth
+												<td class="align-middle text-center quantity-available">{{ $productCommodity->quantity_available }}</td>
 												<td class="align-middle text-center">
 													@if ($authenticated)
 														@if ($currentUserCanCreateOrders)
@@ -85,11 +84,19 @@
 							<script async>
 							'use strict';
 								
-							window.onload = () => {
+							function loadProductCommodities() {
 								const productCommodityIds = @json($productCommodities->pluck('id'));
 								
-								productCommodityIds.map(productCommodityId => window.CMS.loadProductCommodityPriceQuantity(`#product_commodity_${productCommodityId}`));
-							};
+								productCommodityIds.map(productCommodityId => window.CMS.loadProductCommodityPriceQuantity('#product_commodity_' + productCommodityId));
+							}
+							
+							if (window.attachEvent) {
+								window.attachEvent('onload', loadProductCommodities);
+							} else if (window.addEventListener) {
+								window.addEventListener('load', loadProductCommodities, false);
+							} else {
+								document.addEventListener('load', loadProductCommodities, false);
+							}
 							</script>
 						@endif
 						<div class="row">

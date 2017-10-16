@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Keyword extends Model
 {
-	//use PageTrait;
-	
 	/**
      * The table associated with the model.
      *
@@ -30,6 +28,7 @@ class Keyword extends Model
 	 * @var array
 	 */
 	protected $fillable = [
-		'keywords',
+		'id',
+		'title',
 	];
 }

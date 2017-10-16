@@ -42,7 +42,7 @@ class OrderCreatedListener implements ShouldQueue
 	{
 		// We could send out a notification here that sends an email, saved to database, updates slack, send a text message etc etc
 		$time = Carbon::now()->addMinutes($this->minutes);
-			
+		
 		// User - Sends an order created notification to the user. Stick the notification in the "orders" queue to run in 5 minutes.
 		$event->user->notify((new OrderCreatedNotification($event->order, $event->user))->delay($time)->onQueue('orders.notifications'));
 	}

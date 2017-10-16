@@ -30,9 +30,17 @@
 							</div>
 						</div>
                     	<script>
-						window.onload = () => {
+						function loadSystemMessages() {
 							$('#system-message').trigger('shown');
-						};
+						}
+		
+						if (window.attachEvent) {
+							window.attachEvent('onload', loadSystemMessages);
+						} else if (window.addEventListener) {
+							window.addEventListener('load', loadSystemMessages, false);
+						} else {
+							document.addEventListener('load', loadSystemMessages, false);
+						}
 						</script>
                     @endforeach
 				@endif

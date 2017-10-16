@@ -30,6 +30,7 @@ class Content extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'field_id',
 		'data',
 	];

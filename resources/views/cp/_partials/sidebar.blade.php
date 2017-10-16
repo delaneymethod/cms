@@ -44,6 +44,9 @@
 				@if ($currentUser->hasPermission('edit_pages'))
 					<li class="{{ setActive('cp/menu') }}"><a href="/cp/menu" title="Menu"><i class="text-center icon fa fa-list" aria-hidden="true"></i>Menu</a></li>
 				@endif
+				@if ($currentUser->hasPermission('view_globals'))
+					<li class="{{ setActive('cp/globals') }}"><a href="/cp/globals" title="Globals"><i class="text-center icon fa fa-globe" aria-hidden="true"></i>Globals</a></li>
+				@endif
 				@if ($currentUser->hasPermission('view_roles') || $currentUser->hasPermission('view_permissions') || $currentUser->hasPermission('view_statuses'))
 					<li>
 						<a href="javascript:void(0);" title="Advanced" id="submenu" class="{{ setClass('cp/advanced', 'highlight') }}"><i class="text-center icon fa fa-cogs" aria-hidden="true"></i>Advanced<span class="pull-right"><i class="fa fa-angle-left {{ setClass('cp/advanced', 'fa-rotate') }}" aria-hidden="true"></i></span></a>
@@ -63,8 +66,11 @@
 			</ul>
 			<h4 class="text-uppercase">User</h4>
 			<ul class="list-unstyled">
-				<li class="{{ setActive('cp/users/'.$currentUser->id.'/notifications') }}"><a href="/cp/users/{{ $currentUser->id }}/notifications" title=""><i class="text-center icon fa fa-commenting" aria-hidden="true"></i>Messages&nbsp;<span id="notifications-unread" class="float-right badge badge-pill badge-suspended{{ ($currentUser->unreadNotifications->count() == 0) ? ' hidden' : '' }}" style="margin-top: 3px;padding-left: 8px;padding-right: 8px;">{{ $currentUser->unreadNotifications->count() }}</span></a></li>
+				@if ($currentUser->canReceiveNotifications())
+					<li class="{{ setActive('cp/users/'.$currentUser->id.'/notifications') }}"><a href="/cp/users/{{ $currentUser->id }}/notifications" title="Notifications"><i class="text-center icon fa fa-commenting" aria-hidden="true"></i>Messages&nbsp;<span id="notifications-unread" class="float-right badge badge-pill badge-suspended{{ ($currentUser->unreadNotifications->count() == 0) ? ' hidden' : '' }}" style="margin-top: 3px;padding-left: 8px;padding-right: 8px;">{{ $currentUser->unreadNotifications->count() }}</span></a></li>
+				@endif
 				<li class="{{ setActive('cp/users/'.$currentUser->id.'/edit/password') }}"><a href="/cp/users/{{ $currentUser->id }}/edit/password" title="Change Password"><i class="text-center icon fa fa-key" aria-hidden="true"></i>Change Password</a></li>
+				<li class="{{ setActive('cp/users/'.$currentUser->id.'/edit/settings') }}"><a href="/cp/users/{{ $currentUser->id }}/edit/settings" title="Settings"><i class="text-center icon fa fa-sliders" aria-hidden="true"></i>Settings</a></li>
 				<li><a href="javascript:void(0);" title="Logout" id="logout"><i class="text-center icon fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
 			</ul>
 			<form name="logoutUser" id="logoutUser" class="logoutUser" action="/logout" method="POST" style="display: none;">

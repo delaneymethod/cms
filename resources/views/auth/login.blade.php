@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Login - '.config('cms.site.name'))
-@section('description', 'Login - '.config('cms.site.name'))
-@section('keywords', 'Login, '.config('cms.site.name'))
+@section('title', 'Login - '.$siteName)
+@section('description', 'Login - '.$siteName)
+@section('keywords', 'Login, '.$siteName)
 
 @php ($page->content = '')
 
@@ -57,6 +57,10 @@
 					@php ($redirectTo = request()->get('redirectTo'))
 					@if (!empty($redirectTo))
 						@php ($redirectTo = '?redirectTo='.$redirectTo)
+						@php ($code = request()->get('code'))
+						@if (!empty($code))
+							@php ($redirectTo = $redirectTo.'&code='.$code)
+						@endif
 					@endif	
 					<form name="login" id="login" class="login" role="form" method="POST" action="{{ route('login') }}{{ $redirectTo }}">
 						{{ csrf_field() }}

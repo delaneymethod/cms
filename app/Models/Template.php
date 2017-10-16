@@ -30,6 +30,7 @@ class Template extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'filename',
 	];

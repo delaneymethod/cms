@@ -40,6 +40,12 @@ class PermissionsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'title' => 'edit_settings_users',
+				'permission_group_id' => 1,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
 				'title' => 'retire_users',
 				'permission_group_id' => 1,
 				'created_at' => $now,
@@ -348,6 +354,30 @@ class PermissionsTableSeeder extends Seeder
 			[
 				'title' => 'view_carts',
 				'permission_group_id' => 14,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'view_globals',
+				'permission_group_id' => 15,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'create_globals',
+				'permission_group_id' => 15,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'edit_globals',
+				'permission_group_id' => 15,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'delete_globals',
+				'permission_group_id' => 15,
 				'created_at' => $now,
 				'updated_at' => $now,
 			],

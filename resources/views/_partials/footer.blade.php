@@ -44,14 +44,20 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-left text-lg-left text-xl-left">
-							<p>Copyright {{ config('cms.site.name') }} &copy; {{ date('Y') }}, All Rights Reserved.</p>
+							<p>Copyright {{ $siteName }} &copy; {{ date('Y') }}, All Rights Reserved.</p>
 						</div>
 						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-right text-lg-right text-xl-right">
 							<ul class="list-unstyled list-inline social-media">
-								<li class="list-inline-item"><a href="https://www.linkedin.com/company/grampian-fasteners" title="LinkedIn"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+								@if (!empty($linkedin))
+									<li class="list-inline-item"><a href="{{ $linkedin }}" title="LinkedIn"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+								@endif
 								<li class="list-inline-item"><a href="/contact" title="Contact"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
-								<li class="list-inline-item"><a href="https://twitter.com/fastenerpeople" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-								<li class="list-inline-item"><a href="https://www.facebook.com/GrampianFasteners92" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+								@if (!empty($twitter))
+									<li class="list-inline-item"><a href="{{ $twitter }}" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+								@endif
+								@if (!empty($facebook))
+									<li class="list-inline-item"><a href="{{ $facebook }}" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+								@endif
 							</ul>
 						</div>
 					</div>

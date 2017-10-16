@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', (($page->title != 'Home') ? $page->title.' - ' : '').config('cms.site.name'))
-@section('description', $page->description.' '.config('cms.site.name'))
-@section('keywords', $page->keywords.','.config('cms.site.name'))
+@section('title', (($page->title != 'Home') ? $page->title.' - ' : '').$siteName)
+@section('description', $page->description.' '.$siteName)
+@section('keywords', $page->keywords.','.$siteName)
 
 @push('styles')
 	@include('_partials.styles')

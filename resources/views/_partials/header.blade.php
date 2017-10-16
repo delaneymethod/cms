@@ -23,7 +23,7 @@
 					</div>
 					<div class="row d-flex h-100 justify-content-center">
 						<div class="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 text-center text-sm-center text-md-left text-lg-left text-xl-left align-self-center">
-							<h1><a href="/" title="{{ config('cms.site.name') }}"><img src="/assets/img/logo.png" alt="{{ config('cms.site.name') }} logo" class="img-fluid"></a></h1>
+							<h1><a href="/" title="{{ $siteName }}"><img src="{{ $siteLogo }}" alt="{{ $siteName }} logo" class="img-fluid"></a></h1>
 							<div class="spacer tall d-block d-sm-block d-md-none d-lg-none d-xl-none"></div>
 						</div>
 						<div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 ml-auto text-center text-sm-center text-md-right text-lg-right text-xl-right align-self-center">

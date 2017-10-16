@@ -1,8 +1,8 @@
 @extends('_layouts.default')
 
-@section('title', 'Set Password - '.config('cms.site.name'))
-@section('description', 'Set Password - '.config('cms.site.name'))
-@section('keywords', 'Set, Password, '.config('cms.site.name'))
+@section('title', 'Set Password - '.$siteName)
+@section('description', 'Set Password - '.$siteName)
+@section('keywords', 'Set, Password, '.$siteName)
 
 @php ($page->content = '')
 

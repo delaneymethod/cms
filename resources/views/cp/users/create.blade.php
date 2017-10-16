@@ -35,6 +35,8 @@
 				<div class="content padding bg-white">
 					<form name="createUser" id="createUser" class="createUser" role="form" method="POST" action="/cp/users">
 						{{ csrf_field() }}
+						<input type="hidden" name="receive_emails" value="1">
+						<input type="hidden" name="receive_notifications" value="1">
 						<input type="hidden" name="solution_id" value="">
 						<input type="hidden" name="password" value="letmein">
 						@yield('formButtons')

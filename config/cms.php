@@ -17,23 +17,6 @@ return [
     
     'version' => '1.0.0',
     
-    'site' => [
-	    
-		'name' => 'Test Site',
-		'url' => 'https://www.delaneymethod.com/cms',
-		'emails' => [
-			'general' => 'hello@delaneymethod.com',
-			'sales' => 'hello@delaneymethod.com',
-			'customer_care' => 'hello@delaneymethod.com',
-		],
-		'telephone_numbers' => [
-			'general' => '',
-			'sales' => '',
-			'customer_care' => '',
-		],
-		
-    ],
-    
     'public_path' => env('PUBLIC_PATH', 'public'),
     
 	'delays' => [
@@ -89,6 +72,11 @@ return [
 			'template_id' => 'required|integer',
 			'status_id' => 'required|integer',
 			'parent_id' => 'required|integer',
+		],
+		'global' => [
+			'title' => 'required|string|max:255',
+			'handle' => 'required|string|max:255',
+			'data' => 'nullable|string',
 		],
 		'company' => [
 			'title' => 'required|string|max:255',
@@ -172,6 +160,8 @@ return [
 			'location_id' => 'required|integer',
 			'status_id' => 'required|integer',
 			'role_id' => 'required|integer',
+			'receive_emails' => 'integer',
+			'receive_notifications' => 'integer',
 		],
 	
 	],

@@ -34,6 +34,7 @@ class Article extends Model
 	 * @var array
 	 */
 	protected $fillable = [
+		'id',
 		'title',
 		'slug',
 		'description',

@@ -1,24 +1,10 @@
-make all fa- fa-lg
-
-update email confirmation to include PDF version
-
-settings tab - email preferences, notifications options - tick to receive
-
-globals tab - saved linkedin, twitter, facebook, google analytic 
-
-setup permissions for settings and globals
-
 add pagination to articles
-
-locations have shipping methods defined
 
 allow more than 1 banner image
 
 carousel on homepage
 
-add pagination to articles
-
-
+locations have shipping methods defined
 
 
 
