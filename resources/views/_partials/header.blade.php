@@ -38,25 +38,37 @@
 						<div class="col-12 spacer tall"></div>
 					</div>
 				</div>
-				@if (!empty($page->bannerContent))
-					<div class="container-fluid">
+				@if ($page->template->filename == 'homepage')
+					<div class="">
 						<div class="row">
 							<div class="col-12 spacer tall"></div>
 						</div>
 						<div class="row">
-							<div class="col-12 banner"{!! $bannerImage !!}>
-								<div class="row d-flex h-100 justify-content-center">
-									<div class="col-10 col-sm-10 col-md-10 col-lg-12 col-xl-12 align-self-center text-center">
-										<div class="row">
-											<div class="col-12">
-												{!! $page->bannerContent !!}
+							<div class="col-12">
+							</div>
+						</div>
+					</div>
+				@else
+					@if (!empty($page->bannerContent))
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-12 spacer tall"></div>
+							</div>
+							<div class="row">
+								<div class="col-12 banner"{!! $bannerImage !!}>
+									<div class="row d-flex h-100 justify-content-center">
+										<div class="col-10 col-sm-10 col-md-10 col-lg-12 col-xl-12 align-self-center text-center">
+											<div class="row">
+												<div class="col-12">
+													{!! $page->bannerContent !!}
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					@endif
 				@endif
 				<div class="container">	
 					<div class="row">

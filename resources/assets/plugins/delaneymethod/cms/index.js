@@ -69,6 +69,41 @@
 		};
 		
 		this.loadPagination = () => {
+			const limit = 15;
+			
+			const length = $('#pagination .paginate').length;
+			
+			if (length > limit) {
+				$('#pagination .paginate:gt(' + (limit - 1) + ')').hide();
+			
+				const totalPages = Math.round(length / limit);
+			
+				$('#templatePagination').show().append('<nav aria-label="Page pagination"><ul class="pagination justify-content-center"></ul></nav>');
+				
+				for (let i = 1; i <= totalPages; i++) {
+					$('#templatePagination .pagination').append('<li class="page-item"><a href="javascript:void(0);" title="Page ' + i + '" class="page-link">' + i + '</a></li>');
+				}
+				
+				$('#templatePagination .pagination li:first').addClass('active');
+				
+				$('#templatePagination .pagination li a').click(function () {
+					const index = $(this).parent().index() + 1;
+					
+					const gt = limit * index;
+					
+					$('#templatePagination .pagination li').removeClass('active');
+					
+					$(this).parent().addClass('active');
+					
+					$('#pagination .paginate').hide();
+					
+					for (let i = gt - limit; i < gt; i++) {
+						$('#pagination .paginate:eq(' + i + ')').show();
+					}
+				});
+			} else {
+				$('#templatePagination').hide();
+			}
 		};
 		
 		this.loadMap = () => {
@@ -206,6 +241,7 @@
 		};
 		
 		this.showWelcomeBackMessage = user => {
+			/*
 			$('#my-account').tooltip('show');
 			
 			$('#my-account').on('shown.bs.tooltip', () => {
@@ -217,6 +253,7 @@
 			$('#my-account').on('hidden.bs.tooltip', () => {
 				$('#my-account').attr('data-original-title', '<p style="margin-top: 10px;">Click here to access your Account and the Customer Dashboard.</p>');
 			});
+			*/
 		};
 		
 		this.waitForGoogleMaps = () => {

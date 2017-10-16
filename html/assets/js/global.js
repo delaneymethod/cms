@@ -56960,7 +56960,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 			}
 		};
 
-		_this.loadPagination = function () {};
+		_this.loadPagination = function () {
+			var limit = 15;
+
+			var length = $('#pagination .paginate').length;
+
+			if (length > limit) {
+				$('#pagination .paginate:gt(' + (limit - 1) + ')').hide();
+
+				var totalPages = Math.round(length / limit);
+
+				$('#templatePagination').show().append('<nav aria-label="Page pagination"><ul class="pagination justify-content-center"></ul></nav>');
+
+				for (var i = 1; i <= totalPages; i++) {
+					$('#templatePagination .pagination').append('<li class="page-item"><a href="javascript:void(0);" title="Page ' + i + '" class="page-link">' + i + '</a></li>');
+				}
+
+				$('#templatePagination .pagination li:first').addClass('active');
+
+				$('#templatePagination .pagination li a').click(function () {
+					var index = $(this).parent().index() + 1;
+
+					var gt = limit * index;
+
+					$('#templatePagination .pagination li').removeClass('active');
+
+					$(this).parent().addClass('active');
+
+					$('#pagination .paginate').hide();
+
+					for (var _i = gt - limit; _i < gt; _i++) {
+						$('#pagination .paginate:eq(' + _i + ')').show();
+					}
+				});
+			} else {
+				$('#templatePagination').hide();
+			}
+		};
 
 		_this.loadMap = function () {
 			if ($('.map').length) {
@@ -57095,17 +57131,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		};
 
 		_this.showWelcomeBackMessage = function (user) {
-			$('#my-account').tooltip('show');
-
-			$('#my-account').on('shown.bs.tooltip', function () {
-				setTimeout(function () {
-					$('#my-account').tooltip('hide');
-				}, 5000);
-			});
-
-			$('#my-account').on('hidden.bs.tooltip', function () {
-				$('#my-account').attr('data-original-title', '<p style="margin-top: 10px;">Click here to access your Account and the Customer Dashboard.</p>');
-			});
+			/*
+   $('#my-account').tooltip('show');
+   
+   $('#my-account').on('shown.bs.tooltip', () => {
+   	setTimeout(() => {
+   		$('#my-account').tooltip('hide');
+   	}, 5000);
+   });
+   
+   $('#my-account').on('hidden.bs.tooltip', () => {
+   	$('#my-account').attr('data-original-title', '<p style="margin-top: 10px;">Click here to access your Account and the Customer Dashboard.</p>');
+   });
+   */
 		};
 
 		_this.waitForGoogleMaps = function () {

@@ -85,7 +85,18 @@ class OrderUpdatedNotification extends Notification implements ShouldQueue
 	 */
 	public function via($notifiable) : array
 	{
-		return ['mail', 'database', 'broadcast'];
+		$channels = [];
+		
+		if ($this->user->canReceiveEmails()) {
+			array_push($channels, 'mail');
+		}
+		
+		if ($this->user->canReceiveNotifications()) {
+			array_push($channels, 'database');
+			array_push($channels, 'broadcast');
+		}
+		
+		return $channels;
 	}
 
 	/**
@@ -98,12 +109,6 @@ class OrderUpdatedNotification extends Notification implements ShouldQueue
 	{
 		// We dont want to send out any new email regardless - I think the "Solution" will do this.
 		return false;
-		
-		if ($this->user->canReceiveEmails()) {
-			// See above
-		} else {
-			return false;	
-		}
 	}
 	
 	/**
@@ -114,16 +119,12 @@ class OrderUpdatedNotification extends Notification implements ShouldQueue
 	 */
 	public function toBroadcast($notifiable)
 	{
-		if ($this->user->canReceiveNotifications()) {
-			$data = [
-				'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method'),
-			];
+		$data = [
+			'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method'),
+		];
 		
-			// Note, if we dont stick this broadcast on a queue, it gets added to the default queue - unless you are listenings on default queue, this will never get processed.
-			return (new BroadcastMessage($data))->onQueue('orders.broadcasts');
-		} else {
-			return false;
-		}
+		// Note, if we dont stick this broadcast on a queue, it gets added to the default queue - unless you are listenings on default queue, this will never get processed.
+		return (new BroadcastMessage($data))->onQueue('orders.broadcasts');
 	}
 
 	/**
@@ -134,12 +135,8 @@ class OrderUpdatedNotification extends Notification implements ShouldQueue
 	 */
 	public function toDatabase($notifiable)
 	{	
-		if ($this->user->canReceiveNotifications()) {
-			return [
-				'order' => $this->order,
-			];
-		} else {
-			return false;
-		}
+		return [
+			'order' => $this->order,
+		];
 	}
 }

@@ -11550,6 +11550,12 @@ a,
   background-color: #D30E07 !important;
 }
 
+.btn-danger {
+  color: #FFFFFF !important;
+  background-color: #D30E07 !important;
+  border-color: #D30E07 !important;
+}
+
 .bg-warning {
   background-color: #F1C40F !important;
 }
@@ -11765,6 +11771,10 @@ header .banner h4 {
   margin-bottom: 1rem;
 }
 
+header .carousel .carousel-inner {
+  height: 340px;
+}
+
 header .breadcrumbs {
   margin: 0;
   padding: 0;
@@ -11855,6 +11865,17 @@ main .dataTables_filter label {
 
 main .dataTables_filter label input {
   width: 100%;
+}
+
+main .pagination .page-item .page-link {
+  text-decoration: none;
+  color: #333333;
+}
+
+main .pagination .page-item.active .page-link {
+  color: #FFFFFF;
+  background-color: #D30E07;
+  border-color: #D30E07;
 }
 
 footer {

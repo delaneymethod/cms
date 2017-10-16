@@ -92,7 +92,18 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
 	 */
 	public function via($notifiable) : array
 	{
-		return ['mail', 'database', 'broadcast'];
+		$channels = [];
+		
+		if ($this->user->canReceiveEmails()) {
+			array_push($channels, 'mail');
+		}
+		
+		if ($this->user->canReceiveNotifications()) {
+			array_push($channels, 'database');
+			array_push($channels, 'broadcast');
+		}
+		
+		return $channels;
 	}
 
 	/**
@@ -103,19 +114,13 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
 	 */
 	public function toMail($notifiable)
 	{
+		$this->orderCreatedMail = new OrderCreatedMailCustomer($this->order, $this->user, $this->siteName, $this->siteLogo);
+		
 		if ($this->user->isSuperAdmin()) {
 			$this->orderCreatedMail = new OrderCreatedMailSuperAdmin($this->order, $this->user, $this->siteName, $this->siteLogo);
+		}	
 			
-			return ($this->orderCreatedMail)->to($this->user->email)->subject($this->subject);
-		}
-			
-		if ($this->user->canReceiveEmails()) {
-			$this->orderCreatedMail = new OrderCreatedMailCustomer($this->order, $this->user, $this->siteName, $this->siteLogo);
-		
-			return ($this->orderCreatedMail)->to($this->user->email)->subject($this->subject);
-		} else {
-			return false;
-		}
+		return ($this->orderCreatedMail)->to($this->user->email)->subject($this->subject);
 	}
 	
 	/**
@@ -126,16 +131,12 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
 	 */
 	public function toBroadcast($notifiable)
 	{
-		if ($this->user->canReceiveNotifications()) {
-			$data = [
-				'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method'),
-			];
-		
-			// Note, if we dont stick this broadcast on a queue, it gets added to the default queue - unless you are listenings on default queue, this will never get processed.
-			return (new BroadcastMessage($data))->onQueue('orders.broadcasts');
-		} else {
-			return false;
-		}	
+		$data = [
+			'order' => $this->order->load('user', 'status', 'location', 'order_type', 'shipping_method'),
+		];
+	
+		// Note, if we dont stick this broadcast on a queue, it gets added to the default queue - unless you are listenings on default queue, this will never get processed.
+		return (new BroadcastMessage($data))->onQueue('orders.broadcasts');
 	}
 
 	/**
@@ -146,12 +147,8 @@ class OrderCreatedNotification extends Notification implements ShouldQueue
 	 */
 	public function toDatabase($notifiable)
 	{
-		if ($this->user->canReceiveNotifications()) {
-			return [
-				'order' => $this->order,
-			];
-		} else {
-			return false;
-		}
+		return [
+			'order' => $this->order,
+		];
 	}
 }

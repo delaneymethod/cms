@@ -179,10 +179,15 @@ class OrderController extends Controller
 					$rules['product_commodities.'.$index.'.tax_rate'] = 'required|numeric';
 				}
 				
+				$rules['po_number'] = 'required|string|max:255';
+				$rules['notes'] = 'nullable|string';
 				$rules['count'] = 'required|integer';
 				$rules['tax'] = 'required|numeric';
 				$rules['subtotal'] = 'required|numeric';
 				$rules['total'] = 'required|numeric';
+				$rules['shipping_method_id'] = 'required|integer';
+				$rules['location_id'] = 'required|integer';
+				$rules['user_id'] = 'required|integer';
 				
 				// Make sure all the input data is what we actually save
 				$validator = $this->validatorInput($cleanedOrder, $rules);

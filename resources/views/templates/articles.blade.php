@@ -29,12 +29,19 @@
 						<div class="row">
 							<div class="col-12 spacer"></div>
 						</div>
-						@foreach ($articles as $article)
-							@component('_components.article.content', [
-								'article' => $article
-							])
-							@endcomponent
-						@endforeach
+						<div class="row">
+							<div class="col-12" id="pagination">
+								@foreach ($articles as $article)
+									@component('_components.article.content', [
+										'article' => $article
+									])
+									@endcomponent
+								@endforeach
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12" id="templatePagination"></div>
+						</div>
 					@else
 						<div class="row">
 							<div class="col-12">

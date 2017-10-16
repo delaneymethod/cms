@@ -1,4 +1,4 @@
-						<div class="row">
+						<div class="row paginate">
 							@php ($columnsLeft = 12)
 							@if (!empty($article->section1Image))
 								@php ($columnsLeft = 9)
