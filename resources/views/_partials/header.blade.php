@@ -1,7 +1,3 @@
-			@php ($bannerImage = '')	
-			@if (!empty($page->bannerImage))
-				@php ($bannerImage = ' style="background-image: url(\''.$page->bannerImage.'\');"')
-			@endif
 			<header>
 				<div class="container">
 					<div class="row">
@@ -38,23 +34,40 @@
 						<div class="col-12 spacer tall"></div>
 					</div>
 				</div>
-				@if ($page->template->filename == 'homepage')
-					<div class="">
-						<div class="row">
+				@if (optional($page)->carousel)
+					<div>
+						<div class="row no-gutters">
 							<div class="col-12 spacer tall"></div>
 						</div>
-						<div class="row">
-							<div class="col-12">
+						<div class="row no-gutters">
+							<div class="col-12" id="slider">
+								@foreach ($page->carousel as $slide)
+									<div class="banner hidden" style="background-image: url({{ $slide['image'] }});">
+										<div class="row d-flex h-100 justify-content-center">
+											<div class="col-10 col-sm-10 col-md-10 col-lg-12 col-xl-12 align-self-center text-center">
+												<div class="row">
+													<div class="col-12">
+														{!! $slide['content'] !!}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								@endforeach
 							</div>
 						</div>
 					</div>
 				@else
+					@php ($bannerImage = '')	
+					@if (!empty($page->bannerImage))
+						@php ($bannerImage = ' style="background-image: url(\''.$page->bannerImage.'\');"')
+					@endif
 					@if (!empty($page->bannerContent))
-						<div class="container-fluid">
-							<div class="row">
+						<div>
+							<div class="row no-gutters">
 								<div class="col-12 spacer tall"></div>
 							</div>
-							<div class="row">
+							<div class="row no-gutters">
 								<div class="col-12 banner"{!! $bannerImage !!}>
 									<div class="row d-flex h-100 justify-content-center">
 										<div class="col-10 col-sm-10 col-md-10 col-lg-12 col-xl-12 align-self-center text-center">

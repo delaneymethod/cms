@@ -5,15 +5,15 @@
 @section('keywords', 'Edit, Page, Pages, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 	<script async>
 	'use strict';
 	
@@ -60,7 +60,7 @@
 		@if ($currentUser->hasPermission('view_pages'))
 			<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_page" id="submit_edit_page" class="btn btn-primary" title="Save Changes">Save Changes</button>
 		@if ($currentUser->hasPermission('delete_pages') && $page->id != 1)
 			<a href="/cp/pages/{{ $page->id }}/delete" title="Delete Page" class="pull-right btn btn-outline-danger">Delete Page</a>
 		@endif
@@ -184,7 +184,7 @@
 							<label class="control-label font-weight-bold">Hide from Nav</label>
 								<div class="form-check">
 									<label for="hide_from_nav" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
-										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-label="..." aria-describedby="helpBlockHideFromNav" {{ ((old('hide_from_nav') && old('hide_from_nav') == $page->hide_from_nav) || $page->isHiddenFromNav() && $page->id != 1) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>
+										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-label="&hellip;" aria-describedby="helpBlockHideFromNav" {{ ((old('hide_from_nav') && old('hide_from_nav') == $page->hide_from_nav) || $page->isHiddenFromNav() && $page->id != 1) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>
 										&nbsp;
 									</label>
 								</div>

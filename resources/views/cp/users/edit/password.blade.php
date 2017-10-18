@@ -5,15 +5,15 @@
 @section('keywords', 'Edit, Password, Users, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('formButtons')
@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_users'))
 			<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

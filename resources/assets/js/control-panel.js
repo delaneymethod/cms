@@ -82,6 +82,8 @@ require('../plugins/datatables/datatables');
 
 require('../plugins/datatables/datatables-bootstrap');
 
-require('../plugins/delaneymethod/browse/browse');
+require('../plugins/delaneymethod/browse/index');
 
-require('../plugins/delaneymethod/cms/cp/cp');
+require('../plugins/delaneymethod/cms/library');
+
+require('../plugins/delaneymethod/cms/control-panel');

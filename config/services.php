@@ -36,7 +36,13 @@ return [
     ],
     
     'google' => [
-        'key' => env('GOOGLE_API_KEY'),
-    ],
+        'api' => [
+        	'key' => env('GOOGLE_API_KEY'),
+		],
+		'recaptcha' => [
+			'key' => env('GOOGLE_RECAPTCHA_KEY'),
+			'secret' => env('GOOGLE_RECAPTCHA_SECRET'),
+		],
+	],
 
 ];

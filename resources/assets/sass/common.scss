@@ -20,7 +20,7 @@ html, body {
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 1.42857143;
-	color: #333333;
+	color: $gf-default;
 	background-color: #ffffff;
 }
 
@@ -357,4 +357,18 @@ a,
 
 .very-tall {
 	height: 50px;
+}
+
+#didYouMeanMessage {
+	display: none;
+	margin-top: 0.25rem;
+	
+	a {
+		color: $gf-blue-gray-500;
+		text-decoration: underline;
+		
+		&:hover {
+			color: $gf-red;
+		}
+	}
 }

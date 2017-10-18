@@ -15,6 +15,7 @@ use App\Models\{Page, Content};
 use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 use App\Notifications\ContactNotification;
+use App\Http\Requests\ReCaptchataFormRequest;
 use App\Http\Traits\{CartTrait, UserTrait, PageTrait, StatusTrait, ContentTrait, TemplateTrait};
 
 class PageController extends Controller
@@ -176,7 +177,7 @@ class PageController extends Controller
 	 * @params Request 	$request
 	 * @return Response
 	 */
-	public function contact(Request $request)
+	public function contact(ReCaptchataFormRequest $request)
 	{
 		// FIXME - this is messy as fuck - get it sorted!
 		$form = new \stdClass;
@@ -286,6 +287,8 @@ class PageController extends Controller
 			$validator = $this->validatorInput($cleanedPage, $rules);
 
 			if ($validator->fails()) {
+				$request->merge(['template_id' => null]);
+				
 				return back()->withErrors($validator)->withInput();
 			}
 
@@ -395,10 +398,8 @@ class PageController extends Controller
 			
 			$pageTemplate = $this->mapFieldsToFieldTypes($pageTemplate);
 			
-			if ($page->contents->count() > 0) {
-				// now get current page template field values and set defaults / values.
-				$pageTemplate = $this->mapContentsToFields($pageTemplate, $page->contents);
-			}
+			// Now get current page template field values and set defaults / values.
+			$pageTemplate = $this->mapContentsToFields($pageTemplate, $page->contents);
 			
 			return view('cp.pages.edit', compact('currentUser', 'title', 'subTitle', 'page', 'statuses', 'templates', 'pageTemplate'));
 		}
@@ -477,10 +478,20 @@ class PageController extends Controller
 				// Create our new content entries
 				foreach ($cleanedPage['templates'][$page->template_id] as $field_id => $data) {
 					if (!empty($data)) {
-						array_push($pageContents, [
-							'field_id' => $field_id,
-							'data' => $data,
-						]);
+						// Selects and Checkboxes will be arrays
+						if (is_array($data)) {
+							if (!empty($data[0])) {
+								array_push($pageContents, [
+									'field_id' => $field_id,
+									'data' => $data[0],
+								]);
+							}
+						} else {
+							array_push($pageContents, [
+								'field_id' => $field_id,
+								'data' => $data,
+							]);
+						}
 					}
 				}
 				
@@ -561,6 +572,8 @@ class PageController extends Controller
 			$validator = $this->validatorInput($cleanedPage, $rules);
 
 			if ($validator->fails()) {
+				$request->merge(['template_id' => null]);
+				
 				return back()->withErrors($validator)->withInput();
 			}
 

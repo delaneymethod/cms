@@ -12,6 +12,10 @@
 
 @import '~font-awesome/scss/font-awesome';
 
+@import '~slick-carousel/slick/slick';
+
+@import '~slick-carousel/slick/slick-theme';
+
 @import 'common';
 
 hr {
@@ -37,6 +41,10 @@ header {
 				}
 			}
 			
+			li:not(:last-child) {
+				margin-right: 0 !important;
+			}
+			
 			.active {
 				a {
 					color: $gf-red;
@@ -57,16 +65,61 @@ header {
 		background-position: center center;
 		background-size: cover;
 		height: 340px;
+		-webkit-user-select: all;
+    	-moz-user-select: all;
+		-ms-user-select: all;
+		user-select: all;
 		
 		h2 {
 			font-size: 42px;
 			line-height: 44px;
 			margin-bottom: 2rem;
+			z-index: 1;
 		}
 		
 		h4 {
 			margin-bottom: 1rem;
+			z-index: 1;
 		}
+	}
+	
+	.slick-dotted.slick-slider {
+    	margin: 0;
+	}
+	
+	.slick-slide {
+		padding: 0;
+		margin: 0;
+		transition: all ease-in-out .3s;
+		opacity: .2;
+	}
+	
+	.slick-prev {
+		left: 40px;
+		z-index: 1;
+	}
+	
+	.slick-next {
+		right: 50px;
+	}
+	
+	.slick-dots {
+		bottom: 20px;
+		color: white;
+	}
+	
+	.slick-prev:before,
+	.slick-next:before {
+		color: white;
+		font-size: 30px !important;
+	}
+	
+	.slick-active {
+		opacity: 1;
+	}
+	
+	.slick-current {
+		opacity: 1;
 	}
 	
 	.breadcrumbs {

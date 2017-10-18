@@ -128,7 +128,7 @@
 										<td class="align-middle text-center price-per text-muted">-</td>
 									@endauth
 									<td class="align-middle text-center quantity-available">{{ $productCommodity->quantity_available }}</td>
-									<td class="align-middle text-center" style="width: 90px;"><input type="number" name="{{ $productCommodity->id }}_quantity" id="{{ $productCommodity->id }}_quantity" class="form-control text-center" value="1" placeholder="e.g 1" autocomplete="off" step="1" min="1" max="99999" onkeyup="return window.CMS.validateProductCommodityQuantity(event);" data-id="{{ $productCommodity->id }}" required></td>
+									<td class="align-middle text-center" style="width: 90px;"><input type="number" name="{{ $productCommodity->id }}_quantity" id="{{ $productCommodity->id }}_quantity" class="form-control text-center" value="1" placeholder="e.g 1" autocomplete="off" step="1" min="1" max="99999" onkeyup="return window.CMS.Templates.validateProductCommodityQuantity(event);" data-id="{{ $productCommodity->id }}" required></td>
 									<td class="align-middle text-center">
 										@if ($authenticated)
 											@if ($currentUserCanCreateOrders)
@@ -151,7 +151,7 @@
 												</div>	
 											@endif
 										@else
-											<div><a href="javascript:void(0);" title="Add To Cart" class="btn btn-outline-secondary disabled">Add To Cart</a></div>
+											<div><a href="javascript:void(0);" title="Add To Cart" rel="nofollow" class="btn btn-outline-secondary disabled">Add To Cart</a></div>
 											<div style="margin-top: 10px;font-size: 12px;"><a href="/login{{ $redirectTo }}&code={{ $productCommodity->code }}" class="text-gf-blue-gray">Please Login</a>&nbsp;<i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Add to Cart is only available to registered customers." aria-hidden="true"></i></div>
 										@endauth
 									</td>
@@ -170,7 +170,7 @@
 					
 					const productCommodityCodes = @json($product->product_commodities->pluck('code'));
 					
-					productCommodityIds.map((productCommodityId, index) => window.CMS.loadProductCommodity('.' + productCommodityId, productCommodityCodes[index]));
+					productCommodityIds.map((productCommodityId, index) => window.CMS.Templates.loadProductCommodity('.' + productCommodityId, productCommodityCodes[index]));
 				}
 				
 				if (window.attachEvent) {

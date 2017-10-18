@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\{ContentTrait, ProductTrait, ProductCategoryTrait, ProductCommodityTrait};
+use App\Http\Traits\{ContentTrait, ProductTrait, CarouselTrait, ProductCategoryTrait, ProductCommodityTrait};
 
 class ProductsTemplate extends Template
 {
-	use ContentTrait, ProductTrait, ProductCategoryTrait, ProductCommodityTrait;
+	use ContentTrait, ProductTrait, CarouselTrait, ProductCategoryTrait, ProductCommodityTrait;
 	
 	protected $view = 'products';
 	
@@ -42,6 +42,44 @@ class ProductsTemplate extends Template
 		$totalProductCommodities = $this->getProductCommodityCount();
 		
 		$totalProducts = number_format($totalProducts + $totalProductCommodities, 0, '.', ',');
+		
+		// Check if page has slider
+		if (!empty($page->carousel)) {
+			$carousel = $this->getCarousel($page->carousel);
+			
+			if (!empty($carousel->data)) {
+				$carousel = json_decode($carousel->data, true);
+			
+				$images = [];
+			
+				$contents = [];
+			
+				foreach ($carousel as $key => $value) {
+					if (preg_match('/image/i', $key)) {
+						$images[] = $value;
+					}
+					
+					if (preg_match('/content/i', $key)) {
+						$contents[] = $value;
+					}
+				}
+				
+				$carousel = [];
+				
+				foreach ($images as $key => $value) {
+					array_push($carousel, [
+						'image' => $images[$key],
+						'content' => $contents[$key],
+					]);
+				}
+	
+				$page->carousel = collect($carousel);
+			} else {
+				$page->carousel = null;
+			}
+		} else {
+			$page->carousel = null;
+		}
 		
 		$page->breadcrumbs = collect([]);
 		

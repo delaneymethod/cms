@@ -451,7 +451,7 @@
 									</div>
 									<div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-center text-sm-right text-md-right text-lg-right text-xl-right">
 										@if (!optional($currentUser)->isLocationSuspended())
-											<button type="submit" name="submit" id="submit" title="Place Order" class="btn btn-danger">Place Order</button>
+											<button type="submit" name="submit_create_order" id="submit_create_order" title="Place Order" class="btn btn-danger">Place Order</button>
 										@else
 											<a href="/cart/save" title="Save Cart for Later" class="btn btn-outline-secondary">Save Cart for Later</a>
 										@endif

@@ -20,7 +20,7 @@
 					<div class="spacer"></div>
 					<h4>Contact Us</h4>
 					<h5 class="text-danger">Customer Care</h5>
-					<p>For all sales orders, quotes or general enquiries: <a href="tel:+441224772777" title="Call us" class="telephone-number d-block d-sm-block d-md-inline-block d-lg-inline-block d-xl-inline-block">+44 (0) 1224 772 777</a></p>
+					<p>For all sales orders, quotes or general enquiries: <a href="tel:+441224772777" title="Call us" class="telephone-number d-block d-sm-block d-md-inline-block d-lg-inline-block d-xl-inline-block">&#43;44 (0) 1224 772 777</a></p>
 					<p><a href="mailto:connect@grampianfasteners.com" title="Email us" class="email-address">connect@grampianfasteners.com</a></p>
 				</div>
 				<div class="col-12 col-sm-6 col-md-6 col-lg-3 col-xl-3 order-1 order-sm-1 order-md-1 order-lg-2 order-xl-2 text-center text-sm-center text-md-left text-lg-left text-xl-left">
@@ -84,11 +84,12 @@
 											@if ($errors->has('email'))
 												<span id="helpBlockEmail" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 											@endif
+											<span id="didYouMeanMessage" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
 										</div>
 										<div class="spacer"></div>
 										<div class="form-group">
 											<label for="telephone" class="control-label">Telephone <span class="text-danger">&#42;</span></label>
-											<input type="tel" name="telephone" id="telephone" class="form-control" placeholder="e.g 01224 ..." value="{{ old('telephone') }}" title="Telephone" tabindex="4" autocomplete="off" aria-describedby="helpBlockTelephone" required>
+											<input type="tel" name="telephone" id="telephone" class="form-control" placeholder="e.g 01224 &hellip;" value="{{ old('telephone') }}" title="Telephone" tabindex="4" autocomplete="off" aria-describedby="helpBlockTelephone" required>
 											@if ($errors->has('telephone'))
 												<span id="helpBlockTelephone" class="form-control-feedback form-text gf-red">- {{ $errors->first('telephone') }}</span>
 											@endif
@@ -110,8 +111,12 @@
 											@endif
 										</div>
 										<div class="spacer"></div>
+										<div class="form-group">
+											<div class="g-recaptcha" data-sitekey="{{ config('services.google.recaptcha.key') }}"></div>
+										</div>
+										<div class="spacer"></div>
 										<div class="form-group text-center text-sm-center text-md-left text-lg-left text-xl-left">
-											<button type="submit" name="submit" id="submit" class="btn btn-danger" title="Send Enquiry" tabindex="7">Send Enquiry</button>
+											<button type="submit" name="submit_contact" id="submit_contact" class="btn btn-danger" title="Send Enquiry" tabindex="7">Send Enquiry</button>
 										</div>
 									</form>
 								</div>
@@ -129,25 +134,25 @@
 								</div>
 								<div class="col-12 col-sm-6 col-md-6 col-lg-12 col-xl-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 									<h5 class="text-danger">International &amp; Projects</h5>
-									<p>For all international orders or quotes: <a href="tel:+441224727467" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">+44 (0) 1224 727 467</a></p>
+									<p>For all international orders or quotes: <a href="tel:+441224727467" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">&#43;44 (0) 1224 727 467</a></p>
 									<p><a href="mailto:paul.cunningham@grampianfasteners.com" title="Email us" class="email-address">paul.cunningham<br>@grampianfasteners.com</a></p>
 									<div class="spacer"></div>
 								</div>
 								<div class="col-12 col-sm-6 col-md-6 col-lg-12 col-xl-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 									<h5 class="text-danger">Purchasing</h5>
-									<p>For all supplier enquiries: <a href="tel:+441224727465" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">+44 (0) 1224 727 465</a></p>
+									<p>For all supplier enquiries: <a href="tel:+441224727465" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">&#43;44 (0) 1224 727 465</a></p>
 									<p><a href="mailto:purchasing@grampianfasteners.com" title="Email us" class="email-address">purchasing@grampianfasteners.com</a></p>
 									<div class="spacer"></div>
 								</div>
 								<div class="col-12 col-sm-6 col-md-6 col-lg-12 col-xl-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 									<h5 class="text-danger">Accounts</h5>
-									<p>For all accounts enquiries: <a href="tel:+441224727478" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">+44 (0) 1224 727 478</a></p>
+									<p>For all accounts enquiries: <a href="tel:+441224727478" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">&#43;44 (0) 1224 727 478</a></p>
 									<p><a href="mailto:accounts@grampianfasteners.com" title="Email us" class="email-address">accounts@grampianfasteners.com</a></p>
 									<div class="spacer"></div>
 								</div>
 								<div class="col-12 col-sm-6 col-md-6 col-lg-12 col-xl-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 									<h5 class="text-danger">Trade Shop</h5>
-									<p>To browse our product range: <a href="tel:+441224727464" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">+44 (0) 1224 727 464</a></p>
+									<p>To browse our product range: <a href="tel:+441224727464" title="Call us" class="telephone-number d-block d-sm-block d-md-block d-lg-inline-block d-xl-inline-block">&#43;44 (0) 1224 727 464</a></p>
 									<p><a href="mailto:tradeshop@grampianfasteners.com" title="Email us" class="email-address">tradeshop@grampianfasteners.com</a></p>
 								</div>
 							</div>

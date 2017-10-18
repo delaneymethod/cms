@@ -381,6 +381,30 @@ class PermissionsTableSeeder extends Seeder
 				'created_at' => $now,
 				'updated_at' => $now,
 			],
+			[
+				'title' => 'view_carousels',
+				'permission_group_id' => 16,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'create_carousels',
+				'permission_group_id' => 16,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'edit_carousels',
+				'permission_group_id' => 16,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
+				'title' => 'delete_carousels',
+				'permission_group_id' => 16,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
 		];
 				
 		DB::table('permissions')->delete();

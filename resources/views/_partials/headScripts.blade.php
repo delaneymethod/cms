@@ -3,6 +3,7 @@
 	<script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 	@if ($page->slug == 'contact')
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.key') }}&callback="></script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google.api.key') }}&callback="></script>
+		<script async defer src="https://www.google.com/recaptcha/api.js"></script>
 	@endif
 	

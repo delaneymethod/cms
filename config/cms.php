@@ -78,6 +78,11 @@ return [
 			'handle' => 'required|string|max:255',
 			'data' => 'nullable|string',
 		],
+		'carousel' => [
+			'title' => 'required|string|max:255',
+			'handle' => 'required|string|max:255',
+			'data' => 'nullable|string',
+		],
 		'company' => [
 			'title' => 'required|string|max:255',
 			'default_location_id' => 'required|integer',

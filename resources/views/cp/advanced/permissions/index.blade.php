@@ -5,15 +5,15 @@
 @section('keywords', 'Permissions, Advanced, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('content')
@@ -72,7 +72,7 @@
 								@endforeach
 							</tbody>
 						</table>
-						<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+						<button type="submit" name="submit_create_permissions" id="submit_create_permissions" class="btn btn-primary" title="Save Changes">Save Changes</button>
 					</form>
 				</div>
 				@include('cp._partials.footer')

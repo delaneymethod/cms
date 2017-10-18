@@ -10,6 +10,20 @@ $fa-font-path: '/assets/fonts';
 
 $flagsImagePath: '/assets/img/';
 
+$slick-font-path: '/assets/fonts/';
+
+$slick-loader-path: '/assets/img/';
+
+$slick-font-family: 'fontawesome';
+
+$slick-dot-size: 18px;
+
+$slick-prev-character: "\f0a8";
+
+$slick-next-character: "\f0a9";
+
+$slick-dot-character: "\f111";
+
 $input-border-focus: rgba(0, 0, 0, 0.075);
 
 $sidebar-bg-color: #222d32;
@@ -43,3 +57,7 @@ $gf-blue-gray-500: #607D8B; //#90A4AE;
 $gf-default: $sidebar-bg-color;
 
 $main-message-bg-color: $gf-red;
+
+$slick-dot-color: #FFFFFF;
+
+$slick-dot-color-active: #FFFFFF;

@@ -5,15 +5,15 @@
 @section('keywords', 'Edit, Article, Category, Categories, Articles, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('formButtons')
@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_article_categories'))
 			<a href="/cp/articles/categories" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="5" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="4" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_article_category" id="submit_edit_article_category" class="btn btn-primary" tabindex="4" title="Save Changes">Save Changes</button>
 		@if ($currentUser->hasPermission('delete_article_categories') && $articleCategory->id != 1)
 			<a href="/cp/articles/categories/{{ $articleCategory->id }}/delete" title="Delete Article Category" class="pull-right btn btn-outline-danger">Delete Article Category</a>
 		@endif

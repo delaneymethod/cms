@@ -5,15 +5,15 @@
 @section('keywords', 'Pages, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('content')
@@ -57,7 +57,7 @@
 									<td class="align-middle status text-center"><i class="fa fa-circle fa-1 status_id-{{ $page->status->id }}" title="{{ $page->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('edit_pages') || ($currentUser->hasPermission('delete_pages') && $page->id != 1))
 										<td class="align-middle actions dropdown text-center" id="submenu">
-											<a href="javascript:void(0);" title="Page Actions" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+											<a href="javascript:void(0);" title="Page Actions" rel="nofollow" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="actions dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_pages'))
 													<li class="dropdown-item gf-info"><a href="/cp/pages/{{ $page->id }}/edit/{{ $page->template_id }}" title="Edit Page"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Page</a></li>

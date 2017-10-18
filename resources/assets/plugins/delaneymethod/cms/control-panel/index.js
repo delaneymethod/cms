@@ -15,7 +15,7 @@
 			return this;
 		}
 		
-		this.name = 'DelaneyMethod CMS - Control Panel';
+		this.name = 'DelaneyMethod CMS - Control Panel -';
 		
 		this.version = '1.0.0';
 		
@@ -191,31 +191,6 @@
 			$('.content #submenu').on('hide.bs.dropdown', () => {
 				$('.content #pageActions i').removeClass('fa-rotate', 'fast');
 			});
-			
-			if ($('#message').length) {
-				setTimeout(() => {
-					$('.message.success').fadeOut('fast');
-				}, 4000);
-			}
-			
-			$('.message #hideMessage').on('click', () => {
-		 		$('.message').fadeOut('fast');
-			});
-			
-			$('[data-toggle="tooltip"]').tooltip();
-			
-			lazyload();
-		};
-		
-		this.loadListeners = () => {
-			window.Pusher.logToConsole = false;
-			
-			window.Echo = new Echo({
-				broadcaster: 'pusher',
-				key: '7659ca498a8f30edbbc3',
-				cluster: 'eu',
-				encrypted: false
-			});
 		};
 		
 		this.attachDatePicker = element => {
@@ -232,15 +207,34 @@
 			}
 		};
 		
+		this.detachRedactor = element => {
+			$(element).unbind().removeData();
+		};
+		
 		this.attachRedactor = element => {
 			if ($(element).length) {
+				$.Redactor.prototype.redbutton = function() {
+					return {
+						init: function() {
+							const button = this.button.add('red-button', 'Red Button');
+							
+							this.button.addCallback(button, this.redbutton.toggleClasses);
+						},
+						toggleClasses: function() {
+							this.inline.toggleClass('btn');
+							
+							this.inline.toggleClass('btn-danger');
+						}
+					};
+				};
+    
 				const token = window.Laravel.csrfToken;
 				
 				let minHeight = 400;
 				
 				let buttons = ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link', 'horizontalrule'];
 				
-				let plugins = ['codemirror', 'inlinestyle', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video', 'fontcolor', 'properties', 'textexpander'];
+				let plugins = ['codemirror', 'inlinestyle', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video', 'fontcolor', 'properties', 'textexpander', 'redbutton'];
 					
 				if (element == '#excerpt') {
 					minHeight = 100;
@@ -292,32 +286,6 @@
 			}
 		};
 		
-		this.attachDataTable = element => {
-			if ($(element).length) {
-				$(element).dataTable({
-					'order': [],
-					'deferRender': true,
-					'oLanguage': {
-						'sLengthMenu': '_MENU_',
-						'sSearch': '',
-						'sSearchPlaceholder': 'Search...'
-					},
-					'columnDefs': [{
-						'targets': 'no-sort',
-						'orderable': false,
-					}],
-					'language': {
-						'zeroRecords': 'Nothing found - sorry',
-						'info': 'Showing page _PAGE_ of _PAGES_',
-						'infoEmpty': 'No records available',
-						'infoFiltered': '(filtered from _MAX_ total records)',
-					},
-					'retrieve': true,
-					'deferRender': true
-				});
-			}
-		};
-		
 		this.attachNestedSortable = element => {
 			if ($(element).length) {
 				$(element).nestedSortable({
@@ -331,26 +299,6 @@
 					'isTree': true
 				});
 			}
-		};
-		
-		this.attachClipboard = () => {
-			let clipboard = new Clipboard('[data-clipboard]');	
-			
-			clipboard.on('success', event => {
-				event.clearSelection();
-				
-				$('#clipboard-tooltip').tooltip('show');
-				
-				$('#clipboard-tooltip').on('hidden.bs.tooltip', () => {
-					$('#clipboard-tooltip').tooltip('dispose');
-				});
-			});
-			
-			clipboard.on('error', event => {
-				console.error('Action:', event.action);
-				
-				console.error('Trigger:', event.trigger);
-			});
 		};
 		
 		this.convertTitleToSlug = (element, targetElement, separator = '-') => {
@@ -434,7 +382,7 @@
 					$(form).find('input[name="_method"]').remove();
 					
 					/* Submit form */
-					$('#submit').trigger('click');
+					$('[type=submit]').trigger('click');
 				});
 			}
 		};
@@ -491,7 +439,7 @@
 			
 			const date = new Date();
 			
-			const createdAt = date.getDate() + this.getNthSuffix(date) + ' ' + this.getMonthName(date.getMonth()).substring(0, 3) + ' ' + date.getFullYear(); + ' ' + date.getHours() + ':' + date.getMinutes();
+			const createdAt = date.getDate() + window.CMS.Library.getNthSuffix(date) + ' ' + window.CMS.Library.getMonthName(date.getMonth()).substring(0, 3) + ' ' + date.getFullYear(); + ' ' + date.getHours() + ':' + date.getMinutes();
 			
 			const element = $('#all-notifications');
 	
@@ -530,33 +478,11 @@
 			}).fadeIn();
 						
 			/* Reloads the table data again */
-			this.attachDataTable('#datatable');
+			window.CMS.Library.attachDataTable('#datatable');
 		};
 		
-		this.getMonthName = month => {
-			let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		
-			return months[month];
-		};
-		
-		this.getNthSuffix = date => {
-			switch (date) {
-				case 1:
-				case 21:
-				case 31:
-					return 'st';
-				
-				case 2:
-				case 22:
-					return 'nd';
-				
-				case 3:
-				case 23:
-					return 'rd';
-				
-				default:
-					return 'th';
-			}
+		this.detachAssetBrowser = element => {
+			$(element).unbind().removeData();
 		};
 		
 		this.attachAssetBrowser = (element, id, value) => {
@@ -593,27 +519,10 @@
 		};
 		
 		this.init = () => {
-			console.info(this.name + ' v' + this.version + ' is up and running!');
+			console.info(this.name + ' v' + this.version + ' is ready!');
 			
 			this.settings = $.extend({}, this.defaults, options);
 			
-			let token = document.head.querySelector('meta[name="csrf-token"]');
-
-			if (token) {
-			    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-			} else {
-			    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-			}
-			
-			/* IE10 viewport hack for Surface/desktop Windows 8 bug */
-			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-				let msViewportStyle = document.createElement('style');
-				
-				msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
-				
-				document.head.appendChild(msViewportStyle);
-			}
-
 			this.logout();
 			
 			this.loadOrderStats();
@@ -622,17 +531,19 @@
 			
 			this.loadAnimations();
 			
-			this.loadListeners();
-			
 			this.attachDatePicker('.input-group.date');
 			
 			this.attachRedactor('.redactor');
 			
-			this.attachDataTable('#datatable');
-			
 			this.attachNestedSortable('#nestedSortable');
 			
-			this.attachClipboard();
+			this.convertTitleToSlug('#createCarousel #title', '#createCarousel #handle', '_');
+			
+			this.convertTitleToSlug('#createCarousel #handle', '#createCarousel #handle', '_');
+			
+			this.convertTitleToSlug('#editCarousel #title', '#editCarousel #handle', '_');
+			
+			this.convertTitleToSlug('#editCarousel #handle', '#editCarousel #handle', '_');
 			
 			this.convertTitleToSlug('#createGlobal #title', '#createGlobal #handle', '_');
 			

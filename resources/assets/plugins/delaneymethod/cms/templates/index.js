@@ -5,56 +5,23 @@
  */
  
  ;($ => {
-	$.delaneyMethodCMS = options => {
+	$.delaneyMethodCMSTemplates = options => {
 		/* Support multiple elements */
 		if (this.length > 1){
 			this.each(() => { 
-				$(this).delaneyMethodCMS(options);
+				$(this).delaneyMethodCMSTemplates(options);
 			});
 			
 			return this;
 		}
 
-		this.name = 'DelaneyMethod CMS';
+		this.name = 'DelaneyMethod CMS - Templates -';
 		
 		this.version = '1.0.0';
 		
 		this.settings = {};
 
 		this.defaults = {};
-		
-		this.loadAnimations = () => {
-			if ($('#message').length) {
-				setTimeout(() => {
-					$('.message.success').fadeOut('fast');
-				}, 4000);
-			}
-		
-			$('.message #hideMessage').on('click', () => {
-		 		$('.message').fadeOut('fast');
-			});
-		
-			$('[data-toggle="tooltip"]').tooltip();
-			
-			lazyload();
-		};
-		
-		this.validateProductCommodityQuantity = event => {
-			/* Make sure only positive numbers are entered into quantity fields */
-			if (!((event.keyCode > 95 && event.keyCode < 106) || (event.keyCode > 47 && event.keyCode < 58) || event.keyCode == 8)) {
-				event.target.value = 1;
-			}
-
-			if (event.target.value == '' || event.target.value == 0 || event.target.value < 0) {
-				event.target.value = 1;
-			}
-			
-			const productCommodityId = $(event.target).data('id');
-			
-			$('#addProductCommodity' + productCommodityId).find('input[name="quantity"]').val(event.target.value);
-			
-			return true;
-		};
 		
 		this.highlight = id => {
 			const hash = window.location.hash.substring(1);
@@ -68,7 +35,20 @@
 			}
 		};
 		
-		this.loadPagination = () => {
+		this.loadCarousel = element => {
+			if ($(element).length) {
+				$(element).slick({
+					'dots': true,
+					'autoplay': true,
+					'autoplaySpeed': 10000,
+					'fade': true,
+					'speed': 1000,
+					'centerMode': true,
+				});
+			}
+		};
+		
+		this.loadPagination = element => {
 			const limit = 15;
 			
 			const length = $('#pagination .paginate').length;
@@ -78,20 +58,20 @@
 			
 				const totalPages = Math.round(length / limit);
 			
-				$('#templatePagination').show().append('<nav aria-label="Page pagination"><ul class="pagination justify-content-center"></ul></nav>');
+				$(element).show().append('<nav aria-label="Page pagination"><ul class="pagination justify-content-center"></ul></nav>');
 				
 				for (let i = 1; i <= totalPages; i++) {
-					$('#templatePagination .pagination').append('<li class="page-item"><a href="javascript:void(0);" title="Page ' + i + '" class="page-link">' + i + '</a></li>');
+					$(element + ' .pagination').append('<li class="page-item"><a href="javascript:void(0);" title="Page ' + i + '" class="page-link">' + i + '</a></li>');
 				}
 				
-				$('#templatePagination .pagination li:first').addClass('active');
+				$(element + ' .pagination li:first').addClass('active');
 				
-				$('#templatePagination .pagination li a').click(function () {
+				$(element + ' .pagination li a').click(function () {
 					const index = $(this).parent().index() + 1;
 					
 					const gt = limit * index;
 					
-					$('#templatePagination .pagination li').removeClass('active');
+					$(element + ' .pagination li').removeClass('active');
 					
 					$(this).parent().addClass('active');
 					
@@ -102,7 +82,7 @@
 					}
 				});
 			} else {
-				$('#templatePagination').hide();
+				$(element).hide();
 			}
 		};
 		
@@ -173,71 +153,21 @@
 			});
 		};
 		
-		this.attachDataTable = element => {
-			if ($(element).length) {
-				/* If we're on the product page, hide pagination and x of y records information, change the layout too! */
-				if ($(element).hasClass('product-commodities')) {
-					$.extend(true, $.fn.dataTable.defaults, {
-						'bPaginate': false,
-						'bInfo': false,
-						'dom': '<"row"<"col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"f>">',
-						'order': [],
-						'oLanguage': {
-							'sLengthMenu': '_MENU_',
-							'sSearch': '',
-							'sSearchPlaceholder': 'Filter by Option or Product Code e.g M3.5, DIN 931 or 25mm',
-						},
-						'deferRender': true,
-						'columnDefs': [{
-							'targets': 'no-sort',
-							'orderable': false,
-						}],
-						'language': {
-							'zeroRecords': 'Nothing found - sorry',
-							'info': 'Showing page _PAGE_ of _PAGES_',
-							'infoEmpty': 'No records available',
-							'infoFiltered': '(filtered from _MAX_ total records)',
-						},
-						'retrieve': true,
-						'deferRender': true,
-					});
-				} else {
-					$.extend(true, $.fn.dataTable.defaults, {
-						'order': [],
-						'oLanguage': {
-							'sLengthMenu': '_MENU_',
-							'sSearch': '',
-							'sSearchPlaceholder': 'Search...',
-						},
-						'deferRender': true,
-						'columnDefs': [{
-							'targets': 'no-sort',
-							'orderable': false,
-						}],
-						'language': {
-							'zeroRecords': 'Nothing found - sorry',
-							'info': 'Showing page _PAGE_ of _PAGES_',
-							'infoEmpty': 'No records available',
-							'infoFiltered': '(filtered from _MAX_ total records)',
-						},
-						'retrieve': true,
-						'deferRender': true,
-					});
-				}
-				
-				$(element).dataTable();
+		this.validateProductCommodityQuantity = event => {
+			/* Make sure only positive numbers are entered into quantity fields */
+			if (!((event.keyCode > 95 && event.keyCode < 106) || (event.keyCode > 47 && event.keyCode < 58) || event.keyCode == 8)) {
+				event.target.value = 1;
 			}
-		};
-		
-		this.loadListeners = () => {
-			window.Pusher.logToConsole = false;
+
+			if (event.target.value == '' || event.target.value == 0 || event.target.value < 0) {
+				event.target.value = 1;
+			}
 			
-			window.Echo = new Echo({
-				broadcaster: 'pusher',
-				key: '7659ca498a8f30edbbc3',
-				cluster: 'eu',
-				encrypted: false
-			});
+			const productCommodityId = $(event.target).data('id');
+			
+			$('#addProductCommodity' + productCommodityId).find('input[name="quantity"]').val(event.target.value);
+			
+			return true;
 		};
 		
 		this.showWelcomeBackMessage = user => {
@@ -279,26 +209,9 @@
 		};
 		
 		this.init = () => {
-			console.info(this.name + ' v' + this.version + ' is up and running!');
+			console.info(this.name + ' v' + this.version + ' is ready!');
 			
 			this.settings = $.extend({}, this.defaults, options);
-			
-			let token = document.head.querySelector('meta[name="csrf-token"]');
-
-			if (token) {
-			    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-			} else {
-			    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-			}
-			
-			/* IE10 viewport hack for Surface/desktop Windows 8 bug */
-			if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-				let msViewportStyle = document.createElement('style');
-				
-				msViewportStyle.appendChild(document.createTextNode('@-ms-viewport{width:auto!important}'));
-				
-				document.head.appendChild(msViewportStyle);
-			}
 			
 			if (window.location.hash) {
 				this.highlight();
@@ -308,13 +221,9 @@
 				this.highlight();
 			}, false);
 			
-			this.loadAnimations();
+			this.loadPagination('#templatePagination');
 			
-			this.loadListeners();
-			
-			this.loadPagination();
-			
-			this.attachDataTable('#datatable');
+			this.loadCarousel('#slider');
 			
 			this.waitForGoogleMaps();
 			
@@ -325,4 +234,4 @@
 	};
 })(jQuery);
 
-window.CMS = $.delaneyMethodCMS();
+window.CMS.Templates = $.delaneyMethodCMSTemplates();

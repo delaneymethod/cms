@@ -5,15 +5,15 @@
 @section('keywords', 'Assets, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('content')
@@ -26,7 +26,7 @@
                 	@foreach ($messages as $message)
                     	<div class="row">
 							<div class="col-12">
-								<p id="system-message" class="message {{ $message->type }}">{!! $message->text !!}<a href="javascript:void(0);" title="Hide this message" class="pull-right" id="hideMessage"><i class="fa fa-times" aria-hidden="true"></i></a></p>
+								<p id="system-message" class="message {{ $message->type }}">{!! $message->text !!}<a href="javascript:void(0);" title="Hide this message" rel="nofollow" class="pull-right" id="hideMessage"><i class="fa fa-times" aria-hidden="true"></i></a></p>
 							</div>
 						</div>
                     	<script>
@@ -83,11 +83,11 @@
 								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 asset text-center">
 									@if (!empty($meta->mime_type))
 										@if (starts_with($meta->mime_type, 'image'))	
-											<a href="javascript:void(0);" title="{{ $filename }}" class="image asset-opener" style="background-image: url('{{ $meta->url_path }}');" data-toggle="modal" data-target=".asset-{{ $meta->id }}-modal-lg">
+											<a href="javascript:void(0);" title="{{ $filename }}" rel="nofollow" class="image asset-opener" style="background-image: url('{{ $meta->url_path }}');" data-toggle="modal" data-target=".asset-{{ $meta->id }}-modal-lg">
 												<span>{{ $filename }}</span>
 											</a>
 										@else
-											<a href="javascript:void(0);" title="{{ $filename }}" class="asset-opener" data-toggle="modal" data-target=".asset-{{ $meta->id }}-modal-lg">
+											<a href="javascript:void(0);" title="{{ $filename }}" rel="nofollow" class="asset-opener" data-toggle="modal" data-target=".asset-{{ $meta->id }}-modal-lg">
 												<i class="fa {{ $meta->icon_class }} fa-5x" aria-hidden="true"></i>
 												<span>{{ $filename }}</span>
 											</a>
@@ -124,7 +124,7 @@
 																		<label for="file_url">File URL:</label>
 																		<div class="input-group">
 																			<input type="text" class="form-control bg-transparent" value="{{ $meta->url_path }}" id="file_url" readonly>
-																			<span class="input-group-addon"><a href="javascript:void(0);" title="Copy File URL to clipboard" data-clipboard data-clipboard-target="#file_url"><i class="fa fa-clipboard" id="clipboard-tooltip" title="Copied!" aria-hidden="true"></i></a></span>
+																			<span class="input-group-addon"><a href="javascript:void(0);" title="Copy File URL to clipboard" rel="nofollow" data-clipboard data-clipboard-target="#file_url"><i class="fa fa-clipboard" id="clipboard-tooltip" title="Copied!" aria-hidden="true"></i></a></span>
 																		</div>
 																	</div>
 																	<div class="form-group">

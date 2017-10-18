@@ -49,14 +49,14 @@
 						<div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-right text-lg-right text-xl-right">
 							<ul class="list-unstyled list-inline social-media">
 								@if (!empty($linkedin))
-									<li class="list-inline-item"><a href="{{ $linkedin }}" title="LinkedIn"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+									<li class="list-inline-item"><a href="{{ $linkedin }}" title="LinkedIn" rel="nofollow"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
 								@endif
-								<li class="list-inline-item"><a href="/contact" title="Contact"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+								<li class="list-inline-item"><a href="/contact" title="Contact" rel="nofollow"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
 								@if (!empty($twitter))
-									<li class="list-inline-item"><a href="{{ $twitter }}" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+									<li class="list-inline-item"><a href="{{ $twitter }}" title="Twitter" rel="nofollow"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
 								@endif
 								@if (!empty($facebook))
-									<li class="list-inline-item"><a href="{{ $facebook }}" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+									<li class="list-inline-item"><a href="{{ $facebook }}" title="Facebook" rel="nofollow"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
 								@endif
 							</ul>
 						</div>

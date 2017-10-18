@@ -18,6 +18,16 @@ class FieldsTableSeeder extends Seeder
 			
 			// Homepage template fields
 			[	
+				'title' => 'Carousel',
+				'handle' => 'carousel',
+				'instructions' => 'Selecting a Carousel will override the Banner below, unless the Carousel is empty.',
+				'options' => NULL,
+				'field_type_id' => 6,
+				'required' => 0,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[	
 				'title' => 'Banner Background Image',
 				'handle' => 'bannerImage',
 				'instructions' => NULL,

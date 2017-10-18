@@ -3,7 +3,7 @@
 	'use strict';
 	
 	function loadListeners() {
-		window.Echo.private('users.' + window.User.id).listen('.user.login', event => window.CMS.showWelcomeBackMessage(event.user));
+		window.Echo.private('users.' + window.User.id).listen('.user.login', event => window.CMS.Templates.showWelcomeBackMessage(event.user));
 	}
 		
 	if (window.attachEvent) {

@@ -4,10 +4,10 @@
 							@if (!$page->isHiddenFromNav() && $page->isPublished())
 								@if ($page->slug == 'cart')
 									<li class="list-inline-item {{ setActive('cart') }}"><a href="{{ $page->url }}" title="{{ $page->title }}">{{ $page->title }}{{ (optional($cart)->count > 0) ? '&nbsp;('.$cart->product_commodities->count().')' : '' }}</a></li>
-									<li class="list-inline-item">|</li>
+									<li class="list-inline-item">&#9474;</li>
 								@else
 									<li class="list-inline-item {{ setActive($page->slug) }}"><a href="{{ $page->url }}" title="{{ $page->title }}">{{ $page->title }}</a></li>
-									<li class="list-inline-item">|</li>
+									<li class="list-inline-item">&#9474;</li>
 								@endif
 							@endif
 						@endforeach

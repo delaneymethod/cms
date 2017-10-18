@@ -23,17 +23,19 @@ mix.options({
 	processCssUrls: false
 });
 
-mix.sass('resources/assets/sass/global.scss', 'html/assets/css/global.css');
+mix.sass('resources/assets/sass/templates.scss', 'html/assets/css/templates.css');
 
-mix.sass('resources/assets/sass/cp.scss', 'html/assets/css/cp.css');
+mix.sass('resources/assets/sass/control-panel.scss', 'html/assets/css/control-panel.css');
 
-mix.js('resources/assets/js/global.js', 'html/assets/js/global.js');
+mix.js('resources/assets/js/templates.js', 'html/assets/js/templates.js');
 
-mix.js('resources/assets/js/cp.js', 'html/assets/js/cp.js');
+mix.js('resources/assets/js/control-panel.js', 'html/assets/js/control-panel.js');
 
 mix.copy('resources/assets/fonts', 'html/assets/fonts');
 
 mix.copy('node_modules/font-awesome/fonts', 'html/assets/fonts');
+
+mix.copy('node_modules/slick-carousel/slick/fonts', 'html/assets/fonts');
 
 mix.copy('resources/assets/img', 'html/assets/img');
 

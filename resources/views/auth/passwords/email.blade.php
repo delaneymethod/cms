@@ -4,7 +4,7 @@
 @section('description', 'Reset Password - '.$siteName)
 @section('keywords', 'Reset, Password, '.$siteName)
 
-@php ($page->content = '<p>Please type in the email address you use to login with. We'll email you a link to create a new password.</p>')
+@php ($page->content = '<p>Please type in the email address you use to login with. We&#39;ll email you a link to create a new password.</p>')
 
 @push('styles')
 	@include('_partials.styles')
@@ -62,10 +62,11 @@
 							@if ($errors->has('email'))
 								<span id="helpBlockFirstName" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 							@endif
+							<span id="didYouMeanMessage" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
 						</div>
 						<div class="spacer"></div>
 						<div class="form-group text-center text-sm-center text-md-left text-lg-left text-xl-left">
-							<button type="submit" name="submit" id="submit" class="btn btn-danger" title="Send Reset Password Link" tabindex="2">Send Reset Password Link</button>
+							<button type="submit" name="submit_sent_reset_password_link" id="submit_sent_reset_password_link" class="btn btn-danger" title="Send Reset Password Link" tabindex="2">Send Reset Password Link</button>
 						</div>
 					</form>
 				</div>

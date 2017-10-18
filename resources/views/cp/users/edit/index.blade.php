@@ -5,15 +5,15 @@
 @section('keywords', 'Edit, User, Users, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('formButtons')
@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_users'))
 			<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="11" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="btn btn-primary" tabindex="11" title="Save Changes">Save Changes</button>
 		@if ($currentUser->hasPermission('delete_users') && $user->id != $currentUser->id)
 			<a href="/cp/users/{{ $user->id }}/delete" title="Delete User" class="pull-right btn btn-outline-danger">Delete User</a>
 		@endif
@@ -82,6 +82,7 @@
 								<span id="helpBlockEmailAddress" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 							@endif
 							<span id="helpBlockEmailAddress" class="form-control-feedback form-text text-muted">- Please enter the email address in lowercase.</span>
+							<span id="didYouMeanMessage" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
 						</div>
 						<div class="spacer"></div>
 						<div class="form-group">

@@ -5,15 +5,15 @@
 @section('keywords', 'Delete, Article, Category, Categories, Articles, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('content')
@@ -34,7 +34,7 @@
 							@if ($currentUser->hasPermission('view_article_categories'))
 								<a href="/cp/articles/categories" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit" id="submit" class="btn btn-danger" tabindex="1" title="Delete">Delete</button>
+							<button type="submit" name="submit_remove_article_category" id="submit_remove_article_category" class="btn btn-danger" tabindex="1" title="Delete">Delete</button>
 						</div>
 					</form>
 				</div>

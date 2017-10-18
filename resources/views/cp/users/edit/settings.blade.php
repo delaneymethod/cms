@@ -5,15 +5,15 @@
 @section('keywords', 'Edit, Settings, Users, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('formButtons')
@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_users'))
 			<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit" id="submit" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -52,7 +52,7 @@
 							<label class="control-label font-weight-bold">Receive Emails</label>
 							<div class="form-check">
 								<label for="receive_emails" class="form-check-label">
-									<input type="checkbox" name="receive_emails" id="receive_emails" class="form-check-input" value="1" tabindex="1" aria-label="..." aria-describedby="helpBlockReceiveEmails" {{ ((old('receive_emails') && old('receive_emails') == $user->receive_emails || $user->receive_emails == 1)) ? 'checked' : '' }}>
+									<input type="checkbox" name="receive_emails" id="receive_emails" class="form-check-input" value="1" tabindex="1" aria-label="&hellip;" aria-describedby="helpBlockReceiveEmails" {{ ((old('receive_emails') && old('receive_emails') == $user->receive_emails || $user->receive_emails == 1)) ? 'checked' : '' }}>
 									&nbsp;
 								</label>
 							</div>
@@ -66,7 +66,7 @@
 							<label class="control-label font-weight-bold">Receive Notifications</label>
 							<div class="form-check">
 								<label for="receive_notifications" class="form-check-label">
-									<input type="checkbox" name="receive_notifications" id="receive_notifications" class="form-check-input" value="1" tabindex="2" aria-label="..." aria-describedby="helpBlockReceiveNotifications" {{ ((old('receive_notifications') && old('receive_notifications') == $user->receive_notifications || $user->receive_notifications == 1)) ? 'checked' : '' }}>
+									<input type="checkbox" name="receive_notifications" id="receive_notifications" class="form-check-input" value="1" tabindex="2" aria-label="&hellip;" aria-describedby="helpBlockReceiveNotifications" {{ ((old('receive_notifications') && old('receive_notifications') == $user->receive_notifications || $user->receive_notifications == 1)) ? 'checked' : '' }}>
 									&nbsp;
 								</label>
 							</div>

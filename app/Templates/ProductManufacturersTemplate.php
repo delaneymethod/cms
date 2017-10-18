@@ -8,11 +8,11 @@
 namespace App\Templates;
 
 use Illuminate\View\View;
-use App\Http\Traits\{ContentTrait, ProductManufacturerTrait};
+use App\Http\Traits\{ContentTrait, CarouselTrait, ProductManufacturerTrait};
 
 class ProductManufacturersTemplate extends Template
 {
-	use ContentTrait, ProductManufacturerTrait;
+	use ContentTrait, CarouselTrait, ProductManufacturerTrait;
 	
 	protected $view = 'productManufacturers';
 	
@@ -31,6 +31,44 @@ class ProductManufacturersTemplate extends Template
 		
 		// Remove the Various
 		$productManufacturers->forget(0);
+		
+		// Check if page has slider
+		if (!empty($page->carousel)) {
+			$carousel = $this->getCarousel($page->carousel);
+			
+			if (!empty($carousel->data)) {
+				$carousel = json_decode($carousel->data, true);
+			
+				$images = [];
+			
+				$contents = [];
+			
+				foreach ($carousel as $key => $value) {
+					if (preg_match('/image/i', $key)) {
+						$images[] = $value;
+					}
+					
+					if (preg_match('/content/i', $key)) {
+						$contents[] = $value;
+					}
+				}
+				
+				$carousel = [];
+				
+				foreach ($images as $key => $value) {
+					array_push($carousel, [
+						'image' => $images[$key],
+						'content' => $contents[$key],
+					]);
+				}
+	
+				$page->carousel = collect($carousel);
+			} else {
+				$page->carousel = null;
+			}
+		} else {
+			$page->carousel = null;
+		}
 		
 		$page->breadcrumbs = collect([]);
 		

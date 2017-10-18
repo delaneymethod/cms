@@ -20,7 +20,7 @@
 				@endif
 				@if ($currentUser->hasPermission('view_articles') || $currentUser->hasPermission('view_article_categories'))	
 					<li>
-						<a href="javascript:void(0);" title="Articles" id="submenu" class="{{ setClass('cp/articles', 'highlight') }}"><i class="text-center icon fa fa-newspaper-o" aria-hidden="true"></i>Articles<span class="pull-right"><i class="fa fa-angle-left {{ setClass('cp/articles', 'fa-rotate') }}" aria-hidden="true"></i></span></a>
+						<a href="javascript:void(0);" title="Articles" rel="nofollow" id="submenu" class="{{ setClass('cp/articles', 'highlight') }}"><i class="text-center icon fa fa-newspaper-o" aria-hidden="true"></i>Articles<span class="pull-right"><i class="fa fa-angle-left {{ setClass('cp/articles', 'fa-rotate') }}" aria-hidden="true"></i></span></a>
 						<ul class="list-unstyled {{ setClass('cp/articles', 'open') }}">
 							@php($id = request()->id)
 							@if ($currentUser->hasPermission('view_articles'))	
@@ -34,6 +34,9 @@
 				@endif
 				@if ($currentUser->hasPermission('view_assets'))	
 					<li class="{{ setActive('cp/assets') }}"><a href="/cp/assets" title="Assets"><i class="text-center icon fa fa-folder-open" aria-hidden="true"></i>Assets</a></li>
+				@endif
+				@if ($currentUser->hasPermission('view_carousels'))	
+					<li class="{{ setActive('cp/carousels') }}"><a href="/cp/carousels" title="Carousels"><i class="text-center icon fa fa-picture-o" aria-hidden="true"></i>Carousels</a></li>
 				@endif
 				@if ($currentUser->hasPermission('view_templates'))
 					<li class="{{ setActive('cp/templates') }}"><a href="/cp/templates" title="Templates"><i class="text-center icon fa fa-columns" aria-hidden="true"></i>Templates</a></li>
@@ -49,7 +52,7 @@
 				@endif
 				@if ($currentUser->hasPermission('view_roles') || $currentUser->hasPermission('view_permissions') || $currentUser->hasPermission('view_statuses'))
 					<li>
-						<a href="javascript:void(0);" title="Advanced" id="submenu" class="{{ setClass('cp/advanced', 'highlight') }}"><i class="text-center icon fa fa-cogs" aria-hidden="true"></i>Advanced<span class="pull-right"><i class="fa fa-angle-left {{ setClass('cp/advanced', 'fa-rotate') }}" aria-hidden="true"></i></span></a>
+						<a href="javascript:void(0);" title="Advanced" rel="nofollow" id="submenu" class="{{ setClass('cp/advanced', 'highlight') }}"><i class="text-center icon fa fa-cogs" aria-hidden="true"></i>Advanced<span class="pull-right"><i class="fa fa-angle-left {{ setClass('cp/advanced', 'fa-rotate') }}" aria-hidden="true"></i></span></a>
 						<ul class="list-unstyled {{ setClass('cp/advanced', 'open') }}">
 							@if ($currentUser->hasPermission('view_roles'))
 								<li class="{{ setActive('cp/advanced/roles') }}"><a href="/cp/advanced/roles" title="Roles"><i class="text-center icon fa fa-circle-o" aria-hidden="true"></i>Roles</a></li>

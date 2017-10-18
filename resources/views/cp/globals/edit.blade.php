@@ -5,15 +5,15 @@
 @section('keywords', 'Edit, Global, Globals, '.config('app.name'))
 
 @push('styles')
-	<link rel="stylesheet" href="{{ mix('/assets/css/cp.css') }}">
+	@include('cp._partials.styles')
 @endpush
 
 @push('headScripts')
+	@include('cp._partials.headScripts')
 @endpush
 
 @push('bodyScripts')
-	<script async src="{{ mix('/assets/js/cp.js') }}"></script>
-	@include('cp._partials.listeners')
+	@include('cp._partials.bodyScripts')
 @endpush
 
 @section('formButtons')
@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_globals'))
 			<a href="/cp/globals" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit" id="submit" class="btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_global" id="submit_edit_global" class="btn btn-primary" title="Save Changes">Save Changes</button>
 		@if ($currentUser->hasPermission('delete_globals'))
 			<a href="/cp/globals/{{ $global->id }}/delete" title="Delete Global" class="pull-right btn btn-outline-danger">Delete Global</a>
 		@endif

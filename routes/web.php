@@ -202,6 +202,16 @@ Route::group(['prefix' => 'cp'], function () {
 		Route::patch('/statuses/{id}', 'StatusController@update');
 		Route::delete('/statuses/{id}', 'StatusController@delete');
 	});
+	
+	// CP > Carousels routes
+	Route::get('/carousels', 'CarouselController@index');
+	Route::get('/carousels/create', 'CarouselController@create');
+	Route::get('/carousels/{id}/edit', 'CarouselController@edit');
+	Route::get('/carousels/{id}/delete', 'CarouselController@confirm');
+	Route::post('/carousels', 'CarouselController@store');
+	Route::put('/carousels/{id}', 'CarouselController@update');
+	Route::patch('/carousels/{id}', 'CarouselController@update');
+	Route::delete('/carousels/{id}', 'CarouselController@delete');
 		
 	// CP > Assets routes
 	Route::get('/assets', 'AssetController@index');

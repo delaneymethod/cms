@@ -71,7 +71,7 @@
 															</div>	
 														@endif
 													@else
-														<a href="javascript:void(0);" title="Add to Cart" class="btn btn-outline-sucess disabled">Add to Cart</a><br><a href="/login{{ $redirectTo }}" title="Login" class="text-gf-blue-gray">Please login first</a> 
+														<a href="javascript:void(0);" title="Add to Cart" rel="nofollow" class="btn btn-outline-sucess disabled">Add to Cart</a><br><a href="/login{{ $redirectTo }}" title="Login" class="text-gf-blue-gray">Please login first</a> 
 													@endauth
 												</td>
 											</tr>
@@ -87,7 +87,7 @@
 							function loadProductCommodities() {
 								const productCommodityIds = @json($productCommodities->pluck('id'));
 								
-								productCommodityIds.map(productCommodityId => window.CMS.loadProductCommodityPriceQuantity('#product_commodity_' + productCommodityId));
+								productCommodityIds.map(productCommodityId => window.CMS.Templates.loadProductCommodityPriceQuantity('#product_commodity_' + productCommodityId));
 							}
 							
 							if (window.attachEvent) {

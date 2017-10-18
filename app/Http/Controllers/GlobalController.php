@@ -9,10 +9,12 @@ namespace App\Http\Controllers;
 
 use DB;
 use Log;
+use Exception;
 use App\Models\Globals;
 use Illuminate\Http\Request;
 use App\Http\Traits\GlobalTrait;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 
 class GlobalController extends Controller
 {
@@ -159,7 +161,7 @@ class GlobalController extends Controller
 			
 			$subTitle = 'Globals';
 			
-			$global= $this->getGlobal($id);
+			$global = $this->getGlobal($id);
 			
 			return view('cp.globals.edit', compact('currentUser', 'title', 'subTitle', 'global'));
 		}

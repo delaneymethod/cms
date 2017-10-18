@@ -26,9 +26,13 @@ window.axiosCancel(window.axios, {
 	debug: false
 });
 
+window.Clipboard = require('clipboard');
+
 require('lazyload');
 
 require('jquery-inview');
+
+require('slick-carousel');
 
 require('bootstrap');
 
@@ -36,4 +40,6 @@ require('../plugins/datatables/datatables');
 
 require('../plugins/datatables/datatables-bootstrap');
 
-require('../plugins/delaneymethod/cms');
+require('../plugins/delaneymethod/cms/library');
+
+require('../plugins/delaneymethod/cms/templates');

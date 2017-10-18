@@ -1,1 +1,1 @@
-	<link rel="stylesheet" href="{{ mix('/assets/css/global.css') }}">
+	<link rel="stylesheet" href="{{ mix('/assets/css/templates.css') }}">

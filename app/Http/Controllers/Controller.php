@@ -23,12 +23,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Validator as ValidatorResponse;
 use Illuminate\Support\Facades\{File, Auth, Cache, Validator};
 use Illuminate\Support\Collection as SupportCollectionResponse;
-use App\Http\Traits\{UserTrait, PageTrait, FieldTrait, ArticleTrait};
+use App\Http\Traits\{UserTrait, PageTrait, FieldTrait, ArticleTrait, CarouselTrait};
 use Illuminate\Database\Eloquent\Collection as EloquentCollectionResponse;
 
 class Controller extends BaseController
 {
-	use UserTrait, PageTrait, FieldTrait, ArticleTrait, DispatchesJobs, AuthorizesRequests, ValidatesRequests;
+	use UserTrait, PageTrait, FieldTrait, ArticleTrait, CarouselTrait, DispatchesJobs, AuthorizesRequests, ValidatesRequests;
 	
 	protected $env;
 	
@@ -1027,34 +1027,75 @@ class Controller extends BaseController
 	
 	/**
 	 * Does what it says on the tin!
+	 *
+	 * Some contents just store IDs for use in selects etc.
+	 * Templates can have carousels so the field handle will be "carousel" and id "x_y_carousel" and label "Carousel" (business rule)
+	 * In this case, we need to do some exytra leg work to match the data, setting the options and default values
+	 *
+	 * We only support "select" until more fields are used
+	 *
 	 */
 	protected function mapContentsToFields(Template $template, Collection $contents) : Template
 	{
 		$template->fields = recursiveObject($template->fields);
 		
 		foreach ($template->fields as &$field) {
-			foreach ($contents as $content) {
-				if ($content->field_id == $field->_id) {
-					$field->value = $content->data;
-				}
-				
-				/**
-				 * We still attempt to match content based on field types incase ids dont match.
-				 * We would only enter this logic if the field value is empty and the user was 
-				 * creating or editing a page and picked a different template...
-				 */
-				 
-				// Commented out 06/Oct/2017 - Bug investigation - seems to be causing all template fields to be populated with same data
-				
-				/*
-				if (empty($field->value)) {
-					$contentField = $this->getField($content->field_id);
-					
-					if ($contentField->field_type_id == $field->field_type_id) {
-						$field->value = $content->data;
+			if ($contents->count() > 0) {
+				foreach ($contents as $content) {
+					// So we found a Carousel field
+					if ($field->type == 'select' && $field->label == 'Carousel') {
+						$field->options[0] = '';	
+							
+						$carousels = $this->getCarousels();
+							
+						foreach ($carousels as $carousel) {
+							$field->options[$carousel->id] = $carousel->title;
+						}
+						
+						if ($content->field_id == $field->_id) {
+							// Make sure there is data. e.g a carousel id
+							if (!empty($content->data)) {
+								// Grab the Carousel itself based on the id which is stored in $content->data
+								$carousel = $this->getCarousel($content->data);
+								
+								$field->default = [$carousel->id];
+							}
+						}
+					} else {
+						if ($content->field_id == $field->_id) {
+							$field->value = $content->data;
+						}
 					}
+					
+					/**
+					 * We still attempt to match content based on field types incase ids dont match.
+					 * We would only enter this logic if the field value is empty and the user was 
+					 * creating or editing a page and picked a different template...
+					 */
+					 
+					// Commented out 06/Oct/2017 - Bug investigation - seems to be causing all template fields to be populated with same data
+					
+					/*
+					if (empty($field->value)) {
+						$contentField = $this->getField($content->field_id);
+						
+						if ($contentField->field_type_id == $field->field_type_id) {
+							$field->value = $content->data;
+						}
+					}
+					*/
 				}
-				*/
+			} else {
+				// So we found a Carousel field, even though we have no content. We still need to show the field to allow the user to set content if they need too.
+				if ($field->type == 'select' && $field->label == 'Carousel') {
+					$field->options[0] = '';	
+						
+					$carousels = $this->getCarousels();
+						
+					foreach ($carousels as $carousel) {
+						$field->options[$carousel->id] = $carousel->title;
+					}
+				}	
 			}
 		}
 		
@@ -1100,7 +1141,8 @@ class Controller extends BaseController
 					}
 					
 					if ($field->field_type->type == 'select') {
-						array_push($fieldRules, 'integer');
+						array_push($fieldRules, 'array');
+						array_push($fieldRules, 'min:1');
 					}
 					
 					if ($field->field_type->type == 'radio') {

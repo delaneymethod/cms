@@ -22,14 +22,10 @@
 
 @import '../plugins/codemirror/codemirror';
 
-@import '../plugins/delaneymethod/browse/browse';
+@import '../plugins/delaneymethod/browse/index';
 
 @import 'common';
 	
-html, body {
-	color: $gf-default;
-}
-
 .badge {
 	margin-top: -2px;
 }

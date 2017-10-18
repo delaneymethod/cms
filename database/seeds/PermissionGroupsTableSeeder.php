@@ -89,7 +89,12 @@ class PermissionGroupsTableSeeder extends Seeder
 				'title' => 'Globals',
 				'created_at' => $now,
 				'updated_at' => $now,
-			]
+			],
+			[
+				'title' => 'Carousels',
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
 		];
 		
 		DB::table('permission_groups')->delete();
