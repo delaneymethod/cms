@@ -49,7 +49,7 @@
 									<td class="align-middle">{{ $global->handle }}</td>
 									@if ($currentUser->hasPermission('edit_globals') || $currentUser->hasPermission('delete_globals'))
 										<td class="align-middle actions dropdown text-center" id="submenu">
-											<a href="javascript:void(0);" title="Global Actions" rel="nofollow" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+											<a href="javascript:void(0);" title="Global Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_globals'))
 													<li class="dropdown-item gf-info"><a href="/cp/globals/{{ $global->id }}/edit" title="Edit Global"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Global</a></li>

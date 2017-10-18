@@ -8,13 +8,28 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use App\Http\Traits\GlobalTrait;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class ContactNotification extends Notification implements ShouldQueue
 {
-	use Queueable;
+	use Queueable, GlobalTrait;
+	
+	/**
+	 * Information about the site name.
+	 *
+	 * @var string
+	 */
+	protected $siteName;
+	
+	/**
+	 * Information about the site logo.
+	 *
+	 * @var string
+	 */
+	protected $siteLogo;
 	
 	/**
 	 * Information about the form.
@@ -31,6 +46,14 @@ class ContactNotification extends Notification implements ShouldQueue
 	public function __construct($form)
 	{
 		$this->form = $form;
+		
+		$global = $this->getGlobal(1);
+		
+		$this->siteName = $global->data;
+		
+		$global = $this->getGlobal(2);
+		
+		$this->siteLogo = $global->data;
 	}
 
 	/**
@@ -53,6 +76,8 @@ class ContactNotification extends Notification implements ShouldQueue
 	public function toMail($notifiable)
 	{
 		$data = [
+			'siteName' => $this->siteName,
+			'siteLogo' => $this->siteLogo,
 			'contactFirstName' => $this->form->first_name,
 			'contactLastName' => $this->form->last_name,
 			'contactEmail' => $this->form->email,

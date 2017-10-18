@@ -10,13 +10,14 @@ namespace App\Notifications;
 use App\User;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
+use App\Http\Traits\GlobalTrait;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class OrderUpdatedNotification extends Notification implements ShouldQueue
 {
-	use Queueable;
+	use Queueable, GlobalTrait;
 	
 	/**
 	 * Information about the user.
@@ -71,8 +72,6 @@ class OrderUpdatedNotification extends Notification implements ShouldQueue
 		$global = $this->getGlobal(2);
 		
 		$this->siteLogo = $global->data;
-		
-		$this->subject = $subject;
 		
 		$this->subject = $subject;
 	}

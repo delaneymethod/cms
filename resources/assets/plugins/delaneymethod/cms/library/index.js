@@ -44,6 +44,8 @@
 			$('[data-toggle="tooltip"]').tooltip();
 			
 			lazyload();
+			
+			window.FastClick.attach(document.body);
 		};
 		
 		this.loadListeners = () => {

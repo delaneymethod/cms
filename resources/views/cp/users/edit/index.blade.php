@@ -28,6 +28,9 @@
 		@if ($currentUser->hasPermission('edit_passwords_users') || $user->id == $currentUser->id)
 			<a href="/cp/users/{{ $user->id }}/edit/password" title="Change Password" class="pull-right btn btn-outline-secondary {{ ($user->id != $currentUser->id) ? 'cancel-button' : '' }}">Change Password</a>
 		@endif
+		@if ($currentUser->hasPermission('impersonate_users') && $user->canBeImpersonated() && $user->id != $currentUser->id)
+			<a href="{{ route('impersonate', $user->id) }}" title="Impersonate User" class="pull-right cancel-button btn btn-outline-impersonate">Impersonate User</a>
+		@endif
 	</div>
 @endsection
 

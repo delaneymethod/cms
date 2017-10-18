@@ -1,5 +1,10 @@
 <?php
-	
+/**
+ * @link      https://www.delaneymethod.com/cms
+ * @copyright Copyright (c) DelaneyMethod
+ * @license   https://www.delaneymethod.com/cms/license
+ */
+ 	
 return [
 
     /*
@@ -186,6 +191,7 @@ return [
 		App\Providers\CartHelperServiceProvider::class,
 		TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
 		App\Providers\DirectoryHelperServiceProvider::class,
+		Lab404\Impersonate\ImpersonateServiceProvider::class,
 		Propaganistas\LaravelIntl\IntlServiceProvider::class,
 		Spatie\UptimeMonitor\UptimeMonitorServiceProvider::class,
 		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,

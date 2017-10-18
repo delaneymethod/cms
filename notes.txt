@@ -1,5 +1,17 @@
 
-locations have shipping methods defined
+Add show/hide on password fields
+
+Tidy up Page Break plugin
+
+Make CP responsive
+
+Add a quick order form allowing user to enter in multiple codes to create a cart instance.
+
+
+
+
+
+Locations have shipping methods defined
 
 
 
@@ -39,9 +51,54 @@ b. If the item is not in stock and we are using cost price then the price is onl
 
 
 
+
+### TODO ###
+
+Form Builder
+
+http://briandetering.net/repeater
+https://www.craftblue.com/projects/jquery/form-element-repeater-plugin/
+
+- Add Fields CRUD to sidebar to allow user to create a new field.
+-- Each field would have a id, title, handle, instructions, field_type_id, placeholder, and a settings column
+
+- Add Plain Text Field Type - {"placeholder":"asdasdasd","maxLength":"10","multiline":"","initialRows":"4"}
+- Add Multi-Line Text Field Type - {"placeholder":"asdasdasd","maxLength":"10","multiline":"1","initialRows":"4"}
+- Add Number Field Type - {"min":"0","max":"5","decimals":"2"}
+- Add DateTime Field Type
+- Add Radio Field Type - {"options":[{"label":"Label 1","value":"label1","default":"1"},{"label":"Label 2","value":"label2","default":""}]}
+- Add Checkbox Field Type - {"options":[{"label":"Label 1","value":"label1","default":"1"},{"label":"Label 2","value":"label2","default":""}]}
+- Add Dropdown Field Type - {"options":[{"label":"Label 1","value":"label1","default":"1"},{"label":"Label 2","value":"label2","default":""}]}
+- Add Multi-Select Field Type - {"options":[{"label":"Label 1","value":"label1","default":"1"},{"label":"Label 2","value":"label2","default":""}]}
+- Add Entries Field Type - {"sources":["model:pages"],"limit":"5","selectionLabel":"Test Selection Label"}
+-- Allow a source to be selected
+- Add Rich Text Field Type - {"configFile":"","availableAssetSources":"*","availableTransforms":"*","cleanupHtml":"1","purifyHtml":"1","purifierConfig":"","columnType":"mediumtext"}
+-- Basically copy Craft CMS
+
+Template Builder
+
+- Add Templates CRUD to sidebar to allow user add fields to a template.
+
+Redactor Image and File Models
+
+- Improve layout of files. See https://imperavi.com/redactor/examples/plugin-modal/
+
+
+
+
+
+
+
 echo "" > storage/logs/laravel.log
 
-Look into: https://github.com/spatie/laravel-activitylog
+
+
+https://github.com/spatie/laravel-activitylog
+
+https://github.com/brianreavis/sifter.js/
+
+http://htmlpurifier.org/
+
 
 Setup daemon's for 
 

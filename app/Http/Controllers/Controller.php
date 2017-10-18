@@ -603,10 +603,10 @@ class Controller extends BaseController
 				
 				// Run over all users and grab ids
 				foreach ($_users as $_user) {
-					$allowedUserIds = array_merge($allowedUserIds, $_user->id);
+					array_push($allowedUserIds, $_user->id);
 				}
 			} else if ($currentUser->isEndUser()) {
-				$allowedUserIds[] = $currentUser->id;
+				array_push($allowedUserIds, $currentUser->id);
 			}
 			
 			$filteredUsers = [];

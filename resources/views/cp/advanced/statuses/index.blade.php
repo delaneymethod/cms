@@ -49,7 +49,7 @@
 									<td class="align-middle">{{ $status->description }}</td>
 									@if ($currentUser->hasPermission('edit_statuses') || $currentUser->hasPermission('delete_statuses'))
 										<td class="align-middle actions dropdown text-center" id="submenu">
-											<a href="javascript:void(0);" title="Status Actions" rel="nofollow" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+											<a href="javascript:void(0);" title="Status Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_statuses'))
 													<li class="dropdown-item gf-info"><a href="/cp/advanced/statuses/{{ $status->id }}/edit" title="Edit Status"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Status</a></li>

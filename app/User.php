@@ -8,6 +8,7 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Lab404\Impersonate\Models\Impersonate;
 use Illuminate\Database\Eloquent\Collection;
 use App\Notifications\SetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,7 +17,7 @@ use App\Models\{Role, Cart, Order, Status, Session, Company, Article, Location};
 
 class User extends Authenticatable
 {
-	use Notifiable;
+	use Notifiable, Impersonate;
 
 	/**
 	 * The attributes that are mass assignable.
@@ -229,6 +230,26 @@ class User extends Authenticatable
 	public function canReceiveNotifications() : bool
 	{
 		return $this->receive_notifications == 1;
+	}
+	
+	/**
+	 * Checks if user can impersonate another user.
+	 *
+	 * @return bool
+	 */
+	public function canImpersonate() : bool
+	{
+		return $this->isSuperAdmin();
+	}
+	
+	/**
+	 * Checks if user can be impersonated by another user.
+	 *
+	 * @return bool
+	 */
+	public function canBeImpersonated() : bool
+	{
+		return !$this->isSuperAdmin();
 	}
 	
 	/**

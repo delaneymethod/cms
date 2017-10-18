@@ -234,7 +234,7 @@
 				
 				let buttons = ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link', 'horizontalrule'];
 				
-				let plugins = ['codemirror', 'inlinestyle', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video', 'fontcolor', 'properties', 'textexpander', 'redbutton'];
+				let plugins = ['codemirror', 'inlinestyle', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video', 'fontcolor', 'properties', 'textexpander', 'redbutton', 'pagebreak'];
 					
 				if (element == '#excerpt') {
 					minHeight = 100;
@@ -246,6 +246,28 @@
 				
 				$(element).redactor({
 					'focus': false,
+					'focusEnd': false,
+					'animation': false,
+					'lang': 'en',
+					'direction': 'ltr',
+					'spellcheck': true,
+					'overrideStyles': true,
+					'clickToEdit': false,
+					//'removeNewlines': true,
+					'replaceTags': {
+						'b': 'strong',
+						'i': 'em',
+						'strike': 'del'
+					},
+					'pastePlainText': false,
+					'pasteImages': true,
+					'pasteLinks': true,
+					'linkTooltip': true,
+					'linkNofollow': false,
+					'linkSize': 100,
+					'pasteLinkTarget': false,	
+					'pasteBlockTags': ['pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'table', 'tbody', 'thead', 'tfoot', 'th', 'tr', 'td', 'ul', 'ol', 'li', 'blockquote', 'p', 'figure', 'figcaption'],
+					'pasteInlineTags': ['br', 'strong', 'ins', 'code', 'del', 'span', 'samp', 'kbd', 'sup', 'sub', 'mark', 'var', 'cite', 'small', 'b', 'u', 'em', 'i'],
 					'fileUpload': '/cp/assets?_token=' + token + '&type=file',
 					'fileManagerJson': '/cp/assets?format=json',
 					'imageUpload': '/cp/assets?_token=' + token + '&type=image',

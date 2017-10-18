@@ -8,13 +8,28 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use App\Http\Traits\GlobalTrait;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class SetPasswordNotification extends Notification implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, GlobalTrait;
+	
+	/**
+	 * Information about the site name.
+	 *
+	 * @var string
+	 */
+	protected $siteName;
+	
+	/**
+	 * Information about the site logo.
+	 *
+	 * @var string
+	 */
+	protected $siteLogo;
 	
 	/**
 	 * Information about the users first name.
@@ -49,6 +64,14 @@ class SetPasswordNotification extends Notification implements ShouldQueue
 		$this->firstName = $firstName;
 		
 		$this->subject = $subject;
+		
+		$global = $this->getGlobal(1);
+		
+		$this->siteName = $global->data;
+		
+		$global = $this->getGlobal(2);
+		
+		$this->siteLogo = $global->data;
     }
 
     /**
@@ -72,6 +95,8 @@ class SetPasswordNotification extends Notification implements ShouldQueue
     {
 	    // Notice how this one is a bit different than the order placed notification. All that is different is we are setting the mailiable in the user model instead.
 		$data = [
+			'siteName' => $this->siteName,
+			'siteLogo' => $this->siteLogo,
 			'firstName' => $this->firstName, 
 			'setPasswordUrl' => url('/password/reset', $this->token)
 		];

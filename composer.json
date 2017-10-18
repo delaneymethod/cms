@@ -12,6 +12,7 @@
 		"fideloper/proxy": "~3.3",
 		"gloudemans/shoppingcart": "^2.3",
 		"guzzlehttp/guzzle": "^6.3",
+		"lab404/laravel-impersonate": "^1.2",
 		"laravel/framework": "5.5.*",
 		"laravel/scout": "^3.0",
 		"laravel/tinker": "~1.0",

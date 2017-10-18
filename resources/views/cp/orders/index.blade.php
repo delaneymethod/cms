@@ -48,7 +48,7 @@
 									<td class="align-middle status text-center"><i id="order-{{ $order->id }}-status-icon" class="fa fa-circle fa-1 status_id-{{ $order->status->id }}" title="{{ $order->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
 									@if ($currentUser->hasPermission('view_orders'))
 										<td class="align-middle actions dropdown text-center" id="submenu">
-											<a href="javascript:void(0);" title="Order Actions" rel="nofollow" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+											<a href="javascript:void(0);" title="Order Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('view_orders'))
 													<li class="dropdown-item gf-info"><a href="/cp/orders/{{ $order->id }}" title="View Order"><i class="icon fa fa-eye" aria-hidden="true"></i>View Order</a></li>

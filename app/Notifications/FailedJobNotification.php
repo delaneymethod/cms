@@ -8,13 +8,28 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use App\Http\Traits\GlobalTrait;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class FailedJobNotification extends Notification implements ShouldQueue
 {
-	use Queueable;
+	use Queueable, GlobalTrait;
+	
+	/**
+	 * Information about the site name.
+	 *
+	 * @var string
+	 */
+	protected $siteName;
+	
+	/**
+	 * Information about the site logo.
+	 *
+	 * @var string
+	 */
+	protected $siteLogo;
 	
 	/**
 	 * Information about the job.
@@ -39,6 +54,14 @@ class FailedJobNotification extends Notification implements ShouldQueue
 	{
 		$this->job = $job;
 		
+		$global = $this->getGlobal(1);
+		
+		$this->siteName = $global->data;
+		
+		$global = $this->getGlobal(2);
+		
+		$this->siteLogo = $global->data;
+		
 		$this->subject = $subject;
 	}
 
@@ -62,6 +85,8 @@ class FailedJobNotification extends Notification implements ShouldQueue
 	public function toMail($notifiable)
 	{
 		$data = [
+			'siteName' => $this->siteName,
+			'siteLogo' => $this->siteLogo,
 			'job' => $this->job,
 		];
 		

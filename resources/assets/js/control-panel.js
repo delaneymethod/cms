@@ -26,6 +26,8 @@ window.axiosCancel(window.axios, {
 	debug: false
 });
 
+window.FastClick = require('fastclick');
+
 window.Clipboard = require('clipboard');
 
 require('lazyload');
@@ -45,6 +47,8 @@ require('../plugins/redactor/plugins/table');
 require('../plugins/redactor/plugins/definedlinks');
 
 require('../plugins/redactor/plugins/alignment/alignment');
+
+require('../plugins/redactor/plugins/pagebreak/pagebreak');
 
 require('../plugins/redactor/plugins/fullscreen');
 

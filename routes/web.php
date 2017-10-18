@@ -18,6 +18,8 @@
 
 Auth::routes();
 
+Route::impersonate();
+
 // FRONT END ROUTES
 
 // Cart routes

@@ -45,7 +45,7 @@
 									<td class="align-middle text-center">{{ $cart->created_at }}</td>
 									<td class="align-middle text-center">{{ $cart->count() }}</td>
 									<td class="align-middle actions dropdown text-center" id="submenu">
-										<a href="javascript:void(0);" title="Cart Actions" rel="nofollow" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+										<a href="javascript:void(0);" title="Cart Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu dropdown-menu-right">
 											@if ($currentUser->hasPermission('view_carts'))
 												<li class="dropdown-item gf-info"><a href="/cp/carts/{{ $cart->identifier }}" title="View Cart"><i class="icon fa fa-eye" aria-hidden="true"></i>View Cart</a></li>

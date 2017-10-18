@@ -52,6 +52,12 @@ class PermissionsTableSeeder extends Seeder
 				'updated_at' => $now,
 			],
 			[
+				'title' => 'impersonate_users',
+				'permission_group_id' => 1,
+				'created_at' => $now,
+				'updated_at' => $now,
+			],
+			[
 				'title' => 'delete_users',
 				'permission_group_id' => 1,
 				'created_at' => $now,

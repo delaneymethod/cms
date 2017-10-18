@@ -20,6 +20,8 @@
 
 @import '../plugins/redactor/plugins/alignment/alignment';
 
+@import '../plugins/redactor/plugins/pagebreak/pagebreak';
+
 @import '../plugins/codemirror/codemirror';
 
 @import '../plugins/delaneymethod/browse/index';
@@ -315,7 +317,7 @@
 .main {
 	color: $sidebar-a-hover-bg-color;
 	background-color: $main-bg-color;
-	
+
 	.buttons {
 		border-radius: 0.25rem;
 		background-color: #ffffff;
@@ -383,6 +385,17 @@
 			}
 		}
 		
+		.dataTables_filter {
+			label {
+				width: 75%;
+				
+				input {
+					margin-left: 0;
+					width: 100%;
+				}
+			}
+		}
+		
 		table {
 			a {
 				text-decoration: underline;
@@ -437,6 +450,10 @@
 			
 			.gf-danger:hover {
 				background-color: $gf-danger;
+			}
+			
+			.gf-impersonate:hover {
+				background-color: $gf-impersonate;
 			}
 			
 			#pageActions {

@@ -25,7 +25,7 @@ class GlobalsTableSeeder extends Seeder
 			[
 				'title' => 'Site Logo',
 				'handle' => 'site_logo',
-				'data' => '/assets/img/logo.png',
+				'data' => config('app.url').'/assets/img/logo.png',
 				'created_at' => $now,
 				'updated_at' => $now,
 			],

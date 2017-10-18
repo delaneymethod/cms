@@ -49,7 +49,7 @@
 									<td class="align-middle">{{ $carousel->handle }}</td>
 									@if ($currentUser->hasPermission('edit_carousels') || $currentUser->hasPermission('delete_carousels'))
 										<td class="align-middle actions dropdown text-center" id="submenu">
-											<a href="javascript:void(0);" title="Carousel Actions" rel="nofollow" class="dropdown-toggle" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+											<a href="javascript:void(0);" title="Carousel Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_carousels'))
 													<li class="dropdown-item gf-info"><a href="/cp/carousels/{{ $carousel->id }}/edit" title="Edit Carousel"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit Carousel</a></li>

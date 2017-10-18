@@ -159,8 +159,17 @@ a,
 	}
 }
 
+.impersonation {
+	text-decoration: underline !important;
+	color: #FFFFFF !important;
+	
+	&:hover {
+		color: #333333 !important;
+	}
+}
+
 .text-muted-lighter {
-	color: #c1c1c1;	
+	color: #C1C1C1;	
 }
 
 .text-gf-default {
@@ -246,6 +255,20 @@ a,
 		color: #ffffff;
 		background-color: $gf-red;
 		border-color: $gf-red;
+	}
+}
+
+.btn-outline-impersonate {
+	color: $gf-impersonate;
+	font-family: inherit;
+	background-image: none;
+	background-color: transparent;
+	border-color: $gf-impersonate;
+	
+	&:hover {
+		color: #ffffff;
+		background-color: $gf-impersonate;
+		border-color: $gf-impersonate;
 	}
 }
 
@@ -337,6 +360,11 @@ a,
 .message.danger {
 	display: block;
 	background-color: $main-message-bg-color;	
+}
+
+.message.impersonate {
+	display: block;
+	background-color: $gf-impersonate;	
 }
 
 .spacer {
