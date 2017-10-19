@@ -182,14 +182,14 @@ return [
 		'cp' => [
 			'sidebar' => [
 				'sm' => 'col-sm-12',
-				'md' => 'col-md-2',
+				'md' => 'col-md-3',
 				'lg' => 'col-lg-2',
 				'xl' => 'col-xl-2',
 			],
 			
 			'main' => [
 				'sm' => 'col-sm-12',
-				'md' => 'col-md-10',
+				'md' => 'col-md-9',
 				'lg' => 'col-lg-10',
 				'xl' => 'col-xl-10',
 			],

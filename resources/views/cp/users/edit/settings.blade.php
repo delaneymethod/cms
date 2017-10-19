@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_users'))
 			<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

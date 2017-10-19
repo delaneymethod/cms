@@ -12,6 +12,7 @@
 
 @push('headScripts')
 	@include('_partials.headScripts')
+	<script async defer src="/assets/js/zxcvbn.js"></script>
 @endpush
 
 @push('bodyScripts')
@@ -54,7 +55,7 @@
 			@endif
 			<div class="row d-flex h-100 justify-content-center justify-content-sm-center justify-content-md-start justify-content-lg-start justify-content-xl-start">
 				<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 align-self-center">
-					<form name="register" id="register" class="register" role="form" method="POST" action="{{ route('register') }}">
+					<form name="registerUser" id="registerUser" class="registerUser" role="form" method="POST" action="{{ route('register') }}">
 						{{ csrf_field() }}
 						<div class="form-group">
 							<label for="first_name" class="control-label">First Name <span class="text-danger">&#42;</span></label>
@@ -69,11 +70,16 @@
 							@if ($errors->has('email'))
 								<span id="helpBlockEmail" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 							@endif
-							<span id="didYouMeanMessage" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
+							<span id="did-you-mean" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
 						</div>
 						<div class="form-group">
 							<label for="password" class="control-label">Password <span class="text-danger">&#42;</span></label>
-							<input type="password" name="password" id="password" class="form-control" placeholder="e.g y1Fwc]_C" value="" title="Password" tabindex="3" autocomplete="off" aria-describedby="helpBlockPassword" required>
+							<div class="input-group">
+								<input type="password" name="password" id="password" class="form-control" placeholder="e.g y1Fwc]_C" value="" title="Password" tabindex="3" autocomplete="off" aria-describedby="helpBlockPassword" required>
+								<span class="input-group-btn">
+									<button type="button" name="hide_show_password" id="hide_show_password" class="btn btn-outline-secondary" title="Hide / Show Password">Show Password</button>
+								</span>
+							</div>
 							@if ($errors->has('password'))
 								<span id="helpBlockPassword" class="form-control-feedback form-text gf-red">- {{ $errors->first('password') }}</span>
 							@endif

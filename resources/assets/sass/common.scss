@@ -4,6 +4,8 @@
  * @license   https://www.delaneymethod.com/cms/license
  */
 
+@import '../plugins/password-strength/index';
+
 @mixin placeholder {
 	::-webkit-input-placeholder {@content}
 	:-moz-placeholder {@content}
@@ -387,7 +389,7 @@ a,
 	height: 50px;
 }
 
-#didYouMeanMessage {
+#did-you-mean {
 	display: none;
 	margin-top: 0.25rem;
 	

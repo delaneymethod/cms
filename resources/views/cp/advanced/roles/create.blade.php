@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_roles'))
 			<a href="/cp/advanced/roles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="3" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_role" id="submit_create_role" class="btn btn-primary" tabindex="2" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_role" id="submit_create_role" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="2" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_article_categories'))
 			<a href="/cp/articles/categories" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="5" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_article_category" id="submit_create_article_category" class="btn btn-primary" tabindex="4" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_article_category" id="submit_create_article_category" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="4" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

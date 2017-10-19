@@ -1,17 +1,11 @@
 
-Add show/hide on password fields
-
-Tidy up Page Break plugin
-
-Make CP responsive
-
-Add a quick order form allowing user to enter in multiple codes to create a cart instance.
-
-
 
 
 
 Locations have shipping methods defined
+
+
+
 
 
 
@@ -97,7 +91,7 @@ https://github.com/spatie/laravel-activitylog
 
 https://github.com/brianreavis/sifter.js/
 
-http://htmlpurifier.org/
+
 
 
 Setup daemon's for 

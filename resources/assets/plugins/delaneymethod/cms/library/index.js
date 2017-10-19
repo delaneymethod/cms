@@ -23,6 +23,8 @@
 
 		this.defaults = {};
 		
+		this.inputTypeForPassword = 'password';
+		
 		this.formData = {
 			'firstName': '',
 			'lastName': '',
@@ -42,6 +44,10 @@
 			});
 		
 			$('[data-toggle="tooltip"]').tooltip();
+			
+			$('#open-menu').on('click', () => {
+		 		$('.sidebar').toggleClass('d-block d-sm-block d-md-none d-lg-none d-xl-none');
+			});
 			
 			lazyload();
 			
@@ -74,7 +80,7 @@
 					$('[type="submit"]').on('click', () => this.gatherFormDataAndCheck());
 				}
 				
-				$('#didYouMeanMessage a').on('click', () => {
+				$('#did-you-mean a').on('click', () => {
 					if (this.formData.suggestedEmail) {
 						this.formData.email.val(this.formData.suggestedEmail);
 					}
@@ -84,6 +90,38 @@
 					this.gatherFormDataAndCheck();
 				});
 			}
+			
+			if ($('#editUser, #setPassword, #registerUser').length && $('[name="password"]').length) {
+				$('#password').strengthify();
+			
+				$('#hide_show_password').on('click', event => {
+					this.togglePasswordFieldType('#password', '#hide_show_password', this.inputTypeForPassword);
+				});
+				
+				$('#hide_show_password_confirmation').on('click', event => {
+					this.togglePasswordFieldType('#password_confirmation', '#hide_show_password_confirmation', this.inputTypeForPassword);
+				});
+			}
+		};
+		
+		this.togglePasswordFieldType = (targetElement, triggerElement, type) => {
+			if (type === 'password') {
+				this.inputTypeForPassword = 'text';
+
+				$(targetElement).attr({
+					'type': 'text'
+				});
+
+				$(triggerElement).text('Hide Password');
+			} else {
+				this.inputTypeForPassword = 'password';
+
+				$(targetElement).attr({
+					'type': 'password'
+				});
+
+				$(triggerElement).text('Show Password');
+			}	
 		};
 		
 		this.attachDataTable = element => {
@@ -150,17 +188,17 @@
 			});
 			
 			if (this.formData.suggestedEmail) {
-				$('#didYouMeanMessage a').html(this.formData.suggestedEmail);
+				$('#did-you-mean a').html(this.formData.suggestedEmail);
 				
-				$('#didYouMeanMessage a').tabindex = 1;
+				$('#did-you-mean a').tabindex = 1;
 				
-				$('#didYouMeanMessage').css('display', 'inline-block');
+				$('#did-you-mean').css('display', 'inline-block');
 				
-				$('#didYouMeanMessage a').focus();
+				$('#did-you-mean a').focus();
 			} else {
-				$('#didYouMeanMessage').hide();
+				$('#did-you-mean').hide();
 	
-				$('#didYouMeanMessage a').html('');
+				$('#did-you-mean a').html('');
 			}
 		};
 		

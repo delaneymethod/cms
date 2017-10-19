@@ -21,10 +21,7 @@
 		@if ($currentUser->hasPermission('view_article_categories'))
 			<a href="/cp/articles/categories" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="5" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_article_category" id="submit_edit_article_category" class="btn btn-primary" tabindex="4" title="Save Changes">Save Changes</button>
-		@if ($currentUser->hasPermission('delete_article_categories') && $articleCategory->id != 1)
-			<a href="/cp/articles/categories/{{ $articleCategory->id }}/delete" title="Delete Article Category" class="pull-right btn btn-outline-danger">Delete Article Category</a>
-		@endif
+		<button type="submit" name="submit_edit_article_category" id="submit_edit_article_category" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="4" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

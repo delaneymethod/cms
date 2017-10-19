@@ -7,7 +7,7 @@
 const del = require('del');
 const { mix } = require('laravel-mix');
 
-del(['html/assets/**', '!html/assets']);
+del(['html/assets/css/**', 'html/assets/img/**', 'html/assets/fonts/**', 'html/assets/js/control-panel.js', 'html/assets/js/templates.js']);
 
 mix.setPublicPath('html');
 

@@ -60,7 +60,7 @@
 		@if ($currentUser->hasPermission('view_articles'))
 			<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_article" id="submit_create_article" class="btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_article" id="submit_create_article" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

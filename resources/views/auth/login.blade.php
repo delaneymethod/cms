@@ -62,7 +62,7 @@
 							@php ($redirectTo = $redirectTo.'&code='.$code)
 						@endif
 					@endif	
-					<form name="login" id="login" class="login" role="form" method="POST" action="{{ route('login') }}{{ $redirectTo }}">
+					<form name="loginUser" id="loginUser" class="loginUser" role="form" method="POST" action="{{ route('login') }}{{ $redirectTo }}">
 						{{ csrf_field() }}
 						<div class="form-group">
 							<label for="email" class="control-label">Email Address <span class="text-danger">&#42;</span></label>
@@ -70,7 +70,7 @@
 							@if ($errors->has('email'))
 								<span id="helpBlockEmail" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 							@endif
-							<span id="didYouMeanMessage" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
+							<span id="did-you-mean" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
 						</div>
 						<div class="form-group">
 							<label for="password" class="control-label">Password <span class="text-danger">&#42;</span></label>

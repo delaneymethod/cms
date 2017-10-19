@@ -10,6 +10,7 @@
 
 @push('headScripts')
 	@include('cp._partials.headScripts')
+	<script async defer src="/assets/js/zxcvbn.js"></script>
 @endpush
 
 @push('bodyScripts')
@@ -21,7 +22,7 @@
 		@if ($currentUser->hasPermission('view_users'))
 			<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -49,7 +50,12 @@
 						@endif
 						<div class="form-group">
 							<label for="password" class="control-label font-weight-bold">Password <span class="text-danger">&#42;</span></label>
-							<input type="password" name="password" id="password" class="form-control" value="{{ old('password') }}" placeholder="e.g y1Fwc]_C" tabindex="1" autocomplete="off" aria-describedby="helpBlockPassword" required autofocus>
+							<div class="input-group">
+								<input type="password" name="password" id="password" class="form-control" value="{{ old('password') }}" placeholder="e.g y1Fwc]_C" tabindex="1" autocomplete="off" aria-describedby="helpBlockPassword" required autofocus>
+								<span class="input-group-btn">
+									<button type="button" name="hide_show_password" id="hide_show_password" class="btn btn-outline-secondary" title="Hide / Show Password">Show Password</button>
+								</span>
+							</div>
 							@if ($errors->has('password'))
 								<span id="helpBlockPassword" class="form-control-feedback form-text gf-red">- {{ $errors->first('first_name') }}</span>
 							@endif
@@ -58,7 +64,12 @@
 						<div class="spacer"></div>
 						<div class="form-group">
 							<label for="password_confirmation" class="control-label font-weight-bold">Password Confirmation <span class="text-danger">&#42;</span></label>
-							<input type="password" name="password_confirmation" id="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}" placeholder="e.g y1Fwc]_C" tabindex="2" autocomplete="off" aria-describedby="helpBlockPasswordConfirmation" required>
+							<div class="input-group">
+								<input type="password" name="password_confirmation" id="password_confirmation" class="form-control" value="{{ old('password_confirmation') }}" placeholder="e.g y1Fwc]_C" tabindex="2" autocomplete="off" aria-describedby="helpBlockPasswordConfirmation" required>
+								<span class="input-group-btn">
+									<button type="button" name="hide_show_password_confirmation" id="hide_show_password_confirmation" class="btn btn-outline-secondary" title="Hide / Show Password">Show Password</button>
+								</span>
+							</div>
 							@if ($errors->has('password_confirmation'))
 								<span id="helpBlockPasswordConfirmation" class="form-control-feedback form-text gf-red">- {{ $errors->first('password_confirmation') }}</span>
 							@endif

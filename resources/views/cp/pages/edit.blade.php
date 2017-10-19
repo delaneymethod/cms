@@ -60,10 +60,7 @@
 		@if ($currentUser->hasPermission('view_pages'))
 			<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_page" id="submit_edit_page" class="btn btn-primary" title="Save Changes">Save Changes</button>
-		@if ($currentUser->hasPermission('delete_pages') && $page->id != 1)
-			<a href="/cp/pages/{{ $page->id }}/delete" title="Delete Page" class="pull-right btn btn-outline-danger">Delete Page</a>
-		@endif
+		<button type="submit" name="submit_edit_page" id="submit_edit_page" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

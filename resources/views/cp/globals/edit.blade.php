@@ -21,10 +21,7 @@
 		@if ($currentUser->hasPermission('view_globals'))
 			<a href="/cp/globals" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_global" id="submit_edit_global" class="btn btn-primary" title="Save Changes">Save Changes</button>
-		@if ($currentUser->hasPermission('delete_globals'))
-			<a href="/cp/globals/{{ $global->id }}/delete" title="Delete Global" class="pull-right btn btn-outline-danger">Delete Global</a>
-		@endif
+		<button type="submit" name="submit_edit_global" id="submit_edit_global" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

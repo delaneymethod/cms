@@ -23,7 +23,7 @@
 			<a href="/cp/carousels" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
 		<button type="button" name="add_form_group" id="add_form_group" class="btn btn-outline-success add_form_group cancel-button" title="Add Slide">Add Slide</button>
-		<button type="submit" name="submit_create_carousel" id="submit_create_carousel" class="btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_carousel" id="submit_create_carousel" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

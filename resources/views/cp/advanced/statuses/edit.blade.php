@@ -21,10 +21,7 @@
 		@if ($currentUser->hasPermission('view_statuses'))
 			<a href="/cp/locations" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_status" id="submit_edit_status" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
-		@if ($currentUser->hasPermission('delete_statuses'))
-			<a href="/cp/advanced/statuses/{{ $status->id }}/delete" title="Delete Status" class="pull-right btn btn-outline-danger">Delete Status</a>
-		@endif
+		<button type="submit" name="submit_edit_status" id="submit_edit_status" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

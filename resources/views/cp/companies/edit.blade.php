@@ -21,10 +21,7 @@
 		@if ($currentUser->hasPermission('view_companies'))
 			<a href="/cp/companies" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="4" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_company" id="submit_edit_company" class="btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
-		@if ($currentUser->hasPermission('delete_companies') && $company->id != $currentUser->company_id)
-			<a href="/cp/companies/{{ $company->id }}/delete" title="Delete Company" class="pull-right btn btn-outline-danger">Delete Company</a>
-		@endif
+		<button type="submit" name="submit_edit_company" id="submit_edit_company" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

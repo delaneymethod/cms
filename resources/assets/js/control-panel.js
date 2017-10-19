@@ -50,6 +50,8 @@ require('../plugins/redactor/plugins/alignment/alignment');
 
 require('../plugins/redactor/plugins/pagebreak/pagebreak');
 
+/* require('../plugins/redactor/plugins/redbutton'); */
+
 require('../plugins/redactor/plugins/fullscreen');
 
 require('../plugins/redactor/plugins/filemanager');
@@ -81,6 +83,8 @@ require('../plugins/codemirror/modes/xml');
 require('../plugins/jquery-ui/sortable');
 
 require('../plugins/jquery-ui/sortable-nested');
+
+require('../plugins/password-strength');
 
 require('../plugins/datatables/datatables');
 

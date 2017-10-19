@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_pages'))
 			<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_page" id="submit_create_page" class="btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_page" id="submit_create_page" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 

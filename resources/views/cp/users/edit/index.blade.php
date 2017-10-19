@@ -21,16 +21,7 @@
 		@if ($currentUser->hasPermission('view_users'))
 			<a href="/cp/users" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="12" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="btn btn-primary" tabindex="11" title="Save Changes">Save Changes</button>
-		@if ($currentUser->hasPermission('delete_users') && $user->id != $currentUser->id)
-			<a href="/cp/users/{{ $user->id }}/delete" title="Delete User" class="pull-right btn btn-outline-danger">Delete User</a>
-		@endif
-		@if ($currentUser->hasPermission('edit_passwords_users') || $user->id == $currentUser->id)
-			<a href="/cp/users/{{ $user->id }}/edit/password" title="Change Password" class="pull-right btn btn-outline-secondary {{ ($user->id != $currentUser->id) ? 'cancel-button' : '' }}">Change Password</a>
-		@endif
-		@if ($currentUser->hasPermission('impersonate_users') && $user->canBeImpersonated() && $user->id != $currentUser->id)
-			<a href="{{ route('impersonate', $user->id) }}" title="Impersonate User" class="pull-right cancel-button btn btn-outline-impersonate">Impersonate User</a>
-		@endif
+		<button type="submit" name="submit_edit_user" id="submit_edit_user" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="11" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -58,7 +49,6 @@
 						<input type="hidden" name="password" value="{{ $user->password }}">
 						@yield('formButtons')
 						<div class="spacer"></div>
-						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
 							<label for="first_name" class="control-label font-weight-bold">First Name <span class="text-danger">&#42;</span></label>
@@ -85,7 +75,7 @@
 								<span id="helpBlockEmailAddress" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 							@endif
 							<span id="helpBlockEmailAddress" class="form-control-feedback form-text text-muted">- Please enter the email address in lowercase.</span>
-							<span id="didYouMeanMessage" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
+							<span id="did-you-mean" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
 						</div>
 						<div class="spacer"></div>
 						<div class="form-group">

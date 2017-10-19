@@ -25,7 +25,7 @@
 				@include('cp._partials.pageTitle')
 				@if ($currentUser->hasPermission('create_users'))
 					<div class="row">
-						<div class="col-12">
+						<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 							<ul class="list-unstyled list-inline buttons">
 								<li class="list-inline-item"><a href="/cp/users/create" title="Add User" class="btn btn-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add User</a></li>
 							</ul>
@@ -34,7 +34,7 @@
 				@endif
 				<div class="content padding bg-white">
 					<div class="spacer"></div>
-					<table id="datatable" class="table table-striped table-bordered table-hover table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
 								<th class="align-middle">Full Name</th>
@@ -52,7 +52,7 @@
 								<tr class="{{ str_slug($user->status->title) }}">
 									<td class="align-middle">{{ $user->first_name }} {{ $user->last_name }}{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}</td>
 									<td class="align-middle"><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
-									<td class="align-middle">{{ $user->job_title }} {{ $user->canBeImpersonated() ? 'yes' : 'no' }}</td>
+									<td class="align-middle">{{ $user->job_title }}</td>
 									<td class="align-middle">{{ $user->telephone }}</td>
 									<td class="align-middle">{{ $user->mobile }}</td>
 									<td class="align-middle">{{ $user->location->title }}</td>

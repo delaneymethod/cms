@@ -25,7 +25,7 @@
 				@include('cp._partials.pageTitle')
 				@if ($currentUser->hasPermission('create_locations'))
 					<div class="row">
-						<div class="col-12">
+						<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 							<ul class="list-unstyled list-inline buttons">
 								<li class="list-inline-item"><a href="/cp/locations/create" title="Add Location" class="btn btn-success"><i class="icon fa fa-plus" aria-hidden="true"></i>Add Location</a></li>
 							</ul>
@@ -34,7 +34,7 @@
 				@endif
 				<div class="content padding bg-white">	
 					<div class="spacer"></div>
-					<table id="datatable" class="table table-striped table-bordered table-hover table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
 								<th class="align-middle">Title</th>

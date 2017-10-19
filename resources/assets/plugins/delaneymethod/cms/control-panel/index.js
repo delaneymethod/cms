@@ -213,28 +213,13 @@
 		
 		this.attachRedactor = element => {
 			if ($(element).length) {
-				$.Redactor.prototype.redbutton = function() {
-					return {
-						init: function() {
-							const button = this.button.add('red-button', 'Red Button');
-							
-							this.button.addCallback(button, this.redbutton.toggleClasses);
-						},
-						toggleClasses: function() {
-							this.inline.toggleClass('btn');
-							
-							this.inline.toggleClass('btn-danger');
-						}
-					};
-				};
-    
 				const token = window.Laravel.csrfToken;
 				
 				let minHeight = 400;
 				
 				let buttons = ['format', 'bold', 'italic', 'deleted', 'lists', 'image', 'file', 'link', 'horizontalrule'];
 				
-				let plugins = ['codemirror', 'inlinestyle', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video', 'fontcolor', 'properties', 'textexpander', 'redbutton', 'pagebreak'];
+				let plugins = ['codemirror', 'inlinestyle', 'table', 'alignment', 'definedlinks', 'fullscreen', 'filemanager', 'imagemanager', 'video', 'fontcolor', 'properties', 'textexpander', /*'redbutton',*/ 'pagebreak'];
 					
 				if (element == '#excerpt') {
 					minHeight = 100;
@@ -253,7 +238,7 @@
 					'spellcheck': true,
 					'overrideStyles': true,
 					'clickToEdit': false,
-					//'removeNewlines': true,
+					'removeNewlines': true,
 					'replaceTags': {
 						'b': 'strong',
 						'i': 'em',

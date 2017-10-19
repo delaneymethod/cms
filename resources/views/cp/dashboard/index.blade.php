@@ -60,7 +60,7 @@
 					<div class="content padding bg-white">
 						<div class="row stats">
 							@foreach ($statCards as $statCard)
-								<div class="col-12 col-sm-12 col-md-2 col-lg-2 col-xl-2 cols">
+								<div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-2 cols">
 									<a href="{{ $statCard->url }}" title="{{ $statCard->label }}">
 										<div class="stat-card text-center alert" id="{{ $statCard->id }}-card">
 											<h5>{{ $statCard->label }}</h5>

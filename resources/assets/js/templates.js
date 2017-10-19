@@ -38,6 +38,8 @@ require('slick-carousel');
 
 require('bootstrap');
 
+require('../plugins/password-strength');
+
 require('../plugins/datatables/datatables');
 
 require('../plugins/datatables/datatables-bootstrap');

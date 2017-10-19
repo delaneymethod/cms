@@ -261,6 +261,7 @@
 				"link-insert": "Insert link",
 				"link-edit": "Edit link",
 				"link-in-new-tab": "Open link in new tab",
+				"link-calltoaction": "Call to Action (Red Button)",
 				"unlink": "Unlink",
 				"cancel": "Cancel",
 				"close": "Close",
@@ -7587,9 +7588,15 @@
 					$el.attr('href', link.url);
 
 					this.link.target($el, link.target);
+					
+					this.link.callToAction($el, link.callToAction);
 
 					return $el;
 
+				},
+				callToAction: function($el, callToAction)
+				{
+					return (callToAction) ? $el.attr('class', 'btn btn-danger') : $el.removeAttr('class');
 				},
 				target: function($el, target)
 				{
@@ -7640,6 +7647,7 @@
 				// private
 				setModalValues: function(link)
 				{
+					$('#redactor-link-calltoaction').prop('checked', link.callToAction);
 					$('#redactor-link-blank').prop('checked', link.target);
 					$('#redactor-link-url').val(link.url);
 					$('#redactor-link-url-text').val(link.text);
@@ -7745,6 +7753,9 @@
 
 					// target
 					link.target = ($('#redactor-link-blank').prop('checked')) ? true : false;
+					
+					// call to action
+					link.callToAction = ($('#redactor-link-calltoaction').prop('checked')) ? true : false;
 
 					// parse
 					return this.link.parse(link);
@@ -7761,6 +7772,9 @@
 
 					// target
 					link.target = ($el === false) ? link.target : this.link.buildTarget($el);
+					
+					// call to action
+					link.callToAction = ($el === false) ? link.callToAction : this.link.buildCallToAction($el);
 
 					// parse
 					return this.link.parse(link);
@@ -7771,7 +7785,8 @@
 					var link = {
 						url: '',
 						text: (this.selection.is()) ? this.selection.text() : '',
-						target: false
+						target: false,
+						callToAction: false,
 					};
 
 					if ($el !== false)
@@ -7779,6 +7794,7 @@
 						link.url = $el.attr('href');
 						link.text = $el.text();
 						link.target = this.link.buildTarget($el);
+						link.callToAction = this.link.buildCallToAction($el);
 					}
 
 					return link;
@@ -7786,6 +7802,10 @@
 				buildTarget: function($el)
 				{
 					return (typeof $el.attr('target') !== 'undefined' && $el.attr('target') === '_blank') ? true : false;
+				},
+				buildCallToAction: function($el)
+				{
+					return (typeof $el.attr('class') !== 'undefined' && $el.attr('class') === 'btn btn-danger') ? true : false;
 				},
 				removeSelfHostFromUrl: function(url)
 				{
@@ -8300,6 +8320,9 @@
 							+ '</section>'
 							+ '<section>'
 								+ '<label class="checkbox"><input type="checkbox" id="redactor-link-blank"> ' + this.lang.get('link-in-new-tab') + '</label>'
+							+ '</section>'
+							+ '<section>'
+								+ '<label class="checkbox"><input type="checkbox" id="redactor-link-calltoaction"> ' + this.lang.get('link-calltoaction') + '</label>'
 							+ '</section>'
 							+ '<section>'
 								+ '<button id="redactor-modal-button-action">' + this.lang.get('insert') + '</button>'

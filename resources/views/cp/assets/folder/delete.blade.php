@@ -36,7 +36,7 @@
 							@if ($currentUser->hasPermission('view_assets'))
 								<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit_remove_folder_assets" id="submit_remove_folder_assets" class="btn btn-danger" tabindex="1" title="Delete">Delete</button>
+							<button type="submit" name="submit_remove_folder_assets" id="submit_remove_folder_assets" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-danger" tabindex="1" title="Delete">Delete</button>
 						</div>
 					</form>
 				</div>

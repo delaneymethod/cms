@@ -32,7 +32,7 @@
 					<div class="spacer"></div>
 					<form name="createPermissions" id="createPermissions" class="createPermissions" role="form" method="POST" action="/cp/advanced/roles/permissions">
 						{{ csrf_field() }}
-						<table class="permissions table table-hover table-bordered table-striped table-responsive">
+						<table class="permissions table table-hover table-bordered table-striped">
 							<thead>
 								<tr>
 									<th class="align-middle">&nbsp;</th>

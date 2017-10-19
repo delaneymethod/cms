@@ -25,7 +25,7 @@
 				@if ($messages->count() > 0)
                 	@foreach ($messages as $message)
                     	<div class="row">
-							<div class="col-12">
+							<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 								<p id="system-message" class="message {{ $message->type }}">{!! $message->text !!}<a href="javascript:void(0);" title="Hide this message" rel="nofollow" class="pull-right" id="hideMessage"><i class="fa fa-times" aria-hidden="true"></i></a></p>
 							</div>
 						</div>
@@ -47,7 +47,7 @@
 				@include('cp._partials.pageTitle')
 				@if ($currentUser->hasPermission('upload_assets'))
 					<div class="row">
-						<div class="col-12">
+						<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 							<ul class="list-unstyled list-inline buttons">
 								<li class="list-inline-item"><a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-success"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
 								@if ($zipEnabled && count($assets) > 0)
@@ -64,7 +64,7 @@
 				<div class="content padding bg-white">
 					<div class="spacer"></div>
 					<div class="row">
-						<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+						<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 							<ul class="breadcrumbs list-unstyled list-inline">
 								<li class="list-inline-item">You are here:</li>
 								@foreach ($breadcrumbs as $breadcrumb)

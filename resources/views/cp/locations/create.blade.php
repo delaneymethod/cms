@@ -21,7 +21,7 @@
 		@if ($currentUser->hasPermission('view_locations'))
 			<a href="/cp/locations" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="16" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_location" id="submit_create_location" class="btn btn-primary" tabindex="15" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_location" id="submit_create_location" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="15" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 					
