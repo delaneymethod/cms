@@ -5,7 +5,7 @@
 							@endif
 							@if (!empty($article->section1Image))
 								<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
-									<a href="{{ $article->url }}" title="{{ $article->title }}"><img src="{{ $article->section1Image }}" alt="{{ $article->title }}" class="lazyload img-fluid"></a>
+									<a href="{{ $article->url }}" title="{{ $article->title }}"><img src="{{ $article->section1Image }}" alt="{{ $article->title }}" class="img-fluid"></a>
 									<div class="spacer d-block d-sm-block d-md-block d-lg-none d-xl-none"></div>
 								</div>
 							@endif

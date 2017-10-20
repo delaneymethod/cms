@@ -26,7 +26,7 @@
 							<div class="row d-flex h-100 justify-content-center justify-content-sm-end justify-content-md-end justify-content-lg-end justify-content-xl-end">
 								<div class="align-self-center align-self-sm-start align-self-md-end align-self-lg-end align-self-xl-end">
 									<p class="d-block d-sm-none d-md-none d-lg-none d-xl-none">&nbsp;</p>
-									<img src="https://d1g9f3g06ezg82.cloudfront.net/static/images/logos_footer_d5fb7c76e407.png" alt="Logos" class="logos img-fluid">
+									<img src="/assets/img/loading.svg" data-src="'https://d1g9f3g06ezg82.cloudfront.net/static/images/logos_footer_d5fb7c76e407.png'" alt="Logos" class="logos img-fluid">
 								</div>
 							</div>
 						</div>

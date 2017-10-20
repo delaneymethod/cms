@@ -30,13 +30,13 @@ window.FastClick = require('fastclick');
 
 window.Clipboard = require('clipboard');
 
-require('lazyload');
-
 require('bootstrap');
 
 require('bootstrap-datetime-picker');
 
 require('chart.js');
+
+require('../plugins/unveil');
 
 require('../plugins/redactor/redactor');
 
@@ -93,5 +93,9 @@ require('../plugins/datatables/datatables-bootstrap');
 require('../plugins/delaneymethod/browse/index');
 
 require('../plugins/delaneymethod/cms/library');
+
+window.IndexedDB = require('../plugins/delaneymethod/cms/library/idb');
+
+require('../plugins/delaneymethod/cms/library/store');
 
 require('../plugins/delaneymethod/cms/control-panel');

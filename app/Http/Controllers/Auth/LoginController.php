@@ -7,18 +7,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Cart;
 use Illuminate\Http\Request;
 use App\Events\UserLoginEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\{Auth, Session};
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use App\Http\Traits\{CartTrait, PasswordResetTrait};
+use App\Http\Traits\{CartTrait, EmailLoginTrait, PasswordResetTrait};
 
 class LoginController extends Controller
 {
-	use CartTrait, PasswordResetTrait, AuthenticatesUsers;
+	use CartTrait, EmailLoginTrait, PasswordResetTrait, AuthenticatesUsers;
 
 	protected $redirectTo = '/';
 
@@ -34,6 +33,8 @@ class LoginController extends Controller
 	
 	/**
 	 * Override register method in \Illuminate\Foundation\Auth\AuthenticatesUsers.php
+	 *
+	 * Handles an authenticated request to the application.
 	 *
 	 * @param	Request 	$request
 	 * @param 	mixed 		$user
@@ -66,8 +67,15 @@ class LoginController extends Controller
 			$this->deletePasswordReset($user->email);
 		}
 		
+		// If the user has logged in successfully, and they have email login requests pending, just remove them.
+		$emailLogins = $this->getEmailLogin($user->email);
+
+		if (count($emailLogins) > 0) {
+			$this->deleteEmailLoginByEmail($user->email);
+		}
+		
 		// Used to update the frontend / backend UI's
-		UserLoginEvent::dispatch($user);
+		// UserLoginEvent::dispatch($user);
 		
 		// If we are redirecting user back to previous page, then we set the new route here
 		$redirectTo = $request->get('redirectTo');
@@ -87,6 +95,8 @@ class LoginController extends Controller
 	
 	/**
 	 * Override logout method in \Illuminate\Foundation\Auth\AuthenticatesUsers.php
+	 *
+	 * Handles an logout request to the application.
 	 *
 	 * @param	Request 	$request
 	 * @return 	mixed

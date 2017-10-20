@@ -10,9 +10,11 @@ window.$ = window.jQuery = require('jquery');
 
 window.Tether = require('tether');
 
-window.Echo = require('laravel-echo');
+if (window.User) {
+	window.Echo = require('laravel-echo');
 
-window.Pusher = require('pusher-js');
+	window.Pusher = require('pusher-js');
+}
 
 window.Popper = require('popper.js').default;
 
@@ -30,13 +32,13 @@ window.FastClick = require('fastclick');
 
 window.Clipboard = require('clipboard');
 
-require('lazyload');
-
 require('jquery-inview');
 
 require('slick-carousel');
 
 require('bootstrap');
+
+require('../plugins/unveil');
 
 require('../plugins/password-strength');
 
@@ -45,5 +47,9 @@ require('../plugins/datatables/datatables');
 require('../plugins/datatables/datatables-bootstrap');
 
 require('../plugins/delaneymethod/cms/library');
+
+window.IndexedDB = require('../plugins/delaneymethod/cms/library/idb');
+
+require('../plugins/delaneymethod/cms/library/store');
 
 require('../plugins/delaneymethod/cms/templates');

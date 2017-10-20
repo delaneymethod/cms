@@ -1,3 +1,4 @@
+{{--
 @if ($authenticated)
 	<script async>
 	'use strict';
@@ -15,3 +16,4 @@
 	}
 	</script>
 @endif
+--}}

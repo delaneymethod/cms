@@ -49,20 +49,29 @@
 		 		$('.sidebar').toggleClass('d-block d-sm-block d-md-none d-lg-none d-xl-none');
 			});
 			
-			lazyload();
+			$('.img-fluid').unveil(0, function() {
+				$(this).on('load', function() {
+					this.style.opacity = 1;
+				});
+			});
+			
+			/* Lookup for images in the viewport that haven't been "unveiled" yet */
+			$(window).trigger('lookup');
 			
 			window.FastClick.attach(document.body);
 		};
 		
 		this.loadListeners = () => {
-			window.Pusher.logToConsole = false;
+			if (window.User) {
+				window.Pusher.logToConsole = false;
 			
-			window.Echo = new Echo({
-				broadcaster: 'pusher',
-				key: '7659ca498a8f30edbbc3',
-				cluster: 'eu',
-				encrypted: false
-			});
+				window.Echo = new Echo({
+					broadcaster: 'pusher',
+					key: '7659ca498a8f30edbbc3',
+					cluster: 'eu',
+					encrypted: false
+				});
+			}
 			
 			/* Checks the page for a form and email field so we can check the email address for typos and offers fixes/suggestions if any are found. */
 			if ($('form').length && $('[name="email"]').length) {
@@ -218,12 +227,75 @@
 				const firstPart = shortString.substring(0, i);
 				
 				const secondPart = shortString.substring(i);
-		
+				
 				/* Test for wrong letter */
 				const wrongLetterRegEx = new RegExp(`${firstPart}.${secondPart.substring(1)}`);
 				
 				if (wrongLetterRegEx.test(longString)) {
-					return longString.replace(wrongLetterRegEx, shortString);
+					let typo = longString.replace(wrongLetterRegEx, shortString);
+					
+					/* Try to be even cleverer and correct TLD typos after applying original fixes */
+					typo = typo.replace('es', '.es');
+					typo = typo.replace('..es', '.es');
+
+					typo = typo.replace('fr', '.fr');
+					typo = typo.replace('..fr', '.fr');
+
+					typo = typo.replace('it', '.it');
+					typo = typo.replace('..it', '.it');
+
+					typo = typo.replace('de', '.de');
+					typo = typo.replace('..de', '.de');
+
+					typo = typo.replace('be', '.be');
+					typo = typo.replace('..be', '.be');
+
+					typo = typo.replace('nl', '.nl');
+					typo = typo.replace('..nl', '.nl');
+
+					typo = typo.replace('no', '.no');
+					typo = typo.replace('..no', '.no');
+
+					typo = typo.replace('ie', '.ie');
+					typo = typo.replace('..ie', '.ie');
+					
+					typo = typo.replace('co.uk', '.co.uk');
+					typo = typo.replace('..co.uk', '.co.uk');
+					
+					typo = typo.replace('com', '.com');
+					typo = typo.replace('..com', '.com');
+					
+					typo = typo.replace('org', '.org');
+					typo = typo.replace('..org', '.org');
+					
+					typo = typo.replace('net', '.net');
+					typo = typo.replace('..net', '.net');
+					
+					typo = typo.replace('uk', '.uk');
+					typo = typo.replace('..uk', '.uk');
+					
+					typo = typo.replace('eu', '.eu');
+					typo = typo.replace('..eu', '.eu');
+					
+					typo = typo.replace('ch', '.ch');
+					typo = typo.replace('..ch', '.ch');
+					
+					typo = typo.replace('au', '.au');
+					typo = typo.replace('..au', '.au');
+					
+					typo = typo.replace('nz', '.nz');
+					typo = typo.replace('..nz', '.nz');
+					
+					typo = typo.replace('gov', '.gov');
+					typo = typo.replace('..gov', '.gov');
+					
+					typo = typo.replace('info', '.info');
+					typo = typo.replace('..info', '.info');
+					
+					typo = typo.replace('biz', '.biz');
+					typo = typo.replace('..biz', '.biz');
+					
+					return typo;
 				}
 
 				/* Test for extra letter */
@@ -260,7 +332,7 @@
 		};
 
 		this.checkForDomainTypo = userEmail => {
-			const domains = ['gmail', 'hotmail', 'outlook', 'yahoo', 'icloud', 'mail', 'zoho', 'me', 'btinternet', 'delaneymethod', 'grampianfasteners'];
+			const domains = ['gmail', 'hotmail', 'outlook', 'yahoo', 'icloud', 'mail', 'zoho', 'btinternet', 'delaneymethod', 'grampianfasteners'];
 			
 			const [leftPart, rightPart] = userEmail.split('@');
 
@@ -268,7 +340,7 @@
 				const domain = domains[i];
 			
 				const result = this.checkForCloseMatch(rightPart, domain);
-			
+				
 				if (result) {
 					return `${leftPart}@${result}`;
 				}
@@ -304,9 +376,34 @@
 			];
 		
 			typo = commonTypos.find(typo => typo.pattern.test(userInput));
-		
+			
 			if (typo) {
-				return typo.fix(userInput);
+				let correction = typo.fix(userInput);
+				
+				/* Try to be even cleverer and correct TLD typos after applying original fixes */
+				correction = correction.replace('es.com', '.es');
+				correction = correction.replace('fr.com', '.fr');
+				correction = correction.replace('it.com', '.it');
+				correction = correction.replace('de.com', '.de');
+				correction = correction.replace('nl.com', '.nl');
+				correction = correction.replace('be.com', '.be');
+				correction = correction.replace('no.com', '.no');
+				correction = correction.replace('ie.com', '.ie');
+				correction = correction.replace('com.com', '.com');
+				correction = correction.replace('couk.com', '.co.uk');
+				correction = correction.replace('org.com', '.org');
+				correction = correction.replace('net.com', '.net');
+				correction = correction.replace('uk.com', '.uk');
+				correction = correction.replace('eu.com', '.eu');
+				correction = correction.replace('ch.com', '.ch');
+				correction = correction.replace('au.com', '.au');
+				correction = correction.replace('nz.com', '.nz');
+				correction = correction.replace('gov.com', '.gov');
+				correction = correction.replace('info.com', '.info');
+				correction = correction.replace('biz.com', '.biz');
+				correction = correction.replace('co.uk.co.uk', '.co.uk');
+				
+				return correction;
 			}
 			
 			return '';
@@ -375,6 +472,39 @@
 				console.error('Trigger:', event.trigger);
 			});
 		};
+		
+		this.attachServiceWorker = () => {
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.register('/assets/js/service-worker.js').then(registered => {
+					if ('sync' in registered) {
+						/* Contact form - if the user goes offline or loses network connection and clicks submit, grab the form data, save it locally and once back online again, try and send the message. */
+						$('#contactForm').on('submit', event => {
+							event.preventDefault();
+							
+							let formData = {
+								'firstName': $('#first_name').val(),
+								'lastName': $('#last_name').val(),
+								'email': $('#email').val(),
+								'telephone': $('#telephone').val(),
+								'subject': $('#subject').val(),
+								'message': $('#message').val()
+							};
+							
+							window.CMS.Library.Store = {};
+							
+							window.CMS.Library.Store.outbox('readwrite')
+								.then(outbox => outbox.put(formData))
+								.then(() => registered.sync.register('outbox'))
+								.catch(error => {
+									console.error(error);
+								
+									$('#contactForm').submit();
+								});
+						});
+					}
+				}).catch(error => console.error(error));
+			}
+		};
 
 		this.init = () => {
 			console.info(this.name + ' v' + this.version + ' is ready!');
@@ -405,6 +535,8 @@
 			this.attachClipboard();
 			
 			this.attachDataTable('#datatable');
+			
+			/* this.attachServiceWorker(); */
 			
 			return this;
 		};

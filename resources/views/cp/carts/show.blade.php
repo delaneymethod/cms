@@ -49,7 +49,7 @@
 									@foreach ($cart->cartItems as $cartItem)
 										@foreach ($cartItem['product_commodities'] as $productCommodity)
 											<tr>
-												<td class="align-middle text-center"><a href="{{ $cartItem['product_url'] }}" title="{{ $cartItem['product_title'] }}" target="_blank" class="text-gf-info"><img data-src="{{ $cartItem['product_image_url'] }}" class="lazyload img-fluid" width="100px" alt="{{ $cartItem['product_title'] }}"></a></td>
+												<td class="align-middle text-center"><a href="{{ $cartItem['product_url'] }}" title="{{ $cartItem['product_title'] }}" target="_blank" class="text-gf-info"><img data-src="'{{ $cartItem['product_image_url'] }}'" class="img-fluid" width="100px" alt="{{ $cartItem['product_title'] }}"></a></td>
 												<td class="align-middle">{{ $productCommodity['title'] }}</td>
 												<td class="align-middle text-center">{{ $productCommodity['quantity'] }}</td>
 											</tr>

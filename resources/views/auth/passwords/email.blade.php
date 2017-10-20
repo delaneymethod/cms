@@ -62,7 +62,7 @@
 							@if ($errors->has('email'))
 								<span id="helpBlockFirstName" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 							@endif
-							<span id="did-you-mean" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
+							<span id="did-you-mean" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a>?</span>
 						</div>
 						<div class="spacer"></div>
 						<div class="form-group text-center text-sm-center text-md-left text-lg-left text-xl-left">

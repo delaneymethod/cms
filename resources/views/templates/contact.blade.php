@@ -60,7 +60,7 @@
 									<div class="spacer"></div>
 									<h4 class="text-center text-sm-center text-md-left text-lg-left text-xl-left">Enquiry Form</h4>
 									<div class="spacer"></div>
-									<form name="contact" id="contact" class="contact" role="form" method="POST" action="/contact">
+									<form name="contactForm" id="contactForm" class="contactForm" role="form" method="POST" action="/contact">
 										{{ csrf_field() }}
 										<div class="form-group">
 											<label for="first_name" class="control-label">First Name <span class="text-danger">&#42;</span></label>
@@ -84,7 +84,7 @@
 											@if ($errors->has('email'))
 												<span id="helpBlockEmail" class="form-control-feedback form-text gf-red">- {{ $errors->first('email') }}</span>
 											@endif
-											<span id="did-you-mean" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a> ?<br>- Click to fix your mistake.</span>
+											<span id="did-you-mean" class="form-control-feedback form-text gf-red">- Did you mean <a href="javascript:void(0);" title="Click to fix your mistake." rel="nofollow"></a>?</span>
 										</div>
 										<div class="spacer"></div>
 										<div class="form-group">

@@ -16,11 +16,18 @@
 |
 */
 
+// FRONT END ROUTES
+
+// Authentication routes
 Auth::routes();
 
-Route::impersonate();
+// Email Login Routes
+Route::get('/login/email', 'Auth\EmailLoginController@showLoginForm');
+Route::get('/login/email/{token}', 'Auth\EmailLoginController@authenticate');
+Route::post('/login/email', 'Auth\EmailLoginController@login');
 
-// FRONT END ROUTES
+// Impersonate routes
+Route::impersonate();
 
 // Cart routes
 Route::redirect('/cart/checkout', '/cart/checkout/step-1', 301);

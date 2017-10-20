@@ -20,7 +20,7 @@
 							</div>
 							@if (!empty($productManufacturer->logo_image))
 								<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 text-center order-1 order-sm-1 order-md-1 order-lg-2 order-xl-2">
-									<a href="{{ $productManufacturer->url }}" title="{{ $productManufacturer->title }}"><img src="{{ $productManufacturer->image_url }}" alt="{{ $productManufacturer->title }} Logo" class="lazyload img-fluid"></a>
+									<a href="{{ $productManufacturer->url }}" title="{{ $productManufacturer->title }}"><img src="{{ $productManufacturer->image_url }}" alt="{{ $productManufacturer->title }} Logo" class="img-fluid"></a>
 									<div class="spacer very-tall d-block d-sm-block d-md-block d-lg-none d-xl-none"></div>
 								</div>
 							@endif

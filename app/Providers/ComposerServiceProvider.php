@@ -77,9 +77,9 @@ class ComposerServiceProvider extends ServiceProvider
 						$footerLinksRight->push($page);
 					});
 				
-					$specialViews = ['auth.login', 'auth.register', 'auth.passwords.email', 'auth.passwords.reset', 'errors::403', 'errors::404', 'errors::429', 'errors::500', 'errors::503'];
+					$specialViews = ['auth.login', 'auth.email.login', 'auth.register', 'auth.passwords.email', 'auth.passwords.reset', 'errors::403', 'errors::404', 'errors::410', 'errors::429', 'errors::500', 'errors::503'];
 				
-					$specialTitles = ['Login', 'Register', 'Reset Password', 'Set Password', '403 Error', '404 Error', '429 Error', '500 Error', '503 Error'];
+					$specialTitles = ['Login', 'Email Login', 'Register', 'Reset Password', 'Set Password', '403 Error', '404 Error', '410 Error', '429 Error', '500 Error', '503 Error'];
 				
 					$found = array_search($view->getName(), $specialViews);
 				

@@ -43,6 +43,8 @@ b. If the item is not in stock and we are using cost price then the price is onl
 
 
 
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --user-data-dir=/tmp/foo --ignore-certificate-errors --unsafely-treat-insecure-origin-as-secure=https://www.cms.local/
+
 
 
 
@@ -77,6 +79,11 @@ Redactor Image and File Models
 
 - Improve layout of files. See https://imperavi.com/redactor/examples/plugin-modal/
 
+
+Setup Marketing Page for CMS
+
+https://mrr.io/privacy
+https://mrr.io/terms
 
 
 

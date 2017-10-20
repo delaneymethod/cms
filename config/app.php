@@ -183,19 +183,9 @@ return [
         App\Providers\RouteServiceProvider::class,
         
 		// Added by Sean
-		Barryvdh\Cors\ServiceProvider::class,
-		Barryvdh\Snappy\ServiceProvider::class,
-		Baum\Providers\BaumServiceProvider::class,
-		Spatie\Backup\BackupServiceProvider::class,
 		App\Providers\ComposerServiceProvider::class,
 		App\Providers\CartHelperServiceProvider::class,
-		TeamTNT\Scout\TNTSearchScoutServiceProvider::class,
 		App\Providers\DirectoryHelperServiceProvider::class,
-		Lab404\Impersonate\ImpersonateServiceProvider::class,
-		Propaganistas\LaravelIntl\IntlServiceProvider::class,
-		Spatie\UptimeMonitor\UptimeMonitorServiceProvider::class,
-		Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
-		Propaganistas\LaravelPhone\LaravelPhoneServiceProvider::class,
 		
 	],
 

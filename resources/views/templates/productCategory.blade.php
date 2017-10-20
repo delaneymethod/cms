@@ -28,7 +28,7 @@
 					@foreach ($productCategories as $productCategory)
 						<div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 align-self-center text-center">
 							<a href="{{ $productCategory->url }}" title="{{ $productCategory->title }}">
-								<img src="/assets/img/loading.svg" data-src="{{ $productCategory->image_url }}" class="lazyload img-fluid" alt="{{ $productCategory->title }}">
+								<img src="/assets/img/loading.svg" data-src="'{{ $productCategory->image_url }}'" class="img-fluid" alt="{{ $productCategory->title }}">
 								<div class="spacer tall"></div>
 								<h4>{{ $productCategory->title }}</h4>
 							</a>
@@ -58,7 +58,7 @@
 						</div>
 						@foreach ($products as $product)
 							<div class="row">
-								<div class="col-12 col-sm-6 col-md-3 col-lg-2 col-xl-2 align-self-center text-center"><a href="{{ $product->url }}" title="{{ $product->short_name }}"><img src="/assets/img/loading.svg" data-src="{{ $product->image_url }}" class="lazyload img-fluid" alt="{{ $product->short_name }}"></a></div>
+								<div class="col-12 col-sm-6 col-md-3 col-lg-2 col-xl-2 align-self-center text-center"><a href="{{ $product->url }}" title="{{ $product->short_name }}"><img src="/assets/img/loading.svg" data-src="'{{ $product->image_url }}'" class="img-fluid" alt="{{ $product->short_name }}"></a></div>
 								<div class="col-12 col-sm-6 col-md-9 col-lg-{{ $descriptionColumnWidth }} col-xl-{{ $descriptionColumnWidth }} text-center text-sm-left text-md-left text-lg-left text-xl-left align-self-center">
 									<a href="{{ $product->url }}" title="{{ $product->short_name }}">{{ $product->title }}</a>
 									<ul class="list-unstyled d-block d-sm-block d-mg-none d-lg-none d-xl-none" style="margin-top:10px;">

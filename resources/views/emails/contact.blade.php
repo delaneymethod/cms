@@ -18,7 +18,6 @@
 					<tr>
 						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"><strong>Telephone:</strong><br>{{ $contactTelephone }}</td>
 					</tr>
-					
 					<tr>
 						<td align="left" valign="top" style="padding: 15px 0 15px 0;font-family: Arial, sans-serif;font-size: 14px;line-height: 20px;"><strong>Message:</strong><br>{{ $contactMessage }}</td>
 					</tr>

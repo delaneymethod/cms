@@ -40,7 +40,7 @@
 									<tbody>
 										@foreach ($productCommodities->sortBy('code') as $productCommodity)
 											<tr id="product_commodity_{{ $productCommodity->id }}">
-												<td class="align-middle text-center"><a href="{{ $productCommodity->product->url }}" title="{{ $productCommodity->product->title }}" target="_blank">{{ $productCommodity->short_description }}</a></td>
+												<td class="align-middle text-center"><a href="{{ $productCommodity->product->url }}" title="{{ $productCommodity->product->title }}">{{ $productCommodity->short_description }}</a></td>
 												<td class="align-middle text-center">{{ $productCommodity->code }}</td>
 												@if ($authenticated)
 													<td class="align-middle text-center price text-muted"><img src="/assets/img/loading.svg" class="img-fluid" alt="Please wait while we load the data&hellip;"></td>
@@ -116,7 +116,7 @@
 							@foreach ($products as $product)
 								<div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 align-self-center text-center">
 									<a href="{{ $product->url }}" title="{{ $product->title }}">
-										<img src="/assets/img/loading.svg" data-src="{{ $product->image_url }}" class="lazyload img-fluid" alt="{{ $product->title }}">
+										<img src="/assets/img/loading.svg" data-src="'{{ $product->image_url }}'" class="img-fluid" alt="{{ $product->title }}">
 										<div class="spacer tall"></div>
 										<h4>{{ $product->title }}</h4>
 									</a>
@@ -146,7 +146,7 @@
 						@foreach ($productCategories as $productCategory)
 							<div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 align-self-center text-center">
 								<a href="{{ $productCategory->url }}" title="{{ $productCategory->title }}">
-									<img src="/assets/img/loading.svg" data-src="{{ $productCategory->image_url }}" class="lazyload img-fluid" alt="{{ $productCategory->title }}">
+									<img src="/assets/img/loading.svg" data-src="'{{ $productCategory->image_url }}'" class="img-fluid" alt="{{ $productCategory->title }}">
 									<div class="spacer tall"></div>
 									<h4>{{ $productCategory->title }}</h4>
 								</a>

@@ -170,8 +170,8 @@
 			return true;
 		};
 		
+		/*
 		this.showWelcomeBackMessage = user => {
-			/*
 			$('#my-account').tooltip('show');
 			
 			$('#my-account').on('shown.bs.tooltip', () => {
@@ -183,8 +183,8 @@
 			$('#my-account').on('hidden.bs.tooltip', () => {
 				$('#my-account').attr('data-original-title', '<p style="margin-top: 10px;">Click here to access your Account and the Customer Dashboard.</p>');
 			});
-			*/
 		};
+		*/
 		
 		this.waitForGoogleMaps = () => {
 			/*
