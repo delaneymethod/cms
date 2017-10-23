@@ -473,39 +473,6 @@
 			});
 		};
 		
-		this.attachServiceWorker = () => {
-			if ('serviceWorker' in navigator) {
-				navigator.serviceWorker.register('/assets/js/service-worker.js').then(registered => {
-					if ('sync' in registered) {
-						/* Contact form - if the user goes offline or loses network connection and clicks submit, grab the form data, save it locally and once back online again, try and send the message. */
-						$('#contactForm').on('submit', event => {
-							event.preventDefault();
-							
-							let formData = {
-								'firstName': $('#first_name').val(),
-								'lastName': $('#last_name').val(),
-								'email': $('#email').val(),
-								'telephone': $('#telephone').val(),
-								'subject': $('#subject').val(),
-								'message': $('#message').val()
-							};
-							
-							window.CMS.Library.Store = {};
-							
-							window.CMS.Library.Store.outbox('readwrite')
-								.then(outbox => outbox.put(formData))
-								.then(() => registered.sync.register('outbox'))
-								.catch(error => {
-									console.error(error);
-								
-									$('#contactForm').submit();
-								});
-						});
-					}
-				}).catch(error => console.error(error));
-			}
-		};
-
 		this.init = () => {
 			console.info(this.name + ' v' + this.version + ' is ready!');
 			
@@ -535,8 +502,6 @@
 			this.attachClipboard();
 			
 			this.attachDataTable('#datatable');
-			
-			/* this.attachServiceWorker(); */
 			
 			return this;
 		};

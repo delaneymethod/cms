@@ -48,8 +48,4 @@ require('../plugins/datatables/datatables-bootstrap');
 
 require('../plugins/delaneymethod/cms/library');
 
-window.IndexedDB = require('../plugins/delaneymethod/cms/library/idb');
-
-require('../plugins/delaneymethod/cms/library/store');
-
 require('../plugins/delaneymethod/cms/templates');

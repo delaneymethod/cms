@@ -1,5 +1,11 @@
 
 
+Switch px to rem
+
+https://github.com/jupeter/clean-code-php
+
+
+
 
 
 Locations have shipping methods defined

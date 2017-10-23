@@ -94,8 +94,4 @@ require('../plugins/delaneymethod/browse/index');
 
 require('../plugins/delaneymethod/cms/library');
 
-window.IndexedDB = require('../plugins/delaneymethod/cms/library/idb');
-
-require('../plugins/delaneymethod/cms/library/store');
-
 require('../plugins/delaneymethod/cms/control-panel');
