@@ -1387,16 +1387,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.5.18",
+            "version": "v5.5.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "1cc21baac11551377734b8c17ead17db4c34fe21"
+                "reference": "c678100e84934ec85c9f8bc26bd0a60222682719"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/1cc21baac11551377734b8c17ead17db4c34fe21",
-                "reference": "1cc21baac11551377734b8c17ead17db4c34fe21",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/c678100e84934ec85c9f8bc26bd0a60222682719",
+                "reference": "c678100e84934ec85c9f8bc26bd0a60222682719",
                 "shasum": ""
             },
             "require": {
@@ -1514,7 +1514,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2017-10-19T12:50:26+00:00"
+            "time": "2017-10-25T19:10:45+00:00"
         },
         {
             "name": "laravel/scout",
@@ -2899,22 +2899,22 @@
         },
         {
             "name": "propaganistas/laravel-intl",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Propaganistas/Laravel-Intl.git",
-                "reference": "3ef1924d331d74c9ed93d3a8aa8606e8375275b7"
+                "reference": "f429154cd49ba225427cc2c423a8a66f10f7ad97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Propaganistas/Laravel-Intl/zipball/3ef1924d331d74c9ed93d3a8aa8606e8375275b7",
-                "reference": "3ef1924d331d74c9ed93d3a8aa8606e8375275b7",
+                "url": "https://api.github.com/repos/Propaganistas/Laravel-Intl/zipball/f429154cd49ba225427cc2c423a8a66f10f7ad97",
+                "reference": "f429154cd49ba225427cc2c423a8a66f10f7ad97",
                 "shasum": ""
             },
             "require": {
                 "commerceguys/intl": "^0.7.3",
                 "jenssegers/date": "^3.2",
-                "laravel/framework": "^5.0",
+                "laravel/framework": ">=5.0,<5.6",
                 "php": ">=5.5.0"
             },
             "require-dev": {
@@ -2922,6 +2922,13 @@
                 "phpunit/phpunit": "^4.0|^5.0"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Propaganistas\\LaravelIntl\\IntlServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Propaganistas\\LaravelIntl\\": "src/"
@@ -2948,7 +2955,7 @@
                 "l10n",
                 "laravel"
             ],
-            "time": "2017-01-29T09:10:38+00:00"
+            "time": "2017-10-25T09:18:02+00:00"
         },
         {
             "name": "propaganistas/laravel-phone",
@@ -4586,26 +4593,26 @@
         },
         {
             "name": "spatie/ssl-certificate",
-            "version": "1.11.0",
+            "version": "1.11.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/ssl-certificate.git",
-                "reference": "35c8b2755868f2d5317fec46d6b070dcd66e2d3b"
+                "reference": "b08f83f2e0322781d4cacb44d7bd2fabe3943202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/ssl-certificate/zipball/35c8b2755868f2d5317fec46d6b070dcd66e2d3b",
-                "reference": "35c8b2755868f2d5317fec46d6b070dcd66e2d3b",
+                "url": "https://api.github.com/repos/spatie/ssl-certificate/zipball/b08f83f2e0322781d4cacb44d7bd2fabe3943202",
+                "reference": "b08f83f2e0322781d4cacb44d7bd2fabe3943202",
                 "shasum": ""
             },
             "require": {
                 "nesbot/carbon": "^1.15",
                 "php": "^7.0",
-                "spatie/macroable": "^1.0",
-                "spatie/phpunit-snapshot-assertions": "^1.0"
+                "spatie/macroable": "^1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "5.*"
+                "phpunit/phpunit": "5.*",
+                "spatie/phpunit-snapshot-assertions": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -4634,7 +4641,7 @@
                 "spatie",
                 "ssl-certificate"
             ],
-            "time": "2017-09-18T10:01:52+00:00"
+            "time": "2017-10-26T05:53:18+00:00"
         },
         {
             "name": "spatie/temporary-directory",

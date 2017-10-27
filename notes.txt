@@ -2,7 +2,11 @@
 
 Switch px to rem
 
+add UK flag next to price and price per
+
 https://github.com/jupeter/clean-code-php
+
+add arrow to toolip
 
 
 
