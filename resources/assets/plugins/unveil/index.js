@@ -4,18 +4,18 @@
  * @license   https://www.delaneymethod.com/cms/license
  */
 
-;(function($) {
+;($ => {
 	$.fn.unveil = function(threshold, callback) {
-		var th = threshold || 0;
+		const th = threshold || 0;
 		
-		var attribute = window.devicePixelRatio > 1 ? 'data-src-retina' : 'data-src';
+		const attribute = window.devicePixelRatio > 1 ? 'data-src-retina' : 'data-src';
 		
-		var images = this;
+		let images = this;
 		
-		var loaded = false;
+		let loaded = false;
 	
 		this.one('unveil', function() {
-			var source = this.getAttribute(attribute);
+			let source = this.getAttribute(attribute);
 			
 			source = source || this.getAttribute('src');
 			
@@ -33,18 +33,18 @@
 		});
 	
 		function unveil () {
-			var inview = images.filter(function() {
+			let inview = images.filter(function() {
 				if ($(this).is(':hidden')) {
 					return;
 				}
 				
-				var wt = $(window).scrollTop();
+				const wt = $(window).scrollTop();
 				
-				var wb = wt + $(window).height();
+				const wb = wt + $(window).height();
 				
-				var et = $(this).offset().top;
+				const et = $(this).offset().top;
 				
-				var eb = et + $(this).height();
+				const eb = et + $(this).height();
 	
 				return eb >= wt - th && et <= wb + th;
 			});

@@ -111,7 +111,7 @@
 								<tbody>
 									@foreach ($order->product_commodities as $productCommodity)
 										<tr>
-											<td class="align-middle text-center"><a href="{{ $productCommodity->product->url }}" title="{{ $productCommodity->product->title }}" target="_blank" class="text-gf-info"><img data-src="'{{ $productCommodity->product->image_url }}'" class="img-fluid" width="100px" alt="{{ $productCommodity->product->title }}"></a></td>
+											<td class="align-middle text-center"><a href="{{ $productCommodity->product->url }}" title="{{ $productCommodity->product->title }}" target="_blank" class="text-gf-info"><img src="/assets/img/loading.svg" data-src="{{ $productCommodity->product->image_url }}" data-src-retina="{{ $productCommodity->product->image_url }}" class="img-fluid" width="100px" alt="{{ $productCommodity->product->title }}"></a></td>
 											<td class="align-middle">{{ $productCommodity->product->title }}</td>
 											<td class="align-middle">{{ $productCommodity->title }}</td>
 											<td class="align-middle text-center">{{ $productCommodity->pivot->quantity }}</td>

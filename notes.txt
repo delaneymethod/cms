@@ -23,6 +23,15 @@ Locations have shipping methods defined
 
 
 
+try_files $uri $uri/ /index.php?$query_string;
+
+rewrite ^/index\.php(.*) $1 permanent;
+
+
+
+
+
+
 ### To Do ###
 
 Pricing and Quantities 

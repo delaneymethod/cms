@@ -116,7 +116,7 @@
 							@foreach ($products as $product)
 								<div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 align-self-center text-center">
 									<a href="{{ $product->url }}" title="{{ $product->title }}">
-										<img src="/assets/img/loading.svg" data-src="'{{ $product->image_url }}'" class="img-fluid" alt="{{ $product->title }}">
+										<img src="/assets/img/loading.svg" data-src="{{ $product->image_url }}" data-src-retina="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->title }}">
 										<div class="spacer tall"></div>
 										<h4>{{ $product->title }}</h4>
 									</a>
@@ -146,7 +146,7 @@
 						@foreach ($productCategories as $productCategory)
 							<div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xl-3 align-self-center text-center">
 								<a href="{{ $productCategory->url }}" title="{{ $productCategory->title }}">
-									<img src="/assets/img/loading.svg" data-src="'{{ $productCategory->image_url }}'" class="img-fluid" alt="{{ $productCategory->title }}">
+									<img src="/assets/img/loading.svg" data-src="{{ $productCategory->image_url }}" data-src-retina="{{ $productCategory->image_url }}" class="img-fluid" alt="{{ $productCategory->title }}">
 									<div class="spacer tall"></div>
 									<h4>{{ $productCategory->title }}</h4>
 								</a>

@@ -50,7 +50,7 @@
 				</div>
 				@if (!empty($product->image_url))
 					<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-center text-lg-center text-xl-center align-self-start">
-						<img src="/assets/img/loading.svg" data-src="'{{ $product->image_url }}'" class="img-fluid" alt="{{ $product->title }}">
+						<img src="/assets/img/loading.svg" data-src="{{ $product->image_url }}" data-src-retina="{{ $product->image_url }}" class="img-fluid" alt="{{ $product->title }}">
 					</div>
 				@endif
 			</div>
@@ -74,7 +74,7 @@
 				</div>
 				<div class="row d-flex h-100 justify-content-center justify-content-sm-center justify-content-md-start justify-content-lg-start justify-content-xl-start">
 					<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 align-self-center text-center text-sm-center text-md-left text-lg-left text-xl-left">
-						<a href="{{ $product->product_manufacturer->url }}" title="{{ $product->product_manufacturer->title }}"><img data-src="'{{ $product->product_manufacturer->image_url }}'" class="img-fluid" alt="{{ $product->product_manufacturer->title }} Logo"></a>
+						<a href="{{ $product->product_manufacturer->url }}" title="{{ $product->product_manufacturer->title }}"><img src="/assets/img/loading.svg" data-src="{{ $product->product_manufacturer->image_url }}" data-src-retina="{{ $product->product_manufacturer->image_url }}" class="img-fluid" alt="{{ $product->product_manufacturer->title }} Logo"></a>
 					</div>
 				</div>
 				<div class="row">

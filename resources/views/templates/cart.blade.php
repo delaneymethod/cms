@@ -66,7 +66,7 @@
 							<tbody>
 								@foreach ($cart->product_commodities as $productCommodity)
 									<tr>
-										<td class="align-middle d-none d-sm-none d-md-block d-lg-block d-xl-block text-center" style="height: 122px;"><a href="{{ $productCommodity->model->product->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-blue-gray d-flex h-100 justify-content-center"><img src="/assets/img/loading.svg" data-src="'{{ $productCommodity->model->product->image_url }}'" class="img-fluid align-self-center" width="100px" alt="{{ $productCommodity->model->product->title }}"></a></td>
+										<td class="align-middle d-none d-sm-none d-md-block d-lg-block d-xl-block text-center" style="height: 122px;"><a href="{{ $productCommodity->model->product->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-blue-gray d-flex h-100 justify-content-center"><img src="/assets/img/loading.svg" data-src="{{ $productCommodity->model->product->image_url }}" data-src-retina="{{ $productCommodity->model->product->image_url }}" class="img-fluid align-self-center" width="100px" alt="{{ $productCommodity->model->product->title }}"></a></td>
 										<td class="align-middle"><a href="{{ $productCommodity->model->product->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodity->model->product->title }}" class="text-gf-blue-gray">{{ $productCommodity->name }}</a><br>Code: <span class="font-italic">{{ $productCommodity->model->code }}</span></td>
 										<td class="align-middle text-center">
 											@component('_components.cart.updateProductCommodity', [
@@ -222,7 +222,7 @@
 								@foreach ($wishlistCart->product_commodities as $productCommodity)
 									@php ($productCommodityProduct = $productCommodity->model->product)
 									<tr>
-										<td class="align-middle text-center d-none d-sm-none d-md-block d-lg-block d-xl-block" style="height: 122px;"><a href="{{ $productCommodityProduct->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodityProduct->title }}" class="text-gf-blue-gray d-flex h-100 justify-content-center"><img data-src="'{{ $productCommodityProduct->image_url }}'" class="img-fluid align-self-center" width="100px" alt="{{ $productCommodityProduct->title }}"></a></td>
+										<td class="align-middle text-center d-none d-sm-none d-md-block d-lg-block d-xl-block" style="height: 122px;"><a href="{{ $productCommodityProduct->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodityProduct->title }}" class="text-gf-blue-gray d-flex h-100 justify-content-center"><img src="/assets/img/loading.svg" data-src="{{ $productCommodityProduct->image_url }}" data-src-retina="{{ $productCommodityProduct->image_url }}" class="img-fluid align-self-center" width="100px" alt="{{ $productCommodityProduct->title }}"></a></td>
 										<td class="align-middle text-left"><a href="{{ $productCommodityProduct->url }}#{{ $productCommodity->model->code }}" title="{{ $productCommodityProduct->title }}" class="text-gf-blue-gray">{{ $productCommodity->name }}</a><br>Code: <span class="font-italic">{{ $productCommodity->model->code }}</span></td>
 										<td class="align-middle text-center">	
 											@component('_components.cart.addProductCommodity', [
