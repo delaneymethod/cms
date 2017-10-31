@@ -458,12 +458,6 @@
 			
 			clipboard.on('success', event => {
 				event.clearSelection();
-				
-				$('#clipboard-tooltip').tooltip('show');
-				
-				$('#clipboard-tooltip').on('hidden.bs.tooltip', () => {
-					$('#clipboard-tooltip').tooltip('dispose');
-				});
 			});
 			
 			clipboard.on('error', event => {

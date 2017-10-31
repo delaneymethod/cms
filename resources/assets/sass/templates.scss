@@ -19,11 +19,11 @@
 @import 'common';
 
 hr {
-	border-top: 1px solid #ECEFF1;
+	border-top: 0.0625rem solid #ECEFF1;
 }
 
 header {
-	border-bottom: 1px solid #ECEFF1;
+	border-bottom: 0.0625rem solid #ECEFF1;
 	
 	nav {
 		ul {
@@ -64,15 +64,15 @@ header {
 		background-repeat: no-repeat;
 		background-position: center center;
 		background-size: cover;
-		height: 340px;
+		height: 21.25rem;
 		-webkit-user-select: all;
     	-moz-user-select: all;
 		-ms-user-select: all;
 		user-select: all;
 		
 		h2 {
-			font-size: 42px;
-			line-height: 44px;
+			font-size: 2.625rem;
+			line-height: 2.75rem;
 			margin-bottom: 2rem;
 			z-index: 1;
 		}
@@ -95,23 +95,23 @@ header {
 	}
 	
 	.slick-prev {
-		left: 40px;
+		left: 2.5rem;
 		z-index: 1;
 	}
 	
 	.slick-next {
-		right: 50px;
+		right: 3.125rem;
 	}
 	
 	.slick-dots {
-		bottom: 20px;
+		bottom: 1.25rem;
 		color: white;
 	}
 	
 	.slick-prev:before,
 	.slick-next:before {
 		color: white;
-		font-size: 30px !important;
+		font-size: 1.875rem !important;
 	}
 	
 	.slick-active {
@@ -137,7 +137,7 @@ header {
 				}
 				
 				.fa {
-					font-size: 18px;
+					font-size: 1.125rem;
 				}
 			}
 			
@@ -171,18 +171,18 @@ main {
 	.products {
 		a {
 			img {
-				max-height: 200px; 	
+				max-height: 12.5rem; 	
 			}
 			
 			h4 {
-				font-size: 14px;
+				font-size: 0.875rem;
 				font-weight: normal;
 			}
 		}
 	}
 	
 	.btn-qty {
-		padding: 2px 7px;
+		padding: 0.125rem 0.4375rem;
 	}
 	
 	.telephone-number {
@@ -195,7 +195,7 @@ main {
 	
 	.map {
 		width: 100%;
-		height: 600px;
+		height: 37.5rem;
 		background-position: center center;
 		background-repeat: no-repeat;
 	}
@@ -213,7 +213,7 @@ main {
 	}
 	
 	.search {
-		border-top: 1px solid #ECECEC;
+		border-top: 0.0625rem solid #ECECEC;
 		background-color: #EFEFEF;
 	}
 	
@@ -261,7 +261,7 @@ footer {
 		padding: 0;
 		
 		li {
-			padding: 2px 0;
+			padding: 0.125rem 0;
 			
 			a {
 				text-decoration: none;
@@ -273,19 +273,19 @@ footer {
 				}
 				
 				.fa {
-					font-size: 18px;
+					font-size: 1.125rem;
 				}
 			}
 		}		
 	}
 	
 	hr {
-		border-top: 1px solid #FFFFFF;
+		border-top: 0.0625rem solid #FFFFFF;
 	}
 		
 	.social-media {
 		li {
-			padding: 0 0 0 10px;
+			padding: 0 0 0 0.625rem;
 		}
 	}
 }

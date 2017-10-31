@@ -1,13 +1,7 @@
+Update any px to rem
 
 
-Switch px to rem
-
-add UK flag next to price and price per
-
-https://github.com/jupeter/clean-code-php
-
-add arrow to toolip
-
+https://zurb.com/playground/projects/responsive-tables/index.html
 
 
 

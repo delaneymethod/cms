@@ -80,7 +80,7 @@ a,
 }
 
 .btn {
-	border-radius: 50px;
+	border-radius: 3.125rem;
 	padding: 0.5rem 1.25rem;
 }
 
@@ -102,11 +102,11 @@ a,
 }
 
 .btn-styled-gf-blue-gray {
-	border-radius: 50px;
+	border-radius: 3.125rem;
 	background: none !important;
 	color: $gf-blue-gray-500;
-	border: 1px solid $gf-blue-gray-500;
-	padding: 0 6px;
+	border: 0.0625rem solid $gf-blue-gray-500;
+	padding: 0 0.375rem;
 	margin: 0;
 	text-decoration: underline;
 	font: inherit;
@@ -116,7 +116,7 @@ a,
 	&:hover {
 		background: inherit;
 		color: $gf-default;
-		border: 1px solid $gf-default;
+		border: 0.0625rem solid $gf-default;
 	}
 }
 
@@ -227,7 +227,15 @@ a,
 }
 
 .icon {
-	width: 20px;
+	width: 1.25rem;
+}
+
+.tooltip {
+	font-size: 0.75rem;
+}
+
+.tooltip-inner {
+	padding: 0.5rem;
 }
 
 .table-responsive {
@@ -239,7 +247,7 @@ a,
 .table {
 	thead {
 		th {
-			border: 0;		
+			border: 0;
 		}
 	}
 }
@@ -317,7 +325,7 @@ a,
  
 .form-control {
 	font-family: inherit !important;
-	font-size: 14px !important;
+	font-size: 0.875rem !important;
 	
 	&:focus {
 		border-color: rgba(151, 151, 151, 1);
@@ -326,14 +334,14 @@ a,
 
 .message {
 	display: none;
-	margin-right: -15px;
-	margin-left: -15px;
+	margin-right: -0.9375rem;
+	margin-left: -0.9375rem;
 	margin-bottom: 0;
-	padding: 20px 30px;
+	padding: 1.25rem 1.875rem;
 	background-color: $main-message-bg-color;
 	color: #ffffff;
 	font-weight: 600;
-	font-size: 16px;
+	font-size: 1rem;
 	
 	a,
 	a:hover {
@@ -371,7 +379,7 @@ a,
 .spacer {
 	display: block;
 	width: 100%;
-	height: 15px;
+	height: 0.9375rem;
 	padding: 0;
 	margin: 0;	
 }
@@ -381,11 +389,11 @@ a,
 }
 
 .tall {
-	height: 25px;
+	height: 1.563rem;
 }
 
 .very-tall {
-	height: 50px;
+	height: 3.125rem;
 }
 
 #did-you-mean {

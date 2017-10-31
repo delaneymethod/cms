@@ -45,23 +45,20 @@
                     @endforeach
 				@endif
 				@include('cp._partials.pageTitle')
-				@if ($currentUser->hasPermission('upload_assets'))
-					<div class="row">
-						<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
-							<ul class="list-unstyled list-inline buttons">
-								<li class="list-inline-item"><a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-success"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload Assets</a></li>
-								@if ($zipEnabled && count($assets) > 0)
-									<li class="list-inline-item"><a href="/cp/assets?zip={{ $zipDownloadPath }}" title="Download Assets" class="btn btn-outline-secondary"><i class="icon fa fa-download" aria-hidden="true"></i>Download Assets</a></li>
-								@endif
-								@if ($deleteFolderEnabled)
-									<li class="list-inline-item"><a href="/cp/assets/folder/delete{{ $uploadDirectory }}" title="Delete Folder" class="btn btn-outline-danger"><i class="icon fa fa-folder" aria-hidden="true"></i>Delete Folder</a></li>
-								@endif
-								<li class="list-inline-item"><a href="/cp/assets/folder/create{{ $uploadDirectory }}" title="Create Folder" class="btn btn-outline-secondary"><i class="icon fa fa-folder" aria-hidden="true"></i>Create Folder</a></li>
-							</ul>
-						</div>
-					</div>
-				@endif
 				<div class="content padding bg-white">
+					@if ($currentUser->hasPermission('upload_assets'))
+						<div class="form-buttons">
+							<a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-success cancel-button"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload Assets</a>
+							@if ($zipEnabled && count($assets) > 0)
+								<a href="/cp/assets?zip={{ $zipDownloadPath }}" title="Download Assets" class="btn btn-outline-secondary cancel-button"><i class="icon fa fa-download" aria-hidden="true"></i>Download Assets</a>
+							@endif
+							@if ($deleteFolderEnabled)
+								<a href="/cp/assets/folder/delete{{ $uploadDirectory }}" title="Delete Folder" class="btn btn-outline-danger cancel-button"><i class="icon fa fa-folder" aria-hidden="true"></i>Delete Folder</a>
+							@endif
+							<a href="/cp/assets/folder/create{{ $uploadDirectory }}" title="Create Folder" class="btn btn-outline-secondary cancel-button"><i class="icon fa fa-folder" aria-hidden="true"></i>Create Folder</a>
+						</div>
+					@endif
+					<div class="spacer"></div>
 					<div class="spacer"></div>
 					<div class="row">
 						<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
@@ -124,7 +121,7 @@
 																		<label for="file_url">File URL:</label>
 																		<div class="input-group">
 																			<input type="text" class="form-control bg-transparent" value="{{ $meta->url_path }}" id="file_url" readonly>
-																			<span class="input-group-addon"><a href="javascript:void(0);" title="Copy File URL to clipboard" rel="nofollow" data-clipboard data-clipboard-target="#file_url"><i class="fa fa-clipboard" id="clipboard-tooltip" title="Copied!" aria-hidden="true"></i></a></span>
+																			<span class="input-group-addon"><a href="javascript:void(0);" title="Copy File URL to clipboard" rel="nofollow" class="clipboard" data-clipboard data-clipboard-target="#file_url"><i class="fa fa-clipboard" title="Copy" aria-hidden="true"></i></a></span>
 																		</div>
 																	</div>
 																	<div class="form-group">
@@ -146,8 +143,8 @@
 														<div class="container-fluid">
 															<div class="row d-flex h-100 justify-content-start">
 																<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center text-sm-center text-md-center text-lg-right text-xl-right align-self-center">
-																	<a href="/cp/assets/{{ $meta->id }}/delete{{ $uploadDirectory }}" title="Delete" class="btn btn-outline-danger">Delete</a>
-																	<a href="/cp/assets/{{ $meta->id }}/move{{ $uploadDirectory }}" title="Move" class="btn btn-outline-info">Move</a>
+																	<a href="/cp/assets/{{ $meta->id }}/delete{{ $uploadDirectory }}" title="Delete" class="btn btn-outline-danger cancel-button">Delete</a>
+																	<a href="/cp/assets/{{ $meta->id }}/move{{ $uploadDirectory }}" title="Move" class="btn btn-outline-info cancel-button">Move</a>
 																	<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
 																</div>
 															</div>

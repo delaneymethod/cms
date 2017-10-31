@@ -29,7 +29,7 @@
 @import 'common';
 	
 .badge {
-	margin-top: -2px;
+	margin-top: -0.125rem;
 }
 
 .extra-breathing-space {
@@ -57,26 +57,26 @@
 .redactor-styles {
 	font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 0.875rem;
 	line-height: 1.42857143;
 	color: $gf-default;
-	height: 200px;
+	height: 12.5rem;
 }
 
 .redactor-toolbar {
 	background-color: #f7f7f7;
    	border: none;
 	box-shadow: none !important;
-	border-top: 1px solid rgba(0, 0, 0, 0.07);
-	border-right: 1px solid rgba(0, 0, 0, 0.07);
+	border-top: 0.0625rem solid rgba(0, 0, 0, 0.07);
+	border-right: 0.0625rem solid rgba(0, 0, 0, 0.07);
 	
 	li {
 		border: none;
 		background-color: #f7f7f7;
-		border-left: 1px solid rgba(0, 0, 0, 0.07);
+		border-left: 0.0625rem solid rgba(0, 0, 0, 0.07);
 			
 		&:last-child {
-			border-right: 1px solid rgba(0, 0, 0, 0.07);
+			border-right: 0.0625rem solid rgba(0, 0, 0, 0.07);
 		}
 			
 		a {
@@ -84,14 +84,14 @@
 			background-size: cover;
 			border: none !important;
 			background-color: #f7f7f7;
-			font-size: 14px !important;
-			padding: 10px !important;
+			font-size: 0.875rem !important;
+			padding: 0.625rem !important;
 			height: auto !important;
 			
 			&:hover {
 				color: white !important;
-				margin-top: -1px;
-				border-top: 1px solid #222d32 !important;
+				margin-top: -0.0625rem;
+				border-top: 0.0625rem solid #222d32 !important;
 				background-color: #222d32;
 			}	
 		}
@@ -191,8 +191,48 @@
 	}
 	
 	.divider {
-		margin-right: -5px;
+		margin-right: -0.3125rem;
 	}
+}
+
+.dropdown ul.dropdown-menu {
+	top: 0.625rem !important;
+    left: 1.125rem !important;
+}
+
+.dropdown ul.dropdown-menu:before {
+    content: '';
+    border-bottom: 0.625rem solid #FFFFFF;
+    border-right: 0.625rem solid transparent;
+    border-left: 0.625rem solid transparent;
+    position: absolute;
+    top: -0.625rem;
+    right: 1rem;
+    z-index: 10;
+}
+
+.dropdown ul.dropdown-menu:after {
+	content: '';
+	border-bottom: 0.75rem solid #CCCCCC;
+	border-right: 0.75rem solid transparent;
+	border-left: 0.75rem solid transparent;
+	position: absolute;
+	top: -0.75rem;
+	right: 0.875rem;
+	z-index: 9;
+}
+
+.cancel-button {
+	margin-right: 0.625rem;
+}
+
+.form-buttons {
+	margin-top: 1.875rem;
+}
+	
+.form-buttons:first-of-type {
+	margin-top: 0;
+	margin-bottom: 0.625rem;
 }
 
 .sidebar {
@@ -202,13 +242,13 @@
 	padding: 0 !important;
 	padding-bottom: 100%;
 	font-weight: 400;
-	font-size: 14px;
+	font-size: 0.875rem;
 	line-height: 1.42857143;
 	
 	h3 {
 		font-size: inherit;
 		margin: inherit;
-		padding: 15px;
+		padding: 0.9375rem;
 		font-weight: 600;
 	}
 	
@@ -217,8 +257,8 @@
 		padding: inherit;
 		color: #4b646f;
 		background-color: $sidebar-h4-bg-color;
-		padding: 12px 15px;
-		font-size: 12px;
+		padding: 0.75rem 0.9375rem;
+		font-size: 0.75rem;
 	}
 	
 	ul {
@@ -232,13 +272,14 @@
 			a {
 				display: block;
 				margin: inherit;
-				padding: 15px 12px;
+				padding: 0.9375rem 0.75rem;
 				color: #b8c7ce;
-				border-left: 3px solid transparent;
+				border-left: 0.1875rem solid transparent;
 				text-decoration: none;
+				text-shadow: 0 0.0625rem 0.0625rem #000000;
 				
 				span {
-					margin-right: 10px;	
+					margin-right: 0.625rem;	
 				}
 				
 				.fa-angle-left {
@@ -258,7 +299,8 @@
 				}
 				
 				.icon {
-					margin-right: 5px;
+					margin-right: 0.3125rem;
+					opacity: 0.6;
 				}
 				
 				&:visited,
@@ -266,12 +308,22 @@
 				&:focus {
 					color: #b8c7ce;
 					text-decoration: none;
+					text-shadow: none;
+					
+					.icon {
+						opacity: 1;
+					}
 				}
 				
 				&:hover {
 					color: #ffffff;
 					text-decoration: none;
 					background-color: $sidebar-a-hover-bg-color;
+					text-shadow: none;
+					
+					.icon {
+						opacity: 1;
+					}	
 				}
 			}
 			
@@ -279,6 +331,10 @@
 				color: #ffffff !important;
 				text-decoration: none;
 				background-color: $sidebar-a-hover-bg-color;
+				
+				.icon {
+					opacity: 1;
+				}
 			}
 			
 			ul {
@@ -293,7 +349,12 @@
 				
 					a {
 						margin: inherit;	
-						padding: 8px 10px;
+						padding: 0.5rem 0.625rem;
+						text-shadow: 0 0.0625rem 0.0625rem #222c31;
+						
+						&:hover {
+							text-shadow: none;
+						}
 					}
 				}
 			}
@@ -309,6 +370,11 @@
 				color: #ffffff !important;
 				text-decoration: none;
 				background-color: $sidebar-a-hover-bg-color;
+				text-shadow: none;
+				
+				.icon {
+					opacity: 1;
+				}
 			}
 		}
 	}
@@ -320,22 +386,22 @@
 	background-color: $sidebar-bg-color;
 	
 	h3 {
-		margin: 0 20px 0 0;
-		font-size: 16px;
+		margin: 0 1.25rem 0 0;
+		font-size: 1rem;
 		font-weight: normal;
 	}
 	
 	p {
-		margin: 0 0 0 30px;
+		margin: 0 0 0 1.875rem;
 		
 		a {
 			font-weight: normal;
 			color: #b8c7ce;
-			font-size: 16px;
+			font-size: 1rem;
 			text-decoration: none;
 			
 			i {
-				margin-right: 5px;	
+				margin-right: 0.3125rem;	
 			}
 			
 			&:hover {
@@ -348,37 +414,42 @@
 .main {
 	color: $sidebar-a-hover-bg-color;
 	background-color: $main-bg-color;
+	background: -webkit-linear-gradient(-180deg, rgb(241, 243, 246), rgb(223, 223, 223));
+	background: linear-gradient(-180deg, rgb(241, 243, 246), rgb(223, 223, 223));
 
 	.buttons {
-		border-radius: 0.25rem;
+		border-radius: 0;
+		border-top-left-radius: 0.25rem;
+		border-top-right-radius: 0.25rem;
 		background-color: #ffffff;
-		padding: 15px 0 0 15px;
-		margin: 10px 0 -10px;
+		padding: 0.9375rem 0 0 0.9375rem;
+		margin: 0.625rem 0 -0.625rem;
 		
 		a {
 			.fa {
 				margin-top: 0.2em;
 				width: auto;
-				margin-right: 5px;
+				margin-right: 0.3125rem;
 			}
 		}
 	}
 	
 	.content {
 		border-radius: 0.25rem;
+		border-radius: 0;
 		padding-left: 0;
 		padding-right: 0;
-		padding-top: 15px;
+		padding-top: 0.9375rem;
 		padding-bottom: 0;
 		margin: 0;
 		
 		.page-title {
-			font-size: 24px;
+			font-size: 1.5rem;
 			
 			small {
-				font-size: 15px;
+				font-size: 0.9375rem;
 				display: inline-block;
-				padding-left: 4px;
+				padding-left: 0.25rem;
 				font-weight: 300
 			}
 		}
@@ -387,12 +458,12 @@
 		}
 		
 		form {
-			font-size: 14px;
+			font-size: 0.875rem;
 			
 			input[type='radio'],
 			input[type='checkbox'] {
-				margin-top: 4px;
-				margin-right: 5px;
+				margin-top: 0.25rem;
+				margin-right: 0.3125rem;
 			}
 			
 			.text-disabled {
@@ -401,19 +472,6 @@
 			
 			.gf-red {
 				color: $gf-red;
-			}
-			
-			.cancel-button {
-				margin-right: 10px;
-			}
-			
-			.form-buttons {
-				margin-top: 30px;
-			}
-				
-			.form-buttons:first-of-type {
-				margin-top: 0;
-				margin-bottom: 10px;
 			}
 		}
 		
@@ -442,17 +500,17 @@
 			}
 			
 			.status {
-				width: 55px;
+				width: 3.438rem;
 				
 				.fa-1 {
-					font-size: 9px;
-					margin-top: 5px;
+					font-size: 0.5625rem;
+					margin-top: 0.3125rem;
 					vertical-align: top;
 				}
 			}
 			
 			.actions {
-				width: 15px;
+				width: 0.9375rem;
 			}
 			
 			.dropdown-item {
@@ -460,7 +518,7 @@
 				
 				a {
 					text-decoration: none;
-					font-size: 14px;
+					font-size: 0.875rem;
 					color: $sidebar-bg-color;
 					
 					&:hover {
@@ -514,17 +572,17 @@
 		}
 		
 		.sortable {
-			margin: 0 0 15px 0;
+			margin: 0 0 0.9375rem 0;
 			padding: 0;
 			
 			li {
-				margin-bottom: 10px;
+				margin-bottom: 0.625rem;
 				
 				div {
-					border: 1px solid #eceeef;
-					margin:0;
+					border: 0.0625rem solid #eceeef;
+					margin: 0;
 					color: #748885;
-					padding: 10px 15px;
+					padding: 0.625rem 0.9375rem;
 					border-radius: 0.25rem;
 					background-color: rgba(0, 0, 0, 0.05);
 				
@@ -534,29 +592,29 @@
 					}
 				
 					.fa-bars {
-						width: 20px;
-						margin-right: 20px;
+						width: 1.25rem;
+						margin-right: 1.25rem;
 						display: inline-block;
 						cursor: move;
 					}
 					
 					span {
-						font-size: 14px;
+						font-size: 0.875rem;
 						display: inline-block;
 					}
 					
 					.page-slug {
 						width: auto;
-						margin-right: 20px;
+						margin-right: 1.25rem;
 					}
 					
 					.page-status {
 						width: auto;
-						margin-right: 20px;
+						margin-right: 1.25rem;
 						
 						.fa-1 {
-							font-size: 9px;
-							margin-top: 5px;
+							font-size: 0.5625rem;
+							margin-top: 0.3125rem;
 							vertical-align: top;
 						}
 					}
@@ -564,7 +622,7 @@
 					.gf-info {
 						width: auto;
 						margin: 0;
-						font-size: 14px;
+						font-size: 0.875rem;
 						color: $sidebar-bg-color;
 						text-decoration: none;
 						display: inline-block;
@@ -581,16 +639,16 @@
 				
 				& > ol {
 					list-style: none;
-					margin-top: 10px;
+					margin-top: 0.625rem;
 				}
 			}
 			
 			.sortable-placeholder {
-				border: 1px dashed $gf-default;
-				padding: 10px 15px;
+				border: 0.0625rem dashed $gf-default;
+				padding: 0.625rem 0.9375rem;
 				display: block;
-				height: 42px;
-				margin-bottom: 10px;
+				height: 2.625rem;
+				margin-bottom: 0.625rem;
 				border-radius: 0.25rem;
 			}
 		}
@@ -604,17 +662,17 @@
 						background-color: #222d32;
 						color: #b8c7ce;
 						padding: 0;
-						margin: 0 0 15px 0;
+						margin: 0 0 0.9375rem 0;
 						
 						h5 {
-							padding: 10px 0 0 0;
+							padding: 0.625rem 0 0 0;
 							font-size: 100%;
 						}
 						
 						p {
 							padding: 0;
-							margin: -20px 0 0 0;
-							font-size: 50px;
+							margin: -1.25rem 0 0 0;
+							font-size: 3.125rem;
 						}
 					}
 					
@@ -632,23 +690,23 @@
 			margin-bottom: 0;
 			
 			.asset {
-				margin-bottom: 15px;
+				margin-bottom: 0.9375rem;
 				
 				.asset-opener {
-					padding: 10px 15px;
+					padding: 0.625rem 0.9375rem;
 					margin: 0;
 					background-color: rgba(0, 0, 0, 0.05);
-					border: 1px solid #eceeef;
+					border: 0.0625rem solid #eceeef;
 					color: #748885;
 					min-width: auto;
-					min-height: 100px;
+					min-height: 6.25rem;
 					width: 100%;
 					height: 100%;
 					display: block;
 					border-radius: 0.25rem;
 					
 					i {
-						margin-bottom: 5px;	
+						margin-bottom: 0.3125rem;	
 					}
 					
 					span {
@@ -662,7 +720,7 @@
 					
 					&:hover {
 						color: #333333;
-						border: 1px solid #dddddd;
+						border: 0.0625rem solid #dddddd;
 						background-color: rgba(0, 0, 0, 0.075);
 						text-decoration: none;
 					}
@@ -688,6 +746,28 @@
 					}
 				}
 				
+				.modal-content {
+					border: 0;
+				}
+				
+				.modal-header {
+					border-radius: 0.3rem 0.3rem 0 0;
+					background: -webkit-linear-gradient(69deg, rgb(211, 14, 7), rgb(211, 14, 7));
+					background: linear-gradient(69deg, rgb(211, 14, 7), rgb(211, 14, 7));
+							
+					h5 {
+						color: #FFFFFF;
+					} 
+					
+					.close {
+						margin-top: -0.25rem;
+						color: #FFFFFF;
+						font-weight: bold;
+						text-shadow: none;
+						opacity: 1;
+					}
+				}
+				
 				.modal-body {
 					a {
 						color: $gf-default;
@@ -703,10 +783,11 @@
 	}
 	
 	.content.padding {
-		border-radius: 0.25rem;
-		margin-top: 10px;
-		margin-bottom: 15px;
-		padding: 15px;
+		border-bottom-left-radius: 0.25rem;
+		border-bottom-right-radius: 0.25rem;
+		margin-top: 0.625rem;
+		margin-bottom: 0.9375rem;
+		padding: 0.9375rem;
 	}
 	
 	.content.padding.footer {
@@ -717,7 +798,7 @@
 		p {
 			background-color: transparent;
 			color: $gf-default;
-			font-size: 12px;
+			font-size: 0.75rem;
 		}
 	}
 }
