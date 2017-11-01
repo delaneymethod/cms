@@ -34,29 +34,33 @@
 				@endif
 				<div class="content padding bg-white">
 					<div class="spacer"></div>
-					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="align-middle">Full Name</th>
-								<th class="align-middle">Email</th>
-								<th class="align-middle">Job Title</th>
-								<th class="align-middle">Telephone</th>
-								<th class="align-middle">Mobile</th>
-								<th class="align-middle">Location</th>
-								<th class="align-middle text-center">Status</th>
-								<th class="align-middle no-sort">&nbsp;</th>
+								<th scope="col" class="align-middle no-sort">&nbsp;</th>
+								<th scope="col" class="text-left align-middle">Full Name</th>
+								<th scope="col" class="align-middle">Email</th>
+								<th scope="col" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">Job Title</th>
+								<th scope="col" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">Telephone</th>
+								<th scope="col" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">Mobile</th>
+								<th scope="col" class="align-middle">Location</th>
+								<th scope="col" class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($users as $user)
 								<tr class="{{ str_slug($user->status->title) }}">
-									<td class="align-middle">{{ $user->first_name }} {{ $user->last_name }}{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-primary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}</td>
-									<td class="align-middle"><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
-									<td class="align-middle">{{ $user->job_title }}</td>
-									<td class="align-middle">{{ $user->telephone }}</td>
-									<td class="align-middle">{{ $user->mobile }}</td>
-									<td class="align-middle">{{ $user->location->title }}</td>
-									<td class="align-middle status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
+									<td scope="row" data-label="Status:" class="align-middle status text-left text-sm-left text-md-left text-lg-center text-xl-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
+									<td data-label="Full Name:" class="align-middle">{{ $user->first_name }} {{ $user->last_name }}
+										<!--
+										{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-secondary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}
+										//-->
+									</td>
+									<td data-label="Email:" class="align-middle"><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
+									<td data-label="Job Title:" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">{{ $user->job_title ?: '&nbsp;' }}</td>
+									<td data-label="Telephone:" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">{{ str_replace(' ', '', $user->telephone) ?: '&nbsp;' }}</td>
+									<td data-label="Mobile:" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">{{ str_replace(' ', '', $user->mobile) ?: '&nbsp;' }}</td>
+									<td data-label="Location:" class="align-middle">{{ $user->location->title }}</td>
 									@if ($currentUser->isAdmin() && $user->isSuperAdmin())
 										<td class="align-middle">&nbsp;</td>
 									@else
@@ -64,7 +68,7 @@
 											<a href="javascript:void(0);" title="User Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_users') || $currentUser->id == $user->id)
-													<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>Edit User</a></li>
+													<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="View / Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>View / Edit User</a></li>
 												@endif
 												@if ($currentUser->hasPermission('retire_users') && !$user->isRetired() && $user->id != $currentUser->id)
 													<li class="dropdown-item gf-default"><a href="/cp/users/{{ $user->id }}/retire" title="Retire User"><i class="icon fa fa-circle-o" aria-hidden="true"></i>Retire User</a></li>

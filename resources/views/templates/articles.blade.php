@@ -19,8 +19,11 @@
 				</div>
 			@endif
 			<div class="row d-flex">
-				<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 text-center text-sm-center text-md-left text-lg-left text-xl-left order-2 order-sm-2 order-md-2 order-lg-1 order-xl-1">
+				<div class="bg-lighter-grey col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9 text-center text-sm-center text-md-left text-lg-left text-xl-left order-2 order-sm-2 order-md-2 order-lg-1 order-xl-1">
 					@if ($articles->count() > 0)
+						<div class="row">
+							<div class="col-12 spacer"></div>
+						</div>
 						<div class="row">
 							<div class="col-12">
 								<h4>All {{ $page->title }} @if (!empty($articleCategory))<small class="text-muted">{{ $articleCategory->title }}</small>@endif</h4>
@@ -33,7 +36,8 @@
 							<div class="col-12" id="pagination">
 								@foreach ($articles as $article)
 									@component('_components.article.content', [
-										'article' => $article
+										'article' => $article,
+										'lastArticle' => $loop->last
 									])
 									@endcomponent
 								@endforeach
@@ -43,6 +47,9 @@
 							<div class="col-12" id="templatePagination"></div>
 						</div>
 					@else
+						<div class="row">
+							<div class="col-12 spacer"></div>
+						</div>
 						<div class="row">
 							<div class="col-12">
 								@if (!empty($articleCategory))
@@ -84,6 +91,9 @@
 				<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 text-center text-sm-center text-md-center text-lg-right text-xl-right order-1 order-sm-1 order-md-1 order-lg-2 order-xl-2">
 					@if ($articleCategories->count() > 0)
 						<div class="row">
+							<div class="col-12 spacer"></div>
+						</div>
+						<div class="row">
 							<div class="col-12">
 								<div class="spacer d-block d-sm-block d-md-block d-lg-none d-xl-none"></div>
 								<h4>Articles by Category</h4>
@@ -103,6 +113,9 @@
 						</div>						
 					@endif
 					@if ($articleAuthors->count() > 0)
+						<div class="row">
+							<div class="col-12 spacer"></div>
+						</div>
 						<div class="row">
 							<div class="col-12">
 								<div class="spacer d-block d-sm-block d-md-block d-lg-none d-xl-none"></div>

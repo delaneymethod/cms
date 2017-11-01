@@ -1,7 +1,16 @@
-Update any px to rem
+
+Users table - mobile:
+
+- Fix pagination alignment
+- Fix actions button to be text on mobile, sm and md but icon on lg and xl
 
 
-https://zurb.com/playground/projects/responsive-tables/index.html
+- Apply table refactor to all tables across the CP
+
+- Update any px to rem
+
+
+
 
 
 

@@ -153,16 +153,41 @@
 	cursor: not-allowed;
 }
 
+.badge-status_id-1,
+.badge-status_id-2,
+.badge-status_id-3,
+.badge-status_id-4,
+.badge-status_id-5,
+.badge-status_id-6,
+.badge-status_id-7,
+.badge-status_id-8,
+.badge-status_id-9 {
+	//padding: 0.4em;
+}
+
+.badge-status_id-1,
+.badge-status_id-4,
+.badge-status_id-9,
+.badge-success {
+	color: white !important;
+	background-color: $gf-success !important;
+}
+
+.badge-status_id-2,
 .badge-warning {
 	color: white !important;
 	background-color: $gf-warning !important;
 }
 
+.badge-status_id-3,
+.badge-status_id-8,
 .badge-retired {
 	color: white !important;
 	background-color: #9b9b9b !important;
 }
 
+.badge-status_id-5,
+.badge-status_id-7,
 .badge-suspended {
 	color: white !important;
 	background-color: $gf-red !important;
@@ -170,6 +195,23 @@
 
 .dataTables_paginate {
 	padding-top: 0.4em;
+}
+
+.dataTables_wrapper {
+	.row:nth-child(1) {
+		margin-top: -0.9375rem !important;
+		padding-top: 1.188rem !important;
+		border-top: 0.0625rem solid #ECEFF1 !important;
+		margin-bottom: 0.625rem !important;
+		padding-bottom: 0.625rem !important;
+		border-bottom: 0.0625rem solid #ECEFF1 !important;
+	}
+	
+	.row:nth-child(3) {
+		margin-top: 0.625rem !important;
+		padding-top: 0.5625rem !important;
+		border-top: 0.0625rem solid #ECEFF1 !important;
+	}
 }
 
 .breadcrumbs {
@@ -487,8 +529,6 @@
 		}
 		
 		table {
-			width: 100%;
-			
 			a {
 				text-decoration: underline;
 				display: block;
@@ -501,6 +541,7 @@
 			
 			.status {
 				width: 3.438rem;
+				width: auto !important;
 				
 				.fa-1 {
 					font-size: 0.5625rem;
@@ -663,6 +704,7 @@
 						color: #b8c7ce;
 						padding: 0;
 						margin: 0 0 0.9375rem 0;
+						text-shadow: 0 0.0625rem 0.0625rem #000000;
 						
 						h5 {
 							padding: 0.625rem 0 0 0;
@@ -680,6 +722,7 @@
 						.stat-card {
 							color: #ffffff;
 							background-color: #1e282c;
+							text-shadow: none;
 						}
 					}
 				}
@@ -783,6 +826,8 @@
 	}
 	
 	.content.padding {
+		border-top-left-radius: 0.25rem;
+		border-top-right-radius: 0.25rem;
 		border-bottom-left-radius: 0.25rem;
 		border-bottom-right-radius: 0.25rem;
 		margin-top: 0.625rem;

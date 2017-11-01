@@ -22,8 +22,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-12">
-								<div class="spacer very-tall"></div>
-							</div>
+							@if (!$lastArticle)
+								<div class="col-12">
+									<div class="spacer very-tall"></div>
+								</div>
+							@endif
 						</div>
 						

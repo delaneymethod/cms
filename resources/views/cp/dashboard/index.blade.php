@@ -23,8 +23,8 @@
 			<div class="{{ $mainSmCols }} {{ $mainMdCols }} {{ $mainLgCols }} {{ $mainXlCols }} main">
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
-				@if (count($orders) > 0)
-					<div class="content padding bg-white">
+				<div class="content padding bg-white">
+					@if (count($orders) > 0)
 						<div class="row">
 							<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
 								<h4>Recent Orders</h4>
@@ -54,10 +54,11 @@
 								</table>
 							</div>
 						</div>
-					</div>
-				@endif
-				@if (count($statCards) > 0)
-					<div class="content padding bg-white">
+					@endif
+					@if (count($statCards) > 0)
+						<div class="row">
+							<div class="col-12 spacer"></div>
+						</div>
 						<div class="row stats">
 							@foreach ($statCards as $statCard)
 								<div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-2 cols">
@@ -70,17 +71,18 @@
 								</div>
 							@endforeach
 						</div>
-					</div>
-				@endif
-				@if (count($roles) > 0)
-					<div class="content padding bg-white">
+					@endif
+					@if (count($roles) > 0)
+						<div class="row">
+							<div class="col-12 spacer"></div>
+						</div>
 						<div class="row">
 							<div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
 								<canvas id="roleUsersStats" data-total-super-admins="{{ $roles[0]->users->count() }}" data-total-admins="{{ $roles[1]->users->count() }}" data-total-end-users="{{ $roles[2]->users->count() }}"></canvas>
 							</div>
 						</div>
-					</div>
-				@endif
+					@endif
+				</div>
 				@include('cp._partials.footer')
 			</div>
 		</div>
