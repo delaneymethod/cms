@@ -239,7 +239,7 @@
 
 .dropdown ul.dropdown-menu {
 	top: 0.625rem !important;
-    left: 1.125rem !important;
+    left: 1.25rem !important;
 }
 
 .dropdown ul.dropdown-menu:before {
@@ -540,9 +540,10 @@
 			}
 			
 			.status {
-				width: 3.438rem;
-				width: auto !important;
-				
+				//width: 3.438rem;
+				//width: auto !important;
+				width: 0.9375rem;
+					
 				.fa-1 {
 					font-size: 0.5625rem;
 					margin-top: 0.3125rem;
@@ -552,10 +553,12 @@
 			
 			.actions {
 				width: 0.9375rem;
+				//width: auto !important;
+				
 			}
 			
 			.dropdown-item {
-				width: auto;
+				width: auto !important;
 				
 				a {
 					text-decoration: none;

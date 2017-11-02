@@ -38,13 +38,10 @@
 						<thead>
 							<tr>
 								<th scope="col" class="align-middle no-sort">&nbsp;</th>
-								<th scope="col" class="text-left align-middle">Full Name</th>
+								<th scope="col" class="align-middle">Full Name</th>
 								<th scope="col" class="align-middle">Email</th>
-								<th scope="col" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">Job Title</th>
-								<th scope="col" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">Telephone</th>
-								<th scope="col" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">Mobile</th>
 								<th scope="col" class="align-middle">Location</th>
-								<th scope="col" class="align-middle no-sort">&nbsp;</th>
+								<th scope="col" class="align-middle no-sort">&nbsp;></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -57,15 +54,19 @@
 										//-->
 									</td>
 									<td data-label="Email:" class="align-middle"><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
-									<td data-label="Job Title:" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">{{ $user->job_title ?: '&nbsp;' }}</td>
-									<td data-label="Telephone:" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">{{ str_replace(' ', '', $user->telephone) ?: '&nbsp;' }}</td>
-									<td data-label="Mobile:" class="align-middle d-block d-sm-block d-md-block d-lg-none d-xl-table-cell">{{ str_replace(' ', '', $user->mobile) ?: '&nbsp;' }}</td>
 									<td data-label="Location:" class="align-middle">{{ $user->location->title }}</td>
 									@if ($currentUser->isAdmin() && $user->isSuperAdmin())
-										<td class="align-middle">&nbsp;</td>
+										<td data-label="Tools:" class="align-middle">&nbsp;</td>
 									@else
-										<td class="align-middle actions dropdown text-center" id="submenu">
-											<a href="javascript:void(0);" title="User Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
+										<td data-label="Tools:" class="align-middle actions dropdown text-left text-sm-left text-md-left text-lg-center text-xl-center" id="submenu">
+											
+											
+											<a href="javascript:void(0);" title="User Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown">
+												<span class="d-none d-sm-none d-md-none d-lg-inline-block d-xl-inline-block "><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+												<span class="d-inline-block d-sm-inline-block d-md-inline-block d-lg-none d-xl-none">Manage</span>
+											</a>
+											
+											
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_users') || $currentUser->id == $user->id)
 													<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="View / Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>View / Edit User</a></li>
