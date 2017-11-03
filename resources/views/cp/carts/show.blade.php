@@ -37,7 +37,7 @@
 					<div class="row">
 						<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 							<h5>Cart Items</h5>
-							<table class="text-muted table table-responsive" cellspacing="0" border="0" cellpadding="0" width="100%">
+							<table class="text-muted table" cellspacing="0" border="0" cellpadding="0" width="100%">
 								<thead>
 									<tr class="bg-default text-white">
 										<th class="align-middle">&nbsp;</th>

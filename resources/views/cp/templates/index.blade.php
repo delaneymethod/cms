@@ -25,18 +25,18 @@
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">	
 					<div class="spacer"></div>
-					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
 								<th class="align-middle">Title</th>
-								<th class="align-middle">Filename</th>
+								<th class="align-middle d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Filename</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($templates as $template)
 								<tr>
 									<td class="align-middle">{{ $template->title }}</td>
-									<td class="align-middle">{{ $template->filename }}</td>
+									<td class="align-middle d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $template->filename }}</td>
 								</tr>
 							@endforeach
 						</tbody>

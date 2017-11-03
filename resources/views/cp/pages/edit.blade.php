@@ -58,9 +58,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_pages'))
-			<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+			<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_page" id="submit_edit_page" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_page" id="submit_edit_page" class="pull-right btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -87,7 +87,7 @@
 							<input type="hidden" name="template_id" value="{{ $page->template_id }}">
 						@endif
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
@@ -180,9 +180,9 @@
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Hide from Nav</label>
 								<div class="form-check">
-									<label for="hide_from_nav" class="form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
+									<label for="hide_from_nav" class="switch form-check-label {{ ($page->id == 1) ? 'text-disabled' : '' }}">
 										<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-label="&hellip;" aria-describedby="helpBlockHideFromNav" {{ ((old('hide_from_nav') && old('hide_from_nav') == $page->hide_from_nav) || $page->isHiddenFromNav() && $page->id != 1) ? 'checked' : '' }} {{ ($page->id == 1) ? 'disabled' : '' }}>
-										&nbsp;
+										<span class="slider round"></span>
 									</label>
 								</div>
 							@if ($errors->has('hide_from_nav'))
@@ -191,7 +191,7 @@
 							@if ($page->id == 1)
 								<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-warning">- This field is disabled. Homepage cannot be hidden from the navigation.</span>
 							@endif
-							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Ticking this box will hide the page from the navigation.</span>
+							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Turn On to hide the page from the navigation.</span>
 						</div>
 						<div class="spacer"></div>
 						<div class="form-group">
@@ -218,6 +218,8 @@
 								@endif
 							</div>
 						@endforeach
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

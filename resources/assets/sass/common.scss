@@ -94,7 +94,6 @@ a,
 }
 
 .btn {
-	border-radius: 3.125rem;
 	border-radius: 0.25rem;
 	padding: 0.5rem 1.25rem;
 }
@@ -255,46 +254,79 @@ a,
 
 table {
 	word-wrap: break-word;
-	border: 0;
+	border: 0 !important;
 	margin: 0;
 	padding: 0;
 	width: 100%;
 	table-layout: auto;
 	
-	tr {
-		border: 0;
-		
-		th {
-			//padding: 0.75rem 0.625rem !important;
+	thead {
+		tr {
 			border: 0 !important;
+				
+			th {
+				border: 0 !important;
+				color: #333333;
+				background-color: #F1F1F1;
 			
-			&:first-child {
-				padding: 0.75rem 0.625rem !important;
+				&:first-child {
+					border-top-left-radius: 0.25rem !important;
+					border-bottom-left-radius: 0.25rem !important;
+				}
+			
+				&:last-child {
+					border-top-right-radius: 0.25rem !important;
+					border-bottom-right-radius: 0.25rem !important;
+				}
 			}
 		}
-		
-		td {
-			//padding: 0.75rem 0.625rem !important;
+	}
+	
+	tbody {
+		tr {
 			border: 0 !important;
-			
-			&:first-child {
-				border-top-left-radius: 0.25rem !important;
-				border-bottom-left-radius: 0.25rem !important;
+				
+			th {
+				border: 0 !important;
+				
+				&:first-child {
+					padding: 0.75rem 0.625rem !important;
+				}
 			}
 			
-			&:last-child {
-				border-top-right-radius: 0.25rem !important;
-				border-bottom-right-radius: 0.25rem !important;
+			td {
+				border: 0 !important;
+				
+				&:first-child {
+					border-top-left-radius: 0.25rem !important;
+					border-bottom-left-radius: 0.25rem !important;
+				}
+				
+				&:last-child {
+					border-top-right-radius: 0.25rem !important;
+					border-bottom-right-radius: 0.25rem !important;
+				}
+			}
+			
+			.group-title {
+				background-color: #F1F1F1;
+			}
+			
+			.blank {
+				background-color: #FFFFFF !important;
+				
+				&:hover {
+					background-color: #FFFFFF !important;
+				}
 			}
 		}
 		
-		.status {
-			//padding: 0 !important;	
-			//padding: 0.75rem !important;
-		}
-		
-		.actions {
-			//padding: 0.75rem 1.25rem !important;
+		.blank {
+			background-color: #FFFFFF !important;
+			
+			&:hover {
+				background-color: #FFFFFF !important;
+			}
 		}
 	}
 }
@@ -303,11 +335,12 @@ table {
 	background-color: rgba(241, 241, 241, 0.75) !important;
 }
 
-@include media-breakpoint-down(md) {
-	table {
+@include media-breakpoint-down(sm) {
+	.permissions {
 		table-layout: fixed;
 		border: 0 !important;
-	
+		
+		.thead,
 		thead {
 			border: 0;
 			clip: rect(0 0 0 0);
@@ -323,7 +356,9 @@ table {
 			display: block;
 			border-bottom: 0 !important;
 			border-radius: 0.25rem !important;
-				
+			margin-bottom: 0.625rem;
+			margin-bottom: 1rem;
+			
 			td {
 				padding: 0 0.75rem 0.375rem !important;
 				display: block;
@@ -339,12 +374,24 @@ table {
 				}
 				
 				&:before {
+					margin-top: 0.125rem;
 					content: attr(data-label);
 					float: left;
-					width: 30%;
-					font-weight: bold;
 					text-align: left;
 				}
+			}
+			
+			.permissionTitle {
+				font-weight: bold;
+			}
+			
+			.blank {
+				margin-bottom: 1.25rem !important;
+			}
+			
+			.postal-address-short {
+				float: right;
+				width: 50%;
 			}
 			
 			.status,
@@ -355,6 +402,10 @@ table {
 			&:last-child {
 				border-bottom: 0 !important;
 			}
+		}
+		
+		.blank {
+			margin-bottom: 1.25rem !important;
 		}
 	}
 }
@@ -520,4 +571,64 @@ table {
 .img-fluid {
 	// opacity: 0;
 	transition: opacity .3s ease-in;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 3.125rem;
+	height: 1.563rem;
+	margin-top: 0 !important;
+	margin-bottom: -0.3125rem !important;
+	padding: 0 !important;
+}
+	
+.switch input {
+	display: none;
+}
+	
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #CCCCCC;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+	
+.slider:before {
+	position: absolute;
+	content: '';
+	height: 1.063rem;
+	width: 1.125rem;
+	left: 0.25rem;
+	bottom: 0.25rem;
+	background-color: #FFFFFF;
+	-webkit-transition: 0.4s;
+	transition: 0.4s;
+}
+	
+input:checked + .slider {
+	background-color: $gf-success;
+}
+	
+input:focus + .slider {
+	box-shadow: 0 0 0.0625rem $gf-success;
+}
+	
+input:checked + .slider:before {
+	-webkit-transform: translateX(1.5rem);
+	-ms-transform: translateX(1.5rem);
+	transform: translateX(1.5rem);
+}
+	
+.slider.round {
+	border-radius: 2.125rem;
+}
+	
+.slider.round:before {
+	border-radius: 50%;
 }

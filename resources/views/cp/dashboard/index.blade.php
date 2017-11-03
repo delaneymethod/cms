@@ -29,11 +29,11 @@
 							<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-center">
 								<h4>Recent Orders</h4>
 							</div>
-							<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+							<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
 								<canvas id="orderTotals" data-order-stats="{{ $orderStats }}"></canvas>
 							</div>
-							<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
-								<table class="table table-striped table-bordered table-hover table-responsive" style="margin-top: 5px;">
+							<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+								<table class="table table-hover" style="margin-top: 5px;">
 									<thead>
 										<tr>
 											<th class="align-middle">Order Number</th>
@@ -54,11 +54,11 @@
 								</table>
 							</div>
 						</div>
-					@endif
-					@if (count($statCards) > 0)
 						<div class="row">
 							<div class="col-12 spacer"></div>
 						</div>
+					@endif
+					@if (count($statCards) > 0)
 						<div class="row stats">
 							@foreach ($statCards as $statCard)
 								<div class="col-12 col-sm-4 col-md-3 col-lg-3 col-xl-2 cols">

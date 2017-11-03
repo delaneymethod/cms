@@ -22,8 +22,8 @@
 		@if ($currentUser->hasPermission('view_carousels'))
 			<a href="/cp/carousels" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="button" name="add_form_group" id="add_form_group" class="btn btn-outline-success add_form_group cancel-button" title="Add Slide">Add Slide</button>
-		<button type="submit" name="submit_create_carousel" id="submit_create_carousel" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="button" name="add_form_group" id="add_form_group" class="btn btn-outline-success add_form_group" title="Add Slide">Add Slide</button>
+		<button type="submit" name="submit_create_carousel" id="submit_create_carousel" class="pull-right btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -38,7 +38,7 @@
 					<form name="createCarousel" id="createCarousel" class="createCarousel" role="form" method="POST" action="/cp/carousels">
 						{{ csrf_field() }}
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
@@ -107,6 +107,8 @@
 							</div>
 						</div>
 						<div id="wrapper"></div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

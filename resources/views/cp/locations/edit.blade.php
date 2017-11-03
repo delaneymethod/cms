@@ -19,9 +19,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_locations'))
-			<a href="/cp/locations" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="16" title="Cancel">Cancel</a>
+			<a href="/cp/locations" title="Cancel" class="btn btn-outline-secondary" tabindex="16" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_location" id="submit_edit_location" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="15" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_location" id="submit_edit_location" class="pull-right btn btn-primary" tabindex="15" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -41,7 +41,7 @@
 							<input type="hidden" name="status_id" value="{{ $location->status_id }}">
 						@endif
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
@@ -190,6 +190,8 @@
 							@endif
 							<span id="helpBlockStatusId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

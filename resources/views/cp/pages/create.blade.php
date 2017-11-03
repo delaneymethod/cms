@@ -19,9 +19,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_pages'))
-			<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+			<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_page" id="submit_create_page" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_page" id="submit_create_page" class="pull-right btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -36,7 +36,7 @@
 					<form name="createPage" id="createPage" class="createPage" role="form" method="POST" action="/cp/pages">
 						{{ csrf_field() }}
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
@@ -116,15 +116,15 @@
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Hide from Nav</label>
 							<div class="form-check">
-								<label for="hide_from_nav" class="form-check-label">
+								<label for="hide_from_nav" class="switch form-check-label">
 									<input type="checkbox" name="hide_from_nav" id="hide_from_nav" class="form-check-input" value="1" tabindex="7" aria-label="&hellip;" aria-describedby="helpBlockHideFromNav" {{ old('hide_from_nav') == 1 ? 'checked' : '' }}>
-									&nbsp;
+									<span class="slider round"></span>
 								</label>
 							</div>
 							@if ($errors->has('hide_from_nav'))
 								<span id="helpBlockHideFromNav" class="form-control-feedback form-text gf-red">- {{ $errors->first('hide_from_nav') }}</span>
 							@endif
-							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Ticking this box will hide the page from the navigation.</span>
+							<span id="helpBlockHideFromNav" class="form-control-feedback form-text text-muted">- Turn On to hide the page from the navigation.</span>
 						</div>
 						<div class="spacer"></div>
 						<div class="form-group">
@@ -141,6 +141,8 @@
 							<span id="helpBlockTemplateIdWarning" class="form-control-feedback form-text text-warning">- This field is disabled until you enter a title and slug.</span>
 							<span id="helpBlockTemplateId" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

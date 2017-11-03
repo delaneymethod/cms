@@ -19,9 +19,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_roles'))
-			<a href="/cp/advanced/roles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="3" title="Cancel">Cancel</a>
+			<a href="/cp/advanced/roles" title="Cancel" class="btn btn-outline-secondary" tabindex="3" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_role" id="submit_create_role" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" tabindex="2" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_role" id="submit_create_role" class="pull-right btn btn-primary" tabindex="2" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -36,7 +36,7 @@
 					<form name="createRole" id="createRole" class="createRole" role="form" method="POST" action="/cp/advanced/roles">
 						{{ csrf_field() }}
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
@@ -47,6 +47,8 @@
 							@endif
 							<span id="helpBlockTitle" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

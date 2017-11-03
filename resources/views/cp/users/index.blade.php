@@ -37,36 +37,25 @@
 					<table id="datatable" class="table table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th scope="col" class="align-middle no-sort">&nbsp;</th>
-								<th scope="col" class="align-middle">Full Name</th>
-								<th scope="col" class="align-middle">Email</th>
-								<th scope="col" class="align-middle">Location</th>
-								<th scope="col" class="align-middle no-sort">&nbsp;></th>
+								<th class="align-middle no-sort">&nbsp;</th>
+								<th class="align-middle">Full Name</th>
+								<th class="align-middle d-none d-sm-table-cell d-md-table-cell d-lg-table-cell d-xl-table-cell">Email</th>
+								<th class="align-middle d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Location</th>
+								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($users as $user)
 								<tr class="{{ str_slug($user->status->title) }}">
-									<td scope="row" data-label="Status:" class="align-middle status text-left text-sm-left text-md-left text-lg-center text-xl-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
-									<td data-label="Full Name:" class="align-middle">{{ $user->first_name }} {{ $user->last_name }}
-										<!--
-										{!! ($user->id == $currentUser->id) ? '&nbsp;<span class="badge badge-pill badge-secondary align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;You</span>' : '' !!}{!! ($user->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}{!! ($user->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$user->status->title.'</span>' : '' !!}
-										//-->
-									</td>
-									<td data-label="Email:" class="align-middle"><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
-									<td data-label="Location:" class="align-middle">{{ $user->location->title }}</td>
+									<td class="align-middle status text-center"><i class="fa fa-circle fa-1 status_id-{{ $user->status->id }}" title="{{ $user->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
+									<td class="align-middle">{{ $user->first_name }} {{ $user->last_name }}</td>
+									<td class="d-none d-sm-table-cell d-md-table-cell d-lg-table-cell d-xl-table-cell align-middle"><a href="mailto:{{ $user->email }}" title="Email User" class="d-inline text-gf-red">{{ $user->email }}</a></td>
+									<td class="d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell align-middle">{{ $user->location->title }}</td>
 									@if ($currentUser->isAdmin() && $user->isSuperAdmin())
-										<td data-label="Tools:" class="align-middle">&nbsp;</td>
+										<td class="align-middle">&nbsp;</td>
 									@else
-										<td data-label="Tools:" class="align-middle actions dropdown text-left text-sm-left text-md-left text-lg-center text-xl-center" id="submenu">
-											
-											
-											<a href="javascript:void(0);" title="User Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown">
-												<span class="d-none d-sm-none d-md-none d-lg-inline-block d-xl-inline-block "><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
-												<span class="d-inline-block d-sm-inline-block d-md-inline-block d-lg-none d-xl-none">Manage</span>
-											</a>
-											
-											
+										<td class="align-middle actions dropdown text-center" id="submenu">
+											<a href="javascript:void(0);" title="User Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 											<ul class="dropdown-menu dropdown-menu-right">
 												@if ($currentUser->hasPermission('edit_users') || $currentUser->id == $user->id)
 													<li class="dropdown-item gf-info"><a href="/cp/users/{{ $user->id }}/edit" title="View / Edit User"><i class="icon fa fa-pencil" aria-hidden="true"></i>View / Edit User</a></li>

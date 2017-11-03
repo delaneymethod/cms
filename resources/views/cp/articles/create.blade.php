@@ -58,9 +58,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_articles'))
-			<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+			<a href="/cp/articles" title="Cancel" class="btn btn-outline-secondary" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_article" id="submit_create_article" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_article" id="submit_create_article" class="pull-right btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -77,7 +77,7 @@
 						<input type="hidden" name="template_id" value="9">
 						<input type="hidden" name="article_category_ids[]" value="1">
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
@@ -186,6 +186,8 @@
 								@endif
 							</div>
 						@endforeach
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

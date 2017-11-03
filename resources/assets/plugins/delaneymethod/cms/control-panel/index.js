@@ -180,7 +180,7 @@
 				event.preventDefault();
 				
 				$('.content #pageActions i').removeClass('fa-rotate');
-				
+			
 				if (event.target === event.currentTarget) {
 					$(event.target).find('i').toggleClass('fa-rotate', 'fast');
 				} else {

@@ -37,7 +37,7 @@
 						{{ csrf_field() }}
 						<input type="hidden" name="directory" value="{{ $directory }}">
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
@@ -53,6 +53,8 @@
 							@endif
 							<span id="helpBlockFolder" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

@@ -19,9 +19,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_globals'))
-			<a href="/cp/globals" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+			<a href="/cp/globals" title="Cancel" class="btn btn-outline-secondary" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_global" id="submit_edit_global" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_global" id="submit_edit_global" class="pull-right btn btn-primary" title="Save Changes">Save Changes</button>
 	</div>
 @endsection
 
@@ -38,7 +38,7 @@
 						{{ method_field('PUT') }}
 						<input type="hidden" name="id" value="{{ $global->id }}">
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
 						<div class="form-group">
@@ -67,6 +67,8 @@
 							@endif
 							<span id="helpBlockData" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

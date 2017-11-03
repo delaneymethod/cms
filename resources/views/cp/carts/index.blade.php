@@ -24,26 +24,25 @@
 				@include('cp._partials.message')
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">	
-					<div class="spacer"></div>
-					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
-								<th class="align-middle">Instance</th>
+								<th class="align-middle d-none d-sm-table-cell d-md-table-cell d-lg-table-cell d-xl-table-cell">Instance</th>
 								<th class="align-middle">User</th>
-								<th class="align-middle">Location</th>
+								<th class="align-middle d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell">Location</th>
 								<th class="align-middle text-center">Saved</th>
-								<th class="align-middle text-center">Items</th>
+								<th class="align-middle text-center d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Items</th>
 								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($carts as $cart)
 								<tr>
-									<td class="align-middle">{{ $cart->instance }}</td>
+									<td class="align-middle d-none d-sm-table-cell d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $cart->instance }}</td>
 									<td class="align-middle">{{ $cart->user->first_name }} {{ $cart->user->last_name }}</td>
-									<td class="align-middle">{{ str_replace('<br>', ', ', $cart->user->location->postal_address) }}</td>
-									<td class="align-middle text-center">{{ $cart->created_at }}</td>
-									<td class="align-middle text-center">{{ $cart->count() }}</td>
+									<td class="align-middle d-none d-sm-none d-md-none d-lg-table-cell d-xl-table-cell">{{ str_replace('<br>', ', ', $cart->user->location->postal_address) }}</td>
+									<td class="align-middle text-center"><span class="d-none d-sm-none d-md-none d-lg-inline d-xl-inline">{{ $cart->created_at }}</span><span class="d-inline d-sm-inline d-md-inline d-lg-none d-xl-none">{{ $cart->created_at->format('Y-m-d') }}</span></td>
+									<td class="align-middle text-center d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $cart->count() }}</td>
 									<td class="align-middle actions dropdown text-center" id="submenu">
 										<a href="javascript:void(0);" title="Cart Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>
 										<ul class="dropdown-menu dropdown-menu-right">

@@ -31,7 +31,8 @@
 						{{ method_field('DELETE') }}
 						<input type="hidden" name="folder" value="{{ $folder }}">
 						<input type="hidden" name="directory" value="{{ $directory }}">
-						<div class="spacer blank"></div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_assets'))
 								<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>

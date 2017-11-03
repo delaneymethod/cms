@@ -32,6 +32,12 @@
 			'suggestedEmail': '',
 		};
 		
+		this.getBreakpoint = () => {
+			const w = $(document).innerWidth();
+			
+			return (w < 768) ? 'xs' : ((w < 992) ? 'sm' : ((w < 1200) ? 'md' : 'lg'));
+		};
+		
 		this.loadAnimations = () => {
 			if ($('#message').length) {
 				setTimeout(() => {
@@ -140,7 +146,7 @@
 					$.extend(true, $.fn.dataTable.defaults, {
 						'bPaginate': false,
 						'bInfo': false,
-						'dom': '<"row"<"col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"f>">',
+						'dom': '<"row"<"col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center"f>">',
 						'order': [],
 						'retrieve': true,
 						'deferRender': true,
@@ -171,7 +177,7 @@
 							'sSearch': '',
 							'sSearchPlaceholder': 'Search...',
 						},
-						
+						'dom': '<"row"<"col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-left text-lg-left text-xl-left"l><"col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-right text-lg-right text-xl-right"f>">t<"row"<"col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-left text-lg-left text-xl-left"i><"col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 text-center text-sm-center text-md-right text-lg-right text-xl-right"p>">',
 						'columnDefs': [{
 							'targets': 'no-sort',
 							'orderable': false,

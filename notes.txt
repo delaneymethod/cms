@@ -1,13 +1,5 @@
 
-Users table - mobile:
 
-- Fix pagination alignment
-- Fix actions button to be text on mobile, sm and md but icon on lg and xl
-
-
-- Apply table refactor to all tables across the CP
-
-Add Shadow to mobile menu icon and text
 
 - Update any px to rem
 

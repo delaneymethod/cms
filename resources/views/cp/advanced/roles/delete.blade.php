@@ -29,12 +29,13 @@
 					<form name="removeRole" id="removeRole" class="removeRole" role="form" method="POST" action="/cp/advanced/roles/{{ $role->id }}">
 						{{ csrf_field() }}
 						{{ method_field('DELETE') }}
-						<div class="spacer blank"></div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_roles'))
-								<a href="/cp/advanced/roles" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>
+								<a href="/cp/advanced/roles" title="Cancel" class="btn btn-outline-secondary" tabindex="2" title="Cancel">Cancel</a>
 							@endif
-							<button type="submit" name="submit_remove_role" id="submit_remove_role" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-danger" tabindex="1" title="Delete">Delete</button>
+							<button type="submit" name="submit_remove_role" id="submit_remove_role" class="pull-right btn btn-danger" tabindex="1" title="Delete">Delete</button>
 						</div>
 					</form>
 				</div>

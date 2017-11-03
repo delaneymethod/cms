@@ -1,14 +1,14 @@
-		<div class="col-12 sidebar mobile d-block d-sm-block d-md-none d-lg-none d-xl-none">
+		<div class="col-12 sidebar mobile d-block d-sm-block d-md-block d-lg-none d-xl-none">
 			<div class="row no-gutters d-flex h-100 justify-content-center">
-				<div class="col-3 align-self-center">
+				<div class="col-4 align-self-center">
 					<p><a href="javascript:void(0);" title="Open Menu" id="open-menu"><i class="fa fa-bars" aria-hidden="true"></i>Menu</a></p>
 				</div>
-				<div class="col-9 text-right align-self-center">
+				<div class="col-8 text-right align-self-center">
 					<h3>{{ $currentUser->first_name }} {{ $currentUser->last_name }}</h3>
 				</div>
 			</div>
 		</div>
-		<div class="{{ $sidebarSmCols }} {{ $sidebarMdCols }} {{ $sidebarLgCols }} {{ $sidebarXlCols }} sidebar d-none d-sm-none d-md-block d-lg-block d-xl-block">
+		<div class="{{ $sidebarSmCols }} {{ $sidebarMdCols }} {{ $sidebarLgCols }} {{ $sidebarXlCols }} sidebar d-none d-sm-none d-md-none d-lg-block d-xl-block">
 			<h3 class="d-none d-sm-none d-md-block d-lg-block d-xl-block">{{ $currentUser->first_name }} {{ $currentUser->last_name }}</h3>
 			<h4 class="text-uppercase extra-breathing-space">Administration</h4>
 			<ul class="list-unstyled">

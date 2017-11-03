@@ -37,7 +37,7 @@
 						{{ csrf_field() }}
 						{{ method_field('PUT') }}
 						@yield('formButtons')
-						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p>Please select the new directory you want to move the <strong>{{ $asset->filename }}</strong> asset into.</p>
 						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
@@ -67,6 +67,8 @@
 							@endif
 							<span id="helpBlockNewPath" class="form-control-feedback form-text text-muted"></span>
 						</div>
+						<div class="spacer"></div>
+						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						@yield('formButtons')
 					</form>
 				</div>

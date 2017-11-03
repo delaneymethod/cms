@@ -47,19 +47,18 @@
 				@include('cp._partials.pageTitle')
 				<div class="content padding bg-white">
 					@if ($currentUser->hasPermission('upload_assets'))
-						<div class="form-buttons">
+						<div class="form-buttons text-center text-sm-center text-md-left text-lg-left text-xl-left">
 							<a href="/cp/assets/upload{{ $uploadDirectory }}" title="Upload Assets" class="btn btn-success cancel-button"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload Assets</a>
 							@if ($zipEnabled && count($assets) > 0)
-								<a href="/cp/assets?zip={{ $zipDownloadPath }}" title="Download Assets" class="btn btn-outline-secondary cancel-button"><i class="icon fa fa-download" aria-hidden="true"></i>Download Assets</a>
+								<a href="/cp/assets?zip={{ $zipDownloadPath }}" title="Download Assets" class="btn btn-outline-secondary cancel-button d-none d-sm-none d-md-none d-lg-inline-block d-xl-inline-block"><i class="icon fa fa-download" aria-hidden="true"></i>Download Assets</a>
 							@endif
 							@if ($deleteFolderEnabled)
-								<a href="/cp/assets/folder/delete{{ $uploadDirectory }}" title="Delete Folder" class="btn btn-outline-danger cancel-button"><i class="icon fa fa-folder" aria-hidden="true"></i>Delete Folder</a>
+								<a href="/cp/assets/folder/delete{{ $uploadDirectory }}" title="Delete Folder" class="btn btn-outline-danger cancel-button d-none d-sm-none d-md-none d-lg-inline-block d-xl-inline-block"><i class="icon fa fa-folder" aria-hidden="true"></i>Delete Folder</a>
 							@endif
-							<a href="/cp/assets/folder/create{{ $uploadDirectory }}" title="Create Folder" class="btn btn-outline-secondary cancel-button"><i class="icon fa fa-folder" aria-hidden="true"></i>Create Folder</a>
+							<a href="/cp/assets/folder/create{{ $uploadDirectory }}" title="Create Folder" class="btn btn-outline-secondary pull-right float-sm-right float-md-none float-lg-none float-xl-none d-none d-sm-none d-md-none d-lg-inline-block d-xl-inline-block"><i class="icon fa fa-folder" aria-hidden="true"></i>Create Folder</a>
 						</div>
 					@endif
-					<div class="spacer"></div>
-					<div class="spacer"></div>
+					<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 					<div class="row">
 						<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 							<ul class="breadcrumbs list-unstyled list-inline">
@@ -74,10 +73,11 @@
 							</ul>
 						</div>
 					</div>
+					<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 					<div class="row assets">
 						@if (count($assets) > 0)
 							@foreach ($assets as $filename => $meta)
-								<div class="col-12 col-sm-3 col-md-3 col-lg-2 col-xl-2 asset text-center">
+								<div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3 asset text-center">
 									@if (!empty($meta->mime_type))
 										@if (starts_with($meta->mime_type, 'image'))	
 											<a href="javascript:void(0);" title="{{ $filename }}" rel="nofollow" class="image asset-opener" style="background-image: url('{{ $meta->url_path }}');" data-toggle="modal" data-target=".asset-{{ $meta->id }}-modal-lg">

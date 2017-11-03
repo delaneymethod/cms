@@ -34,21 +34,21 @@
 				@endif
 				<div class="content padding bg-white">	
 					<div class="spacer"></div>
-					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
+								<th class="align-middle no-sort">&nbsp;</th>
 								<th class="align-middle">Title</th>
-								<th class="align-middle">Slug</th>
-								<th class="align-middle text-center">Status</th>
+								<th class="align-middle d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Slug</th>
 								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
 							@foreach ($articleCategories as $articleCategory)
 								<tr>
-									<td class="align-middle">{{ $articleCategory->title }}{!! ($articleCategory->isRetired()) ? '&nbsp;<span class="badge badge-pill badge-retired align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$articleCategory->status->title.'</span>' : '' !!}{!! ($articleCategory->isPending()) ? '&nbsp;<span class="badge badge-pill badge-warning align-middle text-uppercase"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;'.$articleCategory->status->title.'</span>' : '' !!}</td>
-									<td class="align-middle">{{ $articleCategory->slug }}</td>
 									<td class="align-middle status text-center"><i class="fa fa-circle fa-1 status_id-{{ $articleCategory->status->id }}" title="{{ $articleCategory->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></td>
+									<td class="align-middle">{{ $articleCategory->title }}</td>
+									<td class="align-middle d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $articleCategory->slug }}</td>
 									@if ($currentUser->hasPermission('edit_article_categories') || ($currentUser->hasPermission('delete_article_categories') && $articleCategory->id != 1))
 										<td class="align-middle actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Article Category Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>

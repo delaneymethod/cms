@@ -34,7 +34,7 @@
 				@endif
 				<div class="content padding bg-white">	
 					<div class="spacer"></div>
-					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
 								<th class="align-middle">Title</th>

@@ -34,11 +34,11 @@
 				@endif
 				<div class="content padding bg-white">	
 					<div class="spacer"></div>
-					<table id="datatable" class="table table-striped table-bordered table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
+					<table id="datatable" class="table table-hover" cellspacing="0" border="0" cellpadding="0" width="100%">
 						<thead>
 							<tr>
 								<th class="align-middle">Title</th>
-								<th class="align-middle">Handle</th>
+								<th class="align-middle d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Handle</th>
 								<th class="align-middle no-sort">&nbsp;</th>
 							</tr>
 						</thead>
@@ -46,7 +46,7 @@
 							@foreach ($carousels as $carousel)
 								<tr>
 									<td class="align-middle">{{ $carousel->title }}</td>
-									<td class="align-middle">{{ $carousel->handle }}</td>
+									<td class="align-middle d-none d-sm-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $carousel->handle }}</td>
 									@if ($currentUser->hasPermission('edit_carousels') || $currentUser->hasPermission('delete_carousels'))
 										<td class="align-middle actions dropdown text-center" id="submenu">
 											<a href="javascript:void(0);" title="Carousel Actions" rel="nofollow" class="dropdown-toggle needsclick" id="pageActions" data-toggle="dropdown"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></a>

@@ -1,9 +1,9 @@
 		<li id="page_{{ $page->id }}">
 			<div>
 				<em class="text-center icon fa fa-bars" aria-hidden="true"></em>
-				<span class="page-title">{{ $page->title }}{!! $page->isHiddenFromNav() ? '&nbsp;<i class="text-muted-lighter">(Hidden from Nav)</i>' : '' !!}</span>
+				<span class="page-title">{{ $page->title }}{!! $page->isHiddenFromNav() ? '&nbsp;<i class="text-muted-lighter d-none d-sm-none d-md-inline d-lg-inline d-xl-inline">(Hidden from Nav)</i>' : '' !!}</span>
 				@if ($currentUser->hasPermission('edit_pages'))
-					<a href="/cp/pages/{{ $page->id }}/edit/{{ $page->template_id }}" title="Edit Page" class="pull-right text-center gf-info"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
+					<a href="/cp/pages/{{ $page->id }}/edit/{{ $page->template_id }}" title="Edit Page" class="pull-right text-center gf-info  d-none d-sm-none d-md-inline d-lg-inline d-xl-inline"><i class="icon fa fa-pencil" aria-hidden="true"></i></a>
 				@endif
 				<span class="pull-right page-status"><i class="fa fa-circle fa-1 status_id-{{ $page->status->id }}" title="{{ $page->status->title }}" data-toggle="tooltip" data-placement="top" aria-hidden="true"></i></span>
 			</div>
