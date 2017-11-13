@@ -35,7 +35,7 @@
 						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_assets'))
-								<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>
+								<a href="/cp/assets" title="Cancel" class="btn btn-link text-secondary cancel-button" tabindex="2" title="Cancel">Cancel</a>
 							@endif
 							<button type="submit" name="submit_remove_folder_assets" id="submit_remove_folder_assets" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-danger" tabindex="1" title="Delete">Delete</button>
 						</div>

@@ -19,9 +19,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_assets'))
-			<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+			<a href="/cp/assets" title="Cancel" class="btn btn-link text-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_upload_asset" id="submit_upload_asset" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Upload">Upload</button>
+		<button type="submit" name="submit_upload_asset" id="submit_upload_asset" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Upload"><i class="icon fa fa-upload" aria-hidden="true"></i>Upload</button>
 	</div>
 @endsection
 

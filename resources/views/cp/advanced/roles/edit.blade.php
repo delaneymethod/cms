@@ -19,9 +19,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_roles'))
-			<a href="/cp/advanced/roles" title="Cancel" class="btn btn-outline-secondary" tabindex="3" title="Cancel">Cancel</a>
+			<a href="/cp/advanced/roles" title="Cancel" class="btn btn-link text-secondary" tabindex="3" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_edit_role" id="submit_edit_role" class="pull-right btn btn-primary" tabindex="2" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_edit_role" id="submit_edit_role" class="pull-right btn btn-primary" tabindex="2" title="Save Changes"><i class="icon fa fa-check-circle" aria-hidden="true"></i>Save Changes</button>
 	</div>
 @endsection
 

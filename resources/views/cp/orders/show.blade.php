@@ -129,7 +129,7 @@
 							<p>&nbsp;</p>
 							<ul class="list-unstyled list-inline">
 								<li class="list-inline-item"><a href="/cp/orders" title="View All Orders" class="btn btn-primary">View All Orders</a></li>
-								<li class="list-inline-item"><a href="/cp/orders/{{ $order->id }}/pdf" title="Download PDF Version" class="btn btn-outline-secondary">Download PDF Version</a></li>
+								<li class="list-inline-item"><a href="/cp/orders/{{ $order->id }}/pdf" title="Download PDF Version" class="btn btn-link text-secondary">Download PDF Version</a></li>
 							</ul>
 						</div>
 					</div>

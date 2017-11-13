@@ -33,7 +33,7 @@
 						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-bottom: -30px;"><hr></div>
 						<div class="form-buttons">
 							@if ($currentUser->hasPermission('view_pages'))
-								<a href="/cp/pages" title="Cancel" class="btn btn-outline-secondary" tabindex="2" title="Cancel">Cancel</a>
+								<a href="/cp/pages" title="Cancel" class="btn btn-link text-secondary" tabindex="2" title="Cancel">Cancel</a>
 							@endif
 							<button type="submit" name="submit_remove_page" id="submit_remove_page" class="pull-right btn btn-danger" tabindex="1" title="Delete">Delete</button>
 						</div>

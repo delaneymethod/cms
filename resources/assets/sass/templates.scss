@@ -4,6 +4,8 @@
  * @license   https://www.delaneymethod.com/cms/license
  */
 
+@import 'mixins';
+
 @import 'variables';
 
 @import 'reboot';
@@ -90,8 +92,9 @@ header {
 	.slick-slide {
 		padding: 0;
 		margin: 0;
-		transition: all ease-in-out .3s;
-		opacity: .2;
+		
+		@include transition(all .3s ease-in-out);
+		@include opacity(0.2);
 	}
 	
 	.slick-prev {
@@ -115,11 +118,11 @@ header {
 	}
 	
 	.slick-active {
-		opacity: 1;
+		@include opacity(1);
 	}
 	
 	.slick-current {
-		opacity: 1;
+		@include opacity(1);
 	}
 	
 	.breadcrumbs {

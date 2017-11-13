@@ -4,6 +4,8 @@
  * @license   https://www.delaneymethod.com/cms/license
  */
 
+@import 'mixins';
+
 @import 'variables';
 
 @import 'reboot';
@@ -344,6 +346,8 @@
 			margin: inherit;
 			
 			a {
+				@include transition(background-color .2s ease-in-out);
+				
 				display: block;
 				margin: inherit;
 				padding: 0.9375rem 0.75rem;
@@ -357,24 +361,19 @@
 				}
 				
 				.fa-angle-left {
-					-moz-transition: all .3s linear;
-					-webkit-transition: all .3s linear;
-					transition: all .3s linear;
+					@include transition(all .3s linear);
 				}
 				
 				.fa-rotate {
-					-moz-transform:rotate(-90deg);
-					-webkit-transform:rotate(-90deg);
-					transform:rotate(-90deg);
-					-webkit-transform-origin: 50% 50%;
-					-moz-transform-origin: 50% 50%;
-					-o-transform-origin: 50% 50%;
-					transform-origin: 50% 50%;
+					@include transform(rotate(-90deg));
+					
+					@include transform-origin(50% 50%);
 				}
 				
 				.icon {
 					margin-right: 0.3125rem;
-					opacity: 0.6;
+					
+					@include opacity(0.6);			
 				}
 				
 				&:visited,
@@ -385,7 +384,7 @@
 					text-shadow: none;
 					
 					.icon {
-						opacity: 1;
+						@include opacity(1);
 					}
 				}
 				
@@ -396,7 +395,7 @@
 					text-shadow: none;
 					
 					.icon {
-						opacity: 1;
+						@include opacity(1);
 					}	
 				}
 			}
@@ -407,7 +406,7 @@
 				background-color: $sidebar-a-hover-bg-color;
 				
 				.icon {
-					opacity: 1;
+					@include opacity(1);
 				}
 			}
 			
@@ -447,7 +446,7 @@
 				text-shadow: none;
 				
 				.icon {
-					opacity: 1;
+					@include opacity(1);
 				}
 			}
 		}
@@ -478,14 +477,15 @@
 			
 			i {
 				margin-right: 0.3125rem;
-				opacity: 0.6;	
+				
+				@include opacity(0.6);
 			}
 			
 			&:hover {
 				color: #FFFFFF;
 				
 				i {
-					opacity: 1;
+					@include opacity(1);
 				}
 			}
 		}
@@ -498,7 +498,8 @@
 	background-color: $main-bg-color;
 	background: -webkit-linear-gradient(-180deg, rgb(233, 233, 233), rgb(235, 235, 235));
 	background: linear-gradient(-180deg, rgb(233, 233, 233), rgb(235, 235, 235));
-
+	//background-color: #ebedef;
+	
 	.buttons {
 		border-radius: 0;
 		border-top-left-radius: 0.25rem;
@@ -570,13 +571,34 @@
 		
 		table {
 			margin: 1rem 0 !important;
-	
-			a {
-				text-decoration: underline;
-				display: block;
-				color: $sidebar-bg-color;
+			
+			tr {
+				color: #838383;
+				
+				@include transition(background-color .2s ease-in-out);
 				
 				&:hover {
+					color: $sidebar-bg-color;
+					
+					a {
+						text-decoration: none;
+						color: $sidebar-bg-color;
+						
+						&:hover {
+							text-decoration: underline;
+							color: $gf-red;
+						}
+					}
+				}				
+			}
+			
+			a {
+				text-decoration: none;
+				display: block;
+				color: #838383;
+		
+				&:hover {
+					text-decoration: underline;
 					color: $gf-red;
 				}
 			}
@@ -604,47 +626,46 @@
 					color: $sidebar-bg-color;
 					
 					&:hover {
-						color: #ffffff;
-						text-decoration: none;
+						color: #ffffff !important;
+						text-decoration: none !important;
 					}
 				}
 			}
 				
 			.gf-default:hover {
+				color: #ffffff !important;
 				background-color: $gf-default;
 			}
 			
 			.gf-info:hover {
+				color: #ffffff !important;
 				background-color: $gf-info;
 			}
 			
 			.gf-warning:hover {
+				color: #ffffff !important;
 				background-color: $gf-warning;
 			}
 			
 			.gf-danger:hover {
+				color: #ffffff !important;
 				background-color: $gf-danger;
 			}
 			
 			.gf-impersonate:hover {
+				color: #ffffff !important;
 				background-color: $gf-impersonate;
 			}
 			
 			#pageActions {
 				.fa-ellipsis-v {
-					-moz-transition: all .3s linear;
-					-webkit-transition: all .3s linear;
-					transition: all .3s linear;
+					@include transition(all .3s linear);
 				}
 			
 				.fa-rotate {
-					-moz-transform:rotate(-90deg);
-					-webkit-transform:rotate(-90deg);
-					transform:rotate(-90deg);
-					-webkit-transform-origin: 50% 50%;
-					-moz-transform-origin: 50% 50%;
-					-o-transform-origin: 50% 50%;
-					transform-origin: 50% 50%;
+					@include transform(rotate(-90deg));
+					
+					@include transform-origin(50% 50%);
 				}
 			}
 			
@@ -815,9 +836,10 @@
 				}
 				
 				.image {
+					@include opacity(0.8);
+					
 					padding: 0;
 					border: 0;
-					opacity: 0.8;
 					background-color: transparent;
 					background-origin: border-box;
 					background-size: cover;
@@ -828,9 +850,10 @@
 					}
 					
 					&:hover {
+						@include opacity(1);
+					
 						background-color: transparent;
 						border: 0;
-						opacity: 1;
 					}
 				}
 				
@@ -853,7 +876,8 @@
 						color: #FFFFFF;
 						font-weight: bold;
 						text-shadow: none;
-						opacity: 1;
+						
+						@include opacity(1);
 					}
 					*/
 				}
@@ -891,7 +915,7 @@
 		
 		p {
 			background-color: transparent;
-			color: $gf-default;
+			color: #B9BFC6;
 			font-size: 0.75rem;
 		}
 	}

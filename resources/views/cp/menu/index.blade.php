@@ -41,7 +41,7 @@
 							<div class="row">
 								<div class="col-12 text-center text-sm-center text-md-left text-lg-left text-xl-left">
 									<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;margin-top: -15px;"><hr></div>
-									<button type="submit" name="submit_menu" id="submit_menu" class="pull-right btn btn-primary" title="Save Changes">Save Changes</button>
+									<button type="submit" name="submit_menu" id="submit_menu" class="pull-right btn btn-primary" title="Save Changes"><i class="icon fa fa-check-circle" aria-hidden="true"></i>Save Changes</button>
 								</div>
 							</div>
 						</form>

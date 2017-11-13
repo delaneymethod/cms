@@ -20,10 +20,10 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_carousels'))
-			<a href="/cp/carousels" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+			<a href="/cp/carousels" title="Cancel" class="btn btn-link text-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
 		<button type="button" name="add_form_group" id="add_form_group" class="btn btn-outline-success add_form_group" title="Add Slide">Add Slide</button>
-		<button type="submit" name="submit_create_carousel" id="submit_create_carousel" class="pull-right btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_carousel" id="submit_create_carousel" class="pull-right btn btn-primary" title="Save Changes"><i class="icon fa fa-check-circle" aria-hidden="true"></i>Save Changes</button>
 	</div>
 @endsection
 

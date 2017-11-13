@@ -19,9 +19,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_statuses'))
-			<a href="/cp/advanced/statuses" title="Cancel" class="btn btn-outline-secondary" tabindex="4" title="Cancel">Cancel</a>
+			<a href="/cp/advanced/statuses" title="Cancel" class="btn btn-link text-secondary" tabindex="4" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_create_status" id="submit_create_status" class="pull-right btn btn-primary" tabindex="3" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_create_status" id="submit_create_status" class="pull-right btn btn-primary" tabindex="3" title="Save Changes"><i class="icon fa fa-check-circle" aria-hidden="true"></i>Save Changes</button>
 	</div>
 @endsection
 

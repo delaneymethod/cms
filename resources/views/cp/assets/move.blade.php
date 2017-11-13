@@ -19,9 +19,9 @@
 @section('formButtons')
 	<div class="form-buttons">
 		@if ($currentUser->hasPermission('view_assets'))
-			<a href="/cp/assets" title="Cancel" class="btn btn-outline-secondary cancel-button" title="Cancel">Cancel</a>
+			<a href="/cp/assets" title="Cancel" class="btn btn-link text-secondary cancel-button" title="Cancel">Cancel</a>
 		@endif
-		<button type="submit" name="submit_move_asset" id="submit_move_asset" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes">Save Changes</button>
+		<button type="submit" name="submit_move_asset" id="submit_move_asset" class="pull-right float-sm-right float-md-none float-lg-none float-xl-none btn btn-primary" title="Save Changes"><i class="icon fa fa-check-circle" aria-hidden="true"></i>Save Changes</button>
 	</div>
 @endsection
 

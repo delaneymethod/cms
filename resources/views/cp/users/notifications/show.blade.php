@@ -33,7 +33,7 @@
 									<p></p>
 									<ul class="list-unstyled list-inline">
 										<li class="list-inline-item"><a href="/cp/orders/{{ $order->id }}" title="View Order" class="btn btn-primary">View Order</a></li>
-										<li class="list-inline-item"><a href="/cp/users/{{ $currentUser->id }}/notifications" title="View All Messages" class="btn btn-outline-secondary">View All Messages</a></li>
+										<li class="list-inline-item"><a href="/cp/users/{{ $currentUser->id }}/notifications" title="View All Messages" class="btn btn-link text-secondary">View All Messages</a></li>
 									</ul>
 								</div>
 							</div>
