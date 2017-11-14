@@ -81,7 +81,7 @@
 						</div>
 						<div class="form-group">
 							<div class="form-check">
-								<label class="form-check-label"><input type="checkbox" name="remember" id="remember" class="form-check-input" title="Remember me" {{ old('remember') ? 'checked' : '' }} tabindex="3" autocomplete="off"> Remember me</label>
+								<label class="form-check-label"><input type="checkbox" name="remember" id="remember" class="form-check-input" title="Remember me" {{ old('remember') ? 'checked' : '' }} tabindex="3" autocomplete="off"> Remember me. <a href="javascript:void(0);" data-html="true" data-toggle="tooltip" data-placement="top" title="<p><strong>&quot;Remember me&quot; Tick Box</strong><p><p>Choosing &quot;Remember me&quot; reduces the number of times you&#39;re asked to log in on this device.</p><p>To keep your account secure, use this option only on your personal devices.</p>">Details</a></label>
 							</div>
 						</div>
 						<div class="spacer"></div>

@@ -40,7 +40,7 @@
 						@yield('formButtons')
 						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
-						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
+						<p><i class="fa fa-info-circle" aria-hidden="true"></i> Fields marked with <span class="text-danger">&#42;</span> are required.</p>
 						@if ($user->id != $currentUser->id)
 							<div class="form-group">
 								<label class="control-label font-weight-bold">User Account</label>

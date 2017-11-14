@@ -50,7 +50,7 @@
 						@yield('formButtons')
 						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
-						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
+						<p><i class="fa fa-info-circle" aria-hidden="true"></i> Fields marked with <span class="text-danger">&#42;</span> are required.</p>
 						<div class="form-group">
 							<label for="first_name" class="control-label font-weight-bold">First Name <span class="text-danger">&#42;</span></label>
 							<input type="text" name="first_name" id="first_name" class="form-control" value="{{ old('first_name', optional($user)->first_name) }}" placeholder="e.g Joe" tabindex="1" autocomplete="off" aria-describedby="helpBlockFirstName" required autofocus>

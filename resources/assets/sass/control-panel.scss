@@ -430,6 +430,20 @@
 						}
 					}
 				}
+				
+				.active {
+					a:before {
+						content: '';
+						position: absolute;
+						height: 0;
+						width: 0;
+						top: 9px;
+						right: -3px;
+						border-width: 10px;
+						border-color: transparent #EBEDEF transparent transparent;
+						border-style: solid;
+					}
+				}
 			}
 			
 			.open {
@@ -439,6 +453,7 @@
 		
 		.active {
 			a {
+				position: relative;
 				border-left-color: $gf-red;
 				color: #ffffff !important;
 				text-decoration: none;
@@ -447,6 +462,32 @@
 				
 				.icon {
 					@include opacity(1);
+				}
+			}
+			
+			a:before {
+				content: '';
+				position: absolute;
+				height: 0;
+				width: 0;
+				top: 1rem;
+				right: -3px;
+				border-width: 10px;
+				border-color: transparent #EBEDEF transparent transparent;
+				border-style: solid;
+			}
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.sidebar {
+		ul {
+			.active {
+				a:before {
+					display: none;
+					border-width: none;
+					border-color: none;
 				}
 			}
 		}
@@ -495,10 +536,12 @@
 .main {
 	color: $sidebar-a-hover-bg-color;
 	color: #444444;
+	/*
 	background-color: $main-bg-color;
 	background: -webkit-linear-gradient(-180deg, rgb(233, 233, 233), rgb(235, 235, 235));
 	background: linear-gradient(-180deg, rgb(233, 233, 233), rgb(235, 235, 235));
-	//background-color: #ebedef;
+	*/
+	background-color: #EBEDEF;
 	
 	.buttons {
 		border-radius: 0;

@@ -40,7 +40,7 @@
 						<div class="spacer" style="width: auto;margin-left: -15px;margin-right: -15px;"><hr></div>
 						<div class="spacer"></div>
 						<p>Please select the new directory you want to move the <strong>{{ $asset->filename }}</strong> asset into.</p>
-						<p><span class="text-danger">&#42;</span> denotes a required field.</p>
+						<p><i class="fa fa-info-circle" aria-hidden="true"></i> Fields marked with <span class="text-danger">&#42;</span> are required.</p>
 						<div class="form-group">
 							<label class="control-label font-weight-bold">Current Directory</label>
 							<input type="text" name="_directory" id="_directory" class="form-control" value="{{ $path }}" tabindex="1" disabled>
