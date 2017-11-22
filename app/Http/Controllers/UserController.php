@@ -145,7 +145,13 @@ class UserController extends Controller
 			if ($validator->fails()) {
 				return back()->withErrors($validator)->withInput();
 			}
+			
+			if ($cleanedUser['role_id'] == 1) {
+				flash('Max number of Super Admin users was reached! User details were not updated.', $level = 'danger');
 
+				return redirect('/cp/users');
+			}
+			
 			DB::beginTransaction();
 
 			try {
@@ -377,6 +383,12 @@ class UserController extends Controller
 			
 			if ($validator->fails()) {
 				return back()->withErrors($validator)->withInput();
+			}
+			
+			if ($cleanedUser['role_id'] == 1) {
+				flash('Max number of Super Admin users was reached! User details were not updated.', $level = 'danger');
+
+				return redirect('/cp/users');
 			}
 			
 			DB::beginTransaction();

@@ -4,6 +4,13 @@
 	@return $remSize * 1rem;
 }
 
+@mixin placeholder {
+	::-webkit-input-placeholder {@content}
+	:-moz-placeholder {@content}
+	::-moz-placeholder {@content}
+	:-ms-input-placeholder {@content}
+}
+
 @mixin font-size($size) {
 	font-size: $size;
 	font-size: calculateRem($size);
@@ -37,4 +44,28 @@
 	opacity: $opacity;
 	$opacity-ie: $opacity * 100;
 	filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+@mixin border-top-left-radius($args...) {
+	-webkit-border-top-left-radius: $args;
+	-moz-border-radius-topleft: $args;
+	border-top-left-radius: $args;
+}
+
+@mixin border-bottom-left-radius($args...) {
+	-webkit-border-bottom-left-radius: $args;
+	-moz-border-radius-bottomleft: $args;
+	border-bottom-left-radius: $args;
+}
+
+@mixin border-top-right-radius($args...) {
+	-webkit-border-top-right-radius: $args;
+	-moz-border-radius-topright: $args;
+	border-top-left-radius: $args;
+}
+
+@mixin border-bottom-right-radius($args...) {
+	-webkit-border-bottom-right-radius: $args;
+	-moz-border-radius-bottomright: $args;
+	border-bottom-right-radius: $args;
 }

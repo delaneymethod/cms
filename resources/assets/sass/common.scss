@@ -8,13 +8,6 @@
 
 @import '../plugins/password-strength/index';
 
-@mixin placeholder {
-	::-webkit-input-placeholder {@content}
-	:-moz-placeholder {@content}
-	::-moz-placeholder {@content}
-	:-ms-input-placeholder {@content}
-}
-
 @include media-breakpoint-up(xl) {
 	.modal-xl { max-width: $modal-xl; }
 }
@@ -272,13 +265,13 @@ table {
 				background-color: #F1F1F1;
 			
 				&:first-child {
-					border-top-left-radius: 0.25rem !important;
-					border-bottom-left-radius: 0.25rem !important;
+					@include border-top-left-radius(0.25rem !important);
+					@include border-bottom-left-radius(0.25rem !important);
 				}
 			
 				&:last-child {
-					border-top-right-radius: 0.25rem !important;
-					border-bottom-right-radius: 0.25rem !important;
+					@include border-top-right-radius(0.25rem !important);
+					@include border-bottom-right-radius(0.25rem !important);
 				}
 			}
 		}
@@ -300,13 +293,13 @@ table {
 				border: 0 !important;
 				
 				&:first-child {
-					border-top-left-radius: 0.25rem !important;
-					border-bottom-left-radius: 0.25rem !important;
+					@include border-top-left-radius(0.25rem !important);
+					@include border-bottom-left-radius(0.25rem !important);
 				}
 				
 				&:last-child {
-					border-top-right-radius: 0.25rem !important;
-					border-bottom-right-radius: 0.25rem !important;
+					@include border-top-right-radius(0.25rem !important);
+					@include border-bottom-right-radius(0.25rem !important);
 				}
 			}
 			
@@ -332,7 +325,7 @@ table {
 		}
 	}
 }
-
+ 
 .table-hover tbody tr:hover {
 	background-color: rgba(241, 241, 241, 0.75) !important;
 }

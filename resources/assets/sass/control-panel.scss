@@ -623,13 +623,15 @@
 				&:hover {
 					color: $sidebar-bg-color;
 					
-					a {
-						text-decoration: none;
-						color: $sidebar-bg-color;
-						
-						&:hover {
-							text-decoration: underline;
-							color: $gf-red;
+					td {	
+						a {
+							text-decoration: none;
+							color: $sidebar-bg-color;
+							
+							&:hover {
+								text-decoration: underline;
+								color: $gf-red;
+							}
 						}
 					}
 				}				
