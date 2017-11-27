@@ -1,5 +1,6 @@
+- Add spacer below Required fields message
 
-
+- Delete spacer above form in delete templates and text center for small screens
 
 - Update any px to rem
 
